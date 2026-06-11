@@ -128,30 +128,46 @@
       margin-bottom: 36px;
     }
 
-    /* Botões de ação */
-    .actions {
+    /* Seção de links (estilo link na bio) */
+    .links-titulo {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .links {
       display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: center;
-      margin-bottom: 34px;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto 34px;
     }
     .btn {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 1rem;
-      font-weight: 600;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      font-size: 1.02rem;
+      font-weight: 700;
       text-decoration: none;
-      padding: 14px 26px;
+      padding: 15px 22px;
       border-radius: 999px;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
-      min-height: 48px; /* área de toque confortável no celular */
+      min-height: 54px; /* área de toque confortável no celular */
     }
+    .btn .ico { font-size: 1.2rem; }
     .btn-primary {
       color: #052e16;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+    }
+    .btn-instagram {
+      color: var(--text);
+      background: linear-gradient(90deg, #f58529, #dd2a7b, #8134af);
+      box-shadow: 0 8px 24px rgba(221, 42, 123, 0.30);
     }
     .btn-outline {
       color: var(--text);
@@ -223,14 +239,15 @@
     </div>
     <p class="progress-label">Trabalhando nos últimos detalhes…</p>
 
-    <div class="actions">
+    <p class="links-titulo">Acompanhe e apoie</p>
+    <nav class="links" aria-label="Links oficiais">
       <a class="btn btn-primary" href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">
-        💚 Apoie aqui
+        <span class="ico">💚</span> Apoie a campanha — apoiar.me
       </a>
-      <a class="btn btn-outline" href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">
-        📷 @delegadoyasser
+      <a class="btn btn-instagram" href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">
+        <span class="ico">📷</span> Instagram — @delegadoyasser
       </a>
-    </div>
+    </nav>
 
     <p class="contact">
       Contato:

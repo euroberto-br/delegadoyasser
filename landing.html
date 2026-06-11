@@ -3,539 +3,356 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#16a34a">
-  <title>Time Yasser — aGentes do Amor | Goiás sem Medo</title>
-  <meta name="description" content="Entre para o Time Yasser — aGentes do Amor e ajude a construir uma segurança pública com cuidado, prevenção e comunidade. (Protótipo)">
+  <meta name="theme-color" content="#f6faf7">
+  <title>Delegado Yasser — Goiás sem Medo | Pré-candidato a Deputado Estadual PT-GO</title>
+  <meta name="description" content="Goiás sem medo começa com a gente. Entre para o time aGentes do Amor e ajude a construir uma segurança pública com cuidado, prevenção e comunidade.">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Time Yasser — aGentes do Amor">
-  <meta property="og:description" content="Goiás sem medo começa com a gente. Entre para o Time Yasser.">
+  <meta property="og:title" content="Delegado Yasser — Goiás sem Medo">
+  <meta property="og:description" content="Goiás sem medo começa com a gente. Cuidado, prevenção e comunidade.">
   <meta property="og:type" content="website">
 
   <style>
+    /* ======================================================
+       MOBILE-FIRST · Tema CLEAN (cores suaves)
+       Paleta: laranja + verde dessaturados, fundos claros.
+       ====================================================== */
     :root {
-      /* Paleta — Laranja + Verde */
-      --laranja: #f97316;
-      --laranja-claro: #fb923c;
-      --laranja-escuro: #ea580c;
-      --verde: #16a34a;
-      --verde-claro: #22c55e;
-      --verde-escuro: #15803d;
+      --laranja: #f3a06b;
+      --laranja-md: #ed8d54;      /* botões */
+      --laranja-escuro: #c2611f;  /* texto / links sobre claro */
+      --verde: #6bb88a;
+      --verde-md: #4f9b6c;        /* botões */
+      --verde-escuro: #357a52;    /* texto / acento verde */
 
-      --escuro: #0f1f17;
-      --texto: #1f2937;
-      --texto-claro: #6b7280;
+      --escuro: #25382e;          /* títulos */
+      --texto: #45524b;           /* corpo */
+      --texto-claro: #7e8c84;     /* secundário */
       --bg: #ffffff;
-      --bg-suave: #f7faf8;
-      --borda: #e5e7eb;
+      --bg-suave: #f6faf7;        /* seções alternadas */
+      --bg-quente: #fdf6ef;       /* respiro quente */
+      --borda: #ebf0ec;
+
+      --tint-laranja: #fdeede;
+      --tint-verde: #e8f4ec;
+      --tint-neutro: #f3f1ea;
 
       --raio: 18px;
-      --sombra: 0 10px 30px rgba(15, 31, 23, 0.08);
-      --sombra-forte: 0 18px 45px rgba(15, 31, 23, 0.15);
-      --container: 1140px;
+      --raio-lg: 26px;
+      --sombra: 0 6px 22px rgba(37, 56, 46, 0.05);
+      --sombra-forte: 0 14px 36px rgba(37, 56, 46, 0.09);
+      --container: 1180px;
+      --pad-x: 18px;
+
+      --grad-laranja: linear-gradient(135deg, #f4ab7a, #ed8d54);
+      --grad-verde: linear-gradient(135deg, #79c096, #4f9b6c);
+      --grad-misto: linear-gradient(120deg, #f0a06d, #6bb88a);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      color: var(--texto);
-      background: var(--bg);
-      line-height: 1.65;
-      overflow-x: hidden;
+      color: var(--texto); background: var(--bg); line-height: 1.65;
+      overflow-x: hidden; width: 100%;
     }
-
-    img { max-width: 100%; display: block; }
+    img { max-width: 100%; height: auto; display: block; }
     a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4, p, span, a, li { overflow-wrap: break-word; }
+    h1, h2, h3, h4 { letter-spacing: -0.015em; }
 
-    .container {
-      width: 100%;
-      max-width: var(--container);
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+    .container { width: 100%; max-width: var(--container); margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
 
-    /* ===== Placeholder de FOTO (protótipo) ===== */
+    /* ===== FOTO (placeholder) ===== */
     .foto {
-      position: relative;
-      background:
-        repeating-linear-gradient(45deg, #f3f4f6, #f3f4f6 12px, #eef0f2 12px, #eef0f2 24px);
-      border: 2px dashed #cbd5cf;
-      border-radius: var(--raio);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #94a3a0;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      min-height: 200px;
-      padding: 16px;
-      gap: 6px;
+      position: relative; width: 100%;
+      background: var(--bg-suave);
+      border: 1.5px dashed #d4ddd7; border-radius: var(--raio);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; color: #9fb0a6; font-size: .8rem; font-weight: 700;
+      padding: 16px; gap: 6px; aspect-ratio: 4 / 3;
     }
-    .foto::before { content: "📷"; font-size: 2rem; }
+    .foto::before { content: "📷"; font-size: 1.7rem; opacity: .7; }
     .foto.alta { aspect-ratio: 3 / 4; }
-    .foto.larga { aspect-ratio: 16 / 9; }
+    .foto.larga { aspect-ratio: 16 / 10; }
     .foto.quadrada { aspect-ratio: 1 / 1; }
-    .foto.redonda { border-radius: 50%; aspect-ratio: 1 / 1; }
 
-    /* ===== Botões ===== */
+    /* ===== BOTÕES ===== */
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 1rem;
-      padding: 15px 30px;
-      border-radius: 999px;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-      min-height: 52px;
-      text-align: center;
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      font-weight: 700; font-size: 1rem; line-height: 1.15;
+      padding: 14px 26px; border-radius: 999px; border: 1.5px solid transparent;
+      cursor: pointer; min-height: 52px; text-align: center;
+      transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
     }
-    .btn-laranja {
-      background: linear-gradient(135deg, var(--laranja), var(--laranja-escuro));
-      color: #fff;
-      box-shadow: 0 10px 24px rgba(249, 115, 22, .35);
-    }
-    .btn-verde {
-      background: linear-gradient(135deg, var(--verde-claro), var(--verde-escuro));
-      color: #fff;
-      box-shadow: 0 10px 24px rgba(22, 163, 74, .35);
-    }
-    .btn-outline {
-      background: rgba(255,255,255,.1);
-      color: #fff;
-      border-color: rgba(255,255,255,.7);
-    }
-    .btn-ghost {
-      background: #fff;
-      color: var(--verde-escuro);
-      border-color: var(--borda);
-    }
-    .btn:hover { transform: translateY(-3px); box-shadow: var(--sombra-forte); }
-    .btn:active { transform: translateY(0); }
+    .btn-laranja { background: var(--laranja-md); color: #fff; box-shadow: 0 8px 18px rgba(237,141,84,.28); }
+    .btn-verde   { background: var(--verde-md);   color: #fff; box-shadow: 0 8px 18px rgba(79,155,108,.26); }
+    .btn-branco  { background: #fff; color: var(--verde-escuro); }
+    .btn-ghost   { background: #fff; color: var(--verde-escuro); border-color: var(--borda); }
+    .btn-suave   { background: var(--tint-verde); color: var(--verde-escuro); }
+    .btn:hover   { transform: translateY(-2px); box-shadow: var(--sombra-forte); }
+    .btn:active  { transform: translateY(0); }
 
-    /* ===== Header / Nav ===== */
+    .acoes { display: flex; flex-direction: column; gap: 12px; }
+    .acoes .btn { width: 100%; }
+
+    /* ===== TOP BAR ===== */
+    .topbar { background: var(--bg-suave); color: var(--texto-claro); font-size: .76rem; font-weight: 600; border-bottom: 1px solid var(--borda); }
+    .topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 38px; padding-top: 6px; padding-bottom: 6px; }
+    .topbar .proto { display: inline-flex; align-items: center; gap: 7px; }
+    .topbar .proto .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--laranja-md); flex: none; }
+    .topbar .social { display: flex; gap: 8px; }
+    .topbar .social a { width: 28px; height: 28px; border-radius: 8px; flex: none; background: #fff; border: 1px solid var(--borda); display: flex; align-items: center; justify-content: center; font-size: .82rem; transition: border-color .15s; }
+    .topbar .social a:hover { border-color: var(--laranja); }
+
+    /* ===== HEADER ===== */
     header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: rgba(255,255,255,.92);
-      backdrop-filter: saturate(180%) blur(10px);
-      border-bottom: 1px solid var(--borda);
+      -webkit-backdrop-filter: saturate(160%) blur(10px); backdrop-filter: saturate(160%) blur(10px);
+      border-bottom: 1px solid var(--borda); transition: box-shadow .2s ease;
     }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 70px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 1.05rem;
-      color: var(--escuro);
-    }
-    .logo .mark {
-      width: 40px; height: 40px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--laranja), var(--verde));
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 1.2rem;
-    }
-    .logo small {
-      display: block;
-      font-size: .68rem;
-      font-weight: 600;
-      color: var(--texto-claro);
-      letter-spacing: .04em;
-    }
+    header.rolou { box-shadow: var(--sombra); }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 66px; }
+    .logo { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 1.02rem; color: var(--escuro); line-height: 1.05; }
+    .logo .mark { width: 42px; height: 42px; flex: none; border-radius: 13px; background: var(--tint-laranja); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .logo small { display: block; font-size: .64rem; font-weight: 700; color: var(--laranja-escuro); margin-top: 2px; }
+
+    .menu-toggle { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: none; border: none; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--escuro); }
     .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 26px;
-      list-style: none;
+      position: fixed; top: 66px; left: 0; right: 0; background: #fff; list-style: none;
+      display: flex; flex-direction: column; padding: 8px var(--pad-x) 22px;
+      border-bottom: 1px solid var(--borda); box-shadow: var(--sombra);
+      transform: translateY(-160%); transition: transform .28s ease;
+      max-height: calc(100vh - 66px); overflow-y: auto;
     }
-    .nav-links a {
-      font-weight: 600;
-      font-size: .95rem;
-      color: var(--texto);
-      transition: color .15s;
-    }
-    .nav-links a:hover { color: var(--laranja-escuro); }
-    .nav-cta { padding: 10px 22px; min-height: 44px; }
+    .nav-links.aberto { transform: translateY(0); }
+    .nav-links li { border-bottom: 1px solid var(--borda); }
+    .nav-links li:last-child { border: none; padding-top: 12px; }
+    .nav-links a { display: block; padding: 14px 4px; font-weight: 600; color: var(--texto); }
+    .nav-links .nav-cta { text-align: center; }
 
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.7rem;
-      cursor: pointer;
-      color: var(--escuro);
-      padding: 6px;
-    }
-
-    /* ===== Hero ===== */
-    .hero {
-      position: relative;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(249,115,22,.12), transparent 45%),
-        radial-gradient(circle at 85% 80%, rgba(22,163,74,.14), transparent 45%),
-        linear-gradient(160deg, #fff 0%, var(--bg-suave) 100%);
-      padding: 64px 0 72px;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 48px;
-      align-items: center;
-    }
-    .hero .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(22,163,74,.1);
-      color: var(--verde-escuro);
-      font-weight: 700;
-      font-size: .8rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 8px 16px;
-      border-radius: 999px;
-      margin-bottom: 22px;
-    }
-    .hero h1 {
-      font-size: clamp(2.1rem, 6vw, 3.6rem);
-      line-height: 1.08;
-      font-weight: 800;
-      color: var(--escuro);
-      margin-bottom: 18px;
-    }
-    .hero h1 .destaque {
-      background: linear-gradient(120deg, var(--laranja), var(--verde-escuro));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero p.sub {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      color: var(--texto-claro);
-      margin-bottom: 30px;
-      max-width: 540px;
-    }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; }
-    .hero-mini {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      color: var(--texto-claro);
-      font-size: .9rem;
-    }
-    .hero-mini b { color: var(--escuro); font-size: 1.3rem; display: block; }
-    .hero-foto-wrap { position: relative; }
-    .hero-foto-wrap .foto { min-height: 420px; }
-    .hero-badge {
-      position: absolute;
-      bottom: -18px; left: -18px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: var(--sombra-forte);
-      padding: 14px 18px;
-      display: flex; align-items: center; gap: 12px;
-      font-weight: 700; font-size: .9rem;
-      max-width: 230px;
-    }
-    .hero-badge .ico {
-      width: 42px; height: 42px; flex: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--laranja), var(--laranja-escuro));
-      color: #fff; display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-    }
-
-    /* ===== Seções genéricas ===== */
-    section { padding: 72px 0; }
-    .section-head { text-align: center; max-width: 680px; margin: 0 auto 48px; }
-    .section-head .eyebrow {
-      display: inline-block;
-      font-weight: 800;
-      font-size: .8rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--laranja-escuro);
-      margin-bottom: 12px;
-    }
-    .section-head h2 {
-      font-size: clamp(1.7rem, 4.5vw, 2.6rem);
-      font-weight: 800;
-      color: var(--escuro);
-      line-height: 1.15;
-      margin-bottom: 14px;
-    }
-    .section-head p { color: var(--texto-claro); font-size: 1.05rem; }
-
+    /* ===== SEÇÕES ===== */
+    section { padding: 54px 0; }
     .bg-suave { background: var(--bg-suave); }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 36px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--laranja-escuro); margin-bottom: 12px; }
+    .eyebrow::before { content: ""; width: 20px; height: 2px; border-radius: 2px; background: var(--laranja); }
+    .section-head .eyebrow { justify-content: center; }
+    .section-head h2 { font-size: clamp(1.6rem, 6vw, 2.5rem); font-weight: 800; color: var(--escuro); line-height: 1.15; margin-bottom: 12px; }
+    .section-head p { color: var(--texto-claro); font-size: 1.02rem; }
 
-    /* ===== Pilares ===== */
-    .pilares { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .pilar {
-      background: #fff;
-      border: 1px solid var(--borda);
-      border-radius: var(--raio);
-      padding: 32px 26px;
-      box-shadow: var(--sombra);
-      transition: transform .2s ease;
-    }
-    .pilar:hover { transform: translateY(-6px); }
-    .pilar .ico {
-      width: 60px; height: 60px;
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.7rem; margin-bottom: 18px; color: #fff;
-    }
-    .pilar:nth-child(1) .ico { background: linear-gradient(135deg, var(--laranja), var(--laranja-escuro)); }
-    .pilar:nth-child(2) .ico { background: linear-gradient(135deg, var(--verde-claro), var(--verde-escuro)); }
-    .pilar:nth-child(3) .ico { background: linear-gradient(135deg, var(--laranja-claro), var(--verde)); }
-    .pilar h3 { font-size: 1.25rem; font-weight: 800; color: var(--escuro); margin-bottom: 10px; }
+    /* ===== HERO (claro) ===== */
+    .hero { background: linear-gradient(170deg, var(--bg-quente), var(--bg-suave)); padding: 44px 0 52px; }
+    .hero-grid { display: grid; gap: 30px; }
+    .hero .selo { display: inline-flex; align-items: center; gap: 9px; background: #fff; border: 1px solid var(--borda); color: var(--verde-escuro); font-weight: 700; font-size: .74rem; letter-spacing: .04em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; margin-bottom: 18px; box-shadow: var(--sombra); }
+    .hero .selo .pt { background: var(--laranja-md); color: #fff; padding: 2px 8px; border-radius: 6px; font-size: .7rem; }
+    .hero h1 { font-size: clamp(2rem, 9vw, 3.7rem); line-height: 1.07; font-weight: 800; color: var(--escuro); margin-bottom: 16px; }
+    .hero h1 .destaque { background: var(--grad-misto); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero .sub { font-size: clamp(1rem, 4vw, 1.18rem); color: var(--texto-claro); margin-bottom: 26px; max-width: 560px; }
+    .hero .sub strong { color: var(--verde-escuro); }
+    .hero .acoes { margin-bottom: 28px; }
+    .hero-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .hero-mini > div { background: #fff; border: 1px solid var(--borda); border-radius: 14px; padding: 14px 8px; text-align: center; box-shadow: var(--sombra); }
+    .hero-mini b { display: block; font-size: 1.4rem; font-weight: 800; line-height: 1.1; color: var(--verde-escuro); }
+    .hero-mini span { font-size: .74rem; color: var(--texto-claro); }
+    .hero-foto .foto { aspect-ratio: 4 / 4.4; }
+
+    /* ===== FAIXA SLOGAN (suave) ===== */
+    .faixa-slogan { background: var(--bg-quente); border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); padding: clamp(28px, 5vw, 44px) 0; }
+    .faixa-slogan .container { display: flex; align-items: flex-start; justify-content: center; gap: 14px; }
+    .faixa-slogan .aspas { font-size: clamp(2.4rem, 8vw, 3.6rem); line-height: 1; color: var(--laranja); opacity: .55; }
+    .faixa-slogan p { font-size: clamp(1.15rem, 4.5vw, 1.9rem); font-weight: 800; line-height: 1.25; color: var(--escuro); max-width: 880px; }
+
+    /* ===== PILARES ===== */
+    .pilares { display: grid; gap: 18px; }
+    .pilar { position: relative; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio-lg); padding: 30px 26px; box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease; }
+    .pilar:hover { transform: translateY(-5px); box-shadow: var(--sombra-forte); }
+    .pilar .ico { width: 62px; height: 62px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; margin-bottom: 16px; }
+    .pilar:nth-child(1) .ico { background: var(--tint-laranja); }
+    .pilar:nth-child(2) .ico { background: var(--tint-verde); }
+    .pilar:nth-child(3) .ico { background: var(--tint-neutro); }
+    .pilar h3 { font-size: 1.28rem; font-weight: 800; color: var(--escuro); margin-bottom: 9px; }
     .pilar p { color: var(--texto-claro); font-size: .96rem; }
 
-    /* ===== Sobre / Causa (texto + foto) ===== */
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-      align-items: center;
-    }
-    .split h2 {
-      font-size: clamp(1.7rem, 4.5vw, 2.5rem);
-      font-weight: 800; color: var(--escuro); line-height: 1.15; margin-bottom: 18px;
-    }
-    .split p { color: var(--texto-claro); margin-bottom: 16px; }
-    .lista-check { list-style: none; margin-top: 20px; display: grid; gap: 12px; }
-    .lista-check li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; color: var(--texto); }
-    .lista-check li::before {
-      content: "✓"; flex: none;
-      width: 26px; height: 26px; border-radius: 50%;
-      background: rgba(22,163,74,.12); color: var(--verde-escuro);
-      display: flex; align-items: center; justify-content: center;
-      font-size: .85rem; font-weight: 800;
-    }
-    .galeria-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    /* ===== STATS ===== */
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .stat { text-align: center; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio); padding: 24px 12px; box-shadow: var(--sombra); }
+    .stat b { display: block; font-size: clamp(1.8rem, 7vw, 2.5rem); font-weight: 800; line-height: 1; color: var(--verde-escuro); }
+    .stat span { display: block; margin-top: 6px; font-size: .85rem; font-weight: 600; color: var(--texto-claro); }
+    .stats-nota { text-align: center; font-size: .76rem; color: var(--texto-claro); margin-top: 16px; opacity: .8; }
+
+    /* ===== SPLIT (causa) ===== */
+    .split { display: grid; gap: 28px; align-items: center; }
+    .split h2 { font-size: clamp(1.55rem, 6vw, 2.4rem); font-weight: 800; color: var(--escuro); line-height: 1.16; margin: 8px 0 14px; }
+    .split p { color: var(--texto-claro); margin-bottom: 14px; }
+    .lista-titulo { font-weight: 800; color: var(--escuro); margin-top: 18px; }
+    .lista-check { list-style: none; margin-top: 14px; display: grid; gap: 11px; }
+    .lista-check li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; color: var(--texto); font-size: .96rem; }
+    .lista-check li::before { content: "✓"; flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--tint-verde); color: var(--verde-escuro); display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 800; }
+    .galeria-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .galeria-mini .foto:first-child { grid-column: 1 / -1; }
 
-    /* ===== Missões (cards) ===== */
-    .missoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .missao {
-      border: 1px solid var(--borda);
-      border-radius: var(--raio);
-      overflow: hidden;
-      background: #fff;
-      box-shadow: var(--sombra);
-      display: flex; flex-direction: column;
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-    .missao:hover { transform: translateY(-6px); box-shadow: var(--sombra-forte); }
-    .missao .foto { border: none; border-radius: 0; min-height: 0; }
-    .missao .foto.larga { aspect-ratio: 16/10; }
-    .missao .corpo { padding: 24px; display: flex; flex-direction: column; flex: 1; }
-    .missao .pill {
-      align-self: flex-start;
-      font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
-      padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
-    }
-    .missao:nth-child(odd) .pill { background: rgba(249,115,22,.12); color: var(--laranja-escuro); }
-    .missao:nth-child(even) .pill { background: rgba(22,163,74,.12); color: var(--verde-escuro); }
-    .missao h3 { font-size: 1.2rem; font-weight: 800; color: var(--escuro); margin-bottom: 8px; }
-    .missao p { color: var(--texto-claro); font-size: .92rem; margin-bottom: 18px; flex: 1; }
-    .missao .link {
-      font-weight: 700; color: var(--laranja-escuro); font-size: .92rem;
-      display: inline-flex; align-items: center; gap: 6px;
-    }
+    /* ===== FRASES-CHAVE (claro) ===== */
+    .frases .frases-grid { display: grid; gap: 16px; }
+    .frase { background: #fff; border: 1px solid var(--borda); border-left: 4px solid var(--laranja); border-radius: 16px; padding: 24px 22px; font-size: 1.05rem; font-weight: 700; line-height: 1.4; color: var(--escuro); box-shadow: var(--sombra); }
+    .frase:nth-child(even) { border-left-color: var(--verde); }
+    .frase .quem { display: block; margin-top: 12px; font-size: .8rem; font-weight: 700; color: var(--texto-claro); }
 
-    /* ===== Radar (destaque) ===== */
-    .radar {
-      background: linear-gradient(135deg, var(--verde-escuro), var(--verde) 60%, var(--laranja-escuro));
-      color: #fff;
-      border-radius: 28px;
-      padding: 56px 44px;
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 44px;
-      align-items: center;
-      box-shadow: var(--sombra-forte);
-    }
-    .radar .eyebrow { color: rgba(255,255,255,.85); font-weight:800; letter-spacing:.1em; text-transform:uppercase; font-size:.8rem; }
-    .radar h2 { font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 800; margin: 12px 0 14px; line-height: 1.15; }
-    .radar p { color: rgba(255,255,255,.9); margin-bottom: 26px; }
-    .radar .foto { min-height: 300px; background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.5); color: rgba(255,255,255,.85); }
-    .radar .foto::before { filter: grayscale(0); }
+    /* ===== MISSÕES ===== */
+    .missoes { display: grid; gap: 18px; }
+    .missao { border: 1px solid var(--borda); border-radius: var(--raio-lg); overflow: hidden; background: #fff; box-shadow: var(--sombra); display: flex; flex-direction: column; transition: transform .2s ease, box-shadow .2s ease; }
+    .missao:hover { transform: translateY(-5px); box-shadow: var(--sombra-forte); }
+    .missao .foto { border: none; border-radius: 0; aspect-ratio: 16 / 9; }
+    .missao .corpo { padding: 22px; display: flex; flex-direction: column; flex: 1; }
+    .missao .pill { align-self: flex-start; font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; margin-bottom: 12px; }
+    .missao:nth-child(3n+1) .pill { background: var(--tint-laranja); color: var(--laranja-escuro); }
+    .missao:nth-child(3n+2) .pill { background: var(--tint-verde); color: var(--verde-escuro); }
+    .missao:nth-child(3n+3) .pill { background: var(--tint-neutro); color: var(--escuro); }
+    .missao h3 { font-size: 1.16rem; font-weight: 800; color: var(--escuro); margin-bottom: 8px; }
+    .missao p { color: var(--texto-claro); font-size: .92rem; margin-bottom: 16px; flex: 1; }
+    .missao .link { font-weight: 700; color: var(--laranja-escuro); font-size: .92rem; }
 
-    /* ===== Passos ===== */
-    .passos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; counter-reset: passo; }
-    .passo {
-      text-align: center;
-      padding: 28px 16px;
-      background: #fff;
-      border: 1px solid var(--borda);
-      border-radius: var(--raio);
-      position: relative;
-    }
-    .passo .num {
-      counter-increment: passo;
-      width: 48px; height: 48px; margin: 0 auto 14px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--laranja), var(--verde));
-      color: #fff; font-weight: 800; font-size: 1.2rem;
-      display: flex; align-items: center; justify-content: center;
-    }
+    /* ===== RADAR (acento suave) ===== */
+    .radar { background: var(--grad-verde); color: #fff; border-radius: var(--raio-lg); padding: 34px 24px; display: grid; gap: 24px; box-shadow: var(--sombra); position: relative; overflow: hidden; }
+    .radar::after { content: "📍"; position: absolute; right: -8px; top: -14px; font-size: 7rem; opacity: .14; }
+    .radar .eyebrow { color: #fff; }
+    .radar .eyebrow::before { background: rgba(255,255,255,.7); }
+    .radar h2 { font-size: clamp(1.5rem, 6vw, 2.3rem); font-weight: 800; margin-bottom: 12px; line-height: 1.18; }
+    .radar p { color: rgba(255,255,255,.94); margin-bottom: 22px; }
+    .radar .foto { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.55); color: #fff; }
+
+    /* ===== PASSOS ===== */
+    .passos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; counter-reset: passo; }
+    .passo { text-align: center; padding: 24px 12px; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio); }
+    .passo .num { counter-increment: passo; width: 48px; height: 48px; margin: 0 auto 13px; border-radius: 50%; background: var(--tint-verde); color: var(--verde-escuro); font-weight: 800; font-size: 1.15rem; display: flex; align-items: center; justify-content: center; }
     .passo .num::before { content: counter(passo); }
-    .passo h4 { font-size: 1rem; color: var(--escuro); margin-bottom: 6px; }
-    .passo p { font-size: .85rem; color: var(--texto-claro); }
+    .passo h4 { font-size: 1rem; color: var(--escuro); margin-bottom: 5px; }
+    .passo p { font-size: .84rem; color: var(--texto-claro); }
 
-    /* ===== Galeria ===== */
-    .galeria { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .galeria .foto { min-height: 0; aspect-ratio: 1/1; }
-    .galeria .foto:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    /* ===== MATERIAIS ===== */
+    .materiais { display: grid; gap: 16px; }
+    .material { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio-lg); padding: 26px 22px; box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease; }
+    .material:hover { transform: translateY(-4px); box-shadow: var(--sombra-forte); }
+    .material .ico { width: 54px; height: 54px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+    .material:nth-child(3n+1) .ico { background: var(--tint-laranja); }
+    .material:nth-child(3n+2) .ico { background: var(--tint-verde); }
+    .material:nth-child(3n+3) .ico { background: var(--tint-neutro); }
+    .material .tag-formato { align-self: flex-start; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--texto-claro); background: var(--bg-suave); border: 1px solid var(--borda); padding: 4px 10px; border-radius: 999px; margin-bottom: 12px; }
+    .material h3 { font-size: 1.12rem; font-weight: 800; color: var(--escuro); margin-bottom: 7px; }
+    .material p { color: var(--texto-claro); font-size: .9rem; margin-bottom: 16px; flex: 1; }
+    .material .link { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--laranja-escuro); font-size: .92rem; }
+    .materiais-cta, .agenda-cta { text-align: center; margin-top: 30px; }
 
-    /* ===== Cadastro (formulário protótipo) ===== */
-    .cadastro-grid {
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 48px;
-      align-items: start;
-    }
-    .form-card {
-      background: #fff;
-      border: 1px solid var(--borda);
-      border-radius: 24px;
-      padding: 36px;
-      box-shadow: var(--sombra-forte);
-    }
-    .form-card h3 { font-size: 1.4rem; font-weight: 800; color: var(--escuro); margin-bottom: 6px; }
-    .form-card .hint { color: var(--texto-claro); font-size: .9rem; margin-bottom: 24px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    /* ===== AGENDA ===== */
+    .agenda { display: grid; gap: 14px; max-width: 800px; margin: 0 auto; }
+    .evento { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio); padding: 18px 20px; box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease; }
+    .evento:hover { transform: translateY(-3px); box-shadow: var(--sombra-forte); }
+    .evento .data { flex: none; width: 64px; text-align: center; border-radius: 14px; padding: 10px 6px; }
+    .evento:nth-child(odd) .data { background: var(--tint-laranja); color: var(--laranja-escuro); }
+    .evento:nth-child(even) .data { background: var(--tint-verde); color: var(--verde-escuro); }
+    .evento .data .dia { font-size: 1.5rem; font-weight: 800; line-height: 1; display: block; }
+    .evento .data .mes { font-size: .66rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+    .evento .info { flex: 1; min-width: 160px; }
+    .evento .info h3 { font-size: 1.06rem; font-weight: 800; color: var(--escuro); margin-bottom: 3px; }
+    .evento .info p { font-size: .87rem; color: var(--texto-claro); }
+    .evento .tag-tipo { flex: none; margin-left: auto; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; }
+    .evento:nth-child(odd) .tag-tipo { background: var(--tint-laranja); color: var(--laranja-escuro); }
+    .evento:nth-child(even) .tag-tipo { background: var(--tint-verde); color: var(--verde-escuro); }
+
+    /* ===== GALERIA ===== */
+    .galeria { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .galeria .foto { aspect-ratio: 1 / 1; }
+    .galeria .foto:nth-child(1) { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+
+    /* ===== CADASTRO ===== */
+    .cadastro-grid { display: grid; gap: 28px; align-items: start; }
+    .cadastro-info h2 { font-size: clamp(1.55rem, 6vw, 2.4rem); font-weight: 800; color: var(--escuro); margin: 8px 0 14px; line-height: 1.16; }
+    .cadastro-info p { color: var(--texto-claro); margin-bottom: 18px; }
+    .form-card { background: #fff; border: 1px solid var(--borda); border-radius: var(--raio-lg); padding: 26px; box-shadow: var(--sombra-forte); }
+    .form-card h3 { font-size: 1.32rem; font-weight: 800; color: var(--escuro); margin-bottom: 6px; }
+    .form-card .hint { color: var(--texto-claro); font-size: .88rem; margin-bottom: 20px; }
+    .form-grid { display: grid; gap: 14px; }
     .field { display: flex; flex-direction: column; gap: 6px; }
-    .field.full { grid-column: 1 / -1; }
-    .field label { font-size: .85rem; font-weight: 700; color: var(--texto); }
-    .field input, .field select {
-      padding: 13px 14px;
-      border: 1.5px solid var(--borda);
-      border-radius: 12px;
-      font-size: .95rem;
-      font-family: inherit;
-      background: var(--bg-suave);
-      transition: border-color .15s, box-shadow .15s;
-    }
-    .field input:focus, .field select:focus {
-      outline: none;
-      border-color: var(--verde);
-      box-shadow: 0 0 0 3px rgba(22,163,74,.15);
-      background: #fff;
-    }
-    .check { display: flex; gap: 10px; align-items: flex-start; font-size: .88rem; color: var(--texto-claro); margin-bottom: 18px; }
-    .check input { margin-top: 3px; accent-color: var(--verde); width: 18px; height: 18px; flex: none; }
-    .cadastro-info h2 { font-size: clamp(1.7rem,4.5vw,2.5rem); font-weight:800; color: var(--escuro); margin-bottom: 16px; line-height:1.15; }
-    .cadastro-info p { color: var(--texto-claro); margin-bottom: 22px; }
+    .field label { font-size: .84rem; font-weight: 700; color: var(--texto); }
+    .field input, .field select { width: 100%; padding: 13px 14px; border: 1.5px solid var(--borda); border-radius: 12px; font-size: 1rem; font-family: inherit; background: var(--bg-suave); transition: border-color .15s, box-shadow .15s; }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--verde); background: #fff; box-shadow: 0 0 0 3px rgba(107,184,138,.18); }
+    .check { display: flex; gap: 10px; align-items: flex-start; font-size: .86rem; color: var(--texto-claro); margin: 18px 0; }
+    .check input { margin-top: 2px; accent-color: var(--verde-md); width: 20px; height: 20px; flex: none; }
+    .form-card .btn { width: 100%; }
 
-    /* ===== Fechamento / CTA final ===== */
-    .cta-final {
-      background:
-        radial-gradient(circle at 80% 20%, rgba(249,115,22,.25), transparent 50%),
-        linear-gradient(135deg, var(--escuro), #14342a);
-      color: #fff;
-      text-align: center;
-      border-radius: 28px;
-      padding: 64px 32px;
-    }
-    .cta-final h2 { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; margin-bottom: 18px; line-height:1.12; max-width: 760px; margin-inline: auto; }
-    .cta-final p { color: rgba(255,255,255,.82); font-size: 1.1rem; margin-bottom: 30px; max-width: 600px; margin-inline:auto; }
-    .cta-final .hero-actions { justify-content: center; }
+    /* ===== CTA FINAL (claro) ===== */
+    .cta-final { text-align: center; border-radius: var(--raio-lg); padding: 50px 24px; background: linear-gradient(150deg, var(--bg-quente), var(--bg-suave)); border: 1px solid var(--borda); }
+    .cta-final .eyebrow { color: var(--laranja-escuro); justify-content: center; }
+    .cta-final h2 { font-size: clamp(1.55rem, 6.2vw, 2.7rem); font-weight: 800; color: var(--escuro); margin-bottom: 14px; line-height: 1.16; max-width: 820px; margin-inline: auto; }
+    .cta-final p { color: var(--texto-claro); font-size: 1.05rem; margin-bottom: 26px; }
 
-    /* ===== Footer ===== */
-    footer {
-      background: var(--escuro);
-      color: rgba(255,255,255,.7);
-      padding: 48px 0 28px;
-    }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 36px; margin-bottom: 32px; }
-    footer .logo { color: #fff; margin-bottom: 14px; }
-    footer .logo small { color: rgba(255,255,255,.6); }
-    footer h5 { color: #fff; font-size: .95rem; margin-bottom: 14px; text-transform: uppercase; letter-spacing:.05em; }
-    footer ul { list-style: none; display: grid; gap: 10px; }
-    footer a:hover { color: var(--laranja-claro); }
-    .footer-social { display: flex; gap: 12px; margin-top: 16px; }
-    .footer-social a {
-      width: 42px; height: 42px; border-radius: 12px;
-      background: rgba(255,255,255,.1);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; transition: background .15s;
-    }
-    .footer-social a:hover { background: var(--verde); }
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,.12);
-      padding-top: 22px;
-      text-align: center;
-      font-size: .82rem;
-      color: rgba(255,255,255,.55);
-    }
-    .proto-aviso {
-      background: var(--laranja-escuro);
-      color: #fff;
-      text-align: center;
-      font-size: .82rem;
-      font-weight: 600;
-      padding: 8px 16px;
-      letter-spacing: .03em;
+    /* ===== FOOTER (claro) ===== */
+    footer { background: var(--bg-suave); color: var(--texto-claro); padding: 44px 0 26px; border-top: 1px solid var(--borda); }
+    .footer-grid { display: grid; gap: 28px; margin-bottom: 28px; }
+    footer .logo { color: var(--escuro); margin-bottom: 12px; }
+    footer .logo small { color: var(--laranja-escuro); }
+    footer .sobre { font-size: .92rem; line-height: 1.65; }
+    footer h5 { color: var(--escuro); font-size: .92rem; margin-bottom: 14px; text-transform: uppercase; letter-spacing: .04em; }
+    footer ul { list-style: none; display: grid; gap: 10px; font-size: .92rem; }
+    footer a:hover { color: var(--laranja-escuro); }
+    .footer-social { display: flex; gap: 10px; margin-top: 16px; }
+    .footer-social a { width: 44px; height: 44px; border-radius: 12px; flex: none; background: #fff; border: 1px solid var(--borda); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: border-color .15s; }
+    .footer-social a:hover { border-color: var(--laranja); }
+    .footer-bottom { border-top: 1px solid var(--borda); padding-top: 22px; text-align: center; font-size: .8rem; color: var(--texto-claro); line-height: 1.65; }
+
+    /* ======================================================
+       TABLET (>= 640px)
+       ====================================================== */
+    @media (min-width: 640px) {
+      :root { --pad-x: 26px; }
+      section { padding: 72px 0; }
+      .acoes { flex-direction: row; flex-wrap: wrap; }
+      .acoes .btn { width: auto; }
+      .pilares   { grid-template-columns: repeat(3, 1fr); }
+      .missoes   { grid-template-columns: repeat(2, 1fr); }
+      .materiais { grid-template-columns: repeat(2, 1fr); }
+      .frases .frases-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats     { grid-template-columns: repeat(4, 1fr); }
+      .passos    { grid-template-columns: repeat(3, 1fr); }
+      .galeria   { grid-template-columns: repeat(3, 1fr); }
+      .galeria .foto:nth-child(1) { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+      .form-grid { grid-template-columns: 1fr 1fr; }
+      .field.full { grid-column: 1 / -1; }
+      .hero-mini { max-width: 480px; }
     }
 
-    /* ===== RESPONSIVO ===== */
-    @media (max-width: 980px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 36px; }
-      .hero-foto-wrap { order: -1; }
-      .hero-foto-wrap .foto { min-height: 300px; }
-      .split { grid-template-columns: 1fr; gap: 32px; }
-      .radar { grid-template-columns: 1fr; padding: 40px 28px; }
-      .cadastro-grid { grid-template-columns: 1fr; gap: 32px; }
-      .passos { grid-template-columns: repeat(2, 1fr); }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 760px) {
-      .nav-links {
-        position: fixed;
-        top: 70px; left: 0; right: 0;
-        background: #fff;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        padding: 12px 20px 24px;
-        border-bottom: 1px solid var(--borda);
-        box-shadow: var(--sombra);
-        transform: translateY(-130%);
-        transition: transform .28s ease;
-      }
-      .nav-links.aberto { transform: translateY(0); }
-      .nav-links li { border-bottom: 1px solid var(--borda); }
-      .nav-links li:last-child { border: none; padding-top: 12px; }
-      .nav-links a { display: block; padding: 14px 4px; }
-      .nav-cta { text-align: center; }
-      .menu-toggle { display: block; }
-    }
-    @media (max-width: 560px) {
-      section { padding: 52px 0; }
-      .pilares, .missoes { grid-template-columns: 1fr; }
-      .galeria { grid-template-columns: 1fr 1fr; }
-      .galeria .foto:nth-child(1) { grid-column: span 2; }
-      .form-row { grid-template-columns: 1fr; }
-      .hero-actions .btn { width: 100%; }
-      .hero-badge { left: 50%; transform: translateX(-50%); bottom: -22px; }
+    /* ======================================================
+       DESKTOP (>= 980px)
+       ====================================================== */
+    @media (min-width: 980px) {
+      section { padding: 92px 0; }
+      .menu-toggle { display: none; }
+      .nav-links { position: static; flex-direction: row; align-items: center; gap: 24px; padding: 0; transform: none; box-shadow: none; border: none; max-height: none; overflow: visible; background: transparent; }
+      .nav-links li { border: none; padding: 0; }
+      .nav-links li:last-child { padding: 0; }
+      .nav-links a { padding: 0; font-size: .94rem; }
+      .nav-links a:hover { color: var(--laranja-escuro); }
+      .nav-cta { padding: 11px 22px !important; min-height: 44px; }
+      .section-head { margin-bottom: 52px; }
+
+      .hero { padding: 76px 0 84px; }
+      .hero-grid { grid-template-columns: 1.05fr .95fr; gap: 52px; align-items: center; }
+      .hero-foto { order: 2; }
+      .hero-mini { max-width: none; }
+
+      .split { grid-template-columns: 1fr 1fr; gap: 56px; }
+      .missoes { grid-template-columns: repeat(3, 1fr); }
+      .materiais { grid-template-columns: repeat(3, 1fr); }
+      .frases .frases-grid { grid-template-columns: repeat(3, 1fr); }
+      .radar { grid-template-columns: 1.1fr .9fr; padding: 56px 48px; align-items: center; }
+      .passos { grid-template-columns: repeat(5, 1fr); }
+      .galeria { grid-template-columns: repeat(4, 1fr); }
+      .cadastro-grid { grid-template-columns: .9fr 1.1fr; gap: 52px; }
+      .footer-grid { grid-template-columns: 2.2fr 1fr 1fr; gap: 40px; }
+      .cta-final { padding: 72px 32px; }
+      .cta-final p { max-width: 640px; margin-inline: auto; }
+      .acoes.centro { justify-content: center; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -545,29 +362,33 @@
 </head>
 <body>
 
-  <!-- Aviso de protótipo -->
-  <div class="proto-aviso">⚠️ PROTÓTIPO — textos em Lorem Ipsum e imagens são exemplos. Conteúdo final a definir.</div>
+  <!-- ===== TOP BAR ===== -->
+  <div class="topbar">
+    <div class="container">
+      <span class="proto"><span class="dot"></span> Protótipo — conteúdo em validação</span>
+      <span class="social">
+        <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+        <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+        <a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener" aria-label="Apoiar">💛</a>
+      </span>
+    </div>
+  </div>
 
   <!-- ===== HEADER ===== -->
-  <header>
+  <header id="cabecalho">
     <div class="container nav">
-      <a href="#topo" class="logo" aria-label="Time Yasser - aGentes do Amor">
-        <span class="mark">💚</span>
-        <span>Time Yasser
-          <small>aGentes do Amor</small>
-        </span>
+      <a href="#topo" class="logo" aria-label="Delegado Yasser Yassine">
+        <span class="mark">🛡️</span>
+        <span>Delegado Yasser <small>Pré-candidato · Dep. Estadual · PT-GO</small></span>
       </a>
-
-      <nav>
-        <ul class="nav-links" id="navLinks">
-          <li><a href="#causa">A causa</a></li>
-          <li><a href="#missoes">Missões</a></li>
-          <li><a href="#radar">Radar</a></li>
-          <li><a href="#como">Como funciona</a></li>
-          <li><a href="#cadastro" class="btn btn-verde nav-cta">Quero fazer parte</a></li>
-        </ul>
-      </nav>
-
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#causa">A causa</a></li>
+        <li><a href="#missoes">Missões</a></li>
+        <li><a href="#radar">Radar</a></li>
+        <li><a href="#materiais">Materiais</a></li>
+        <li><a href="#agenda">Agenda</a></li>
+        <li><a href="#cadastro" class="btn btn-verde nav-cta">Quero fazer parte</a></li>
+      </ul>
       <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
     </div>
   </header>
@@ -576,32 +397,35 @@
   <section class="hero" id="topo">
     <div class="container hero-grid">
       <div class="hero-texto">
-        <span class="tag">🛡️ Goiás sem Medo</span>
+        <span class="selo"><span class="pt">PT-GO</span> Pré-candidato a Deputado Estadual</span>
         <h1>Goiás sem medo <span class="destaque">começa com a gente.</span></h1>
         <p class="sub">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Entre para o Time Yasser
-          e ajude a construir uma segurança pública com cuidado, prevenção e comunidade.
+          Entre para o time <strong>aGentes do Amor</strong> e ajude a construir uma segurança pública
+          com cuidado, prevenção e comunidade — para fazer o povo voltar vivo para casa.
         </p>
-        <div class="hero-actions">
+        <div class="acoes">
           <a href="#cadastro" class="btn btn-laranja">Quero fazer parte →</a>
           <a href="#causa" class="btn btn-ghost">Conhecer a causa</a>
         </div>
         <div class="hero-mini">
-          <div><b>+5 mil</b> voluntários (exemplo)</div>
-          <div><b>120</b> cidades (exemplo)</div>
-          <div><b>3</b> pilares de ação</div>
+          <div><b>+5 mil</b><span>aGentes</span></div>
+          <div><b>120</b><span>cidades</span></div>
+          <div><b>3</b><span>pilares</span></div>
         </div>
       </div>
-
-      <div class="hero-foto-wrap">
-        <div class="foto larga" style="aspect-ratio:4/5;">FOTO PRINCIPAL<br>(Yasser / mobilização)</div>
-        <div class="hero-badge">
-          <span class="ico">❤️</span>
-          <span>Tropa de Elite do Amor em ação</span>
-        </div>
+      <div class="hero-foto">
+        <div class="foto">FOTO PRINCIPAL<br>(Delegado Yasser)</div>
       </div>
     </div>
   </section>
+
+  <!-- ===== FAIXA SLOGAN ===== -->
+  <div class="faixa-slogan">
+    <div class="container">
+      <span class="aspas">“</span>
+      <p>Segurança não é espetáculo. É cuidado, prevenção e comunidade.</p>
+    </div>
+  </div>
 
   <!-- ===== PILARES ===== -->
   <section id="pilares">
@@ -609,41 +433,62 @@
       <div class="section-head">
         <span class="eyebrow">Nossos pilares</span>
         <h2>Cuidado, prevenção e comunidade</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+        <p>Três pilares que sustentam uma política de segurança pública de verdade em Goiás.</p>
       </div>
       <div class="pilares">
         <div class="pilar">
           <div class="ico">🤝</div>
           <h3>Cuidado</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proteção às pessoas, famílias e grupos vulneráveis.</p>
+          <p>Proteção às pessoas, às famílias, às vítimas e aos grupos vulneráveis.</p>
         </div>
         <div class="pilar">
           <div class="ico">💡</div>
           <h3>Prevenção</h3>
-          <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Inteligência, juventude e presença do Estado.</p>
+          <p>Inteligência, iluminação, juventude, escola, cultura, tecnologia e presença do Estado.</p>
         </div>
         <div class="pilar">
           <div class="ico">🏘️</div>
           <h3>Comunidade</h3>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation. Moradores, lideranças e Estado atuando juntos.</p>
+          <p>Moradores, lideranças, comerciantes, servidores, escolas, coletivos e Estado atuando juntos.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== CAUSA (texto + galeria) ===== -->
-  <section class="bg-suave" id="causa">
+  <!-- ===== STATS ===== -->
+  <section class="bg-suave">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Juntos somos mais fortes</span>
+        <h2>Uma rede que cresce a cada dia</h2>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>+5 mil</b><span>aGentes do Amor</span></div>
+        <div class="stat"><b>120</b><span>cidades alcançadas</span></div>
+        <div class="stat"><b>3 mil</b><span>relatos no Radar</span></div>
+        <div class="stat"><b>200+</b><span>rodas de conversa</span></div>
+      </div>
+      <p class="stats-nota">* Números ilustrativos — serão atualizados com os dados reais da campanha.</p>
+    </div>
+  </section>
+
+  <!-- ===== CAUSA ===== -->
+  <section id="causa">
     <div class="container split">
       <div>
-        <span class="eyebrow" style="color:var(--laranja-escuro);font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;">O que estamos construindo</span>
+        <span class="eyebrow">O que estamos construindo</span>
         <h2>Uma rede viva por todo o estado</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-        <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+        <p>Nossa missão em Goiás é transformar mobilização em presença real nas cidades: ouvir a população, mapear os espaços do medo e construir uma segurança pública que faça o povo voltar vivo para casa.</p>
+        <p>Quando o Estado abandona, o crime ocupa. Por isso queremos polícia valorizada, investigação funcionando e comunidade protegida.</p>
+        <p class="lista-titulo">Como você pode ajudar:</p>
         <ul class="lista-check">
-          <li>Lorem ipsum dolor sit amet consectetur</li>
-          <li>Sed do eiusmod tempor incididunt</li>
-          <li>Ut labore et dolore magna aliqua</li>
-          <li>Quis nostrud exercitation ullamco</li>
+          <li>Divulgar conteúdos</li>
+          <li>Entrar no grupo da sua cidade</li>
+          <li>Enviar relatos sobre segurança</li>
+          <li>Indicar lideranças</li>
+          <li>Organizar rodas de conversa</li>
+          <li>Produzir vídeos e depoimentos</li>
+          <li>Participar de ações presenciais</li>
         </ul>
       </div>
       <div class="galeria-mini">
@@ -654,66 +499,76 @@
     </div>
   </section>
 
+  <!-- ===== FRASES-CHAVE ===== -->
+  <section class="frases bg-suave">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">No que a gente acredita</span>
+        <h2>Frases que movem Goiás</h2>
+        <p>O que orienta cada passo dessa caminhada.</p>
+      </div>
+      <div class="frases-grid">
+        <div class="frase">“Segurança pública de verdade é fazer o povo voltar vivo para casa.”<span class="quem">— Delegado Yasser</span></div>
+        <div class="frase">“Quando o Estado abandona, o crime ocupa.”<span class="quem">— Delegado Yasser</span></div>
+        <div class="frase">“Segurança não é espetáculo. É cuidado, prevenção e comunidade.”<span class="quem">— Delegado Yasser</span></div>
+        <div class="frase">“O crime organizado não emancipa ninguém.”<span class="quem">— Delegado Yasser</span></div>
+        <div class="frase">“Polícia valorizada, investigação funcionando e comunidade protegida.”<span class="quem">— Delegado Yasser</span></div>
+        <div class="frase">“Goiás sem medo começa com gente organizada.”<span class="quem">— Delegado Yasser</span></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== MISSÕES ===== -->
   <section id="missoes">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Escolha sua missão</span>
         <h2>Como você pode ajudar</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Escolha a forma de participação que combina com você.</p>
+        <p>Escolha a forma de participação que combina com você. Toda ajuda conta.</p>
       </div>
       <div class="missoes">
         <article class="missao">
-          <div class="foto larga">FOTO</div>
+          <div class="foto">FOTO</div>
           <div class="corpo">
             <span class="pill">Digital</span>
             <h3>Comunicação Digital</h3>
-            <p>Lorem ipsum dolor sit amet. Compartilhe conteúdos, comente posts e ajude a mensagem chegar mais longe.</p>
+            <p>Compartilhe conteúdos, comente posts e ajude a mensagem a chegar mais longe.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
           </div>
         </article>
         <article class="missao">
-          <div class="foto larga">FOTO</div>
+          <div class="foto">FOTO</div>
           <div class="corpo">
             <span class="pill">Radar</span>
             <h3>Radar Goiás sem Medo</h3>
-            <p>Consectetur adipiscing elit. Envie relatos sobre lugares onde as pessoas sentem medo.</p>
+            <p>Envie relatos sobre lugares onde as pessoas sentem medo.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
           </div>
         </article>
         <article class="missao">
-          <div class="foto larga">FOTO</div>
+          <div class="foto">FOTO</div>
           <div class="corpo">
             <span class="pill">Território</span>
             <h3>Liderança Local</h3>
-            <p>Sed do eiusmod tempor. Ajude a organizar apoiadores na sua cidade ou bairro.</p>
+            <p>Ajude a organizar apoiadores na sua cidade ou bairro.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
           </div>
         </article>
         <article class="missao">
-          <div class="foto larga">FOTO</div>
+          <div class="foto">FOTO</div>
           <div class="corpo">
             <span class="pill">Encontros</span>
             <h3>Rodas de Conversa</h3>
-            <p>Ut labore et dolore magna. Reúna pessoas para conversar sobre segurança e comunidade.</p>
+            <p>Reúna pessoas para conversar sobre segurança e comunidade.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
           </div>
         </article>
         <article class="missao">
-          <div class="foto larga">FOTO</div>
+          <div class="foto">FOTO</div>
           <div class="corpo">
             <span class="pill">Conexões</span>
             <h3>Conexões Estratégicas</h3>
-            <p>Aliqua ut enim ad minim. Indique lideranças, movimentos, coletivos e pessoas importantes.</p>
-            <a href="#cadastro" class="link">Quero esta missão →</a>
-          </div>
-        </article>
-        <article class="missao">
-          <div class="foto larga">FOTO</div>
-          <div class="corpo">
-            <span class="pill">Conteúdo</span>
-            <h3>Produção de Conteúdo</h3>
-            <p>Veniam quis nostrud. Grave vídeos, depoimentos e ajude na comunicação da campanha.</p>
+            <p>Indique lideranças, movimentos, coletivos e pessoas importantes.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
           </div>
         </article>
@@ -726,41 +581,149 @@
     <div class="container">
       <div class="radar">
         <div>
-          <span class="eyebrow">📍 Radar Goiás sem Medo</span>
+          <span class="eyebrow">Radar Goiás sem Medo</span>
           <h2>Tem um lugar que você evita por medo?</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro.</p>
-          <a href="#cadastro" class="btn btn-laranja">Enviar um relato →</a>
+          <p>Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro, escola vulnerável. Sua resposta vira proposta real para Goiás.</p>
+          <div class="acoes">
+            <a href="#cadastro" class="btn btn-branco">Enviar um relato →</a>
+          </div>
         </div>
         <div class="foto larga">FOTO / MAPA<br>(ilustração do Radar)</div>
       </div>
     </div>
   </section>
 
-  <!-- ===== COMO FUNCIONA (passos) ===== -->
+  <!-- ===== COMO FUNCIONA ===== -->
   <section id="como">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Depois do cadastro</span>
         <h2>Como funciona, passo a passo</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Simples e sem complicação.</p>
+        <p>Simples, rápido e sem complicação. Em poucos minutos você já está no time.</p>
       </div>
       <div class="passos">
-        <div class="passo"><div class="num"></div><h4>Cadastre-se</h4><p>Lorem ipsum dolor sit amet.</p></div>
-        <div class="passo"><div class="num"></div><h4>Identificação</h4><p>Consectetur adipiscing elit.</p></div>
-        <div class="passo"><div class="num"></div><h4>Entre no grupo</h4><p>Sed do eiusmod tempor.</p></div>
-        <div class="passo"><div class="num"></div><h4>Primeira tarefa</h4><p>Ut labore et dolore.</p></div>
-        <div class="passo"><div class="num"></div><h4>Mobilize Goiás</h4><p>Magna aliqua veniam.</p></div>
+        <div class="passo"><div class="num"></div><h4>Cadastre-se</h4><p>Você preenche o formulário.</p></div>
+        <div class="passo"><div class="num"></div><h4>Identificação</h4><p>A equipe vê sua cidade e missão.</p></div>
+        <div class="passo"><div class="num"></div><h4>Entre no grupo</h4><p>Você entra no grupo correto.</p></div>
+        <div class="passo"><div class="num"></div><h4>Primeira tarefa</h4><p>Recebe sua primeira missão.</p></div>
+        <div class="passo"><div class="num"></div><h4>Mobilize Goiás</h4><p>Ajuda a mobilizar o estado.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MATERIAIS ===== -->
+  <section class="bg-suave" id="materiais">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Biblioteca de materiais</span>
+        <h2>Tudo pronto para você mobilizar</h2>
+        <p>Baixe, compartilhe e ajude a mensagem a chegar mais longe.</p>
+      </div>
+      <div class="materiais">
+        <article class="material">
+          <div class="ico">📱</div>
+          <span class="tag-formato">Imagens · ZIP</span>
+          <h3>Cards para WhatsApp</h3>
+          <p>Artes prontas para postar e encaminhar nos seus grupos e stories.</p>
+          <a href="#" class="link">Baixar →</a>
+        </article>
+        <article class="material">
+          <div class="ico">🎬</div>
+          <span class="tag-formato">Vídeos · MP4</span>
+          <h3>Vídeos curtos</h3>
+          <p>Cortes verticais prontos para reels, stories e status.</p>
+          <a href="#" class="link">Acessar →</a>
+        </article>
+        <article class="material">
+          <div class="ico">💬</div>
+          <span class="tag-formato">Texto · PDF</span>
+          <h3>Frases e legendas</h3>
+          <p>Legendas prontas e frases-chave da campanha para usar à vontade.</p>
+          <a href="#" class="link">Baixar →</a>
+        </article>
+        <article class="material">
+          <div class="ico">📘</div>
+          <span class="tag-formato">Guia · PDF</span>
+          <h3>Manual do voluntário</h3>
+          <p>Tudo o que você precisa saber para começar a ajudar hoje.</p>
+          <a href="#" class="link">Baixar →</a>
+        </article>
+        <article class="material">
+          <div class="ico">🗣️</div>
+          <span class="tag-formato">Roteiro · PDF</span>
+          <h3>Roteiro de roda de conversa</h3>
+          <p>Passo a passo para organizar um encontro na sua cidade.</p>
+          <a href="#" class="link">Baixar →</a>
+        </article>
+        <article class="material">
+          <div class="ico">📅</div>
+          <span class="tag-formato">Links · Drive</span>
+          <h3>Agenda da semana</h3>
+          <p>Conteúdos prioritários e links da semana, sempre atualizados.</p>
+          <a href="#" class="link">Acessar →</a>
+        </article>
+      </div>
+      <div class="materiais-cta">
+        <a href="#cadastro" class="btn btn-verde">Acessar a biblioteca completa</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AGENDA ===== -->
+  <section id="agenda">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Agenda de ações</span>
+        <h2>Participe dos próximos encontros</h2>
+        <p>Datas e locais são exemplos — serão atualizados com a agenda real.</p>
+      </div>
+      <div class="agenda">
+        <article class="evento">
+          <div class="data"><span class="dia">15</span><span class="mes">Jun</span></div>
+          <div class="info">
+            <h3>Roda de Conversa — Segurança e Comunidade</h3>
+            <p>Goiânia · Setor Central · 19h</p>
+          </div>
+          <span class="tag-tipo">Presencial</span>
+        </article>
+        <article class="evento">
+          <div class="data"><span class="dia">22</span><span class="mes">Jun</span></div>
+          <div class="info">
+            <h3>Mutirão Digital — aGentes do Amor</h3>
+            <p>Online · Grupo no WhatsApp · 20h</p>
+          </div>
+          <span class="tag-tipo">Online</span>
+        </article>
+        <article class="evento">
+          <div class="data"><span class="dia">29</span><span class="mes">Jun</span></div>
+          <div class="info">
+            <h3>Caminhada Goiás sem Medo</h3>
+            <p>Aparecida de Goiânia · Praça Central · 9h</p>
+          </div>
+          <span class="tag-tipo">Presencial</span>
+        </article>
+        <article class="evento">
+          <div class="data"><span class="dia">06</span><span class="mes">Jul</span></div>
+          <div class="info">
+            <h3>Lançamento do Radar Goiás sem Medo</h3>
+            <p>Anápolis · Centro · 18h30</p>
+          </div>
+          <span class="tag-tipo">Lançamento</span>
+        </article>
+      </div>
+      <div class="agenda-cta">
+        <a href="#cadastro" class="btn btn-ghost">Quero ser avisado das ações</a>
       </div>
     </div>
   </section>
 
   <!-- ===== GALERIA ===== -->
-  <section class="bg-suave">
+  <section class="bg-suave" id="galeria">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Galeria</span>
         <h2>A gente nas ruas</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Goiás sem medo se constrói no encontro com as pessoas.</p>
       </div>
       <div class="galeria">
         <div class="foto">FOTO destaque</div>
@@ -776,17 +739,16 @@
   <section id="cadastro">
     <div class="container cadastro-grid">
       <div class="cadastro-info">
-        <span class="eyebrow" style="color:var(--laranja-escuro);font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;">Cadastro de voluntário</span>
-        <h2>Entre para o Time Yasser</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <div class="foto larga" style="aspect-ratio:4/3;">FOTO — voluntários reunidos</div>
+        <span class="eyebrow">Cadastro de voluntário</span>
+        <h2>Entre para o time</h2>
+        <p>Preencha seus dados, escolha como quer ajudar e a equipe te direciona para o grupo certo. Goiás sem medo começa com gente organizada.</p>
+        <div class="foto larga">FOTO — voluntários reunidos</div>
       </div>
 
       <form class="form-card" onsubmit="return false;">
-        <h3>Quero fazer parte 💚</h3>
-        <p class="hint">Lorem ipsum — protótipo, o formulário ainda não envia dados.</p>
-
-        <div class="form-row">
+        <h3>Quero fazer parte 🛡️</h3>
+        <p class="hint">Protótipo — o formulário ainda não envia dados.</p>
+        <div class="form-grid">
           <div class="field full">
             <label for="nome">Nome completo</label>
             <input id="nome" type="text" placeholder="Seu nome">
@@ -820,25 +782,24 @@
             </select>
           </div>
         </div>
-
         <label class="check">
-          <input type="checkbox"> Autorizo o contato por WhatsApp e aceito receber materiais da campanha. (Lorem ipsum)
+          <input type="checkbox"> Autorizo o contato por WhatsApp e aceito receber materiais da campanha.
         </label>
-
-        <button type="submit" class="btn btn-verde" style="width:100%;">Enviar cadastro</button>
+        <button type="submit" class="btn btn-laranja">Enviar cadastro</button>
       </form>
     </div>
   </section>
 
   <!-- ===== CTA FINAL ===== -->
-  <section>
+  <section class="bg-suave">
     <div class="container">
       <div class="cta-final">
-        <h2>Segurança de verdade é fazer o povo voltar vivo para casa.</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-        <div class="hero-actions">
-          <a href="#cadastro" class="btn btn-laranja">Entrar para o Time Yasser →</a>
-          <a href="https://wa.me/" target="_blank" rel="noopener" class="btn btn-outline">💬 Falar no WhatsApp</a>
+        <span class="eyebrow">Goiás sem Medo</span>
+        <h2>Segurança pública de verdade não é espetáculo. É fazer o povo voltar vivo para casa.</h2>
+        <p>Sua participação transforma apoio em ação concreta. Vem com a gente construir esse Goiás.</p>
+        <div class="acoes centro">
+          <a href="#cadastro" class="btn btn-laranja">Entrar para o time →</a>
+          <a href="https://wa.me/" target="_blank" rel="noopener" class="btn btn-ghost">💬 Falar no WhatsApp</a>
         </div>
       </div>
     </div>
@@ -850,10 +811,10 @@
       <div class="footer-grid">
         <div>
           <div class="logo">
-            <span class="mark">💚</span>
-            <span>Time Yasser <small>aGentes do Amor</small></span>
+            <span class="mark">🛡️</span>
+            <span>Delegado Yasser <small>Pré-candidato · Dep. Estadual · PT-GO</small></span>
           </div>
-          <p style="font-size:.9rem;max-width:340px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Goiás sem medo começa com gente organizada.</p>
+          <p class="sobre">Goiás sem medo começa com gente organizada. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
           <div class="footer-social">
             <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
             <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
@@ -867,6 +828,8 @@
             <li><a href="#missoes">Missões</a></li>
             <li><a href="#radar">Radar</a></li>
             <li><a href="#como">Como funciona</a></li>
+            <li><a href="#materiais">Materiais</a></li>
+            <li><a href="#agenda">Agenda de ações</a></li>
           </ul>
         </div>
         <div>
@@ -880,13 +843,13 @@
         </div>
       </div>
       <div class="footer-bottom">
-        &copy; <span id="ano">2026</span> Delegado Yasser Yassine — Time Yasser, aGentes do Amor. Protótipo para validação.
+        &copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás sem Medo.<br>
+        Protótipo para validação. Conteúdo e imagens sujeitos a alteração.
       </div>
     </div>
   </footer>
 
   <script>
-    // Menu mobile
     var toggle = document.getElementById('menuToggle');
     var links = document.getElementById('navLinks');
     toggle.addEventListener('click', function () {
@@ -894,7 +857,6 @@
       toggle.setAttribute('aria-expanded', aberto);
       toggle.textContent = aberto ? '✕' : '☰';
     });
-    // Fecha o menu ao clicar num link (mobile)
     links.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
         links.classList.remove('aberto');
@@ -902,7 +864,10 @@
         toggle.setAttribute('aria-expanded', false);
       });
     });
-    // Ano automático
+    var head = document.getElementById('cabecalho');
+    window.addEventListener('scroll', function () {
+      head.classList.toggle('rolou', window.scrollY > 8);
+    }, { passive: true });
     document.getElementById('ano').textContent = new Date().getFullYear();
   </script>
 </body>
