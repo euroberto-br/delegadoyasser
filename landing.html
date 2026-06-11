@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#16a34a">
+  <title>Time Yasser — aGentes do Amor | Goiás sem Medo</title>
+  <meta name="description" content="Entre para o Time Yasser — aGentes do Amor e ajude a construir uma segurança pública com cuidado, prevenção e comunidade. (Protótipo)">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Time Yasser — aGentes do Amor">
+  <meta property="og:description" content="Goiás sem medo começa com a gente. Entre para o Time Yasser.">
+  <meta property="og:type" content="website">
+
+  <style>
+    :root {
+      /* Paleta — Laranja + Verde */
+      --laranja: #f97316;
+      --laranja-claro: #fb923c;
+      --laranja-escuro: #ea580c;
+      --verde: #16a34a;
+      --verde-claro: #22c55e;
+      --verde-escuro: #15803d;
+
+      --escuro: #0f1f17;
+      --texto: #1f2937;
+      --texto-claro: #6b7280;
+      --bg: #ffffff;
+      --bg-suave: #f7faf8;
+      --borda: #e5e7eb;
+
+      --raio: 18px;
+      --sombra: 0 10px 30px rgba(15, 31, 23, 0.08);
+      --sombra-forte: 0 18px 45px rgba(15, 31, 23, 0.15);
+      --container: 1140px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--texto);
+      background: var(--bg);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== Placeholder de FOTO (protótipo) ===== */
+    .foto {
+      position: relative;
+      background:
+        repeating-linear-gradient(45deg, #f3f4f6, #f3f4f6 12px, #eef0f2 12px, #eef0f2 24px);
+      border: 2px dashed #cbd5cf;
+      border-radius: var(--raio);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #94a3a0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      min-height: 200px;
+      padding: 16px;
+      gap: 6px;
+    }
+    .foto::before { content: "📷"; font-size: 2rem; }
+    .foto.alta { aspect-ratio: 3 / 4; }
+    .foto.larga { aspect-ratio: 16 / 9; }
+    .foto.quadrada { aspect-ratio: 1 / 1; }
+    .foto.redonda { border-radius: 50%; aspect-ratio: 1 / 1; }
+
+    /* ===== Botões ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 15px 30px;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      min-height: 52px;
+      text-align: center;
+    }
+    .btn-laranja {
+      background: linear-gradient(135deg, var(--laranja), var(--laranja-escuro));
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(249, 115, 22, .35);
+    }
+    .btn-verde {
+      background: linear-gradient(135deg, var(--verde-claro), var(--verde-escuro));
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(22, 163, 74, .35);
+    }
+    .btn-outline {
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      border-color: rgba(255,255,255,.7);
+    }
+    .btn-ghost {
+      background: #fff;
+      color: var(--verde-escuro);
+      border-color: var(--borda);
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: var(--sombra-forte); }
+    .btn:active { transform: translateY(0); }
+
+    /* ===== Header / Nav ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: saturate(180%) blur(10px);
+      border-bottom: 1px solid var(--borda);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--escuro);
+    }
+    .logo .mark {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--laranja), var(--verde));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.2rem;
+    }
+    .logo small {
+      display: block;
+      font-size: .68rem;
+      font-weight: 600;
+      color: var(--texto-claro);
+      letter-spacing: .04em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--texto);
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--laranja-escuro); }
+    .nav-cta { padding: 10px 22px; min-height: 44px; }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.7rem;
+      cursor: pointer;
+      color: var(--escuro);
+      padding: 6px;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(249,115,22,.12), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(22,163,74,.14), transparent 45%),
+        linear-gradient(160deg, #fff 0%, var(--bg-suave) 100%);
+      padding: 64px 0 72px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(22,163,74,.1);
+      color: var(--verde-escuro);
+      font-weight: 700;
+      font-size: .8rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 6vw, 3.6rem);
+      line-height: 1.08;
+      font-weight: 800;
+      color: var(--escuro);
+      margin-bottom: 18px;
+    }
+    .hero h1 .destaque {
+      background: linear-gradient(120deg, var(--laranja), var(--verde-escuro));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p.sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--texto-claro);
+      margin-bottom: 30px;
+      max-width: 540px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; }
+    .hero-mini {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      color: var(--texto-claro);
+      font-size: .9rem;
+    }
+    .hero-mini b { color: var(--escuro); font-size: 1.3rem; display: block; }
+    .hero-foto-wrap { position: relative; }
+    .hero-foto-wrap .foto { min-height: 420px; }
+    .hero-badge {
+      position: absolute;
+      bottom: -18px; left: -18px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: var(--sombra-forte);
+      padding: 14px 18px;
+      display: flex; align-items: center; gap: 12px;
+      font-weight: 700; font-size: .9rem;
+      max-width: 230px;
+    }
+    .hero-badge .ico {
+      width: 42px; height: 42px; flex: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--laranja), var(--laranja-escuro));
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    /* ===== Seções genéricas ===== */
+    section { padding: 72px 0; }
+    .section-head { text-align: center; max-width: 680px; margin: 0 auto 48px; }
+    .section-head .eyebrow {
+      display: inline-block;
+      font-weight: 800;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--laranja-escuro);
+      margin-bottom: 12px;
+    }
+    .section-head h2 {
+      font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+      font-weight: 800;
+      color: var(--escuro);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .section-head p { color: var(--texto-claro); font-size: 1.05rem; }
+
+    .bg-suave { background: var(--bg-suave); }
+
+    /* ===== Pilares ===== */
+    .pilares { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .pilar {
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: var(--raio);
+      padding: 32px 26px;
+      box-shadow: var(--sombra);
+      transition: transform .2s ease;
+    }
+    .pilar:hover { transform: translateY(-6px); }
+    .pilar .ico {
+      width: 60px; height: 60px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.7rem; margin-bottom: 18px; color: #fff;
+    }
+    .pilar:nth-child(1) .ico { background: linear-gradient(135deg, var(--laranja), var(--laranja-escuro)); }
+    .pilar:nth-child(2) .ico { background: linear-gradient(135deg, var(--verde-claro), var(--verde-escuro)); }
+    .pilar:nth-child(3) .ico { background: linear-gradient(135deg, var(--laranja-claro), var(--verde)); }
+    .pilar h3 { font-size: 1.25rem; font-weight: 800; color: var(--escuro); margin-bottom: 10px; }
+    .pilar p { color: var(--texto-claro); font-size: .96rem; }
+
+    /* ===== Sobre / Causa (texto + foto) ===== */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .split h2 {
+      font-size: clamp(1.7rem, 4.5vw, 2.5rem);
+      font-weight: 800; color: var(--escuro); line-height: 1.15; margin-bottom: 18px;
+    }
+    .split p { color: var(--texto-claro); margin-bottom: 16px; }
+    .lista-check { list-style: none; margin-top: 20px; display: grid; gap: 12px; }
+    .lista-check li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; color: var(--texto); }
+    .lista-check li::before {
+      content: "✓"; flex: none;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(22,163,74,.12); color: var(--verde-escuro);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; font-weight: 800;
+    }
+    .galeria-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .galeria-mini .foto:first-child { grid-column: 1 / -1; }
+
+    /* ===== Missões (cards) ===== */
+    .missoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .missao {
+      border: 1px solid var(--borda);
+      border-radius: var(--raio);
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--sombra);
+      display: flex; flex-direction: column;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .missao:hover { transform: translateY(-6px); box-shadow: var(--sombra-forte); }
+    .missao .foto { border: none; border-radius: 0; min-height: 0; }
+    .missao .foto.larga { aspect-ratio: 16/10; }
+    .missao .corpo { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+    .missao .pill {
+      align-self: flex-start;
+      font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
+    }
+    .missao:nth-child(odd) .pill { background: rgba(249,115,22,.12); color: var(--laranja-escuro); }
+    .missao:nth-child(even) .pill { background: rgba(22,163,74,.12); color: var(--verde-escuro); }
+    .missao h3 { font-size: 1.2rem; font-weight: 800; color: var(--escuro); margin-bottom: 8px; }
+    .missao p { color: var(--texto-claro); font-size: .92rem; margin-bottom: 18px; flex: 1; }
+    .missao .link {
+      font-weight: 700; color: var(--laranja-escuro); font-size: .92rem;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    /* ===== Radar (destaque) ===== */
+    .radar {
+      background: linear-gradient(135deg, var(--verde-escuro), var(--verde) 60%, var(--laranja-escuro));
+      color: #fff;
+      border-radius: 28px;
+      padding: 56px 44px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 44px;
+      align-items: center;
+      box-shadow: var(--sombra-forte);
+    }
+    .radar .eyebrow { color: rgba(255,255,255,.85); font-weight:800; letter-spacing:.1em; text-transform:uppercase; font-size:.8rem; }
+    .radar h2 { font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 800; margin: 12px 0 14px; line-height: 1.15; }
+    .radar p { color: rgba(255,255,255,.9); margin-bottom: 26px; }
+    .radar .foto { min-height: 300px; background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.5); color: rgba(255,255,255,.85); }
+    .radar .foto::before { filter: grayscale(0); }
+
+    /* ===== Passos ===== */
+    .passos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; counter-reset: passo; }
+    .passo {
+      text-align: center;
+      padding: 28px 16px;
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: var(--raio);
+      position: relative;
+    }
+    .passo .num {
+      counter-increment: passo;
+      width: 48px; height: 48px; margin: 0 auto 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--laranja), var(--verde));
+      color: #fff; font-weight: 800; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .passo .num::before { content: counter(passo); }
+    .passo h4 { font-size: 1rem; color: var(--escuro); margin-bottom: 6px; }
+    .passo p { font-size: .85rem; color: var(--texto-claro); }
+
+    /* ===== Galeria ===== */
+    .galeria { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .galeria .foto { min-height: 0; aspect-ratio: 1/1; }
+    .galeria .foto:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+
+    /* ===== Cadastro (formulário protótipo) ===== */
+    .cadastro-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .form-card {
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: var(--sombra-forte);
+    }
+    .form-card h3 { font-size: 1.4rem; font-weight: 800; color: var(--escuro); margin-bottom: 6px; }
+    .form-card .hint { color: var(--texto-claro); font-size: .9rem; margin-bottom: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: .85rem; font-weight: 700; color: var(--texto); }
+    .field input, .field select {
+      padding: 13px 14px;
+      border: 1.5px solid var(--borda);
+      border-radius: 12px;
+      font-size: .95rem;
+      font-family: inherit;
+      background: var(--bg-suave);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: var(--verde);
+      box-shadow: 0 0 0 3px rgba(22,163,74,.15);
+      background: #fff;
+    }
+    .check { display: flex; gap: 10px; align-items: flex-start; font-size: .88rem; color: var(--texto-claro); margin-bottom: 18px; }
+    .check input { margin-top: 3px; accent-color: var(--verde); width: 18px; height: 18px; flex: none; }
+    .cadastro-info h2 { font-size: clamp(1.7rem,4.5vw,2.5rem); font-weight:800; color: var(--escuro); margin-bottom: 16px; line-height:1.15; }
+    .cadastro-info p { color: var(--texto-claro); margin-bottom: 22px; }
+
+    /* ===== Fechamento / CTA final ===== */
+    .cta-final {
+      background:
+        radial-gradient(circle at 80% 20%, rgba(249,115,22,.25), transparent 50%),
+        linear-gradient(135deg, var(--escuro), #14342a);
+      color: #fff;
+      text-align: center;
+      border-radius: 28px;
+      padding: 64px 32px;
+    }
+    .cta-final h2 { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; margin-bottom: 18px; line-height:1.12; max-width: 760px; margin-inline: auto; }
+    .cta-final p { color: rgba(255,255,255,.82); font-size: 1.1rem; margin-bottom: 30px; max-width: 600px; margin-inline:auto; }
+    .cta-final .hero-actions { justify-content: center; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: var(--escuro);
+      color: rgba(255,255,255,.7);
+      padding: 48px 0 28px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 36px; margin-bottom: 32px; }
+    footer .logo { color: #fff; margin-bottom: 14px; }
+    footer .logo small { color: rgba(255,255,255,.6); }
+    footer h5 { color: #fff; font-size: .95rem; margin-bottom: 14px; text-transform: uppercase; letter-spacing:.05em; }
+    footer ul { list-style: none; display: grid; gap: 10px; }
+    footer a:hover { color: var(--laranja-claro); }
+    .footer-social { display: flex; gap: 12px; margin-top: 16px; }
+    .footer-social a {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: background .15s;
+    }
+    .footer-social a:hover { background: var(--verde); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding-top: 22px;
+      text-align: center;
+      font-size: .82rem;
+      color: rgba(255,255,255,.55);
+    }
+    .proto-aviso {
+      background: var(--laranja-escuro);
+      color: #fff;
+      text-align: center;
+      font-size: .82rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      letter-spacing: .03em;
+    }
+
+    /* ===== RESPONSIVO ===== */
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero-foto-wrap { order: -1; }
+      .hero-foto-wrap .foto { min-height: 300px; }
+      .split { grid-template-columns: 1fr; gap: 32px; }
+      .radar { grid-template-columns: 1fr; padding: 40px 28px; }
+      .cadastro-grid { grid-template-columns: 1fr; gap: 32px; }
+      .passos { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 760px) {
+      .nav-links {
+        position: fixed;
+        top: 70px; left: 0; right: 0;
+        background: #fff;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 12px 20px 24px;
+        border-bottom: 1px solid var(--borda);
+        box-shadow: var(--sombra);
+        transform: translateY(-130%);
+        transition: transform .28s ease;
+      }
+      .nav-links.aberto { transform: translateY(0); }
+      .nav-links li { border-bottom: 1px solid var(--borda); }
+      .nav-links li:last-child { border: none; padding-top: 12px; }
+      .nav-links a { display: block; padding: 14px 4px; }
+      .nav-cta { text-align: center; }
+      .menu-toggle { display: block; }
+    }
+    @media (max-width: 560px) {
+      section { padding: 52px 0; }
+      .pilares, .missoes { grid-template-columns: 1fr; }
+      .galeria { grid-template-columns: 1fr 1fr; }
+      .galeria .foto:nth-child(1) { grid-column: span 2; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-actions .btn { width: 100%; }
+      .hero-badge { left: 50%; transform: translateX(-50%); bottom: -22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Aviso de protótipo -->
+  <div class="proto-aviso">⚠️ PROTÓTIPO — textos em Lorem Ipsum e imagens são exemplos. Conteúdo final a definir.</div>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="container nav">
+      <a href="#topo" class="logo" aria-label="Time Yasser - aGentes do Amor">
+        <span class="mark">💚</span>
+        <span>Time Yasser
+          <small>aGentes do Amor</small>
+        </span>
+      </a>
+
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#causa">A causa</a></li>
+          <li><a href="#missoes">Missões</a></li>
+          <li><a href="#radar">Radar</a></li>
+          <li><a href="#como">Como funciona</a></li>
+          <li><a href="#cadastro" class="btn btn-verde nav-cta">Quero fazer parte</a></li>
+        </ul>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="topo">
+    <div class="container hero-grid">
+      <div class="hero-texto">
+        <span class="tag">🛡️ Goiás sem Medo</span>
+        <h1>Goiás sem medo <span class="destaque">começa com a gente.</span></h1>
+        <p class="sub">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Entre para o Time Yasser
+          e ajude a construir uma segurança pública com cuidado, prevenção e comunidade.
+        </p>
+        <div class="hero-actions">
+          <a href="#cadastro" class="btn btn-laranja">Quero fazer parte →</a>
+          <a href="#causa" class="btn btn-ghost">Conhecer a causa</a>
+        </div>
+        <div class="hero-mini">
+          <div><b>+5 mil</b> voluntários (exemplo)</div>
+          <div><b>120</b> cidades (exemplo)</div>
+          <div><b>3</b> pilares de ação</div>
+        </div>
+      </div>
+
+      <div class="hero-foto-wrap">
+        <div class="foto larga" style="aspect-ratio:4/5;">FOTO PRINCIPAL<br>(Yasser / mobilização)</div>
+        <div class="hero-badge">
+          <span class="ico">❤️</span>
+          <span>Tropa de Elite do Amor em ação</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PILARES ===== -->
+  <section id="pilares">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Nossos pilares</span>
+        <h2>Cuidado, prevenção e comunidade</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+      </div>
+      <div class="pilares">
+        <div class="pilar">
+          <div class="ico">🤝</div>
+          <h3>Cuidado</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proteção às pessoas, famílias e grupos vulneráveis.</p>
+        </div>
+        <div class="pilar">
+          <div class="ico">💡</div>
+          <h3>Prevenção</h3>
+          <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Inteligência, juventude e presença do Estado.</p>
+        </div>
+        <div class="pilar">
+          <div class="ico">🏘️</div>
+          <h3>Comunidade</h3>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation. Moradores, lideranças e Estado atuando juntos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CAUSA (texto + galeria) ===== -->
+  <section class="bg-suave" id="causa">
+    <div class="container split">
+      <div>
+        <span class="eyebrow" style="color:var(--laranja-escuro);font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;">O que estamos construindo</span>
+        <h2>Uma rede viva por todo o estado</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+        <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+        <ul class="lista-check">
+          <li>Lorem ipsum dolor sit amet consectetur</li>
+          <li>Sed do eiusmod tempor incididunt</li>
+          <li>Ut labore et dolore magna aliqua</li>
+          <li>Quis nostrud exercitation ullamco</li>
+        </ul>
+      </div>
+      <div class="galeria-mini">
+        <div class="foto larga">FOTO — ação na rua</div>
+        <div class="foto quadrada">FOTO</div>
+        <div class="foto quadrada">FOTO</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MISSÕES ===== -->
+  <section id="missoes">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Escolha sua missão</span>
+        <h2>Como você pode ajudar</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Escolha a forma de participação que combina com você.</p>
+      </div>
+      <div class="missoes">
+        <article class="missao">
+          <div class="foto larga">FOTO</div>
+          <div class="corpo">
+            <span class="pill">Digital</span>
+            <h3>Comunicação Digital</h3>
+            <p>Lorem ipsum dolor sit amet. Compartilhe conteúdos, comente posts e ajude a mensagem chegar mais longe.</p>
+            <a href="#cadastro" class="link">Quero esta missão →</a>
+          </div>
+        </article>
+        <article class="missao">
+          <div class="foto larga">FOTO</div>
+          <div class="corpo">
+            <span class="pill">Radar</span>
+            <h3>Radar Goiás sem Medo</h3>
+            <p>Consectetur adipiscing elit. Envie relatos sobre lugares onde as pessoas sentem medo.</p>
+            <a href="#cadastro" class="link">Quero esta missão →</a>
+          </div>
+        </article>
+        <article class="missao">
+          <div class="foto larga">FOTO</div>
+          <div class="corpo">
+            <span class="pill">Território</span>
+            <h3>Liderança Local</h3>
+            <p>Sed do eiusmod tempor. Ajude a organizar apoiadores na sua cidade ou bairro.</p>
+            <a href="#cadastro" class="link">Quero esta missão →</a>
+          </div>
+        </article>
+        <article class="missao">
+          <div class="foto larga">FOTO</div>
+          <div class="corpo">
+            <span class="pill">Encontros</span>
+            <h3>Rodas de Conversa</h3>
+            <p>Ut labore et dolore magna. Reúna pessoas para conversar sobre segurança e comunidade.</p>
+            <a href="#cadastro" class="link">Quero esta missão →</a>
+          </div>
+        </article>
+        <article class="missao">
+          <div class="foto larga">FOTO</div>
+          <div class="corpo">
+            <span class="pill">Conexões</span>
+            <h3>Conexões Estratégicas</h3>
+            <p>Aliqua ut enim ad minim. Indique lideranças, movimentos, coletivos e pessoas importantes.</p>
+            <a href="#cadastro" class="link">Quero esta missão →</a>
+          </div>
+        </article>
+        <article class="missao">
+          <div class="foto larga">FOTO</div>
+          <div class="corpo">
+            <span class="pill">Conteúdo</span>
+            <h3>Produção de Conteúdo</h3>
+            <p>Veniam quis nostrud. Grave vídeos, depoimentos e ajude na comunicação da campanha.</p>
+            <a href="#cadastro" class="link">Quero esta missão →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RADAR ===== -->
+  <section class="bg-suave" id="radar">
+    <div class="container">
+      <div class="radar">
+        <div>
+          <span class="eyebrow">📍 Radar Goiás sem Medo</span>
+          <h2>Tem um lugar que você evita por medo?</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro.</p>
+          <a href="#cadastro" class="btn btn-laranja">Enviar um relato →</a>
+        </div>
+        <div class="foto larga">FOTO / MAPA<br>(ilustração do Radar)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMO FUNCIONA (passos) ===== -->
+  <section id="como">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Depois do cadastro</span>
+        <h2>Como funciona, passo a passo</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Simples e sem complicação.</p>
+      </div>
+      <div class="passos">
+        <div class="passo"><div class="num"></div><h4>Cadastre-se</h4><p>Lorem ipsum dolor sit amet.</p></div>
+        <div class="passo"><div class="num"></div><h4>Identificação</h4><p>Consectetur adipiscing elit.</p></div>
+        <div class="passo"><div class="num"></div><h4>Entre no grupo</h4><p>Sed do eiusmod tempor.</p></div>
+        <div class="passo"><div class="num"></div><h4>Primeira tarefa</h4><p>Ut labore et dolore.</p></div>
+        <div class="passo"><div class="num"></div><h4>Mobilize Goiás</h4><p>Magna aliqua veniam.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALERIA ===== -->
+  <section class="bg-suave">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Galeria</span>
+        <h2>A gente nas ruas</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+      <div class="galeria">
+        <div class="foto">FOTO destaque</div>
+        <div class="foto">FOTO</div>
+        <div class="foto">FOTO</div>
+        <div class="foto">FOTO</div>
+        <div class="foto">FOTO</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CADASTRO ===== -->
+  <section id="cadastro">
+    <div class="container cadastro-grid">
+      <div class="cadastro-info">
+        <span class="eyebrow" style="color:var(--laranja-escuro);font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;">Cadastro de voluntário</span>
+        <h2>Entre para o Time Yasser</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div class="foto larga" style="aspect-ratio:4/3;">FOTO — voluntários reunidos</div>
+      </div>
+
+      <form class="form-card" onsubmit="return false;">
+        <h3>Quero fazer parte 💚</h3>
+        <p class="hint">Lorem ipsum — protótipo, o formulário ainda não envia dados.</p>
+
+        <div class="form-row">
+          <div class="field full">
+            <label for="nome">Nome completo</label>
+            <input id="nome" type="text" placeholder="Seu nome">
+          </div>
+          <div class="field">
+            <label for="zap">WhatsApp</label>
+            <input id="zap" type="tel" placeholder="(62) 90000-0000">
+          </div>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input id="email" type="email" placeholder="voce@email.com">
+          </div>
+          <div class="field">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" type="text" placeholder="Sua cidade">
+          </div>
+          <div class="field">
+            <label for="bairro">Bairro</label>
+            <input id="bairro" type="text" placeholder="Seu bairro">
+          </div>
+          <div class="field full">
+            <label for="missao">Como deseja ajudar?</label>
+            <select id="missao">
+              <option>Comunicação Digital</option>
+              <option>Radar Goiás sem Medo</option>
+              <option>Liderança Local</option>
+              <option>Rodas de Conversa</option>
+              <option>Conexões Estratégicas</option>
+              <option>Produção de Conteúdo</option>
+              <option>Quero ajudar, mas ainda não sei como</option>
+            </select>
+          </div>
+        </div>
+
+        <label class="check">
+          <input type="checkbox"> Autorizo o contato por WhatsApp e aceito receber materiais da campanha. (Lorem ipsum)
+        </label>
+
+        <button type="submit" class="btn btn-verde" style="width:100%;">Enviar cadastro</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section>
+    <div class="container">
+      <div class="cta-final">
+        <h2>Segurança de verdade é fazer o povo voltar vivo para casa.</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+        <div class="hero-actions">
+          <a href="#cadastro" class="btn btn-laranja">Entrar para o Time Yasser →</a>
+          <a href="https://wa.me/" target="_blank" rel="noopener" class="btn btn-outline">💬 Falar no WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo">
+            <span class="mark">💚</span>
+            <span>Time Yasser <small>aGentes do Amor</small></span>
+          </div>
+          <p style="font-size:.9rem;max-width:340px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Goiás sem medo começa com gente organizada.</p>
+          <div class="footer-social">
+            <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+            <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+            <a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener" aria-label="Apoiar">💛</a>
+          </div>
+        </div>
+        <div>
+          <h5>Navegação</h5>
+          <ul>
+            <li><a href="#causa">A causa</a></li>
+            <li><a href="#missoes">Missões</a></li>
+            <li><a href="#radar">Radar</a></li>
+            <li><a href="#como">Como funciona</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Participe</h5>
+          <ul>
+            <li><a href="#cadastro">Quero fazer parte</a></li>
+            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoie a campanha</a></li>
+            <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
+            <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="ano">2026</span> Delegado Yasser Yassine — Time Yasser, aGentes do Amor. Protótipo para validação.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Menu mobile
+    var toggle = document.getElementById('menuToggle');
+    var links = document.getElementById('navLinks');
+    toggle.addEventListener('click', function () {
+      var aberto = links.classList.toggle('aberto');
+      toggle.setAttribute('aria-expanded', aberto);
+      toggle.textContent = aberto ? '✕' : '☰';
+    });
+    // Fecha o menu ao clicar num link (mobile)
+    links.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        links.classList.remove('aberto');
+        toggle.textContent = '☰';
+        toggle.setAttribute('aria-expanded', false);
+      });
+    });
+    // Ano automático
+    document.getElementById('ano').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
