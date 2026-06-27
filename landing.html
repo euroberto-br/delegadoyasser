@@ -3,832 +3,589 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f6faf7">
+  <meta name="theme-color" content="#c4122f">
   <title>Delegado Yasser — Goiás sem Medo | Pré-candidato a Deputado Estadual PT-GO</title>
-  <meta name="description" content="Goiás sem medo começa com a gente. Entre para o time aGentes do Amor e ajude a construir uma segurança pública com cuidado, prevenção e comunidade.">
+  <meta name="description" content="Delegado Yasser Yassine, pré-candidato a deputado estadual pelo PT-GO. Goiás sem medo começa com a gente: segurança pública com cuidado, prevenção e comunidade.">
+
+  <link rel="canonical" href="https://delegadoyasser.com.br/landing.html">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Delegado Yasser — Goiás sem Medo">
-  <meta property="og:description" content="Goiás sem medo começa com a gente. Cuidado, prevenção e comunidade.">
+  <meta property="og:description" content="Segurança pública com cuidado, prevenção e comunidade. Entre para a Tropa de Elite do Amor.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://delegadoyasser.com.br/landing.html">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
 
-  <style>
-    /* ======================================================
-       MOBILE-FIRST · Tema CLEAN (cores suaves)
-       Paleta: laranja + verde dessaturados, fundos claros.
-       ====================================================== */
-    :root {
-      --laranja: #f3a06b;
-      --laranja-md: #ed8d54;      /* botões */
-      --laranja-escuro: #c2611f;  /* texto / links sobre claro */
-      --verde: #6bb88a;
-      --verde-md: #4f9b6c;        /* botões */
-      --verde-escuro: #357a52;    /* texto / acento verde */
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-      --escuro: #25382e;          /* títulos */
-      --texto: #45524b;           /* corpo */
-      --texto-claro: #7e8c84;     /* secundário */
-      --bg: #ffffff;
-      --bg-suave: #f6faf7;        /* seções alternadas */
-      --bg-quente: #fdf6ef;       /* respiro quente */
-      --borda: #ebf0ec;
+  <!-- Aplica o tema de cor salvo antes da pintura (evita flash). Prévia only. -->
+  <script>try{var t=localStorage.getItem('tema-cor');if(t&&t!=='vermelho')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 
-      --tint-laranja: #fdeede;
-      --tint-verde: #e8f4ec;
-      --tint-neutro: #f3f1ea;
-
-      --raio: 18px;
-      --raio-lg: 26px;
-      --sombra: 0 6px 22px rgba(37, 56, 46, 0.05);
-      --sombra-forte: 0 14px 36px rgba(37, 56, 46, 0.09);
-      --container: 1180px;
-      --pad-x: 18px;
-
-      --grad-laranja: linear-gradient(135deg, #f4ab7a, #ed8d54);
-      --grad-verde: linear-gradient(135deg, #79c096, #4f9b6c);
-      --grad-misto: linear-gradient(120deg, #f0a06d, #6bb88a);
-    }
-
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      color: var(--texto); background: var(--bg); line-height: 1.65;
-      overflow-x: hidden; width: 100%;
-    }
-    img { max-width: 100%; height: auto; display: block; }
-    a { color: inherit; text-decoration: none; }
-    h1, h2, h3, h4, p, span, a, li { overflow-wrap: break-word; }
-    h1, h2, h3, h4 { letter-spacing: -0.015em; }
-
-    .container { width: 100%; max-width: var(--container); margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
-
-    /* ===== FOTO (placeholder) ===== */
-    .foto {
-      position: relative; width: 100%;
-      background: var(--bg-suave);
-      border: 1.5px dashed #d4ddd7; border-radius: var(--raio);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; color: #9fb0a6; font-size: .8rem; font-weight: 700;
-      padding: 16px; gap: 6px; aspect-ratio: 4 / 3;
-    }
-    .foto::before { content: "📷"; font-size: 1.7rem; opacity: .7; }
-    .foto.alta { aspect-ratio: 3 / 4; }
-    .foto.larga { aspect-ratio: 16 / 10; }
-    .foto.quadrada { aspect-ratio: 1 / 1; }
-
-    /* ===== BOTÕES ===== */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-      font-weight: 700; font-size: 1rem; line-height: 1.15;
-      padding: 14px 26px; border-radius: 999px; border: 1.5px solid transparent;
-      cursor: pointer; min-height: 52px; text-align: center;
-      transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
-    }
-    .btn-laranja { background: var(--laranja-md); color: #fff; box-shadow: 0 8px 18px rgba(237,141,84,.28); }
-    .btn-verde   { background: var(--verde-md);   color: #fff; box-shadow: 0 8px 18px rgba(79,155,108,.26); }
-    .btn-branco  { background: #fff; color: var(--verde-escuro); }
-    .btn-ghost   { background: #fff; color: var(--verde-escuro); border-color: var(--borda); }
-    .btn-suave   { background: var(--tint-verde); color: var(--verde-escuro); }
-    .btn:hover   { transform: translateY(-2px); box-shadow: var(--sombra-forte); }
-    .btn:active  { transform: translateY(0); }
-
-    .acoes { display: flex; flex-direction: column; gap: 12px; }
-    .acoes .btn { width: 100%; }
-
-    /* ===== TOP BAR ===== */
-    .topbar { background: var(--bg-suave); color: var(--texto-claro); font-size: .76rem; font-weight: 600; border-bottom: 1px solid var(--borda); }
-    .topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 38px; padding-top: 6px; padding-bottom: 6px; }
-    .topbar .proto { display: inline-flex; align-items: center; gap: 7px; }
-    .topbar .proto .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--laranja-md); flex: none; }
-    .topbar .social { display: flex; gap: 8px; }
-    .topbar .social a { width: 28px; height: 28px; border-radius: 8px; flex: none; background: #fff; border: 1px solid var(--borda); display: flex; align-items: center; justify-content: center; font-size: .82rem; transition: border-color .15s; }
-    .topbar .social a:hover { border-color: var(--laranja); }
-
-    /* ===== HEADER ===== */
-    header {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,.92);
-      -webkit-backdrop-filter: saturate(160%) blur(10px); backdrop-filter: saturate(160%) blur(10px);
-      border-bottom: 1px solid var(--borda); transition: box-shadow .2s ease;
-    }
-    header.rolou { box-shadow: var(--sombra); }
-    .nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 66px; }
-    .logo { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 1.02rem; color: var(--escuro); line-height: 1.05; }
-    .logo .mark { width: 42px; height: 42px; flex: none; border-radius: 13px; background: var(--tint-laranja); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-    .logo small { display: block; font-size: .64rem; font-weight: 700; color: var(--laranja-escuro); margin-top: 2px; }
-
-    .menu-toggle { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: none; border: none; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--escuro); }
-    .nav-links {
-      position: fixed; top: 66px; left: 0; right: 0; background: #fff; list-style: none;
-      display: flex; flex-direction: column; padding: 8px var(--pad-x) 22px;
-      border-bottom: 1px solid var(--borda); box-shadow: var(--sombra);
-      transform: translateY(-160%); transition: transform .28s ease;
-      max-height: calc(100vh - 66px); overflow-y: auto;
-    }
-    .nav-links.aberto { transform: translateY(0); }
-    .nav-links li { border-bottom: 1px solid var(--borda); }
-    .nav-links li:last-child { border: none; padding-top: 12px; }
-    .nav-links a { display: block; padding: 14px 4px; font-weight: 600; color: var(--texto); }
-    .nav-links .nav-cta { text-align: center; }
-
-    /* ===== SEÇÕES ===== */
-    section { padding: 54px 0; }
-    .bg-suave { background: var(--bg-suave); }
-    .section-head { text-align: center; max-width: 720px; margin: 0 auto 36px; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--laranja-escuro); margin-bottom: 12px; }
-    .eyebrow::before { content: ""; width: 20px; height: 2px; border-radius: 2px; background: var(--laranja); }
-    .section-head .eyebrow { justify-content: center; }
-    .section-head h2 { font-size: clamp(1.6rem, 6vw, 2.5rem); font-weight: 800; color: var(--escuro); line-height: 1.15; margin-bottom: 12px; }
-    .section-head p { color: var(--texto-claro); font-size: 1.02rem; }
-
-    /* ===== HERO (claro) ===== */
-    .hero { background: linear-gradient(170deg, var(--bg-quente), var(--bg-suave)); padding: 44px 0 52px; }
-    .hero-grid { display: grid; gap: 30px; }
-    .hero .selo { display: inline-flex; align-items: center; gap: 9px; background: #fff; border: 1px solid var(--borda); color: var(--verde-escuro); font-weight: 700; font-size: .74rem; letter-spacing: .04em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; margin-bottom: 18px; box-shadow: var(--sombra); }
-    .hero .selo .pt { background: var(--laranja-md); color: #fff; padding: 2px 8px; border-radius: 6px; font-size: .7rem; }
-    .hero h1 { font-size: clamp(2rem, 9vw, 3.7rem); line-height: 1.07; font-weight: 800; color: var(--escuro); margin-bottom: 16px; }
-    .hero h1 .destaque { background: var(--grad-misto); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero .sub { font-size: clamp(1rem, 4vw, 1.18rem); color: var(--texto-claro); margin-bottom: 26px; max-width: 560px; }
-    .hero .sub strong { color: var(--verde-escuro); }
-    .hero .acoes { margin-bottom: 28px; }
-    .hero-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .hero-mini > div { background: #fff; border: 1px solid var(--borda); border-radius: 14px; padding: 14px 8px; text-align: center; box-shadow: var(--sombra); }
-    .hero-mini b { display: block; font-size: 1.4rem; font-weight: 800; line-height: 1.1; color: var(--verde-escuro); }
-    .hero-mini span { font-size: .74rem; color: var(--texto-claro); }
-    .hero-foto .foto { aspect-ratio: 4 / 4.4; }
-
-    /* ===== FAIXA SLOGAN (suave) ===== */
-    .faixa-slogan { background: var(--bg-quente); border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); padding: clamp(28px, 5vw, 44px) 0; }
-    .faixa-slogan .container { display: flex; align-items: flex-start; justify-content: center; gap: 14px; }
-    .faixa-slogan .aspas { font-size: clamp(2.4rem, 8vw, 3.6rem); line-height: 1; color: var(--laranja); opacity: .55; }
-    .faixa-slogan p { font-size: clamp(1.15rem, 4.5vw, 1.9rem); font-weight: 800; line-height: 1.25; color: var(--escuro); max-width: 880px; }
-
-    /* ===== PILARES ===== */
-    .pilares { display: grid; gap: 18px; }
-    .pilar { position: relative; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio-lg); padding: 30px 26px; box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease; }
-    .pilar:hover { transform: translateY(-5px); box-shadow: var(--sombra-forte); }
-    .pilar .ico { width: 62px; height: 62px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; margin-bottom: 16px; }
-    .pilar:nth-child(1) .ico { background: var(--tint-laranja); }
-    .pilar:nth-child(2) .ico { background: var(--tint-verde); }
-    .pilar:nth-child(3) .ico { background: var(--tint-neutro); }
-    .pilar h3 { font-size: 1.28rem; font-weight: 800; color: var(--escuro); margin-bottom: 9px; }
-    .pilar p { color: var(--texto-claro); font-size: .96rem; }
-
-    /* ===== STATS ===== */
-    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .stat { text-align: center; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio); padding: 24px 12px; box-shadow: var(--sombra); }
-    .stat b { display: block; font-size: clamp(1.8rem, 7vw, 2.5rem); font-weight: 800; line-height: 1; color: var(--verde-escuro); }
-    .stat span { display: block; margin-top: 6px; font-size: .85rem; font-weight: 600; color: var(--texto-claro); }
-    .stats-nota { text-align: center; font-size: .76rem; color: var(--texto-claro); margin-top: 16px; opacity: .8; }
-
-    /* ===== SPLIT (causa) ===== */
-    .split { display: grid; gap: 28px; align-items: center; }
-    .split h2 { font-size: clamp(1.55rem, 6vw, 2.4rem); font-weight: 800; color: var(--escuro); line-height: 1.16; margin: 8px 0 14px; }
-    .split p { color: var(--texto-claro); margin-bottom: 14px; }
-    .lista-titulo { font-weight: 800; color: var(--escuro); margin-top: 18px; }
-    .lista-check { list-style: none; margin-top: 14px; display: grid; gap: 11px; }
-    .lista-check li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; color: var(--texto); font-size: .96rem; }
-    .lista-check li::before { content: "✓"; flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--tint-verde); color: var(--verde-escuro); display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 800; }
-    .galeria-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .galeria-mini .foto:first-child { grid-column: 1 / -1; }
-
-    /* ===== FRASES-CHAVE (claro) ===== */
-    .frases .frases-grid { display: grid; gap: 16px; }
-    .frase { background: #fff; border: 1px solid var(--borda); border-left: 4px solid var(--laranja); border-radius: 16px; padding: 24px 22px; font-size: 1.05rem; font-weight: 700; line-height: 1.4; color: var(--escuro); box-shadow: var(--sombra); }
-    .frase:nth-child(even) { border-left-color: var(--verde); }
-    .frase .quem { display: block; margin-top: 12px; font-size: .8rem; font-weight: 700; color: var(--texto-claro); }
-
-    /* ===== MISSÕES ===== */
-    .missoes { display: grid; gap: 18px; }
-    .missao { border: 1px solid var(--borda); border-radius: var(--raio-lg); overflow: hidden; background: #fff; box-shadow: var(--sombra); display: flex; flex-direction: column; transition: transform .2s ease, box-shadow .2s ease; }
-    .missao:hover { transform: translateY(-5px); box-shadow: var(--sombra-forte); }
-    .missao .foto { border: none; border-radius: 0; aspect-ratio: 16 / 9; }
-    .missao .corpo { padding: 22px; display: flex; flex-direction: column; flex: 1; }
-    .missao .pill { align-self: flex-start; font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; margin-bottom: 12px; }
-    .missao:nth-child(3n+1) .pill { background: var(--tint-laranja); color: var(--laranja-escuro); }
-    .missao:nth-child(3n+2) .pill { background: var(--tint-verde); color: var(--verde-escuro); }
-    .missao:nth-child(3n+3) .pill { background: var(--tint-neutro); color: var(--escuro); }
-    .missao h3 { font-size: 1.16rem; font-weight: 800; color: var(--escuro); margin-bottom: 8px; }
-    .missao p { color: var(--texto-claro); font-size: .92rem; margin-bottom: 16px; flex: 1; }
-    .missao .link { font-weight: 700; color: var(--laranja-escuro); font-size: .92rem; }
-
-    /* ===== RADAR (acento suave) ===== */
-    .radar { background: var(--grad-verde); color: #fff; border-radius: var(--raio-lg); padding: 34px 24px; display: grid; gap: 24px; box-shadow: var(--sombra); position: relative; overflow: hidden; }
-    .radar::after { content: "📍"; position: absolute; right: -8px; top: -14px; font-size: 7rem; opacity: .14; }
-    .radar .eyebrow { color: #fff; }
-    .radar .eyebrow::before { background: rgba(255,255,255,.7); }
-    .radar h2 { font-size: clamp(1.5rem, 6vw, 2.3rem); font-weight: 800; margin-bottom: 12px; line-height: 1.18; }
-    .radar p { color: rgba(255,255,255,.94); margin-bottom: 22px; }
-    .radar .foto { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.55); color: #fff; }
-
-    /* ===== PASSOS ===== */
-    .passos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; counter-reset: passo; }
-    .passo { text-align: center; padding: 24px 12px; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio); }
-    .passo .num { counter-increment: passo; width: 48px; height: 48px; margin: 0 auto 13px; border-radius: 50%; background: var(--tint-verde); color: var(--verde-escuro); font-weight: 800; font-size: 1.15rem; display: flex; align-items: center; justify-content: center; }
-    .passo .num::before { content: counter(passo); }
-    .passo h4 { font-size: 1rem; color: var(--escuro); margin-bottom: 5px; }
-    .passo p { font-size: .84rem; color: var(--texto-claro); }
-
-    /* ===== MATERIAIS ===== */
-    .materiais { display: grid; gap: 16px; }
-    .material { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio-lg); padding: 26px 22px; box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease; }
-    .material:hover { transform: translateY(-4px); box-shadow: var(--sombra-forte); }
-    .material .ico { width: 54px; height: 54px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
-    .material:nth-child(3n+1) .ico { background: var(--tint-laranja); }
-    .material:nth-child(3n+2) .ico { background: var(--tint-verde); }
-    .material:nth-child(3n+3) .ico { background: var(--tint-neutro); }
-    .material .tag-formato { align-self: flex-start; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--texto-claro); background: var(--bg-suave); border: 1px solid var(--borda); padding: 4px 10px; border-radius: 999px; margin-bottom: 12px; }
-    .material h3 { font-size: 1.12rem; font-weight: 800; color: var(--escuro); margin-bottom: 7px; }
-    .material p { color: var(--texto-claro); font-size: .9rem; margin-bottom: 16px; flex: 1; }
-    .material .link { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--laranja-escuro); font-size: .92rem; }
-    .materiais-cta, .agenda-cta { text-align: center; margin-top: 30px; }
-
-    /* ===== AGENDA ===== */
-    .agenda { display: grid; gap: 14px; max-width: 800px; margin: 0 auto; }
-    .evento { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; background: #fff; border: 1px solid var(--borda); border-radius: var(--raio); padding: 18px 20px; box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease; }
-    .evento:hover { transform: translateY(-3px); box-shadow: var(--sombra-forte); }
-    .evento .data { flex: none; width: 64px; text-align: center; border-radius: 14px; padding: 10px 6px; }
-    .evento:nth-child(odd) .data { background: var(--tint-laranja); color: var(--laranja-escuro); }
-    .evento:nth-child(even) .data { background: var(--tint-verde); color: var(--verde-escuro); }
-    .evento .data .dia { font-size: 1.5rem; font-weight: 800; line-height: 1; display: block; }
-    .evento .data .mes { font-size: .66rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
-    .evento .info { flex: 1; min-width: 160px; }
-    .evento .info h3 { font-size: 1.06rem; font-weight: 800; color: var(--escuro); margin-bottom: 3px; }
-    .evento .info p { font-size: .87rem; color: var(--texto-claro); }
-    .evento .tag-tipo { flex: none; margin-left: auto; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; }
-    .evento:nth-child(odd) .tag-tipo { background: var(--tint-laranja); color: var(--laranja-escuro); }
-    .evento:nth-child(even) .tag-tipo { background: var(--tint-verde); color: var(--verde-escuro); }
-
-    /* ===== GALERIA ===== */
-    .galeria { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .galeria .foto { aspect-ratio: 1 / 1; }
-    .galeria .foto:nth-child(1) { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
-
-    /* ===== CADASTRO ===== */
-    .cadastro-grid { display: grid; gap: 28px; align-items: start; }
-    .cadastro-info h2 { font-size: clamp(1.55rem, 6vw, 2.4rem); font-weight: 800; color: var(--escuro); margin: 8px 0 14px; line-height: 1.16; }
-    .cadastro-info p { color: var(--texto-claro); margin-bottom: 18px; }
-    .form-card { background: #fff; border: 1px solid var(--borda); border-radius: var(--raio-lg); padding: 26px; box-shadow: var(--sombra-forte); }
-    .form-card h3 { font-size: 1.32rem; font-weight: 800; color: var(--escuro); margin-bottom: 6px; }
-    .form-card .hint { color: var(--texto-claro); font-size: .88rem; margin-bottom: 20px; }
-    .form-grid { display: grid; gap: 14px; }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field label { font-size: .84rem; font-weight: 700; color: var(--texto); }
-    .field input, .field select { width: 100%; padding: 13px 14px; border: 1.5px solid var(--borda); border-radius: 12px; font-size: 1rem; font-family: inherit; background: var(--bg-suave); transition: border-color .15s, box-shadow .15s; }
-    .field input:focus, .field select:focus { outline: none; border-color: var(--verde); background: #fff; box-shadow: 0 0 0 3px rgba(107,184,138,.18); }
-    .check { display: flex; gap: 10px; align-items: flex-start; font-size: .86rem; color: var(--texto-claro); margin: 18px 0; }
-    .check input { margin-top: 2px; accent-color: var(--verde-md); width: 20px; height: 20px; flex: none; }
-    .form-card .btn { width: 100%; }
-
-    /* ===== CTA FINAL (claro) ===== */
-    .cta-final { text-align: center; border-radius: var(--raio-lg); padding: 50px 24px; background: linear-gradient(150deg, var(--bg-quente), var(--bg-suave)); border: 1px solid var(--borda); }
-    .cta-final .eyebrow { color: var(--laranja-escuro); justify-content: center; }
-    .cta-final h2 { font-size: clamp(1.55rem, 6.2vw, 2.7rem); font-weight: 800; color: var(--escuro); margin-bottom: 14px; line-height: 1.16; max-width: 820px; margin-inline: auto; }
-    .cta-final p { color: var(--texto-claro); font-size: 1.05rem; margin-bottom: 26px; }
-
-    /* ===== FOOTER (claro) ===== */
-    footer { background: var(--bg-suave); color: var(--texto-claro); padding: 44px 0 26px; border-top: 1px solid var(--borda); }
-    .footer-grid { display: grid; gap: 28px; margin-bottom: 28px; }
-    footer .logo { color: var(--escuro); margin-bottom: 12px; }
-    footer .logo small { color: var(--laranja-escuro); }
-    footer .sobre { font-size: .92rem; line-height: 1.65; }
-    footer h5 { color: var(--escuro); font-size: .92rem; margin-bottom: 14px; text-transform: uppercase; letter-spacing: .04em; }
-    footer ul { list-style: none; display: grid; gap: 10px; font-size: .92rem; }
-    footer a:hover { color: var(--laranja-escuro); }
-    .footer-social { display: flex; gap: 10px; margin-top: 16px; }
-    .footer-social a { width: 44px; height: 44px; border-radius: 12px; flex: none; background: #fff; border: 1px solid var(--borda); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: border-color .15s; }
-    .footer-social a:hover { border-color: var(--laranja); }
-    .footer-bottom { border-top: 1px solid var(--borda); padding-top: 22px; text-align: center; font-size: .8rem; color: var(--texto-claro); line-height: 1.65; }
-
-    /* ======================================================
-       TABLET (>= 640px)
-       ====================================================== */
-    @media (min-width: 640px) {
-      :root { --pad-x: 26px; }
-      section { padding: 72px 0; }
-      .acoes { flex-direction: row; flex-wrap: wrap; }
-      .acoes .btn { width: auto; }
-      .pilares   { grid-template-columns: repeat(3, 1fr); }
-      .missoes   { grid-template-columns: repeat(2, 1fr); }
-      .materiais { grid-template-columns: repeat(2, 1fr); }
-      .frases .frases-grid { grid-template-columns: repeat(2, 1fr); }
-      .stats     { grid-template-columns: repeat(4, 1fr); }
-      .passos    { grid-template-columns: repeat(3, 1fr); }
-      .galeria   { grid-template-columns: repeat(3, 1fr); }
-      .galeria .foto:nth-child(1) { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
-      .form-grid { grid-template-columns: 1fr 1fr; }
-      .field.full { grid-column: 1 / -1; }
-      .hero-mini { max-width: 480px; }
-    }
-
-    /* ======================================================
-       DESKTOP (>= 980px)
-       ====================================================== */
-    @media (min-width: 980px) {
-      section { padding: 92px 0; }
-      .menu-toggle { display: none; }
-      .nav-links { position: static; flex-direction: row; align-items: center; gap: 24px; padding: 0; transform: none; box-shadow: none; border: none; max-height: none; overflow: visible; background: transparent; }
-      .nav-links li { border: none; padding: 0; }
-      .nav-links li:last-child { padding: 0; }
-      .nav-links a { padding: 0; font-size: .94rem; }
-      .nav-links a:hover { color: var(--laranja-escuro); }
-      .nav-cta { padding: 11px 22px !important; min-height: 44px; }
-      .section-head { margin-bottom: 52px; }
-
-      .hero { padding: 76px 0 84px; }
-      .hero-grid { grid-template-columns: 1.05fr .95fr; gap: 52px; align-items: center; }
-      .hero-foto { order: 2; }
-      .hero-mini { max-width: none; }
-
-      .split { grid-template-columns: 1fr 1fr; gap: 56px; }
-      .missoes { grid-template-columns: repeat(3, 1fr); }
-      .materiais { grid-template-columns: repeat(3, 1fr); }
-      .frases .frases-grid { grid-template-columns: repeat(3, 1fr); }
-      .radar { grid-template-columns: 1.1fr .9fr; padding: 56px 48px; align-items: center; }
-      .passos { grid-template-columns: repeat(5, 1fr); }
-      .galeria { grid-template-columns: repeat(4, 1fr); }
-      .cadastro-grid { grid-template-columns: .9fr 1.1fr; gap: 52px; }
-      .footer-grid { grid-template-columns: 2.2fr 1fr 1fr; gap: 40px; }
-      .cta-final { padding: 72px 32px; }
-      .cta-final p { max-width: 640px; margin-inline: auto; }
-      .acoes.centro { justify-content: center; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; scroll-behavior: auto; }
-    }
-  </style>
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+  <!-- ===== SELETOR DE COR (apenas pré-visualização) ===== -->
+  <div class="tema-switch" role="group" aria-label="Pré-visualização: cor do site">
+    <span class="tema-switch__label">Prévia · cor do site</span>
+    <div class="tema-switch__opcoes">
+      <button type="button" class="tema-dot" data-tema="vermelho" style="--c:#c4122f" aria-label="Vermelho" aria-pressed="true"></button>
+      <button type="button" class="tema-dot" data-tema="roxo" style="--c:#7c3aed" aria-label="Roxo" aria-pressed="false"></button>
+      <button type="button" class="tema-dot" data-tema="azul" style="--c:#1d63d8" aria-label="Azul" aria-pressed="false"></button>
+      <button type="button" class="tema-dot" data-tema="verde" style="--c:#1f9d57" aria-label="Verde" aria-pressed="false"></button>
+      <button type="button" class="tema-dot" data-tema="laranja" style="--c:#e2640f" aria-label="Laranja" aria-pressed="false"></button>
+    </div>
+  </div>
 
   <!-- ===== TOP BAR ===== -->
   <div class="topbar">
     <div class="container">
-      <span class="proto"><span class="dot"></span> Protótipo — conteúdo em validação</span>
-      <span class="social">
-        <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
-        <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
-        <a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener" aria-label="Apoiar">💛</a>
+      <span class="topbar__tag"><span class="topbar__dot"></span> Goiás sem medo começa com a gente</span>
+      <span class="topbar__social">
+        <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+        <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></a>
       </span>
     </div>
   </div>
 
   <!-- ===== HEADER ===== -->
-  <header id="cabecalho">
+  <header class="cabecalho" id="cabecalho">
     <div class="container nav">
-      <a href="#topo" class="logo" aria-label="Delegado Yasser Yassine">
-        <span class="mark">🛡️</span>
-        <span>Delegado Yasser <small>Pré-candidato · Dep. Estadual · PT-GO</small></span>
+      <a href="#topo" class="logo" aria-label="Delegado Yasser Yassine — início">
+        <span class="logo__mark" aria-hidden="true">♥</span>
+        <span class="logo__nome">Delegado Yasser <small>Pré-candidato · Dep. Estadual · PT-GO</small></span>
       </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#causa">A causa</a></li>
-        <li><a href="#missoes">Missões</a></li>
-        <li><a href="#radar">Radar</a></li>
-        <li><a href="#materiais">Materiais</a></li>
-        <li><a href="#agenda">Agenda</a></li>
-        <li><a href="#cadastro" class="btn btn-verde nav-cta">Quero fazer parte</a></li>
-      </ul>
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+      <nav aria-label="Navegação principal">
+        <ul class="nav__links" id="navLinks">
+          <li><a href="#quem">Quem é</a></li>
+          <li><a href="#bandeiras">Bandeiras</a></li>
+          <li><a href="#missoes">Missões</a></li>
+          <li><a href="#radar">Radar</a></li>
+          <li><a href="#agenda">Agenda</a></li>
+          <li><a href="#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
+        </ul>
+      </nav>
+      <button class="nav__toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">☰</button>
     </div>
   </header>
 
-  <!-- ===== HERO ===== -->
-  <section class="hero" id="topo">
-    <div class="container hero-grid">
-      <div class="hero-texto">
-        <span class="selo"><span class="pt">PT-GO</span> Pré-candidato a Deputado Estadual</span>
-        <h1>Goiás sem medo <span class="destaque">começa com a gente.</span></h1>
-        <p class="sub">
-          Entre para o time <strong>aGentes do Amor</strong> e ajude a construir uma segurança pública
-          com cuidado, prevenção e comunidade — para fazer o povo voltar vivo para casa.
-        </p>
-        <div class="acoes">
-          <a href="#cadastro" class="btn btn-laranja">Quero fazer parte →</a>
-          <a href="#causa" class="btn btn-ghost">Conhecer a causa</a>
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="topo">
+      <div class="container hero__grid">
+        <div class="hero__texto">
+          <span class="hero__selo"><span class="pt">PT-GO</span> Pré-candidato a Deputado Estadual</span>
+          <h1>Goiás sem medo <span class="destaque">começa com a gente.</span></h1>
+          <p class="hero__sub">
+            Sou delegado de carreira da Polícia Civil de Goiás, filho de uma professora da rede
+            pública e de um imigrante palestino que recomeçou a vida do zero. São <strong>12 anos
+            enfrentando o crime</strong> — e a certeza de que segurança de verdade se faz com
+            <strong>cuidado, prevenção e comunidade</strong>, para que cada goiano volte vivo para casa.
+          </p>
+          <p class="hero__sub hero__sub--cta">
+            Entre para a <strong>Tropa de Elite do Amor</strong> e venha construir esse Goiás com a gente.
+          </p>
+          <div class="acoes">
+            <a href="#cadastro" class="btn btn--primario">Quero fazer parte →</a>
+            <a href="#quem" class="btn btn--ghost">Conhecer o Yasser</a>
+          </div>
+          <div class="hero__mini">
+            <div><b>181 mil</b><span>no Instagram</span></div>
+            <div><b>12 anos</b><span>de delegado</span></div>
+            <div><b>Goiás</b><span>estado inteiro</span></div>
+          </div>
         </div>
-        <div class="hero-mini">
-          <div><b>+5 mil</b><span>aGentes</span></div>
-          <div><b>120</b><span>cidades</span></div>
-          <div><b>3</b><span>pilares</span></div>
-        </div>
-      </div>
-      <div class="hero-foto">
-        <div class="foto">FOTO PRINCIPAL<br>(Delegado Yasser)</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FAIXA SLOGAN ===== -->
-  <div class="faixa-slogan">
-    <div class="container">
-      <span class="aspas">“</span>
-      <p>Segurança não é espetáculo. É cuidado, prevenção e comunidade.</p>
-    </div>
-  </div>
-
-  <!-- ===== PILARES ===== -->
-  <section id="pilares">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Nossos pilares</span>
-        <h2>Cuidado, prevenção e comunidade</h2>
-        <p>Três pilares que sustentam uma política de segurança pública de verdade em Goiás.</p>
-      </div>
-      <div class="pilares">
-        <div class="pilar">
-          <div class="ico">🤝</div>
-          <h3>Cuidado</h3>
-          <p>Proteção às pessoas, às famílias, às vítimas e aos grupos vulneráveis.</p>
-        </div>
-        <div class="pilar">
-          <div class="ico">💡</div>
-          <h3>Prevenção</h3>
-          <p>Inteligência, iluminação, juventude, escola, cultura, tecnologia e presença do Estado.</p>
-        </div>
-        <div class="pilar">
-          <div class="ico">🏘️</div>
-          <h3>Comunidade</h3>
-          <p>Moradores, lideranças, comerciantes, servidores, escolas, coletivos e Estado atuando juntos.</p>
+        <div class="hero__foto">
+          <picture>
+            <source srcset="images/hero.webp" type="image/webp">
+            <img class="hero__img" src="images/hero.jpg"
+                 alt="Tropa de Elite do Amor — campanha do Delegado Yasser Yassine"
+                 width="1600" height="791" decoding="async" fetchpriority="high">
+          </picture>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== STATS ===== -->
-  <section class="bg-suave">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Juntos somos mais fortes</span>
-        <h2>Uma rede que cresce a cada dia</h2>
-      </div>
-      <div class="stats">
-        <div class="stat"><b>+5 mil</b><span>aGentes do Amor</span></div>
-        <div class="stat"><b>120</b><span>cidades alcançadas</span></div>
-        <div class="stat"><b>3 mil</b><span>relatos no Radar</span></div>
-        <div class="stat"><b>200+</b><span>rodas de conversa</span></div>
-      </div>
-      <p class="stats-nota">* Números ilustrativos — serão atualizados com os dados reais da campanha.</p>
-    </div>
-  </section>
-
-  <!-- ===== CAUSA ===== -->
-  <section id="causa">
-    <div class="container split">
-      <div>
-        <span class="eyebrow">O que estamos construindo</span>
-        <h2>Uma rede viva por todo o estado</h2>
-        <p>Nossa missão em Goiás é transformar mobilização em presença real nas cidades: ouvir a população, mapear os espaços do medo e construir uma segurança pública que faça o povo voltar vivo para casa.</p>
-        <p>Quando o Estado abandona, o crime ocupa. Por isso queremos polícia valorizada, investigação funcionando e comunidade protegida.</p>
-        <p class="lista-titulo">Como você pode ajudar:</p>
-        <ul class="lista-check">
-          <li>Divulgar conteúdos</li>
-          <li>Entrar no grupo da sua cidade</li>
-          <li>Enviar relatos sobre segurança</li>
-          <li>Indicar lideranças</li>
-          <li>Organizar rodas de conversa</li>
-          <li>Produzir vídeos e depoimentos</li>
-          <li>Participar de ações presenciais</li>
-        </ul>
-      </div>
-      <div class="galeria-mini">
-        <div class="foto larga">FOTO — ação na rua</div>
-        <div class="foto quadrada">FOTO</div>
-        <div class="foto quadrada">FOTO</div>
+    <!-- ===== FAIXA SLOGAN ===== -->
+    <div class="faixa-slogan">
+      <div class="container">
+        <span class="aspas" aria-hidden="true">“</span>
+        <p>Segurança não é espetáculo. É cuidado, prevenção e comunidade.</p>
       </div>
     </div>
-  </section>
 
-  <!-- ===== FRASES-CHAVE ===== -->
-  <section class="frases bg-suave">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">No que a gente acredita</span>
-        <h2>Frases que movem Goiás</h2>
-        <p>O que orienta cada passo dessa caminhada.</p>
+    <!-- ===== QUEM É ===== -->
+    <section id="quem">
+      <div class="container bio">
+        <div class="bio__foto">
+          <!-- Substitua por: <img src="images/yasser-retrato.jpg" alt="Retrato do Delegado Yasser"> -->
+          <figure class="foto foto--alta">FOTO — retrato</figure>
+        </div>
+        <div>
+          <span class="eyebrow">Quem é o Delegado Yasser</span>
+          <h2>Do Entorno para todo o Goiás</h2>
+          <p>Yasser Martins Yassine é delegado da Polícia Civil de Goiás. Filho de uma professora cearense da rede pública e de um pai palestino que chegou ao Brasil aos 18 anos como vendedor ambulante, carrega na história a origem humilde e a certeza de que as políticas sociais transformam vidas.</p>
+          <p>Foi advogado, professor e servidor da Justiça antes de virar delegado. Hoje, com mais de 350 mil pessoas acompanhando seu trabalho nas redes, leva para a política a mesma bandeira do dia a dia na delegacia: segurança com cuidado, prevenção e comunidade.</p>
+          <ol class="timeline">
+            <li class="timeline__item">
+              <span class="timeline__ano">Raízes</span>
+              <p>Filho de mãe cearense, professora de artes da rede pública, e de pai palestino que chegou ao Brasil aos 18 anos como vendedor ambulante.</p>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__ano">Antes da polícia</span>
+              <p>Advogado criminalista, professor universitário e servidor do Tribunal de Justiça do DF e dos Territórios (TJDFT).</p>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__ano">Delegado</span>
+              <p>12 anos na Polícia Civil de Goiás, com atuação no Entorno do DF. Chefiou a Delegacia da Mulher (DEAM) em Formosa.</p>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__ano">Formação</span>
+              <p>Pós-graduado pela FESMPDFT, MBA em Gestão de Segurança Pública (UnB) e mestrado em Segurança Pública (UFG).</p>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__ano">2026</span>
+              <p>Pré-candidato a deputado estadual pelo PT-GO, com foco em todo o estado de Goiás.</p>
+            </li>
+          </ol>
+        </div>
       </div>
-      <div class="frases-grid">
-        <div class="frase">“Segurança pública de verdade é fazer o povo voltar vivo para casa.”<span class="quem">— Delegado Yasser</span></div>
-        <div class="frase">“Quando o Estado abandona, o crime ocupa.”<span class="quem">— Delegado Yasser</span></div>
-        <div class="frase">“Segurança não é espetáculo. É cuidado, prevenção e comunidade.”<span class="quem">— Delegado Yasser</span></div>
-        <div class="frase">“O crime organizado não emancipa ninguém.”<span class="quem">— Delegado Yasser</span></div>
-        <div class="frase">“Polícia valorizada, investigação funcionando e comunidade protegida.”<span class="quem">— Delegado Yasser</span></div>
-        <div class="frase">“Goiás sem medo começa com gente organizada.”<span class="quem">— Delegado Yasser</span></div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== MISSÕES ===== -->
-  <section id="missoes">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Escolha sua missão</span>
-        <h2>Como você pode ajudar</h2>
-        <p>Escolha a forma de participação que combina com você. Toda ajuda conta.</p>
+    <!-- ===== PILARES ===== -->
+    <section id="pilares">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Nossos pilares</span>
+          <h2>Cuidado, prevenção e comunidade</h2>
+          <p>Três pilares que sustentam uma política de segurança pública de verdade em Goiás.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <h3>Cuidado</h3>
+            <p>Proteção às pessoas, às famílias, às vítimas e aos grupos vulneráveis.</p>
+          </article>
+          <article class="card">
+            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"/></svg></div>
+            <h3>Prevenção</h3>
+            <p>Inteligência, iluminação, juventude, escola, cultura, tecnologia e presença do Estado.</p>
+          </article>
+          <article class="card">
+            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <h3>Comunidade</h3>
+            <p>Moradores, lideranças, comerciantes, servidores, escolas, coletivos e Estado atuando juntos.</p>
+          </article>
+        </div>
       </div>
-      <div class="missoes">
-        <article class="missao">
-          <div class="foto">FOTO</div>
-          <div class="corpo">
-            <span class="pill">Digital</span>
+    </section>
+
+    <!-- ===== BANDEIRAS ===== -->
+    <section id="bandeiras">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Bandeiras na Assembleia</span>
+          <h2>As prioridades do mandato</h2>
+          <p>Educação e segurança pública no centro — com olhar de quem vive a realidade das ruas e das delegacias de Goiás.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3>Segurança pública de verdade</h3>
+            <p>Combate ao crime organizado com inteligência, investigação que funciona e polícias valorizadas — para o povo voltar vivo para casa.</p>
+          </article>
+          <article class="card">
+            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+            <h3>Educação que transforma</h3>
+            <p>Filho de escola pública e de professora: defender a educação é abrir a porta de saída da desigualdade.</p>
+          </article>
+          <article class="card">
+            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
+            <h3>Menos desigualdade</h3>
+            <p>Políticas sociais que mudam vidas — como mudaram a minha. Dignidade para quem mais precisa em Goiás.</p>
+          </article>
+          <article class="card">
+            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 17s-2.8-1.9-2.8-3.7a1.7 1.7 0 0 1 2.8-1.3 1.7 1.7 0 0 1 2.8 1.3C14.8 15.1 12 17 12 17Z"/></svg></div>
+            <h3>Proteção à mulher</h3>
+            <p>Experiência à frente da Delegacia da Mulher em Formosa: acolhimento de quem sofre e responsabilização de quem agride.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="bg-suave">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Juntos somos mais fortes</span>
+          <h2>Uma rede que cresce a cada dia</h2>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>181 mil</b><span>seguidores no Instagram</span></div>
+          <div class="stat"><b>+350 mil</b><span>pessoas nas redes</span></div>
+          <div class="stat"><b>12 anos</b><span>na Polícia Civil de Goiás</span></div>
+          <div class="stat"><b>246</b><span>municípios de Goiás</span></div>
+        </div>
+        <p class="stats-nota">Dados de alcance nas redes do Delegado Yasser e abrangência da pré-candidatura em Goiás.</p>
+      </div>
+    </section>
+
+    <!-- ===== CAUSA ===== -->
+    <section id="causa">
+      <div class="container split">
+        <div>
+          <span class="eyebrow">O que estamos construindo</span>
+          <h2>Uma rede viva por todo o estado</h2>
+          <p>Nossa missão em Goiás é transformar mobilização em presença real nas cidades: ouvir a população, mapear os espaços do medo e construir uma segurança pública que faça o povo voltar vivo para casa.</p>
+          <p>Quando o Estado abandona, o crime ocupa. Por isso queremos polícia valorizada, investigação funcionando e comunidade protegida.</p>
+          <p class="lista-titulo">Como você pode ajudar:</p>
+          <ul class="lista-check">
+            <li>Divulgar conteúdos</li>
+            <li>Entrar no grupo da sua cidade</li>
+            <li>Enviar relatos sobre segurança</li>
+            <li>Indicar lideranças</li>
+            <li>Organizar rodas de conversa</li>
+            <li>Produzir vídeos e depoimentos</li>
+            <li>Participar de ações presenciais</li>
+          </ul>
+        </div>
+        <div class="galeria-mini">
+          <figure class="foto foto--larga">FOTO — ação na rua</figure>
+          <figure class="foto foto--quadrada">FOTO</figure>
+          <figure class="foto foto--quadrada">FOTO</figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FRASES ===== -->
+    <section class="bg-suave">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">No que a gente acredita</span>
+          <h2>Frases que movem Goiás</h2>
+          <p>O que orienta cada passo dessa caminhada.</p>
+        </div>
+        <div class="frases-grid">
+          <blockquote class="frase">“Sou filho de escola pública. Minha mãe é professora.”<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase">“As minhas pautas são de esquerda, mas jamais vou votar contra algo que beneficie o povo.”<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase">“A segurança pública não é feita só de polícia.”<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase">“O crime organizado é hoje um dos maiores desafios do Brasil.”<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase">“Segurança não é espetáculo. É cuidado, prevenção e comunidade.”<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase">“É pra quem quer construir, não destruir. Acredita no Brasil, não no medo.”<span class="quem">— Delegado Yasser</span></blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MISSÕES ===== -->
+    <section id="missoes">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Escolha sua missão</span>
+          <h2>Como você pode ajudar</h2>
+          <p>Escolha a forma de participação que combina com você. Toda ajuda conta.</p>
+        </div>
+        <div class="missoes">
+          <article class="missao">
+            <span class="missao__pill">Digital</span>
             <h3>Comunicação Digital</h3>
             <p>Compartilhe conteúdos, comente posts e ajude a mensagem a chegar mais longe.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
-          </div>
-        </article>
-        <article class="missao">
-          <div class="foto">FOTO</div>
-          <div class="corpo">
-            <span class="pill">Radar</span>
+          </article>
+          <article class="missao">
+            <span class="missao__pill">Radar</span>
             <h3>Radar Goiás sem Medo</h3>
             <p>Envie relatos sobre lugares onde as pessoas sentem medo.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
-          </div>
-        </article>
-        <article class="missao">
-          <div class="foto">FOTO</div>
-          <div class="corpo">
-            <span class="pill">Território</span>
+          </article>
+          <article class="missao">
+            <span class="missao__pill">Território</span>
             <h3>Liderança Local</h3>
             <p>Ajude a organizar apoiadores na sua cidade ou bairro.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
-          </div>
-        </article>
-        <article class="missao">
-          <div class="foto">FOTO</div>
-          <div class="corpo">
-            <span class="pill">Encontros</span>
+          </article>
+          <article class="missao">
+            <span class="missao__pill">Encontros</span>
             <h3>Rodas de Conversa</h3>
             <p>Reúna pessoas para conversar sobre segurança e comunidade.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
-          </div>
-        </article>
-        <article class="missao">
-          <div class="foto">FOTO</div>
-          <div class="corpo">
-            <span class="pill">Conexões</span>
+          </article>
+          <article class="missao">
+            <span class="missao__pill">Conexões</span>
             <h3>Conexões Estratégicas</h3>
             <p>Indique lideranças, movimentos, coletivos e pessoas importantes.</p>
             <a href="#cadastro" class="link">Quero esta missão →</a>
-          </div>
-        </article>
+          </article>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== RADAR ===== -->
-  <section class="bg-suave" id="radar">
-    <div class="container">
-      <div class="radar">
-        <div>
-          <span class="eyebrow">Radar Goiás sem Medo</span>
-          <h2>Tem um lugar que você evita por medo?</h2>
-          <p>Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro, escola vulnerável. Sua resposta vira proposta real para Goiás.</p>
+    <!-- ===== RADAR ===== -->
+    <section class="bg-suave" id="radar">
+      <div class="container">
+        <div class="radar">
+          <div>
+            <span class="eyebrow">Radar Goiás sem Medo</span>
+            <h2>Tem um lugar que você evita por medo?</h2>
+            <p>Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro, escola vulnerável. Sua resposta vira proposta real para Goiás.</p>
+            <div class="acoes">
+              <a href="#cadastro" class="btn btn--branco">Enviar um relato →</a>
+            </div>
+          </div>
+          <!-- Substitua por: <img src="images/radar.jpg" alt="Mapa do Radar Goiás sem Medo"> -->
+          <figure class="foto foto--larga">FOTO / MAPA<br>(ilustração do Radar)</figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COMO FUNCIONA ===== -->
+    <section id="como">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Depois do cadastro</span>
+          <h2>Como funciona, passo a passo</h2>
+          <p>Simples, rápido e sem complicação. Em poucos minutos você já está no time.</p>
+        </div>
+        <div class="passos">
+          <div class="passo"><div class="passo__num">1</div><h4>Cadastre-se</h4><p>Você preenche o formulário.</p></div>
+          <div class="passo"><div class="passo__num">2</div><h4>Identificação</h4><p>A equipe vê sua cidade e missão.</p></div>
+          <div class="passo"><div class="passo__num">3</div><h4>Entre no grupo</h4><p>Você entra no grupo correto.</p></div>
+          <div class="passo"><div class="passo__num">4</div><h4>Primeira tarefa</h4><p>Recebe sua primeira missão.</p></div>
+          <div class="passo"><div class="passo__num">5</div><h4>Mobilize Goiás</h4><p>Ajuda a mobilizar o estado.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MATERIAIS ===== -->
+    <section class="bg-suave" id="materiais">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Biblioteca de materiais</span>
+          <h2>Tudo pronto para você mobilizar</h2>
+          <p>Baixe, compartilhe e ajude a mensagem a chegar mais longe.</p>
+        </div>
+        <div class="materiais">
+          <article class="material">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2.5"/><path d="M12 18h.01"/></svg></div>
+            <span class="material__tag">Imagens · ZIP</span>
+            <h3>Cards para WhatsApp</h3>
+            <p>Artes prontas para postar e encaminhar nos seus grupos e stories.</p>
+            <a href="#" class="link">Baixar →</a>
+          </article>
+          <article class="material">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4V8Z"/></svg></div>
+            <span class="material__tag">Vídeos · MP4</span>
+            <h3>Vídeos curtos</h3>
+            <p>Cortes verticais prontos para reels, stories e status.</p>
+            <a href="#" class="link">Acessar →</a>
+          </article>
+          <article class="material">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <span class="material__tag">Texto · PDF</span>
+            <h3>Frases e legendas</h3>
+            <p>Legendas prontas e frases-chave da campanha para usar à vontade.</p>
+            <a href="#" class="link">Baixar →</a>
+          </article>
+          <article class="material">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg></div>
+            <span class="material__tag">Guia · PDF</span>
+            <h3>Manual do voluntário</h3>
+            <p>Tudo o que você precisa saber para começar a ajudar hoje.</p>
+            <a href="#" class="link">Baixar →</a>
+          </article>
+          <article class="material">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg></div>
+            <span class="material__tag">Roteiro · PDF</span>
+            <h3>Roteiro de roda de conversa</h3>
+            <p>Passo a passo para organizar um encontro na sua cidade.</p>
+            <a href="#" class="link">Baixar →</a>
+          </article>
+          <article class="material">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg></div>
+            <span class="material__tag">Links · Drive</span>
+            <h3>Agenda da semana</h3>
+            <p>Conteúdos prioritários e links da semana, sempre atualizados.</p>
+            <a href="#" class="link">Acessar →</a>
+          </article>
+        </div>
+        <div class="bloco-cta">
+          <a href="#cadastro" class="btn btn--primario">Acessar a biblioteca completa</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AGENDA ===== -->
+    <section id="agenda">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Agenda de ações</span>
+          <h2>Participe dos próximos encontros</h2>
+          <p>Datas e locais são exemplos — serão atualizados com a agenda real.</p>
+        </div>
+        <div class="agenda">
+          <article class="evento">
+            <div class="evento__data"><span class="dia">15</span><span class="mes">Jun</span></div>
+            <div class="evento__info">
+              <h3>Roda de Conversa — Segurança e Comunidade</h3>
+              <p>Goiânia · Setor Central · 19h</p>
+            </div>
+            <span class="evento__tipo">Presencial</span>
+          </article>
+          <article class="evento">
+            <div class="evento__data"><span class="dia">22</span><span class="mes">Jun</span></div>
+            <div class="evento__info">
+              <h3>Mutirão Digital — Tropa de Elite do Amor</h3>
+              <p>Online · Grupo no WhatsApp · 20h</p>
+            </div>
+            <span class="evento__tipo">Online</span>
+          </article>
+          <article class="evento">
+            <div class="evento__data"><span class="dia">29</span><span class="mes">Jun</span></div>
+            <div class="evento__info">
+              <h3>Caminhada Goiás sem Medo</h3>
+              <p>Aparecida de Goiânia · Praça Central · 9h</p>
+            </div>
+            <span class="evento__tipo">Presencial</span>
+          </article>
+          <article class="evento">
+            <div class="evento__data"><span class="dia">06</span><span class="mes">Jul</span></div>
+            <div class="evento__info">
+              <h3>Lançamento do Radar Goiás sem Medo</h3>
+              <p>Anápolis · Centro · 18h30</p>
+            </div>
+            <span class="evento__tipo">Lançamento</span>
+          </article>
+        </div>
+        <div class="bloco-cta">
+          <a href="#cadastro" class="btn btn--ghost">Quero ser avisado das ações</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GALERIA ===== -->
+    <section class="bg-suave" id="galeria">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Galeria</span>
+          <h2>A gente nas ruas</h2>
+          <p>Goiás sem medo se constrói no encontro com as pessoas.</p>
+        </div>
+        <div class="galeria">
+          <figure class="foto foto--destaque">FOTO destaque</figure>
+          <figure class="foto">FOTO</figure>
+          <figure class="foto">FOTO</figure>
+          <figure class="foto">FOTO</figure>
+          <figure class="foto">FOTO</figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CADASTRO ===== -->
+    <section id="cadastro">
+      <div class="container cadastro-grid">
+        <div class="cadastro-info">
+          <span class="eyebrow">Cadastro de voluntário</span>
+          <h2>Entre para o time</h2>
+          <p>Preencha seus dados, escolha como quer ajudar e a equipe te direciona para o grupo certo. Goiás sem medo começa com gente organizada.</p>
+          <figure class="foto foto--larga">FOTO — voluntários reunidos</figure>
+        </div>
+
+        <form class="form-card" id="formCadastro" novalidate>
+          <h3>Quero fazer parte ♥</h3>
+          <p class="hint">Preencha e a equipe entra em contato com você.</p>
+
+          <!-- Anti-spam: campo oculto que humanos não preenchem (honeypot) -->
+          <div class="hp" aria-hidden="true">
+            <label for="website">Não preencha este campo</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form-grid">
+            <div class="field field--full">
+              <label for="nome">Nome completo</label>
+              <input id="nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="zap">WhatsApp</label>
+              <input id="zap" name="whatsapp" type="tel" placeholder="(62) 90000-0000" autocomplete="tel" required>
+            </div>
+            <div class="field">
+              <label for="email">E-mail</label>
+              <input id="email" name="email" type="email" placeholder="voce@email.com" autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="cidade">Cidade</label>
+              <input id="cidade" name="cidade" type="text" placeholder="Sua cidade" autocomplete="address-level2">
+            </div>
+            <div class="field">
+              <label for="bairro">Bairro</label>
+              <input id="bairro" name="bairro" type="text" placeholder="Seu bairro">
+            </div>
+            <div class="field field--full">
+              <label for="missao">Como deseja ajudar?</label>
+              <select id="missao" name="missao">
+                <option>Comunicação Digital</option>
+                <option>Radar Goiás sem Medo</option>
+                <option>Liderança Local</option>
+                <option>Rodas de Conversa</option>
+                <option>Conexões Estratégicas</option>
+                <option>Produção de Conteúdo</option>
+                <option>Quero ajudar, mas ainda não sei como</option>
+              </select>
+            </div>
+          </div>
+          <label class="check">
+            <input type="checkbox" name="consentimento" required> Autorizo o contato por WhatsApp e aceito receber materiais da campanha.
+          </label>
+          <button type="submit" class="btn btn--primario">Enviar cadastro</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== CTA FINAL ===== -->
+    <section class="bg-suave">
+      <div class="container">
+        <div class="cta-final">
+          <span class="eyebrow">Goiás sem Medo</span>
+          <h2>Segurança pública de verdade não é espetáculo. É fazer o povo voltar vivo para casa.</h2>
+          <p>Sua participação transforma apoio em ação concreta. Vem com a gente construir esse Goiás.</p>
           <div class="acoes">
-            <a href="#cadastro" class="btn btn-branco">Enviar um relato →</a>
+            <a href="#cadastro" class="btn btn--primario">Entrar para o time →</a>
+            <a href="https://wa.me/" target="_blank" rel="noopener" class="btn btn--ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> Falar no WhatsApp</a>
           </div>
         </div>
-        <div class="foto larga">FOTO / MAPA<br>(ilustração do Radar)</div>
       </div>
-    </div>
-  </section>
-
-  <!-- ===== COMO FUNCIONA ===== -->
-  <section id="como">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Depois do cadastro</span>
-        <h2>Como funciona, passo a passo</h2>
-        <p>Simples, rápido e sem complicação. Em poucos minutos você já está no time.</p>
-      </div>
-      <div class="passos">
-        <div class="passo"><div class="num"></div><h4>Cadastre-se</h4><p>Você preenche o formulário.</p></div>
-        <div class="passo"><div class="num"></div><h4>Identificação</h4><p>A equipe vê sua cidade e missão.</p></div>
-        <div class="passo"><div class="num"></div><h4>Entre no grupo</h4><p>Você entra no grupo correto.</p></div>
-        <div class="passo"><div class="num"></div><h4>Primeira tarefa</h4><p>Recebe sua primeira missão.</p></div>
-        <div class="passo"><div class="num"></div><h4>Mobilize Goiás</h4><p>Ajuda a mobilizar o estado.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== MATERIAIS ===== -->
-  <section class="bg-suave" id="materiais">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Biblioteca de materiais</span>
-        <h2>Tudo pronto para você mobilizar</h2>
-        <p>Baixe, compartilhe e ajude a mensagem a chegar mais longe.</p>
-      </div>
-      <div class="materiais">
-        <article class="material">
-          <div class="ico">📱</div>
-          <span class="tag-formato">Imagens · ZIP</span>
-          <h3>Cards para WhatsApp</h3>
-          <p>Artes prontas para postar e encaminhar nos seus grupos e stories.</p>
-          <a href="#" class="link">Baixar →</a>
-        </article>
-        <article class="material">
-          <div class="ico">🎬</div>
-          <span class="tag-formato">Vídeos · MP4</span>
-          <h3>Vídeos curtos</h3>
-          <p>Cortes verticais prontos para reels, stories e status.</p>
-          <a href="#" class="link">Acessar →</a>
-        </article>
-        <article class="material">
-          <div class="ico">💬</div>
-          <span class="tag-formato">Texto · PDF</span>
-          <h3>Frases e legendas</h3>
-          <p>Legendas prontas e frases-chave da campanha para usar à vontade.</p>
-          <a href="#" class="link">Baixar →</a>
-        </article>
-        <article class="material">
-          <div class="ico">📘</div>
-          <span class="tag-formato">Guia · PDF</span>
-          <h3>Manual do voluntário</h3>
-          <p>Tudo o que você precisa saber para começar a ajudar hoje.</p>
-          <a href="#" class="link">Baixar →</a>
-        </article>
-        <article class="material">
-          <div class="ico">🗣️</div>
-          <span class="tag-formato">Roteiro · PDF</span>
-          <h3>Roteiro de roda de conversa</h3>
-          <p>Passo a passo para organizar um encontro na sua cidade.</p>
-          <a href="#" class="link">Baixar →</a>
-        </article>
-        <article class="material">
-          <div class="ico">📅</div>
-          <span class="tag-formato">Links · Drive</span>
-          <h3>Agenda da semana</h3>
-          <p>Conteúdos prioritários e links da semana, sempre atualizados.</p>
-          <a href="#" class="link">Acessar →</a>
-        </article>
-      </div>
-      <div class="materiais-cta">
-        <a href="#cadastro" class="btn btn-verde">Acessar a biblioteca completa</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== AGENDA ===== -->
-  <section id="agenda">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Agenda de ações</span>
-        <h2>Participe dos próximos encontros</h2>
-        <p>Datas e locais são exemplos — serão atualizados com a agenda real.</p>
-      </div>
-      <div class="agenda">
-        <article class="evento">
-          <div class="data"><span class="dia">15</span><span class="mes">Jun</span></div>
-          <div class="info">
-            <h3>Roda de Conversa — Segurança e Comunidade</h3>
-            <p>Goiânia · Setor Central · 19h</p>
-          </div>
-          <span class="tag-tipo">Presencial</span>
-        </article>
-        <article class="evento">
-          <div class="data"><span class="dia">22</span><span class="mes">Jun</span></div>
-          <div class="info">
-            <h3>Mutirão Digital — aGentes do Amor</h3>
-            <p>Online · Grupo no WhatsApp · 20h</p>
-          </div>
-          <span class="tag-tipo">Online</span>
-        </article>
-        <article class="evento">
-          <div class="data"><span class="dia">29</span><span class="mes">Jun</span></div>
-          <div class="info">
-            <h3>Caminhada Goiás sem Medo</h3>
-            <p>Aparecida de Goiânia · Praça Central · 9h</p>
-          </div>
-          <span class="tag-tipo">Presencial</span>
-        </article>
-        <article class="evento">
-          <div class="data"><span class="dia">06</span><span class="mes">Jul</span></div>
-          <div class="info">
-            <h3>Lançamento do Radar Goiás sem Medo</h3>
-            <p>Anápolis · Centro · 18h30</p>
-          </div>
-          <span class="tag-tipo">Lançamento</span>
-        </article>
-      </div>
-      <div class="agenda-cta">
-        <a href="#cadastro" class="btn btn-ghost">Quero ser avisado das ações</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== GALERIA ===== -->
-  <section class="bg-suave" id="galeria">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Galeria</span>
-        <h2>A gente nas ruas</h2>
-        <p>Goiás sem medo se constrói no encontro com as pessoas.</p>
-      </div>
-      <div class="galeria">
-        <div class="foto">FOTO destaque</div>
-        <div class="foto">FOTO</div>
-        <div class="foto">FOTO</div>
-        <div class="foto">FOTO</div>
-        <div class="foto">FOTO</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CADASTRO ===== -->
-  <section id="cadastro">
-    <div class="container cadastro-grid">
-      <div class="cadastro-info">
-        <span class="eyebrow">Cadastro de voluntário</span>
-        <h2>Entre para o time</h2>
-        <p>Preencha seus dados, escolha como quer ajudar e a equipe te direciona para o grupo certo. Goiás sem medo começa com gente organizada.</p>
-        <div class="foto larga">FOTO — voluntários reunidos</div>
-      </div>
-
-      <form class="form-card" onsubmit="return false;">
-        <h3>Quero fazer parte 🛡️</h3>
-        <p class="hint">Protótipo — o formulário ainda não envia dados.</p>
-        <div class="form-grid">
-          <div class="field full">
-            <label for="nome">Nome completo</label>
-            <input id="nome" type="text" placeholder="Seu nome">
-          </div>
-          <div class="field">
-            <label for="zap">WhatsApp</label>
-            <input id="zap" type="tel" placeholder="(62) 90000-0000">
-          </div>
-          <div class="field">
-            <label for="email">E-mail</label>
-            <input id="email" type="email" placeholder="voce@email.com">
-          </div>
-          <div class="field">
-            <label for="cidade">Cidade</label>
-            <input id="cidade" type="text" placeholder="Sua cidade">
-          </div>
-          <div class="field">
-            <label for="bairro">Bairro</label>
-            <input id="bairro" type="text" placeholder="Seu bairro">
-          </div>
-          <div class="field full">
-            <label for="missao">Como deseja ajudar?</label>
-            <select id="missao">
-              <option>Comunicação Digital</option>
-              <option>Radar Goiás sem Medo</option>
-              <option>Liderança Local</option>
-              <option>Rodas de Conversa</option>
-              <option>Conexões Estratégicas</option>
-              <option>Produção de Conteúdo</option>
-              <option>Quero ajudar, mas ainda não sei como</option>
-            </select>
-          </div>
-        </div>
-        <label class="check">
-          <input type="checkbox"> Autorizo o contato por WhatsApp e aceito receber materiais da campanha.
-        </label>
-        <button type="submit" class="btn btn-laranja">Enviar cadastro</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- ===== CTA FINAL ===== -->
-  <section class="bg-suave">
-    <div class="container">
-      <div class="cta-final">
-        <span class="eyebrow">Goiás sem Medo</span>
-        <h2>Segurança pública de verdade não é espetáculo. É fazer o povo voltar vivo para casa.</h2>
-        <p>Sua participação transforma apoio em ação concreta. Vem com a gente construir esse Goiás.</p>
-        <div class="acoes centro">
-          <a href="#cadastro" class="btn btn-laranja">Entrar para o time →</a>
-          <a href="https://wa.me/" target="_blank" rel="noopener" class="btn btn-ghost">💬 Falar no WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- ===== FOOTER ===== -->
-  <footer>
+  <footer class="rodape">
     <div class="container">
-      <div class="footer-grid">
+      <div class="rodape__grid">
         <div>
           <div class="logo">
-            <span class="mark">🛡️</span>
-            <span>Delegado Yasser <small>Pré-candidato · Dep. Estadual · PT-GO</small></span>
+            <span class="logo__mark" aria-hidden="true">♥</span>
+            <span class="logo__nome">Delegado Yasser <small>Pré-candidato · Dep. Estadual · PT-GO</small></span>
           </div>
-          <p class="sobre">Goiás sem medo começa com gente organizada. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
-          <div class="footer-social">
-            <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
-            <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
-            <a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener" aria-label="Apoiar">💛</a>
+          <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e pré-candidato a deputado estadual pelo PT-GO. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
+          <div class="rodape__social">
+            <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+            <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></a>
           </div>
         </div>
         <div>
           <h5>Navegação</h5>
           <ul>
+            <li><a href="#quem">Quem é o Yasser</a></li>
+            <li><a href="#bandeiras">Bandeiras</a></li>
             <li><a href="#causa">A causa</a></li>
             <li><a href="#missoes">Missões</a></li>
             <li><a href="#radar">Radar</a></li>
-            <li><a href="#como">Como funciona</a></li>
-            <li><a href="#materiais">Materiais</a></li>
             <li><a href="#agenda">Agenda de ações</a></li>
           </ul>
         </div>
@@ -836,39 +593,18 @@
           <h5>Participe</h5>
           <ul>
             <li><a href="#cadastro">Quero fazer parte</a></li>
-            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoie a campanha</a></li>
             <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
             <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">
-        &copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás sem Medo.<br>
-        Protótipo para validação. Conteúdo e imagens sujeitos a alteração.
+      <div class="rodape__bottom">
+        &copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás sem Medo.
       </div>
     </div>
   </footer>
 
-  <script>
-    var toggle = document.getElementById('menuToggle');
-    var links = document.getElementById('navLinks');
-    toggle.addEventListener('click', function () {
-      var aberto = links.classList.toggle('aberto');
-      toggle.setAttribute('aria-expanded', aberto);
-      toggle.textContent = aberto ? '✕' : '☰';
-    });
-    links.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        links.classList.remove('aberto');
-        toggle.textContent = '☰';
-        toggle.setAttribute('aria-expanded', false);
-      });
-    });
-    var head = document.getElementById('cabecalho');
-    window.addEventListener('scroll', function () {
-      head.classList.toggle('rolou', window.scrollY > 8);
-    }, { passive: true });
-    document.getElementById('ano').textContent = new Date().getFullYear();
-  </script>
+  <!-- Scripts -->
+  <script src="js/main.js" defer></script>
 </body>
 </html>
