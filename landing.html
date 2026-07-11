@@ -3,53 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#c4122f">
-  <title>Delegado Yasser — Goiás sem Medo | Pré-candidato a Deputado Estadual PT-GO</title>
-  <meta name="description" content="Delegado Yasser Yassine, pré-candidato a deputado estadual pelo PT-GO. Goiás sem medo começa com a gente: segurança pública com cuidado, prevenção e comunidade.">
+  <meta name="theme-color" content="#c8102e">
+  <title>Delegado Yasser — Brasil sem Medo | Pré-candidato a Deputado Estadual PT-GO</title>
+  <meta name="description" content="Delegado Yasser Yassine, pré-candidato a deputado estadual pelo PT-GO. Brasil sem medo começa com a gente: segurança pública com cuidado, prevenção e comunidade.">
 
-  <link rel="canonical" href="https://delegadoyasser.com.br/landing.html">
+  <!-- Página em desenvolvimento: não deve ser indexada por buscadores.
+       Ao publicar como página oficial, remova a linha abaixo e restaure o canonical. -->
+  <meta name="robots" content="noindex, nofollow, noarchive">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Delegado Yasser — Goiás sem Medo">
+  <meta property="og:title" content="Delegado Yasser — Brasil sem Medo">
   <meta property="og:description" content="Segurança pública com cuidado, prevenção e comunidade. Entre para a Tropa de Elite do Amor.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://delegadoyasser.com.br/landing.html">
+  <meta property="og:url" content="https://www.delegadoyasser.com.br/landing.html">
+  <meta property="og:image" content="https://www.delegadoyasser.com.br/images/yasser/yasser-retrato-bracos-cruzados.jpg">
   <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Fontes -->
+  <!-- Fontes: Anton (display de cartaz) · Archivo (texto) · IBM Plex Mono (rótulos) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Aplica o tema de cor salvo antes da pintura (evita flash). Prévia only. -->
   <script>try{var t=localStorage.getItem('tema-cor');if(t&&t!=='vermelho')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 
-  <!-- Estilos -->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
 
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
   <!-- ===== SELETOR DE COR (apenas pré-visualização) ===== -->
   <div class="tema-switch" role="group" aria-label="Pré-visualização: cor do site">
-    <span class="tema-switch__label">Prévia · cor do site</span>
+    <span class="tema-switch__label">Prévia · cor</span>
     <div class="tema-switch__opcoes">
-      <button type="button" class="tema-dot" data-tema="vermelho" style="--c:#c4122f" aria-label="Vermelho" aria-pressed="true"></button>
+      <button type="button" class="tema-dot" data-tema="vermelho" style="--c:#c8102e" aria-label="Vermelho" aria-pressed="true"></button>
       <button type="button" class="tema-dot" data-tema="roxo" style="--c:#7c3aed" aria-label="Roxo" aria-pressed="false"></button>
       <button type="button" class="tema-dot" data-tema="azul" style="--c:#1d63d8" aria-label="Azul" aria-pressed="false"></button>
       <button type="button" class="tema-dot" data-tema="verde" style="--c:#1f9d57" aria-label="Verde" aria-pressed="false"></button>
       <button type="button" class="tema-dot" data-tema="laranja" style="--c:#e2640f" aria-label="Laranja" aria-pressed="false"></button>
-    </div>
-  </div>
-
-  <!-- ===== TOP BAR ===== -->
-  <div class="topbar">
-    <div class="container">
-      <span class="topbar__tag"><span class="topbar__dot"></span> Goiás sem medo começa com a gente</span>
-      <span class="topbar__social">
-        <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
-        <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></a>
-      </span>
     </div>
   </div>
 
@@ -64,8 +57,9 @@
         <ul class="nav__links" id="navLinks">
           <li><a href="#quem">Quem é</a></li>
           <li><a href="#bandeiras">Bandeiras</a></li>
+          <li><a href="#redes">Redes</a></li>
           <li><a href="#missoes">Missões</a></li>
-          <li><a href="#radar">Radar</a></li>
+          <li><a href="#noticias">Notícias</a></li>
           <li><a href="#agenda">Agenda</a></li>
           <li><a href="#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
         </ul>
@@ -74,109 +68,119 @@
     </div>
   </header>
 
-  <main>
+  <main id="conteudo">
     <!-- ===== HERO ===== -->
     <section class="hero" id="topo">
       <div class="container hero__grid">
         <div class="hero__texto">
           <span class="hero__selo"><span class="pt">PT-GO</span> Pré-candidato a Deputado Estadual</span>
-          <h1>Goiás sem medo <span class="destaque">começa com a gente.</span></h1>
+          <h1>Brasil <span class="marca">sem medo</span> começa com a gente.</h1>
           <p class="hero__sub">
             Sou delegado de carreira da Polícia Civil de Goiás, filho de uma professora da rede
-            pública e de um imigrante palestino que recomeçou a vida do zero. São <strong>12 anos
-            enfrentando o crime</strong> — e a certeza de que segurança de verdade se faz com
-            <strong>cuidado, prevenção e comunidade</strong>, para que cada goiano volte vivo para casa.
+            pública e de um imigrante palestino. São <strong>12 anos enfrentando o crime</strong>
+            e a certeza de que segurança de verdade se faz com <strong>cuidado, prevenção e comunidade</strong>.
           </p>
-          <p class="hero__sub hero__sub--cta">
-            Entre para a <strong>Tropa de Elite do Amor</strong> e venha construir esse Goiás com a gente.
+          <p class="hero__sub">
+            <!-- TODO: trocar wa.me/ pelo link real do grupo "Tropa de Elite do Amor"
+                 (existe um chat.whatsapp.com/DODX1... divulgado no Threads do Yasser; pegar o link completo com a equipe) -->
+            Entre para a <a class="link-tropa" href="https://wa.me/" target="_blank" rel="noopener">Tropa de Elite do Amor</a>
+            e venha construir esse Brasil com a gente.
           </p>
           <div class="acoes">
-            <a href="#cadastro" class="btn btn--primario">Quero fazer parte →</a>
-            <a href="#quem" class="btn btn--ghost">Conhecer o Yasser</a>
-          </div>
-          <div class="hero__mini">
-            <div><b>181 mil</b><span>no Instagram</span></div>
-            <div><b>12 anos</b><span>de delegado</span></div>
-            <div><b>Goiás</b><span>estado inteiro</span></div>
+            <a href="#quem" class="btn">Conhecer o Yasser</a>
+            <a href="#redes" class="btn">Seguir as redes</a>
+            <a href="#cadastro" class="btn btn--primario">Quero fazer parte</a>
           </div>
         </div>
         <div class="hero__foto">
-          <picture>
-            <source srcset="images/hero.webp" type="image/webp">
-            <img class="hero__img" src="images/hero.jpg"
-                 alt="Tropa de Elite do Amor — campanha do Delegado Yasser Yassine"
-                 width="1600" height="791" decoding="async" fetchpriority="high">
-          </picture>
+          <figure class="moldura">
+            <span class="selo">12 anos de Polícia Civil</span>
+            <img src="images/yasser/yasser-retrato-bracos-cruzados.jpg"
+                 alt="Delegado Yasser de blazer, sorrindo com os braços cruzados"
+                 width="900" height="1350" decoding="async" fetchpriority="high">
+          </figure>
         </div>
       </div>
     </section>
 
     <!-- ===== FAIXA SLOGAN ===== -->
-    <div class="faixa-slogan">
-      <div class="container">
-        <span class="aspas" aria-hidden="true">“</span>
-        <p>Segurança não é espetáculo. É cuidado, prevenção e comunidade.</p>
+    <div class="faixa" aria-hidden="true">
+      <div class="faixa__trilho">
+        <span>Brasil sem medo começa com a gente ★</span>
+        <span>Cuidado ★ Prevenção ★ Comunidade ★</span>
+        <span>Tropa de Elite do Amor ★</span>
+        <span>Brasil sem medo começa com a gente ★</span>
+        <span>Cuidado ★ Prevenção ★ Comunidade ★</span>
+        <span>Tropa de Elite do Amor ★</span>
       </div>
     </div>
 
-    <!-- ===== QUEM É ===== -->
-    <section id="quem">
-      <div class="container bio">
-        <div class="bio__foto">
-          <!-- Substitua por: <img src="images/yasser-retrato.jpg" alt="Retrato do Delegado Yasser"> -->
-          <figure class="foto foto--alta">FOTO — retrato</figure>
-        </div>
-        <div>
-          <span class="eyebrow">Quem é o Delegado Yasser</span>
-          <h2>Do Entorno para todo o Goiás</h2>
-          <p>Yasser Martins Yassine é delegado da Polícia Civil de Goiás. Filho de uma professora cearense da rede pública e de um pai palestino que chegou ao Brasil aos 18 anos como vendedor ambulante, carrega na história a origem humilde e a certeza de que as políticas sociais transformam vidas.</p>
-          <p>Foi advogado, professor e servidor da Justiça antes de virar delegado. Hoje, com mais de 350 mil pessoas acompanhando seu trabalho nas redes, leva para a política a mesma bandeira do dia a dia na delegacia: segurança com cuidado, prevenção e comunidade.</p>
-          <ol class="timeline">
-            <li class="timeline__item">
-              <span class="timeline__ano">Raízes</span>
-              <p>Filho de mãe cearense, professora de artes da rede pública, e de pai palestino que chegou ao Brasil aos 18 anos como vendedor ambulante.</p>
-            </li>
-            <li class="timeline__item">
-              <span class="timeline__ano">Antes da polícia</span>
-              <p>Advogado criminalista, professor universitário e servidor do Tribunal de Justiça do DF e dos Territórios (TJDFT).</p>
-            </li>
-            <li class="timeline__item">
-              <span class="timeline__ano">Delegado</span>
-              <p>12 anos na Polícia Civil de Goiás, com atuação no Entorno do DF. Chefiou a Delegacia da Mulher (DEAM) em Formosa.</p>
-            </li>
-            <li class="timeline__item">
-              <span class="timeline__ano">Formação</span>
-              <p>Pós-graduado pela FESMPDFT, MBA em Gestão de Segurança Pública (UnB) e mestrado em Segurança Pública (UFG).</p>
-            </li>
-            <li class="timeline__item">
-              <span class="timeline__ano">2026</span>
-              <p>Pré-candidato a deputado estadual pelo PT-GO, com foco em todo o estado de Goiás.</p>
-            </li>
-          </ol>
+    <!-- ===== PARTE 1 — QUEM É ===== -->
+    <section class="secao" id="quem">
+      <div class="container">
+        <p class="parte"><b>Parte 1 / 3</b> O Delegado</p>
+        <div class="bio">
+          <div class="bio__foto reveal">
+            <figure class="moldura">
+              <span class="selo">Filho de professora e de imigrante</span>
+              <img src="images/yasser/yasser-kufiya-retrato.jpg"
+                   alt="Delegado Yasser sorrindo, vestindo o kufiya palestino sobre o blazer"
+                   width="900" height="1350" loading="lazy" decoding="async">
+              <figcaption>O kufiya do pai palestino, que chegou ao Brasil aos 18 anos</figcaption>
+            </figure>
+          </div>
+          <div>
+            <span class="eyebrow">Quem é o Delegado Yasser</span>
+            <h2>Do Entorno para todo o Brasil</h2>
+            <p>Yasser Martins Yassine é delegado da Polícia Civil de Goiás. Filho de uma professora cearense da rede pública e de um pai palestino que chegou ao Brasil aos 18 anos como vendedor ambulante. O delegado Yasser carrega na sua história a origem humilde e a certeza de que as políticas sociais transformam vidas.</p>
+            <p>Anteriormente, foi advogado, professor e servidor da Justiça. Hoje, com mais de <strong>927 mil pessoas</strong> acompanhando seu trabalho nas redes sociais, leva à política a mesma bandeira do dia a dia na delegacia: segurança com cuidado, prevenção e comunidade.</p>
+            <ol class="timeline">
+              <li class="timeline__item">
+                <span class="timeline__ano">Raízes</span>
+                <p>Filho de mãe cearense, professora de artes da rede pública, e de pai palestino, que chegou ao Brasil aos 18 anos, como vendedor ambulante.</p>
+              </li>
+              <li class="timeline__item">
+                <span class="timeline__ano">Antes da polícia</span>
+                <p>Advogado criminalista, professor universitário e servidor do Tribunal de Justiça do DF e dos Territórios (TJDFT).</p>
+              </li>
+              <li class="timeline__item">
+                <span class="timeline__ano">Delegado</span>
+                <p>12 anos na Polícia Civil de Goiás. Chefiou a Delegacia da Mulher (DEAM), a Delegacia Especial de Investigação Criminal (GEIC), em Formosa, e a Delegacia de Polícia de Planaltina de Goiás.</p>
+              </li>
+              <li class="timeline__item">
+                <span class="timeline__ano">Formação</span>
+                <p>Pós-graduado pelo FESMPDFT, MBA em Gestão de Segurança Pública (UnB) e mestrando em Segurança Pública (UFG).</p>
+              </li>
+              <li class="timeline__item">
+                <span class="timeline__ano">2026</span>
+                <p>Pré-candidato a deputado estadual pelo PT-GO, com foco em todo o estado de Goiás.</p>
+              </li>
+            </ol>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ===== PILARES ===== -->
-    <section id="pilares">
+    <section class="secao secao--suave" id="pilares">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="eyebrow">Nossos pilares</span>
           <h2>Cuidado, prevenção e comunidade</h2>
-          <p>Três pilares que sustentam uma política de segurança pública de verdade em Goiás.</p>
+          <p>Três pilares que sustentam uma política de segurança pública de verdade.</p>
         </div>
-        <div class="cards">
-          <article class="card">
+        <div class="cards cards--3">
+          <article class="card reveal">
             <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
             <h3>Cuidado</h3>
-            <p>Proteção às pessoas, às famílias, às vítimas e aos grupos vulneráveis.</p>
+            <p>Proteção às pessoas, às famílias, às vítimas, às mulheres, aos jovens, às pessoas LGBTQIA+, aos agentes de segurança e aos demais grupos vulneráveis.</p>
           </article>
-          <article class="card">
+          <article class="card reveal">
             <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"/></svg></div>
             <h3>Prevenção</h3>
             <p>Inteligência, iluminação, juventude, escola, cultura, tecnologia e presença do Estado.</p>
           </article>
-          <article class="card">
+          <article class="card reveal">
             <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
             <h3>Comunidade</h3>
             <p>Moradores, lideranças, comerciantes, servidores, escolas, coletivos e Estado atuando juntos.</p>
@@ -186,312 +190,319 @@
     </section>
 
     <!-- ===== BANDEIRAS ===== -->
-    <section id="bandeiras">
+    <section class="secao" id="bandeiras">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Bandeiras na Assembleia</span>
-          <h2>As prioridades do mandato</h2>
-          <p>Educação e segurança pública no centro — com olhar de quem vive a realidade das ruas e das delegacias de Goiás.</p>
+        <div class="section-head reveal">
+          <span class="eyebrow">Bandeiras do Delegado Yasser</span>
+          <h2>Prioridades</h2>
+          <p>Educação e segurança pública no centro — com olhar de quem vive a realidade das ruas e das delegacias.</p>
         </div>
         <div class="cards">
-          <article class="card">
+          <article class="card reveal">
             <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
             <h3>Segurança pública de verdade</h3>
-            <p>Combate ao crime organizado com inteligência, investigação que funciona e polícias valorizadas — para o povo voltar vivo para casa.</p>
+            <p>Combate ao crime organizado com inteligência, investigação que funciona e polícias bem treinadas, equipadas e valorizadas — para que ninguém viva com medo. Nem na rua. Nem em casa.</p>
           </article>
-          <article class="card">
+          <article class="card reveal">
+            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 3"/></svg></div>
+            <h3>Juventude longe do crime</h3>
+            <p>Yasser veio da periferia e chegou à delegacia porque encontrou caminhos e oportunidades. Todo jovem merece sonhar antes que o crime tente decidir seu futuro.</p>
+          </article>
+          <article class="card reveal">
             <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
             <h3>Educação que transforma</h3>
             <p>Filho de escola pública e de professora: defender a educação é abrir a porta de saída da desigualdade.</p>
           </article>
-          <article class="card">
+          <article class="card reveal">
             <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
             <h3>Menos desigualdade</h3>
             <p>Políticas sociais que mudam vidas — como mudaram a minha. Dignidade para quem mais precisa em Goiás.</p>
           </article>
-          <article class="card">
-            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 17s-2.8-1.9-2.8-3.7a1.7 1.7 0 0 1 2.8-1.3 1.7 1.7 0 0 1 2.8 1.3C14.8 15.1 12 17 12 17Z"/></svg></div>
-            <h3>Proteção à mulher</h3>
-            <p>Experiência à frente da Delegacia da Mulher em Formosa: acolhimento de quem sofre e responsabilização de quem agride.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== STATS ===== -->
-    <section class="bg-suave">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Juntos somos mais fortes</span>
-          <h2>Uma rede que cresce a cada dia</h2>
-        </div>
-        <div class="stats">
-          <div class="stat"><b>181 mil</b><span>seguidores no Instagram</span></div>
-          <div class="stat"><b>+350 mil</b><span>pessoas nas redes</span></div>
-          <div class="stat"><b>12 anos</b><span>na Polícia Civil de Goiás</span></div>
-          <div class="stat"><b>246</b><span>municípios de Goiás</span></div>
-        </div>
-        <p class="stats-nota">Dados de alcance nas redes do Delegado Yasser e abrangência da pré-candidatura em Goiás.</p>
-      </div>
-    </section>
-
-    <!-- ===== CAUSA ===== -->
-    <section id="causa">
-      <div class="container split">
-        <div>
-          <span class="eyebrow">O que estamos construindo</span>
-          <h2>Uma rede viva por todo o estado</h2>
-          <p>Nossa missão em Goiás é transformar mobilização em presença real nas cidades: ouvir a população, mapear os espaços do medo e construir uma segurança pública que faça o povo voltar vivo para casa.</p>
-          <p>Quando o Estado abandona, o crime ocupa. Por isso queremos polícia valorizada, investigação funcionando e comunidade protegida.</p>
-          <p class="lista-titulo">Como você pode ajudar:</p>
-          <ul class="lista-check">
-            <li>Divulgar conteúdos</li>
-            <li>Entrar no grupo da sua cidade</li>
-            <li>Enviar relatos sobre segurança</li>
-            <li>Indicar lideranças</li>
-            <li>Organizar rodas de conversa</li>
-            <li>Produzir vídeos e depoimentos</li>
-            <li>Participar de ações presenciais</li>
-          </ul>
-        </div>
-        <div class="galeria-mini">
-          <figure class="foto foto--larga">FOTO — ação na rua</figure>
-          <figure class="foto foto--quadrada">FOTO</figure>
-          <figure class="foto foto--quadrada">FOTO</figure>
         </div>
       </div>
     </section>
 
     <!-- ===== FRASES ===== -->
-    <section class="bg-suave">
+    <section class="secao secao--suave" id="frases">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="eyebrow">No que a gente acredita</span>
-          <h2>Frases que movem Goiás</h2>
+          <h2>Frases que movem o Yasser</h2>
           <p>O que orienta cada passo dessa caminhada.</p>
         </div>
         <div class="frases-grid">
-          <blockquote class="frase">“Sou filho de escola pública. Minha mãe é professora.”<span class="quem">— Delegado Yasser</span></blockquote>
-          <blockquote class="frase">“As minhas pautas são de esquerda, mas jamais vou votar contra algo que beneficie o povo.”<span class="quem">— Delegado Yasser</span></blockquote>
-          <blockquote class="frase">“A segurança pública não é feita só de polícia.”<span class="quem">— Delegado Yasser</span></blockquote>
-          <blockquote class="frase">“O crime organizado é hoje um dos maiores desafios do Brasil.”<span class="quem">— Delegado Yasser</span></blockquote>
-          <blockquote class="frase">“Segurança não é espetáculo. É cuidado, prevenção e comunidade.”<span class="quem">— Delegado Yasser</span></blockquote>
-          <blockquote class="frase">“É pra quem quer construir, não destruir. Acredita no Brasil, não no medo.”<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase frase--destaque reveal">O crime organizado é o capitalismo de fuzil. As naves, os cordões e os panos de grife estão nas mãos dos patrões. Quem segura o corre, o avião, o peão, o soldado segue morrendo na quebrada, sem nome e sem glória. Não tem distribuição de renda. Só exploração.<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase reveal">Onde o Estado é mínimo, o crime organizado é máximo.<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase reveal">Eu sei o valor das políticas públicas. Cresci na quebrada de Planaltina, onde a violência era rotina. Eu virei delegado. Mas podia ter virado estatística. Eu sou o exemplo prático de que a educação transforma.<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase reveal">Mudar o nome do problema não resolve o problema. Chamar o faccionado de terrorista vai mudar o que na sua vida? Quantos bairros deixarão de ser dominados pelo crime organizado com essa mudança?<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase reveal">Tem político que trata a segurança pública como espetáculo. Muita fumaça e barulho, mas zero resultado.<span class="quem">— Delegado Yasser</span></blockquote>
+          <blockquote class="frase reveal">Todo mundo quer uma polícia mais bem equipada e mais eficiente. Quem gosta do mau policial é bandido e quem apoia bandido.<span class="quem">— Delegado Yasser</span></blockquote>
         </div>
       </div>
     </section>
 
-    <!-- ===== MISSÕES ===== -->
-    <section id="missoes">
+    <!-- ===== PARTE 2 — REDES ===== -->
+    <section class="secao secao--tinta" id="redes">
       <div class="container">
-        <div class="section-head">
+        <p class="parte"><b>Parte 2 / 3</b> As Redes</p>
+        <div class="redes-grid">
+          <div>
+            <span class="eyebrow">Juntos somos mais fortes</span>
+            <h2>Uma rede que cresce a cada dia</h2>
+            <p>Mais de 927 mil pessoas acompanham o trabalho do Delegado Yasser. Siga, compartilhe e traga mais gente para a caminhada.</p>
+            <div class="redes-lista">
+              <a class="rede" href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener"><b>431 mil</b><span>Instagram</span></a>
+              <a class="rede" href="https://www.threads.com/@delegadoyasser" target="_blank" rel="noopener"><b>332 mil</b><span>Threads</span></a>
+              <a class="rede" href="https://www.tiktok.com/@delegadoyasser" target="_blank" rel="noopener"><b>144,1 mil</b><span>TikTok</span></a>
+              <a class="rede" href="https://x.com/delegadoyasser" target="_blank" rel="noopener"><b>20,3 mil</b><span>X (Twitter)</span></a>
+            </div>
+            <p class="redes-tropa">E <strong>milhares de pessoas</strong> nos grupos da <strong>Tropa de Elite do Amor</strong> no Instagram, WhatsApp e TikTok.</p>
+            <p class="redes-nota">Dados de alcance nas redes do Delegado Yasser.</p>
+          </div>
+          <div class="redes-foto reveal">
+            <figure class="moldura">
+              <img src="images/yasser/yasser-camiseta-lula.jpg"
+                   alt="Delegado Yasser de punho erguido, vestindo camiseta vermelha do Lula"
+                   width="900" height="1350" loading="lazy" decoding="async">
+              <figcaption>A militância que virou movimento</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CAUSA ===== -->
+    <section class="secao" id="causa">
+      <div class="container split">
+        <div>
+          <span class="eyebrow">O que estamos construindo</span>
+          <h2>Uma rede viva por todo o Brasil</h2>
+          <p>Nossa missão é transformar mobilização nas redes em presença real: ouvir a população, mapear os espaços do medo e construir uma segurança pública que faça as pessoas viverem sem medo na rua e em casa.</p>
+          <p>Quando o Estado abandona, o crime ocupa. Por isso queremos polícia valorizada, investigação funcionando e comunidade protegida.</p>
+          <div id="ajudar">
+            <p class="lista-titulo">Como você pode ajudar:</p>
+            <ul class="lista-check">
+              <li>Divulgar conteúdos</li>
+              <li>Entrar no grupo da sua cidade</li>
+              <li>Enviar relatos sobre segurança</li>
+              <li>Indicar lideranças</li>
+              <li>Organizar rodas de conversa</li>
+              <li>Produzir vídeos e depoimentos</li>
+              <li>Participar de ações presenciais</li>
+            </ul>
+          </div>
+        </div>
+        <div class="causa-foto reveal">
+          <figure class="moldura">
+            <img src="images/yasser/yasser-camisa-rosa-sentado.jpg"
+                 alt="Delegado Yasser sentado, de camisa rosa, sorrindo"
+                 width="900" height="1350" loading="lazy" decoding="async">
+            <figcaption>Ouvir primeiro, propor depois</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== APOIE (vaquinha oficial) ===== -->
+    <section class="secao secao--brand" id="apoie">
+      <div class="container">
+        <div class="apoio reveal">
+          <span class="eyebrow">Vaquinha oficial · QueroApoiar</span>
+          <h2>Ajude a manter essa rede de pé</h2>
+          <p>Campanha se faz com gente — e também com recursos. Apoie com qualquer valor pelo financiamento coletivo oficial, com doação segura e lista pública de doadores.</p>
+          <a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener" class="btn btn--claro btn--grande">♥ Apoiar a campanha</a>
+          <span class="apoio__url">apoiar.me/delegadoyasser</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PARTE 3 — MISSÕES ===== -->
+    <section class="secao secao--suave" id="missoes">
+      <div class="container">
+        <p class="parte"><b>Parte 3 / 3</b> O Movimento</p>
+        <div class="section-head reveal">
           <span class="eyebrow">Escolha sua missão</span>
           <h2>Como você pode ajudar</h2>
           <p>Escolha a forma de participação que combina com você. Toda ajuda conta.</p>
         </div>
         <div class="missoes">
-          <article class="missao">
+          <article class="missao reveal">
             <span class="missao__pill">Digital</span>
             <h3>Comunicação Digital</h3>
             <p>Compartilhe conteúdos, comente posts e ajude a mensagem a chegar mais longe.</p>
-            <a href="#cadastro" class="link">Quero esta missão →</a>
+            <a href="#cadastro" class="link">Quero esta missão</a>
           </article>
-          <article class="missao">
+          <article class="missao reveal">
             <span class="missao__pill">Radar</span>
-            <h3>Radar Goiás sem Medo</h3>
+            <h3>Radar Brasil sem Medo</h3>
             <p>Envie relatos sobre lugares onde as pessoas sentem medo.</p>
-            <a href="#cadastro" class="link">Quero esta missão →</a>
+            <a href="#cadastro" class="link">Quero esta missão</a>
           </article>
-          <article class="missao">
+          <article class="missao reveal">
             <span class="missao__pill">Território</span>
             <h3>Liderança Local</h3>
             <p>Ajude a organizar apoiadores na sua cidade ou bairro.</p>
-            <a href="#cadastro" class="link">Quero esta missão →</a>
+            <a href="#cadastro" class="link">Quero esta missão</a>
           </article>
-          <article class="missao">
+          <article class="missao reveal">
             <span class="missao__pill">Encontros</span>
             <h3>Rodas de Conversa</h3>
             <p>Reúna pessoas para conversar sobre segurança e comunidade.</p>
-            <a href="#cadastro" class="link">Quero esta missão →</a>
+            <a href="#cadastro" class="link">Quero esta missão</a>
           </article>
-          <article class="missao">
+          <article class="missao reveal">
             <span class="missao__pill">Conexões</span>
             <h3>Conexões Estratégicas</h3>
             <p>Indique lideranças, movimentos, coletivos e pessoas importantes.</p>
-            <a href="#cadastro" class="link">Quero esta missão →</a>
+            <a href="#cadastro" class="link">Quero esta missão</a>
           </article>
         </div>
       </div>
     </section>
 
     <!-- ===== RADAR ===== -->
-    <section class="bg-suave" id="radar">
-      <div class="container">
-        <div class="radar">
-          <div>
-            <span class="eyebrow">Radar Goiás sem Medo</span>
-            <h2>Tem um lugar que você evita por medo?</h2>
-            <p>Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro, escola vulnerável. Sua resposta vira proposta real para Goiás.</p>
-            <div class="acoes">
-              <a href="#cadastro" class="btn btn--branco">Enviar um relato →</a>
-            </div>
+    <section class="secao secao--brand" id="radar">
+      <div class="container radar">
+        <div>
+          <span class="eyebrow">Radar Brasil sem Medo</span>
+          <h2>Tem um lugar que você evita por medo?</h2>
+          <p>Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro, escola vulnerável. Sua resposta vira proposta real para Goiás.</p>
+          <div class="acoes">
+            <a href="#cadastro" class="btn btn--claro">Enviar um relato</a>
           </div>
-          <!-- Substitua por: <img src="images/radar.jpg" alt="Mapa do Radar Goiás sem Medo"> -->
-          <figure class="foto foto--larga">FOTO / MAPA<br>(ilustração do Radar)</figure>
+        </div>
+        <div class="radar-foto reveal">
+          <figure class="moldura">
+            <img src="images/yasser/yasser-retrato-serio.jpg"
+                 alt="Retrato sério do Delegado Yasser, mãos unidas sob o queixo"
+                 width="900" height="1350" loading="lazy" decoding="async">
+            <figcaption>Cada relato vira investigação de proposta</figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
     <!-- ===== COMO FUNCIONA ===== -->
-    <section id="como">
+    <section class="secao" id="como">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="eyebrow">Depois do cadastro</span>
           <h2>Como funciona, passo a passo</h2>
           <p>Simples, rápido e sem complicação. Em poucos minutos você já está no time.</p>
         </div>
         <div class="passos">
-          <div class="passo"><div class="passo__num">1</div><h4>Cadastre-se</h4><p>Você preenche o formulário.</p></div>
-          <div class="passo"><div class="passo__num">2</div><h4>Identificação</h4><p>A equipe vê sua cidade e missão.</p></div>
-          <div class="passo"><div class="passo__num">3</div><h4>Entre no grupo</h4><p>Você entra no grupo correto.</p></div>
-          <div class="passo"><div class="passo__num">4</div><h4>Primeira tarefa</h4><p>Recebe sua primeira missão.</p></div>
-          <div class="passo"><div class="passo__num">5</div><h4>Mobilize Goiás</h4><p>Ajuda a mobilizar o estado.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== MATERIAIS ===== -->
-    <section class="bg-suave" id="materiais">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Biblioteca de materiais</span>
-          <h2>Tudo pronto para você mobilizar</h2>
-          <p>Baixe, compartilhe e ajude a mensagem a chegar mais longe.</p>
-        </div>
-        <div class="materiais">
-          <article class="material">
-            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2.5"/><path d="M12 18h.01"/></svg></div>
-            <span class="material__tag">Imagens · ZIP</span>
-            <h3>Cards para WhatsApp</h3>
-            <p>Artes prontas para postar e encaminhar nos seus grupos e stories.</p>
-            <a href="#" class="link">Baixar →</a>
-          </article>
-          <article class="material">
-            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4V8Z"/></svg></div>
-            <span class="material__tag">Vídeos · MP4</span>
-            <h3>Vídeos curtos</h3>
-            <p>Cortes verticais prontos para reels, stories e status.</p>
-            <a href="#" class="link">Acessar →</a>
-          </article>
-          <article class="material">
-            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-            <span class="material__tag">Texto · PDF</span>
-            <h3>Frases e legendas</h3>
-            <p>Legendas prontas e frases-chave da campanha para usar à vontade.</p>
-            <a href="#" class="link">Baixar →</a>
-          </article>
-          <article class="material">
-            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg></div>
-            <span class="material__tag">Guia · PDF</span>
-            <h3>Manual do voluntário</h3>
-            <p>Tudo o que você precisa saber para começar a ajudar hoje.</p>
-            <a href="#" class="link">Baixar →</a>
-          </article>
-          <article class="material">
-            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg></div>
-            <span class="material__tag">Roteiro · PDF</span>
-            <h3>Roteiro de roda de conversa</h3>
-            <p>Passo a passo para organizar um encontro na sua cidade.</p>
-            <a href="#" class="link">Baixar →</a>
-          </article>
-          <article class="material">
-            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg></div>
-            <span class="material__tag">Links · Drive</span>
-            <h3>Agenda da semana</h3>
-            <p>Conteúdos prioritários e links da semana, sempre atualizados.</p>
-            <a href="#" class="link">Acessar →</a>
-          </article>
-        </div>
-        <div class="bloco-cta">
-          <a href="#cadastro" class="btn btn--primario">Acessar a biblioteca completa</a>
+          <div class="passo reveal"><div class="passo__num">1</div><h4>Cadastre-se</h4><p>Você preenche o formulário.</p></div>
+          <div class="passo reveal"><div class="passo__num">2</div><h4>Identificação</h4><p>A equipe vê sua cidade e missão.</p></div>
+          <div class="passo reveal"><div class="passo__num">3</div><h4>Entre no grupo</h4><p>Você entra no grupo correto.</p></div>
+          <div class="passo reveal"><div class="passo__num">4</div><h4>Primeira tarefa</h4><p>Recebe sua primeira missão.</p></div>
+          <div class="passo reveal"><div class="passo__num">5</div><h4>Mobilize</h4><p>Ajuda a mobilizar o estado.</p></div>
         </div>
       </div>
     </section>
 
     <!-- ===== AGENDA ===== -->
-    <section id="agenda">
+    <section class="secao secao--suave" id="agenda">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="eyebrow">Agenda de ações</span>
           <h2>Participe dos próximos encontros</h2>
-          <p>Datas e locais são exemplos — serão atualizados com a agenda real.</p>
+          <p id="agendaNota">Acompanhe as próximas ações da campanha.</p>
         </div>
-        <div class="agenda">
-          <article class="evento">
-            <div class="evento__data"><span class="dia">15</span><span class="mes">Jun</span></div>
-            <div class="evento__info">
-              <h3>Roda de Conversa — Segurança e Comunidade</h3>
-              <p>Goiânia · Setor Central · 19h</p>
-            </div>
-            <span class="evento__tipo">Presencial</span>
-          </article>
-          <article class="evento">
-            <div class="evento__data"><span class="dia">22</span><span class="mes">Jun</span></div>
-            <div class="evento__info">
-              <h3>Mutirão Digital — Tropa de Elite do Amor</h3>
-              <p>Online · Grupo no WhatsApp · 20h</p>
-            </div>
-            <span class="evento__tipo">Online</span>
-          </article>
-          <article class="evento">
-            <div class="evento__data"><span class="dia">29</span><span class="mes">Jun</span></div>
-            <div class="evento__info">
-              <h3>Caminhada Goiás sem Medo</h3>
-              <p>Aparecida de Goiânia · Praça Central · 9h</p>
-            </div>
-            <span class="evento__tipo">Presencial</span>
-          </article>
-          <article class="evento">
-            <div class="evento__data"><span class="dia">06</span><span class="mes">Jul</span></div>
-            <div class="evento__info">
-              <h3>Lançamento do Radar Goiás sem Medo</h3>
-              <p>Anápolis · Centro · 18h30</p>
-            </div>
-            <span class="evento__tipo">Lançamento</span>
-          </article>
+        <!-- A agenda é alimentada por uma planilha Google publicada como CSV:
+             configure AGENDA_CSV_URL em js/landing.js (guia em docs/AGENDA-DINAMICA.md).
+             Enquanto não configurar, o aviso abaixo é exibido. -->
+        <div class="agenda" id="listaAgenda">
+          <p class="vazio">As próximas ações serão divulgadas em breve. Cadastre-se para ser avisado em primeira mão.</p>
         </div>
-        <div class="bloco-cta">
-          <a href="#cadastro" class="btn btn--ghost">Quero ser avisado das ações</a>
+        <div class="acoes">
+          <a href="#cadastro" class="btn">Quero ser avisado das ações</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== NOTÍCIAS ===== -->
+    <section class="secao" id="noticias">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Notícias da campanha</span>
+          <h2>Acompanhe o movimento</h2>
+          <p id="noticiasNota">Acompanhe as novidades da campanha.</p>
+        </div>
+        <!-- Seção alimentada por planilha Google publicada como CSV:
+             configure NOTICIAS_CSV_URL em js/landing.js (guia em docs/NOTICIAS-DINAMICAS.md).
+             Enquanto não configurar, o aviso abaixo é exibido. -->
+        <div class="noticias" id="listaNoticias">
+          <p class="vazio">As notícias da campanha serão publicadas em breve. Enquanto isso, acompanhe o dia a dia nas <a href="#redes">redes do Yasser</a>.</p>
         </div>
       </div>
     </section>
 
     <!-- ===== GALERIA ===== -->
-    <section class="bg-suave" id="galeria">
+    <section class="secao secao--suave" id="galeria">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="eyebrow">Galeria</span>
           <h2>A gente nas ruas</h2>
-          <p>Goiás sem medo se constrói no encontro com as pessoas.</p>
+          <p>Brasil sem medo se constrói no encontro com as pessoas.</p>
         </div>
         <div class="galeria">
-          <figure class="foto foto--destaque">FOTO destaque</figure>
-          <figure class="foto">FOTO</figure>
-          <figure class="foto">FOTO</figure>
-          <figure class="foto">FOTO</figure>
-          <figure class="foto">FOTO</figure>
+          <figure class="moldura reveal">
+            <img src="images/yasser/yasser-kufiya-em-pe.jpg"
+                 alt="Delegado Yasser em pé, sorrindo com o kufiya palestino"
+                 width="900" height="1350" loading="lazy" decoding="async">
+            <figcaption>Orgulho das raízes</figcaption>
+          </figure>
+          <figure class="moldura reveal">
+            <img src="images/yasser/yasser-kufiya-perfil.jpg"
+                 alt="Delegado Yasser de perfil com o kufiya, mãos no bolso"
+                 width="900" height="1350" loading="lazy" decoding="async">
+            <figcaption>Filho de vendedor ambulante</figcaption>
+          </figure>
+          <figure class="moldura reveal">
+            <img src="images/yasser/yasser-sorrindo-maos-unidas.jpg"
+                 alt="Delegado Yasser sorrindo, de camisa rosa, com as mãos unidas"
+                 width="900" height="1350" loading="lazy" decoding="async">
+            <figcaption>Segurança com cuidado</figcaption>
+          </figure>
+        </div>
+
+        <!-- ===== POSTS DO INSTAGRAM (embed oficial) =====
+             COMO ATIVAR:
+             1. No Instagram, abra um post do @delegadoyasser (de rua, evento, caminhada)
+                e toque em ⋯ → "Copiar link".
+             2. Cole o link no data-instgrm-permalink e no href do bloco abaixo
+                (duplique o bloco para cada post — 3 a 6 ficam bem).
+             3. Descomente os blocos e o <script> do embed no fim desta seção.
+             O embed é o método oficial da Meta: sem problema de direitos e
+             as fotos ficam sempre atualizadas com o perfil.
+
+        <div class="ig-grid">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/CODIGO-DO-POST/" data-instgrm-version="14">
+            <a href="https://www.instagram.com/p/CODIGO-DO-POST/" target="_blank" rel="noopener">Ver post do @delegadoyasser</a>
+          </blockquote>
+        </div>
+        <script async src="https://www.instagram.com/embed.js"></script>
+        -->
+
+        <div class="acoes galeria__cta">
+          <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" class="btn">Ver mais fotos no @delegadoyasser</a>
         </div>
       </div>
     </section>
 
     <!-- ===== CADASTRO ===== -->
-    <section id="cadastro">
+    <section class="secao" id="cadastro">
       <div class="container cadastro-grid">
         <div class="cadastro-info">
           <span class="eyebrow">Cadastro de voluntário</span>
           <h2>Entre para o time</h2>
-          <p>Preencha seus dados, escolha como quer ajudar e a equipe te direciona para o grupo certo. Goiás sem medo começa com gente organizada.</p>
-          <figure class="foto foto--larga">FOTO — voluntários reunidos</figure>
+          <p>Preencha seus dados, escolha como quer ajudar e a equipe vai direcionar você para o grupo certo. Brasil sem medo começa com gente organizada.</p>
+          <figure class="moldura reveal">
+            <img src="images/yasser/yasser-cumprimento-maos.jpg"
+                 alt="Delegado Yasser sorrindo em gesto de cumprimento com as duas mãos"
+                 width="900" height="1350" loading="lazy" decoding="async">
+            <figcaption>Bem-vindo à Tropa de Elite do Amor</figcaption>
+          </figure>
         </div>
 
         <form class="form-card" id="formCadastro" novalidate>
@@ -529,7 +540,7 @@
               <label for="missao">Como deseja ajudar?</label>
               <select id="missao" name="missao">
                 <option>Comunicação Digital</option>
-                <option>Radar Goiás sem Medo</option>
+                <option>Radar Brasil sem Medo</option>
                 <option>Liderança Local</option>
                 <option>Rodas de Conversa</option>
                 <option>Conexões Estratégicas</option>
@@ -548,15 +559,18 @@
     </section>
 
     <!-- ===== CTA FINAL ===== -->
-    <section class="bg-suave">
+    <section class="secao secao--tinta">
       <div class="container">
         <div class="cta-final">
           <span class="eyebrow">Goiás sem Medo</span>
-          <h2>Segurança pública de verdade não é espetáculo. É fazer o povo voltar vivo para casa.</h2>
-          <p>Sua participação transforma apoio em ação concreta. Vem com a gente construir esse Goiás.</p>
+          <h2>Segurança pública de verdade não é espetáculo. É fazer cada um viver <span class="marca">sem medo</span>. Nem na rua. Nem em casa.</h2>
+          <p>Não perca a chance de fazer parte desse movimento. Sua participação transforma apoio em ação concreta. Vem com a gente construir esse Brasil.</p>
           <div class="acoes">
-            <a href="#cadastro" class="btn btn--primario">Entrar para o time →</a>
-            <a href="https://wa.me/" target="_blank" rel="noopener" class="btn btn--ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> Falar no WhatsApp</a>
+            <a href="#cadastro" class="btn btn--primario">Quero fazer parte</a>
+            <!-- TODO: trocar wa.me/ pelo link real do grupo "Tropa de Elite do Amor"
+                 (existe um chat.whatsapp.com/DODX1... divulgado no Threads do Yasser; pegar o link completo com a equipe) -->
+            <a href="https://wa.me/" target="_blank" rel="noopener" class="btn">Ajude a ampliar essa rede</a>
+            <a href="#ajudar" class="btn">Veja como você pode ajudar</a>
           </div>
         </div>
       </div>
@@ -583,9 +597,10 @@
           <ul>
             <li><a href="#quem">Quem é o Yasser</a></li>
             <li><a href="#bandeiras">Bandeiras</a></li>
-            <li><a href="#causa">A causa</a></li>
+            <li><a href="#redes">Redes</a></li>
             <li><a href="#missoes">Missões</a></li>
             <li><a href="#radar">Radar</a></li>
+            <li><a href="#noticias">Notícias</a></li>
             <li><a href="#agenda">Agenda de ações</a></li>
           </ul>
         </div>
@@ -593,18 +608,19 @@
           <h5>Participe</h5>
           <ul>
             <li><a href="#cadastro">Quero fazer parte</a></li>
+            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar a campanha (vaquinha)</a></li>
             <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
             <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
           </ul>
         </div>
       </div>
+      <p class="rodape__assinatura" aria-hidden="true">Brasil sem medo</p>
       <div class="rodape__bottom">
-        &copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás sem Medo.
+        &copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil sem Medo.
       </div>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="js/main.js" defer></script>
+  <script src="js/landing.js" defer></script>
 </body>
 </html>
