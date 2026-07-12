@@ -7,6 +7,13 @@
   <title>Em breve | Delegado Yasser Yassine</title>
   <meta name="description" content="O site do Delegado Yasser Yassine está chegando. Em breve, com novidades e conteúdo. Acompanhe.">
 
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
   <!-- Open Graph (compartilhamento em redes sociais / WhatsApp) -->
   <meta property="og:title" content="Em breve | Delegado Yasser Yassine">
   <meta property="og:description" content="O site do Delegado Yasser Yassine está chegando. Em breve, com novidades e conteúdo.">
@@ -166,8 +173,9 @@
     }
     .btn-instagram {
       color: var(--text);
-      background: linear-gradient(90deg, #f58529, #dd2a7b, #8134af);
-      box-shadow: 0 8px 24px rgba(221, 42, 123, 0.30);
+      /* tons escurecidos do gradiente oficial: contraste ≥ 4,5:1 com o texto branco */
+      background: linear-gradient(90deg, #b35306, #b02160, #6b2a91);
+      box-shadow: 0 8px 24px rgba(176, 33, 96, 0.30);
     }
     .btn-outline {
       color: var(--text);
@@ -176,6 +184,27 @@
     }
     .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0); }
+
+    /* Foco visível para navegação por teclado */
+    a:focus-visible {
+      outline: 3px solid var(--accent-2);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Texto apenas para leitores de tela */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
 
     /* Contato */
     .contact {
@@ -218,7 +247,118 @@
     @media (prefers-reduced-motion: reduce) {
       .icon, .progress span, .container { animation: none; }
     }
+
+    /* ---------- Balão de acessibilidade (fonte e contraste) ---------- */
+    .acess-flutuante { position: fixed; right: 16px; bottom: 64px; z-index: 70; }
+    .acess-flutuante__botao {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #052e16;
+      border: 2px solid #052e16;
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+      cursor: pointer;
+    }
+    .acess-flutuante__botao svg { width: 28px; height: 28px; }
+    .acess-flutuante__botao:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 3px; }
+    .acess-flutuante__painel {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 10px);
+      width: 230px;
+      background: var(--bg-2);
+      border: 1px solid rgba(74, 222, 128, 0.5);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: left;
+    }
+    .acess-flutuante__titulo {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .acess-flutuante__linha { display: flex; gap: 8px; margin-bottom: 10px; }
+    .acess-flutuante__escala {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 54px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .acess-flutuante__painel button {
+      font: inherit;
+      font-weight: 700;
+      color: var(--text);
+      background: rgba(34, 197, 94, 0.12);
+      border: 1.5px solid rgba(74, 222, 128, 0.5);
+      border-radius: 8px;
+      padding: 8px 10px;
+      min-height: 40px;
+      cursor: pointer;
+    }
+    .acess-flutuante__painel button:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 2px; }
+    .acess-flutuante__linha button { flex: 1; }
+    .acess-flutuante__painel button:hover,
+    .acess-flutuante__painel button[aria-pressed="true"] { background: var(--accent); color: #052e16; }
+    .acess-flutuante__painel button[aria-pressed="true"]::before { content: "✓ "; }
+    .acess-flutuante__toggle { width: 100%; margin-bottom: 8px; }
+    .acess-flutuante__toggle:last-of-type { margin-bottom: 0; }
+
+    /* Destacar links (balão de acessibilidade) */
+    html.a11y-links a { text-decoration: underline !important; text-underline-offset: 3px; }
+
+    /* Pausar animações (balão de acessibilidade) */
+    html.a11y-parado *,
+    html.a11y-parado *::before,
+    html.a11y-parado *::after { animation: none !important; transition: none !important; }
+
+    /* ---------- Alto contraste (preto absoluto, texto branco, links amarelos) ---------- */
+    :root[data-contraste="alto"] body { background: #000; }
+    :root[data-contraste="alto"] body::before { background: #000; }
+    :root[data-contraste="alto"] .badge,
+    :root[data-contraste="alto"] .brand,
+    :root[data-contraste="alto"] p.lead,
+    :root[data-contraste="alto"] .progress-label,
+    :root[data-contraste="alto"] .links-titulo,
+    :root[data-contraste="alto"] .contact,
+    :root[data-contraste="alto"] footer { color: #fff; opacity: 1; }
+    :root[data-contraste="alto"] h1 {
+      background: none;
+      -webkit-text-fill-color: currentColor;
+      color: #fff;
+    }
+    :root[data-contraste="alto"] .btn,
+    :root[data-contraste="alto"] .contact a {
+      background: #000;
+      color: #ffef3f;
+      border: 2px solid #fff;
+      box-shadow: none;
+      text-decoration: underline;
+    }
+    :root[data-contraste="alto"] .acess-flutuante__painel { background: #000; border-color: #fff; }
+    :root[data-contraste="alto"] .acess-flutuante__painel button { background: #000; color: #fff; border-color: #fff; }
+    :root[data-contraste="alto"] .acess-flutuante__painel button[aria-pressed="true"] { background: #fff; color: #000; }
+    :root[data-contraste="alto"] .acess-flutuante__botao { background: #000; color: #ffef3f; border-color: #fff; box-shadow: none; }
   </style>
+
+  <!-- Aplica preferências de acessibilidade salvas antes da pintura (evita flash) -->
+  <script>
+    try{
+      var cc=localStorage.getItem('contraste');
+      if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
+      var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
+      if(localStorage.getItem('destacar-links')==='1')document.documentElement.classList.add('a11y-links');
+      if(localStorage.getItem('pausar-animacoes')==='1')document.documentElement.classList.add('a11y-parado');
+    }catch(e){}
+  </script>
 </head>
 <body>
   <main class="container">
@@ -242,10 +382,10 @@
     <p class="links-titulo">Acompanhe e apoie</p>
     <nav class="links" aria-label="Links oficiais">
       <a class="btn btn-primary" href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">
-        <span class="ico">💚</span> Apoie a campanha — apoiar.me
+        <span class="ico" aria-hidden="true">💚</span> Apoie o movimento — apoiar.me<span class="sr-only"> (abre em nova aba)</span>
       </a>
       <a class="btn btn-instagram" href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">
-        <span class="ico">📷</span> Instagram — @delegadoyasser
+        <span class="ico" aria-hidden="true">📷</span> Instagram — @delegadoyasser<span class="sr-only"> (abre em nova aba)</span>
       </a>
     </nav>
 
@@ -259,9 +399,122 @@
     &copy; <span id="ano">2026</span> Delegado Yasser Yassine. Todos os direitos reservados.
   </footer>
 
+  <!-- ===== BALÃO DE ACESSIBILIDADE (fonte e contraste) ===== -->
+  <div class="acess-flutuante">
+    <button type="button" class="acess-flutuante__botao" id="acessToggle"
+            aria-expanded="false" aria-controls="acessPainel" aria-label="Opções de acessibilidade">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm8.5 0c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2z"/></svg>
+    </button>
+    <div class="acess-flutuante__painel" id="acessPainel" role="group" aria-label="Ferramentas de acessibilidade" hidden>
+      <p class="acess-flutuante__titulo">Acessibilidade</p>
+      <div class="acess-flutuante__linha">
+        <button type="button" id="fonteMenor" aria-label="Diminuir tamanho do texto">A−</button>
+        <span class="acess-flutuante__escala" id="fonteEscala" aria-live="polite">100%</span>
+        <button type="button" id="fonteMaior" aria-label="Aumentar tamanho do texto">A+</button>
+      </div>
+      <button type="button" id="contrasteAlto" class="acess-flutuante__toggle" aria-pressed="false">Alto contraste</button>
+      <button type="button" id="destacarLinks" class="acess-flutuante__toggle" aria-pressed="false">Destacar links</button>
+      <button type="button" id="pausarAnimacoes" class="acess-flutuante__toggle" aria-pressed="false">Pausar animações</button>
+      <button type="button" id="restaurarPadrao" class="acess-flutuante__toggle">Restaurar padrão</button>
+    </div>
+  </div>
+
+  <!-- ===== VLIBRAS (tradução para Língua Brasileira de Sinais — widget oficial gov.br) ===== -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
+  </script>
+
   <script>
     // Mantém o ano do rodapé sempre atualizado
     document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // Balão de acessibilidade: fonte, contraste, links e animações (mesmas chaves da landing)
+    (function () {
+      var raiz = document.documentElement;
+      var ESCALAS = [90, 100, 110, 120, 130];
+      var escalaEl = document.getElementById("fonteEscala");
+
+      function escalaAtual() {
+        var p = 100;
+        try { p = parseInt(localStorage.getItem("fonte-escala"), 10) || 100; } catch (e) {}
+        return ESCALAS.indexOf(p) === -1 ? 100 : p;
+      }
+      function aplicarEscala(p) {
+        if (ESCALAS.indexOf(p) === -1) p = 100;
+        raiz.style.fontSize = p === 100 ? "" : p + "%";
+        escalaEl.textContent = p + "%";
+        try { localStorage.setItem("fonte-escala", String(p)); } catch (e) {}
+      }
+      function mudarEscala(direcao) {
+        var i = ESCALAS.indexOf(escalaAtual()) + direcao;
+        aplicarEscala(ESCALAS[Math.max(0, Math.min(ESCALAS.length - 1, i))]);
+      }
+
+      document.getElementById("fonteMenor").addEventListener("click", function () { mudarEscala(-1); });
+      document.getElementById("fonteMaior").addEventListener("click", function () { mudarEscala(1); });
+      escalaEl.textContent = escalaAtual() + "%";
+
+      var btnContraste = document.getElementById("contrasteAlto");
+      btnContraste.setAttribute("aria-pressed", String(raiz.getAttribute("data-contraste") === "alto"));
+      btnContraste.addEventListener("click", function () {
+        var ligado = raiz.getAttribute("data-contraste") !== "alto";
+        if (ligado) raiz.setAttribute("data-contraste", "alto");
+        else raiz.removeAttribute("data-contraste");
+        btnContraste.setAttribute("aria-pressed", String(ligado));
+        try { localStorage.setItem("contraste", ligado ? "alto" : "normal"); } catch (e) {}
+      });
+
+      var MODOS = [
+        { id: "destacarLinks", classe: "a11y-links", chave: "destacar-links" },
+        { id: "pausarAnimacoes", classe: "a11y-parado", chave: "pausar-animacoes" }
+      ];
+      MODOS.forEach(function (modo) {
+        var btn = document.getElementById(modo.id);
+        btn.setAttribute("aria-pressed", String(raiz.classList.contains(modo.classe)));
+        btn.addEventListener("click", function () {
+          var ligado = raiz.classList.toggle(modo.classe);
+          btn.setAttribute("aria-pressed", String(ligado));
+          try { localStorage.setItem(modo.chave, ligado ? "1" : "0"); } catch (e) {}
+        });
+      });
+
+      document.getElementById("restaurarPadrao").addEventListener("click", function () {
+        aplicarEscala(100);
+        raiz.removeAttribute("data-contraste");
+        btnContraste.setAttribute("aria-pressed", "false");
+        try { localStorage.setItem("contraste", "normal"); } catch (e) {}
+        MODOS.forEach(function (modo) {
+          raiz.classList.remove(modo.classe);
+          document.getElementById(modo.id).setAttribute("aria-pressed", "false");
+          try { localStorage.setItem(modo.chave, "0"); } catch (e) {}
+        });
+      });
+
+      var toggle = document.getElementById("acessToggle");
+      var painel = document.getElementById("acessPainel");
+      function fecharPainel() {
+        painel.hidden = true;
+        toggle.setAttribute("aria-expanded", "false");
+      }
+      toggle.addEventListener("click", function () {
+        var abrir = painel.hidden;
+        painel.hidden = !abrir;
+        toggle.setAttribute("aria-expanded", String(abrir));
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !painel.hidden) { fecharPainel(); toggle.focus(); }
+      });
+      document.addEventListener("click", function (e) {
+        if (!painel.hidden && !e.target.closest(".acess-flutuante")) fecharPainel();
+      });
+    })();
   </script>
 </body>
 </html>

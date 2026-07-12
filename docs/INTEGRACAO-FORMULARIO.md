@@ -80,7 +80,7 @@ function resposta(obj) {
 
 ## Passo 4 — Ligar o site à planilha
 
-1. Abra `js/main.js`.
+1. Abra `js/landing.js`.
 2. Localize a linha:
 
    ```javascript

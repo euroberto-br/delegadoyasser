@@ -7,6 +7,13 @@
   <title>Delegado Yasser — Brasil sem Medo | Pré-candidato a Deputado Estadual PT-GO</title>
   <meta name="description" content="Delegado Yasser Yassine, pré-candidato a deputado estadual pelo PT-GO. Brasil sem medo começa com a gente: segurança pública com cuidado, prevenção e comunidade.">
 
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
   <!-- Página em desenvolvimento: não deve ser indexada por buscadores.
        Ao publicar como página oficial, remova a linha abaixo e restaure o canonical. -->
   <meta name="robots" content="noindex, nofollow, noarchive">
@@ -25,14 +32,44 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Aplica o tema de cor salvo antes da pintura (evita flash). Prévia only. -->
-  <script>try{var t=localStorage.getItem('tema-cor');if(t&&t!=='vermelho')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <!-- Aplica preferências de acessibilidade salvas antes da pintura (evita flash) -->
+  <script>
+    try{
+      var t=localStorage.getItem('tema-cor');if(t&&t!=='vermelho')document.documentElement.setAttribute('data-theme',t);
+      var cc=localStorage.getItem('contraste');
+      if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
+      var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
+      if(localStorage.getItem('destacar-links')==='1')document.documentElement.classList.add('a11y-links');
+      if(localStorage.getItem('pausar-animacoes')==='1')document.documentElement.classList.add('a11y-parado');
+    }catch(e){}
+  </script>
 
   <link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
 
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <a class="skip-link" href="#conteudo" accesskey="1">Pular para o conteúdo</a>
+
+  <!-- ===== BALÃO DE ACESSIBILIDADE (flutuante: fonte, contraste, declaração) ===== -->
+  <div class="acess-flutuante">
+    <button type="button" class="acess-flutuante__botao" id="acessToggle"
+            aria-expanded="false" aria-controls="acessPainel" aria-label="Opções de acessibilidade">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm8.5 0c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2z"/></svg>
+    </button>
+    <div class="acess-flutuante__painel" id="acessPainel" role="group" aria-label="Ferramentas de acessibilidade" hidden>
+      <p class="acess-flutuante__titulo">Acessibilidade</p>
+      <div class="acess-flutuante__linha">
+        <button type="button" id="fonteMenor" aria-label="Diminuir tamanho do texto">A−</button>
+        <span class="acess-flutuante__escala" id="fonteEscala" aria-live="polite">100%</span>
+        <button type="button" id="fonteMaior" aria-label="Aumentar tamanho do texto">A+</button>
+      </div>
+      <button type="button" id="contrasteAlto" class="acess-flutuante__toggle" aria-pressed="false">Alto contraste</button>
+      <button type="button" id="destacarLinks" class="acess-flutuante__toggle" aria-pressed="false">Destacar links</button>
+      <button type="button" id="pausarAnimacoes" class="acess-flutuante__toggle" aria-pressed="false">Pausar animações</button>
+      <button type="button" id="restaurarPadrao" class="acess-flutuante__toggle">Restaurar padrão</button>
+      <a href="acessibilidade.html">Declaração de acessibilidade</a>
+    </div>
+  </div>
 
   <!-- ===== SELETOR DE COR (apenas pré-visualização) ===== -->
   <div class="tema-switch" role="group" aria-label="Pré-visualização: cor do site">
@@ -59,8 +96,9 @@
           <li><a href="#bandeiras">Bandeiras</a></li>
           <li><a href="#redes">Redes</a></li>
           <li><a href="#missoes">Missões</a></li>
-          <li><a href="#noticias">Notícias</a></li>
           <li><a href="#agenda">Agenda</a></li>
+          <li><a href="#noticias">Notícias</a></li>
+          <li><a href="#momentos">Momentos</a></li>
           <li><a href="#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
         </ul>
       </nav>
@@ -213,11 +251,6 @@
             <h3>Educação que transforma</h3>
             <p>Filho de escola pública e de professora: defender a educação é abrir a porta de saída da desigualdade.</p>
           </article>
-          <article class="card reveal">
-            <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
-            <h3>Menos desigualdade</h3>
-            <p>Políticas sociais que mudam vidas — como mudaram a minha. Dignidade para quem mais precisa em Goiás.</p>
-          </article>
         </div>
       </div>
     </section>
@@ -288,7 +321,8 @@
               <li>Indicar lideranças</li>
               <li>Organizar rodas de conversa</li>
               <li>Produzir vídeos e depoimentos</li>
-              <li>Participar de ações presenciais</li>
+              <li>Marcar presença nas ações e caminhadas</li>
+              <li>Acompanhar as novidades e conteúdos do movimento</li>
             </ul>
           </div>
         </div>
@@ -309,8 +343,8 @@
         <div class="apoio reveal">
           <span class="eyebrow">Vaquinha oficial · QueroApoiar</span>
           <h2>Ajude a manter essa rede de pé</h2>
-          <p>Campanha se faz com gente — e também com recursos. Apoie com qualquer valor pelo financiamento coletivo oficial, com doação segura e lista pública de doadores.</p>
-          <a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener" class="btn btn--claro btn--grande">♥ Apoiar a campanha</a>
+          <p>O movimento se faz com gente — e também com recursos. Apoie com qualquer valor pelo financiamento coletivo oficial, com doação segura e lista pública de doadores.</p>
+          <a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener" class="btn btn--claro btn--grande">♥ Apoiar o movimento</a>
           <span class="apoio__url">apoiar.me/delegadoyasser</span>
         </div>
       </div>
@@ -330,31 +364,37 @@
             <span class="missao__pill">Digital</span>
             <h3>Comunicação Digital</h3>
             <p>Compartilhe conteúdos, comente posts e ajude a mensagem a chegar mais longe.</p>
-            <a href="#cadastro" class="link">Quero esta missão</a>
+            <a href="#cadastro" class="link" aria-label="Quero a missão Comunicação Digital">Quero esta missão</a>
           </article>
           <article class="missao reveal">
             <span class="missao__pill">Radar</span>
             <h3>Radar Brasil sem Medo</h3>
             <p>Envie relatos sobre lugares onde as pessoas sentem medo.</p>
-            <a href="#cadastro" class="link">Quero esta missão</a>
+            <a href="#cadastro" class="link" aria-label="Quero a missão Radar Brasil sem Medo">Quero esta missão</a>
           </article>
           <article class="missao reveal">
             <span class="missao__pill">Território</span>
             <h3>Liderança Local</h3>
             <p>Ajude a organizar apoiadores na sua cidade ou bairro.</p>
-            <a href="#cadastro" class="link">Quero esta missão</a>
+            <a href="#cadastro" class="link" aria-label="Quero a missão Liderança Local">Quero esta missão</a>
           </article>
           <article class="missao reveal">
             <span class="missao__pill">Encontros</span>
             <h3>Rodas de Conversa</h3>
             <p>Reúna pessoas para conversar sobre segurança e comunidade.</p>
-            <a href="#cadastro" class="link">Quero esta missão</a>
+            <a href="#cadastro" class="link" aria-label="Quero a missão Rodas de Conversa">Quero esta missão</a>
           </article>
           <article class="missao reveal">
             <span class="missao__pill">Conexões</span>
             <h3>Conexões Estratégicas</h3>
             <p>Indique lideranças, movimentos, coletivos e pessoas importantes.</p>
-            <a href="#cadastro" class="link">Quero esta missão</a>
+            <a href="#cadastro" class="link" aria-label="Quero a missão Conexões Estratégicas">Quero esta missão</a>
+          </article>
+          <article class="missao reveal">
+            <span class="missao__pill">Presença</span>
+            <h3>Presença nas Ações</h3>
+            <p>Receba os avisos de caminhadas, mutirões e encontros — e apareça. É na rua, lado a lado, que o Brasil sem Medo acontece.</p>
+            <a href="#cadastro" class="link" aria-label="Quero a missão Presença nas Ações">Quero esta missão</a>
           </article>
         </div>
       </div>
@@ -366,7 +406,7 @@
         <div>
           <span class="eyebrow">Radar Brasil sem Medo</span>
           <h2>Tem um lugar que você evita por medo?</h2>
-          <p>Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro, escola vulnerável. Sua resposta vira proposta real para Goiás.</p>
+          <p>Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro, escola vulnerável. Sua resposta vira projeto real para Goiás.</p>
           <div class="acoes">
             <a href="#cadastro" class="btn btn--claro">Enviar um relato</a>
           </div>
@@ -382,20 +422,57 @@
       </div>
     </section>
 
-    <!-- ===== COMO FUNCIONA ===== -->
-    <section class="secao" id="como">
+    <!-- ===== MATERIAIS / GUIA DO VOLUNTÁRIO ===== -->
+    <section class="secao" id="materiais">
       <div class="container">
         <div class="section-head reveal">
-          <span class="eyebrow">Depois do cadastro</span>
-          <h2>Como funciona, passo a passo</h2>
-          <p>Simples, rápido e sem complicação. Em poucos minutos você já está no time.</p>
+          <span class="eyebrow">Kit do voluntário</span>
+          <h2>Tudo pronto para você mobilizar Goiás</h2>
+          <p>Uma biblioteca completa — artes para redes, vídeos curtos, frases e o Manual do Voluntário, sempre atualizados. Baixe, compartilhe e leve a mensagem mais longe.</p>
         </div>
-        <div class="passos">
-          <div class="passo reveal"><div class="passo__num">1</div><h4>Cadastre-se</h4><p>Você preenche o formulário.</p></div>
-          <div class="passo reveal"><div class="passo__num">2</div><h4>Identificação</h4><p>A equipe vê sua cidade e missão.</p></div>
-          <div class="passo reveal"><div class="passo__num">3</div><h4>Entre no grupo</h4><p>Você entra no grupo correto.</p></div>
-          <div class="passo reveal"><div class="passo__num">4</div><h4>Primeira tarefa</h4><p>Recebe sua primeira missão.</p></div>
-          <div class="passo reveal"><div class="passo__num">5</div><h4>Mobilize</h4><p>Ajuda a mobilizar o estado.</p></div>
+        <div class="materiais">
+          <article class="material material--destaque reveal">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg></div>
+            <span class="material__tag">Comece por aqui</span>
+            <h3>Manual do voluntário</h3>
+            <p>O guia completo: como funciona o movimento, o que fazer no primeiro dia e como levar a mensagem adiante.</p>
+          </article>
+          <article class="material reveal">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2.5"/><path d="M12 18h.01"/></svg></div>
+            <span class="material__tag">Imagens</span>
+            <h3>Cards para WhatsApp</h3>
+            <p>Artes prontas para postar e encaminhar nos seus grupos e stories.</p>
+          </article>
+          <article class="material reveal">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4V8Z"/></svg></div>
+            <span class="material__tag">Vídeos</span>
+            <h3>Vídeos curtos</h3>
+            <p>Cortes verticais prontos para reels, stories e status.</p>
+          </article>
+          <article class="material reveal">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <span class="material__tag">Textos</span>
+            <h3>Frases e legendas</h3>
+            <p>Legendas prontas e frases-chave do movimento para usar à vontade.</p>
+          </article>
+          <article class="material reveal">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg></div>
+            <span class="material__tag">Roteiro</span>
+            <h3>Roda de conversa</h3>
+            <p>Passo a passo para organizar um encontro na sua cidade.</p>
+          </article>
+          <article class="material reveal">
+            <div class="material__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg></div>
+            <span class="material__tag">Semana</span>
+            <h3>Agenda da semana</h3>
+            <p>Conteúdos prioritários e links da semana, sempre atualizados.</p>
+          </article>
+        </div>
+        <div class="acoes materiais-cta">
+          <a href="https://drive.google.com/drive/folders/1nkn6J-YhC1OGHVHByipYSj1Nwl5-i2qe?usp=drive_link"
+             class="btn btn--primario btn--grande" target="_blank" rel="noopener">
+            <span class="material__drive" aria-hidden="true">▸</span> Abrir o kit do voluntário
+          </a>
         </div>
       </div>
     </section>
@@ -406,7 +483,7 @@
         <div class="section-head reveal">
           <span class="eyebrow">Agenda de ações</span>
           <h2>Participe dos próximos encontros</h2>
-          <p id="agendaNota">Acompanhe as próximas ações da campanha.</p>
+          <p id="agendaNota">Acompanhe as próximas ações do movimento.</p>
         </div>
         <!-- A agenda é alimentada por uma planilha Google publicada como CSV:
              configure AGENDA_CSV_URL em js/landing.js (guia em docs/AGENDA-DINAMICA.md).
@@ -424,68 +501,37 @@
     <section class="secao" id="noticias">
       <div class="container">
         <div class="section-head reveal">
-          <span class="eyebrow">Notícias da campanha</span>
+          <span class="eyebrow">Notícias do movimento</span>
           <h2>Acompanhe o movimento</h2>
-          <p id="noticiasNota">Acompanhe as novidades da campanha.</p>
+          <p id="noticiasNota">Acompanhe as novidades do movimento.</p>
         </div>
         <!-- Seção alimentada por planilha Google publicada como CSV:
              configure NOTICIAS_CSV_URL em js/landing.js (guia em docs/NOTICIAS-DINAMICAS.md).
              Enquanto não configurar, o aviso abaixo é exibido. -->
         <div class="noticias" id="listaNoticias">
-          <p class="vazio">As notícias da campanha serão publicadas em breve. Enquanto isso, acompanhe o dia a dia nas <a href="#redes">redes do Yasser</a>.</p>
+          <p class="vazio">As notícias do movimento serão publicadas em breve. Enquanto isso, acompanhe o dia a dia nas <a href="#redes">redes do Yasser</a>.</p>
         </div>
       </div>
     </section>
 
-    <!-- ===== GALERIA ===== -->
-    <section class="secao secao--suave" id="galeria">
+    <!-- ===== CARROSSEL DE FOTOS ===== -->
+    <section class="secao secao--tinta" id="momentos">
       <div class="container">
         <div class="section-head reveal">
-          <span class="eyebrow">Galeria</span>
-          <h2>A gente nas ruas</h2>
-          <p>Brasil sem medo se constrói no encontro com as pessoas.</p>
-        </div>
-        <div class="galeria">
-          <figure class="moldura reveal">
-            <img src="images/yasser/yasser-kufiya-em-pe.jpg"
-                 alt="Delegado Yasser em pé, sorrindo com o kufiya palestino"
-                 width="900" height="1350" loading="lazy" decoding="async">
-            <figcaption>Orgulho das raízes</figcaption>
-          </figure>
-          <figure class="moldura reveal">
-            <img src="images/yasser/yasser-kufiya-perfil.jpg"
-                 alt="Delegado Yasser de perfil com o kufiya, mãos no bolso"
-                 width="900" height="1350" loading="lazy" decoding="async">
-            <figcaption>Filho de vendedor ambulante</figcaption>
-          </figure>
-          <figure class="moldura reveal">
-            <img src="images/yasser/yasser-sorrindo-maos-unidas.jpg"
-                 alt="Delegado Yasser sorrindo, de camisa rosa, com as mãos unidas"
-                 width="900" height="1350" loading="lazy" decoding="async">
-            <figcaption>Segurança com cuidado</figcaption>
-          </figure>
+          <span class="eyebrow">No corpo a corpo</span>
+          <h2>Momentos do movimento</h2>
+          <p>Registros do Delegado Yasser nas ruas, em eventos e no encontro com quem constrói o Brasil sem Medo.</p>
         </div>
 
-        <!-- ===== POSTS DO INSTAGRAM (embed oficial) =====
-             COMO ATIVAR:
-             1. No Instagram, abra um post do @delegadoyasser (de rua, evento, caminhada)
-                e toque em ⋯ → "Copiar link".
-             2. Cole o link no data-instgrm-permalink e no href do bloco abaixo
-                (duplique o bloco para cada post — 3 a 6 ficam bem).
-             3. Descomente os blocos e o <script> do embed no fim desta seção.
-             O embed é o método oficial da Meta: sem problema de direitos e
-             as fotos ficam sempre atualizadas com o perfil.
-
-        <div class="ig-grid">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/CODIGO-DO-POST/" data-instgrm-version="14">
-            <a href="https://www.instagram.com/p/CODIGO-DO-POST/" target="_blank" rel="noopener">Ver post do @delegadoyasser</a>
-          </blockquote>
-        </div>
-        <script async src="https://www.instagram.com/embed.js"></script>
-        -->
-
-        <div class="acoes galeria__cta">
-          <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" class="btn">Ver mais fotos no @delegadoyasser</a>
+        <div class="carrossel reveal" id="carrossel"
+             data-total="92" data-prefixo="images/carrousel/carrousel-" data-autoplay="6000"
+             aria-roledescription="carrossel" aria-label="Fotos do movimento">
+          <div class="carrossel__janela">
+            <ul class="carrossel__trilho" id="carrosselTrilho"></ul>
+          </div>
+          <button type="button" class="carrossel__seta carrossel__seta--prev" id="carrosselPrev" aria-label="Foto anterior">‹</button>
+          <button type="button" class="carrossel__seta carrossel__seta--next" id="carrosselNext" aria-label="Próxima foto">›</button>
+          <p class="carrossel__contador" aria-live="polite" aria-atomic="true"><span class="sr-only">Foto </span><span id="carrosselAtual">1</span><span aria-hidden="true"> / </span><span class="sr-only">de </span><span id="carrosselTotal">92</span></p>
         </div>
       </div>
     </section>
@@ -544,13 +590,15 @@
                 <option>Liderança Local</option>
                 <option>Rodas de Conversa</option>
                 <option>Conexões Estratégicas</option>
+                <option>Presença nas Ações</option>
                 <option>Produção de Conteúdo</option>
+                <option>Apenas receber conteúdo do movimento</option>
                 <option>Quero ajudar, mas ainda não sei como</option>
               </select>
             </div>
           </div>
           <label class="check">
-            <input type="checkbox" name="consentimento" required> Autorizo o contato por WhatsApp e aceito receber materiais da campanha.
+            <input type="checkbox" name="consentimento" required> Autorizo o contato por WhatsApp e aceito receber materiais do movimento.
           </label>
           <button type="submit" class="btn btn--primario">Enviar cadastro</button>
           <p class="form-status" id="formStatus" role="status" aria-live="polite" hidden></p>
@@ -592,34 +640,55 @@
             <a href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></a>
           </div>
         </div>
-        <div>
-          <h5>Navegação</h5>
+        <nav aria-label="Navegação do rodapé">
+          <h3 class="rodape__titulo">Navegação</h3>
           <ul>
             <li><a href="#quem">Quem é o Yasser</a></li>
             <li><a href="#bandeiras">Bandeiras</a></li>
             <li><a href="#redes">Redes</a></li>
             <li><a href="#missoes">Missões</a></li>
             <li><a href="#radar">Radar</a></li>
-            <li><a href="#noticias">Notícias</a></li>
             <li><a href="#agenda">Agenda de ações</a></li>
+            <li><a href="#noticias">Notícias</a></li>
           </ul>
-        </div>
-        <div>
-          <h5>Participe</h5>
+        </nav>
+        <nav aria-label="Participe">
+          <h3 class="rodape__titulo">Participe</h3>
           <ul>
             <li><a href="#cadastro">Quero fazer parte</a></li>
-            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar a campanha (vaquinha)</a></li>
+            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar o movimento (vaquinha)</a></li>
             <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
             <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
+            <li><a href="acessibilidade.html">Acessibilidade</a></li>
           </ul>
-        </div>
+        </nav>
       </div>
       <p class="rodape__assinatura" aria-hidden="true">Brasil sem medo</p>
+      <div class="rodape__selos">
+        <a href="https://www.w3.org/WAI/WCAG2AA-Conformance" target="_blank" rel="noopener"
+           title="Explicação da conformidade com o nível AA das WCAG 2 do W3C">
+          <img src="images/selo-wcag2aa.png" width="88" height="32"
+               alt="Selo de conformidade nível AA, Diretrizes de Acessibilidade para Conteúdo Web (WCAG 2) do W3C WAI">
+        </a>
+        <a href="acessibilidade.html" class="rodape__selo-link">Declaração de acessibilidade</a>
+      </div>
       <div class="rodape__bottom">
         &copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil sem Medo.
       </div>
     </div>
   </footer>
+
+  <!-- ===== VLIBRAS (tradução para Língua Brasileira de Sinais — widget oficial gov.br) ===== -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
+  </script>
 
   <script src="js/landing.js" defer></script>
 </body>

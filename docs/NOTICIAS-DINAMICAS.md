@@ -27,27 +27,59 @@ Regras:
 - **link** — opcional. Se preenchido, aparece como "Ler na íntegra" no fim da
   notícia (bom para matérias de jornais).
 
-## 2. Onde hospedar as fotos
+## 2. Onde hospedar as fotos — Google Drive (passo a passo)
 
-Qualquer URL pública de imagem funciona. O caminho mais prático para a equipe
-é o **Google Drive**:
+O caminho mais prático é uma **pasta do Google Drive** da campanha. O site
+converte o link do Drive sozinho, então **basta colar o link normal** — não
+precisa montar URL nenhuma.
 
-1. Suba a foto numa pasta do Drive da campanha.
-2. Clique com o botão direito ▸ **Compartilhar** ▸ acesso
-   "Qualquer pessoa com o link".
-3. Copie o link, que tem o formato
-   `https://drive.google.com/file/d/ID-DO-ARQUIVO/view?...`
-4. Na planilha, use este formato (troque só o ID):
+### 2.1 Preparar a pasta (uma vez só)
+
+1. No Google Drive, crie uma pasta, ex.: **Fotos do site — Notícias**.
+2. Clique com o botão direito na **pasta** ▸ **Compartilhar** ▸ em "Acesso geral"
+   escolha **"Qualquer pessoa com o link"** (papel **Leitor**).
+   > Compartilhando a pasta, toda foto que você jogar dentro já nasce pública —
+   > não precisa repetir isso a cada imagem.
+
+### 2.2 Para cada foto
+
+1. Suba a foto para essa pasta.
+2. Clique com o botão direito na foto ▸ **Compartilhar** ▸ **Copiar link**.
+3. Cole esse link na coluna **fotos** da planilha. Ele terá um destes formatos —
+   **todos funcionam**:
 
    ```
-   https://drive.google.com/thumbnail?id=ID-DO-ARQUIVO&sz=w1200
+   https://drive.google.com/file/d/1AbCdEf.../view?usp=drive_link   ← o padrão do "Copiar link"
+   https://drive.google.com/open?id=1AbCdEf...
+   1AbCdEf...                                                       ← só o ID também vale
    ```
 
-   O `sz=w1200` entrega a imagem já redimensionada para 1200px — não precisa
-   tratar a foto antes.
+4. Para **várias fotos** na mesma notícia, separe os links com `|` (barra vertical):
 
-Alternativa: colocar as fotos na pasta `images/` do próprio site (melhor
-desempenho, mas exige publicar no GitHub a cada notícia).
+   ```
+   https://drive.google.com/file/d/AAA.../view|https://drive.google.com/file/d/BBB.../view
+   ```
+
+### Como o site trata isso
+
+Ao carregar a notícia, o site lê o link, extrai o **ID do arquivo** e monta a URL
+de imagem real do Drive automaticamente:
+
+```
+https://drive.google.com/thumbnail?id=ID-DO-ARQUIVO&sz=w1600
+```
+
+O `sz=w1600` já entrega a foto redimensionada (até 1600px de largura), então
+**não precisa tratar/comprimir a imagem antes** de subir. A primeira foto vira a
+capa do card; todas aparecem no "Ler mais".
+
+> **Importante:** a foto (ou a pasta) precisa estar como **"Qualquer pessoa com o
+> link"**. Se estiver privada/"restrito", ela não aparece no site — só um ícone
+> quebrado. Se a imagem não carregar, o primeiro suspeito é sempre a permissão.
+
+**Alternativa** ao Drive: colocar as fotos na pasta `images/` do próprio site e
+usar o caminho relativo (ex.: `images/noticias/foto1.jpg`). Melhor desempenho,
+mas exige publicar no GitHub a cada notícia nova.
 
 ## 3. Publicar a planilha e ligar o site
 
