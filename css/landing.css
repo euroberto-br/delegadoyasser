@@ -255,14 +255,14 @@ a { color: var(--brand-escuro); }
   background: var(--tinta);
   opacity: 0.15;
 }
-.parte b {
+.parte strong {
   font-weight: 600;
   background: var(--tinta);
   color: var(--papel);
   padding: 0.35rem 0.65rem;
 }
 .secao--tinta .parte { color: var(--papel); }
-.secao--tinta .parte b { background: var(--brand); color: var(--branco); }
+.secao--tinta .parte strong { background: var(--brand); color: var(--branco); }
 
 /* ---------- Botões ---------- */
 .btn {
@@ -686,7 +686,7 @@ a { color: var(--brand-escuro); }
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 .rede:hover { background: var(--brand); border-color: var(--papel); }
-.rede b {
+.rede strong {
   font-family: var(--fonte-display);
   font-weight: 400;
   font-size: clamp(1.6rem, 5vw, 2.2rem);
@@ -1255,20 +1255,21 @@ a { color: var(--brand-escuro); }
 }
 .rodape__social svg { width: 1.2rem; height: 1.2rem; }
 
+/* Contraste mínimo de 3:1 para texto grande (WCAG 1.4.3), mantendo o ar de marca-d'água */
 .rodape__assinatura {
   font-family: var(--fonte-display);
   font-size: clamp(3.2rem, 14vw, 9rem);
   line-height: 0.9;
   text-transform: uppercase;
-  color: rgba(252, 249, 245, 0.12);
+  color: rgba(252, 249, 245, 0.5);
   white-space: nowrap;
   text-align: center;
   user-select: none;
 }
 @supports (-webkit-text-stroke: 1px #000) {
   .rodape__assinatura {
-    color: transparent;
-    -webkit-text-stroke: 1.5px rgba(252, 249, 245, 0.25);
+    color: rgba(252, 249, 245, 0.5);
+    -webkit-text-stroke: 1.5px rgba(252, 249, 245, 0.55);
   }
 }
 
@@ -1300,12 +1301,13 @@ a { color: var(--brand-escuro); }
 }
 
 /* ---------- Reveal on scroll (só quando há JS; sem JS tudo fica visível) ---------- */
+/* Anima só com transform (sem opacity): texto nunca fica com contraste
+   insuficiente durante a entrada — exigência do critério WCAG 1.4.3 */
 .js .reveal {
-  opacity: 0;
   transform: translateY(18px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  transition: transform 0.55s ease;
 }
-.js .reveal.visivel { opacity: 1; transform: none; }
+.js .reveal.visivel { transform: none; }
 
 /* ---------- Destacar links (balão de acessibilidade) ---------- */
 html.a11y-links a {
@@ -1346,7 +1348,7 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   background: none !important;
   -webkit-text-fill-color: currentColor;
 }
-:root[data-contraste="alto"] .rodape__assinatura { -webkit-text-stroke: 1.5px #fff; }
+:root[data-contraste="alto"] .rodape__assinatura { color: #fff; -webkit-text-stroke: 1.5px #fff; }
 :root[data-contraste="alto"] ::placeholder { color: #cccccc !important; }
 :root[data-contraste="alto"] :focus-visible { outline: 3px solid #ffef3f !important; }
 :root[data-contraste="alto"] .lista-check li::before,

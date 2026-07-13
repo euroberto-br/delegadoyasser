@@ -55,6 +55,15 @@
 
   /* ---------- Links externos: avisa leitores de tela sobre a nova aba ---------- */
   document.querySelectorAll('a[target="_blank"]').forEach(function (a) {
+    /* Com aria-label, o aviso entra no próprio label — um span de texto ficaria
+       fora do nome acessível e violaria o critério WCAG 2.5.3 (label in name) */
+    if (a.hasAttribute("aria-label")) {
+      var label = a.getAttribute("aria-label");
+      if (label.indexOf("abre em nova aba") === -1) {
+        a.setAttribute("aria-label", label + " (abre em nova aba)");
+      }
+      return;
+    }
     if (a.querySelector(".sr-only")) return;
     var aviso = document.createElement("span");
     aviso.className = "sr-only";
