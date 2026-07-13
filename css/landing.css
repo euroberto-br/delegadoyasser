@@ -86,7 +86,7 @@ a { color: var(--brand-escuro); }
 .secao { padding-block: clamp(3.5rem, 9vw, 6.5rem); }
 .secao--suave { background: var(--papel-2); }
 .secao--tinta { background: var(--tinta); color: var(--papel); }
-.secao--brand { background: var(--brand); color: var(--branco); }
+.secao--brand { background: var(--brand-escuro); color: var(--branco); }
 
 /* Texto apenas para leitores de tela (ex.: aviso de link que abre em nova aba) */
 .sr-only {
@@ -262,7 +262,7 @@ a { color: var(--brand-escuro); }
   padding: 0.35rem 0.65rem;
 }
 .secao--tinta .parte { color: var(--papel); }
-.secao--tinta .parte strong { background: var(--brand); color: var(--branco); }
+.secao--tinta .parte strong { background: var(--brand-escuro); color: var(--branco); }
 
 /* ---------- Botões ---------- */
 .btn {
@@ -286,7 +286,9 @@ a { color: var(--brand-escuro); }
 .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--tinta); }
 .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--tinta); }
 
-.btn--primario { background: var(--brand); color: var(--branco); }
+/* Fundos com texto branco pequeno usam --brand-escuro: contraste ≥ 7:1 (WCAG 1.4.6 AAA).
+   O vermelho vivo (--brand) segue em bordas, sombras e no destaque .marca de títulos grandes. */
+.btn--primario { background: var(--brand-escuro); color: var(--branco); }
 .btn--tinta { background: var(--tinta); color: var(--papel); }
 
 .secao--tinta .btn,
@@ -498,7 +500,7 @@ a { color: var(--brand-escuro); }
   margin-bottom: 1.4rem;
 }
 .hero__selo .pt {
-  background: var(--brand);
+  background: var(--brand-escuro);
   color: var(--branco);
   font-weight: 600;
   padding: 0.1rem 0.45rem;
@@ -521,7 +523,7 @@ a { color: var(--brand-escuro); }
 
 /* ---------- Faixa marquee ---------- */
 .faixa {
-  background: var(--brand);
+  background: var(--brand-escuro);
   color: var(--branco);
   border-block: var(--borda);
   transform: rotate(-1.3deg) scale(1.02);
@@ -685,7 +687,7 @@ a { color: var(--brand-escuro); }
   padding: 0.9rem 1.1rem;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
-.rede:hover { background: var(--brand); border-color: var(--papel); }
+.rede:hover { background: var(--brand-escuro); border-color: var(--papel); }
 .rede strong {
   font-family: var(--fonte-display);
   font-weight: 400;
@@ -775,7 +777,7 @@ a { color: var(--brand-escuro); }
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.95);
 }
 
 /* ---------- Missões ---------- */
@@ -799,7 +801,7 @@ a { color: var(--brand-escuro); }
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: var(--brand);
+  background: var(--brand-escuro);
   color: var(--branco);
   padding: 0.25rem 0.6rem;
   margin-bottom: 0.7rem;
@@ -872,7 +874,7 @@ a { color: var(--brand-escuro); }
 /* Card em destaque: o Manual do voluntário (ponto de partida) */
 .material--destaque { background: var(--tinta); color: var(--papel); }
 .material--destaque p { color: #cfc4c8; }
-.material--destaque .material__tag { background: var(--brand); color: var(--branco); }
+.material--destaque .material__tag { background: var(--brand-escuro); color: var(--branco); }
 .material--destaque .material__ico {
   background: rgba(252, 249, 245, 0.12);
   border-color: rgba(252, 249, 245, 0.35);
@@ -1228,7 +1230,7 @@ a { color: var(--brand-escuro); }
   padding-bottom: 2.5rem;
 }
 .rodape .logo { color: var(--papel); margin-bottom: 1rem; }
-.rodape .logo__nome small { color: #a3969b; }
+.rodape .logo__nome small { color: #b3a7ac; } /* 8:1 sobre --tinta (WCAG 1.4.6 AAA) */
 .rodape__sobre { font-size: 0.95rem; max-width: 44ch; }
 .rodape__titulo {
   font-family: var(--fonte-mono);
