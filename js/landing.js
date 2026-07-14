@@ -1,5 +1,5 @@
 /* =============================================================
-   Delegado Yasser — Brasil sem Medo
+   Delegado Yasser — Brasil Seguro
    Scripts da landing (vanilla JS, sem dependências)
    ============================================================= */
 
@@ -661,7 +661,7 @@
       img.setAttribute("data-src", prefixo + ("0" + i).slice(-2) + ".jpg");
       // O número da foto já é anunciado pelo aria-label do slide ("N de total"),
       // então o alt traz só a descrição, sem repetir o número.
-      img.alt = "Delegado Yasser durante as ações do movimento Brasil sem Medo";
+      img.alt = "Delegado Yasser durante as ações do movimento Brasil Seguro";
       img.decoding = "async";
       // Se a foto falhar (link quebrado), esconde a imagem — o slide fica
       // como painel escuro, sem o ícone de imagem quebrada.
