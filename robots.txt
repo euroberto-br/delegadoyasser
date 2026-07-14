@@ -1,0 +1,10 @@
+# robots.txt — Delegado Yasser Yassine
+# Permite a indexação de todo o site pelos buscadores.
+
+User-agent: *
+Allow: /
+
+# Não indexar artefatos internos (relatórios de auditoria)
+Disallow: /erros/
+
+Sitemap: https://delegadoyasser.com.br/sitemap.xml

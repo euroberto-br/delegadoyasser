@@ -1,0 +1,25 @@
+{
+  "name": "Delegado Yasser Yassine — Brasil Seguro",
+  "short_name": "Delegado Yasser",
+  "description": "Site oficial do Delegado Yasser Yassine, pré-candidato a deputado estadual pelo PT-GO.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#c8102e",
+  "background_color": "#fcf9f5",
+  "icons": [
+    {
+      "src": "images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "images/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

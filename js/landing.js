@@ -625,7 +625,7 @@
 
         listaNoticias.innerHTML = "";
         noticias.forEach(function (nt) { listaNoticias.appendChild(montarNoticia(nt)); });
-        if (noticiasNota) noticiasNota.textContent = "Últimas notícias publicadas pela equipe do movimento.";
+        if (noticiasNota) noticiasNota.textContent = "Últimas notícias publicadas.";
       })
       .catch(function () { /* falhou → mantém o aviso do HTML */ });
   }
