@@ -1,0 +1,424 @@
+/* =============================================================
+   Delegado Yasser — Mapa do Medo
+   Estilos da página do mapa participativo.
+   Usa os tokens de css/landing.css (--brand, --tinta, --papel…).
+   Estética "cartaz de rua × dossiê": bordas 2px, sombras duras.
+   ============================================================= */
+
+/* ---------- Intro ---------- */
+.mapa-intro__sub {
+  max-width: 46ch;
+  font-size: 1.1rem;
+}
+.mapa-intro__sub strong { color: var(--branco); }
+
+.aviso-legal {
+  margin-top: 1.6rem;
+  max-width: 60ch;
+  background: rgba(252, 249, 245, 0.08);
+  border: 2px solid var(--papel);
+  border-left-width: 6px;
+  padding: 0.9rem 1.1rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.aviso-legal strong { color: var(--branco); }
+
+/* ---------- Layout do mapa ---------- */
+.mapa-secao { padding-block: clamp(2rem, 5vw, 3.5rem); }
+
+.mapa-layout {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+
+/* Painel lateral */
+.mapa-painel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.btn-adicionar { width: 100%; font-size: 1rem; }
+
+.mapa-painel__dica {
+  margin: 0;
+  font-family: var(--fonte-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  background: var(--brand-suave);
+  border: 2px solid var(--brand-escuro);
+  color: var(--brand-escuro);
+  padding: 0.6rem 0.8rem;
+}
+.link-cancelar,
+.link-geo {
+  font-family: var(--fonte-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--brand-escuro);
+  cursor: pointer;
+}
+
+.mapa-painel__bloco {
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+  padding: 1rem 1.1rem;
+}
+.mapa-painel__titulo {
+  margin: 0 0 0.7rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tinta-70);
+}
+
+/* Legenda / filtros */
+.legenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.legenda__item { margin: 0; }
+.legenda__label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  user-select: none;
+}
+.legenda__check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+  border: 2px solid var(--tinta);
+  background: var(--branco);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.legenda__check:checked { background: var(--tinta); }
+.legenda__check:checked::after { content: "✓"; color: var(--papel); font-size: 0.75rem; line-height: 1; }
+.legenda__check:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+.legenda__pino {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--tinta);
+  background: var(--cor, #999);
+  font-size: 0.8rem;
+  box-shadow: 2px 2px 0 rgba(24, 17, 20, 0.25);
+}
+.legenda__item--off .legenda__label { opacity: 0.45; }
+
+.mapa-nota {
+  margin: 0;
+  font-family: var(--fonte-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--tinta-70);
+}
+.mapa-nota:empty { display: none; }
+
+/* Mapa em si */
+.mapa-wrap {
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+  background: var(--papel-2);
+}
+#mapa {
+  width: 100%;
+  height: 60vh;
+  min-height: 380px;
+  z-index: 1;              /* fica abaixo do header sticky e dos balões */
+}
+.mapa--modo-add { cursor: crosshair; }
+.mapa--modo-add .leaflet-grab { cursor: crosshair; }
+
+/* Aviso ao clicar fora de Goiás */
+.aviso-fora .leaflet-popup-content-wrapper {
+  background: var(--brand-escuro);
+  color: var(--branco);
+  border-color: var(--tinta);
+}
+.aviso-fora .leaflet-popup-content { font-family: var(--fonte-mono); font-size: 0.78rem; font-weight: 600; }
+.aviso-fora .leaflet-popup-tip { background: var(--brand-escuro); }
+
+/* ---------- Pinos personalizados ---------- */
+.pino { background: none; border: none; }
+.pino__corpo {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.95rem;
+  background: var(--cor, #999);
+  border: 2px solid var(--tinta);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 2px 2px 0 rgba(24, 17, 20, 0.3);
+}
+.pino__corpo > span { transform: rotate(45deg); line-height: 1; }
+.pino--pendente .pino__corpo { border-style: dashed; opacity: 0.85; }
+.pino--temp .pino__corpo {
+  background: var(--branco);
+  border-color: var(--brand-escuro);
+  animation: pino-pulsa 1s ease-in-out infinite;
+}
+@keyframes pino-pulsa { 50% { transform: rotate(-45deg) scale(1.12); } }
+
+/* ---------- Popup (dossiê) ---------- */
+.leaflet-popup-content-wrapper {
+  border: var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra-dura);
+}
+.leaflet-popup-content { margin: 0.85rem 1rem; font-family: var(--fonte-texto); }
+.leaflet-popup-tip { border: var(--borda); }
+.popup__cat {
+  display: inline-block;
+  font-family: var(--fonte-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--branco);
+  background: var(--cor, #555);
+  border: 1.5px solid var(--tinta);
+  padding: 0.12rem 0.45rem;
+  margin-bottom: 0.4rem;
+}
+.popup__titulo { display: block; font-weight: 800; font-size: 1rem; margin-bottom: 0.2rem; color: var(--tinta); }
+.popup__desc { margin: 0.25rem 0 0.35rem; font-size: 0.88rem; color: var(--tinta-70); }
+.popup__meta { font-family: var(--fonte-mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tinta-70); }
+
+/* ---------- Passos ---------- */
+.passos-mapa {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: 1fr;
+  counter-reset: passo;
+}
+.passo-mapa {
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+  padding: 1.6rem 1.4rem;
+}
+.passo-mapa__num {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-bottom: 0.8rem;
+  font-family: var(--fonte-display);
+  font-size: 1.3rem;
+  color: var(--branco);
+  background: var(--brand-escuro);
+  border: var(--borda);
+  box-shadow: 3px 3px 0 var(--tinta);
+}
+.passo-mapa h3 { margin-bottom: 0.35rem; }
+.passo-mapa p { margin: 0; color: var(--tinta-70); font-size: 0.95rem; }
+
+/* ---------- CTA ---------- */
+.cta-mapa { display: grid; gap: 1.4rem; }
+.cta-mapa h2 { color: var(--branco); }
+.cta-mapa p { color: #f0e6e8; margin: 0; }
+
+/* ---------- Painel do formulário (relato) ---------- */
+.relato-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(24, 17, 20, 0.55);
+}
+.relato-painel {
+  position: fixed;
+  z-index: 81;
+  top: 0;
+  right: 0;
+  width: min(420px, 100%);
+  height: 100%;
+  overflow-y: auto;
+  background: var(--papel);
+  border-left: var(--borda);
+  box-shadow: -6px 0 0 rgba(24, 17, 20, 0.15);
+  padding: 1.3rem 1.4rem 2rem;
+}
+.relato-painel__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+.relato-painel__topo h2 { margin: 0; font-size: clamp(1.5rem, 6vw, 1.9rem); }
+.relato-fechar {
+  flex: none;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: 3px 3px 0 var(--tinta);
+  cursor: pointer;
+}
+.relato-fechar:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--tinta); }
+
+.relato-form { display: grid; gap: 1rem; }
+.campo { display: grid; gap: 0.35rem; }
+.campo label,
+.campo__rotulo {
+  font-family: var(--fonte-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta-70);
+}
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  color: var(--tinta);
+  background: var(--branco);
+  border: var(--borda);
+  border-radius: var(--raio);
+  padding: 0.7rem 0.8rem;
+}
+.campo textarea { resize: vertical; }
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  outline: 3px solid var(--brand);
+  outline-offset: 1px;
+}
+
+/* Bloco de localização (fieldset) */
+.campo--local {
+  border: 2px dashed var(--tinta);
+  background: var(--papel-2);
+  padding: 0.8rem;
+  display: grid;
+  gap: 0.6rem;
+}
+.campo--local legend {
+  font-family: var(--fonte-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta-70);
+  padding: 0 0.35rem;
+}
+.campo--local .campo { gap: 0.3rem; }
+.endereco-linha { display: grid; grid-template-columns: 1fr 1.6fr; gap: 0.5rem; }
+.btn--mini {
+  padding: 0.55rem 0.85rem;
+  font-size: 0.82rem;
+  box-shadow: 3px 3px 0 var(--tinta);
+}
+.btn-localizar { margin-top: 0.2rem; }
+.coord-texto {
+  font-family: var(--fonte-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--tinta);
+  background: var(--branco);
+  border: 1.5px solid var(--tinta);
+  padding: 0.4rem 0.55rem;
+}
+.coord-texto--vazio { color: var(--tinta-70); font-weight: 500; }
+.local-acoes { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
+.link-geo { justify-self: start; }
+
+/* Grupo "Seus dados" (contato) */
+.campo-grupo {
+  display: grid;
+  gap: 0.85rem;
+  border-top: 2px solid var(--tinta);
+  padding-top: 1rem;
+}
+.campo-grupo__titulo {
+  margin: 0;
+  font-family: var(--fonte-display);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.campo-grupo__nota,
+.campo-dica {
+  margin: -0.4rem 0 0;
+  font-family: var(--fonte-mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--tinta-70);
+}
+.campo-dica { margin: 0; }
+
+.consent {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--tinta-70);
+}
+.consent input {
+  flex: none;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-top: 0.1rem;
+  accent-color: var(--brand);
+}
+
+.relato-form .btn { width: 100%; }
+.relato-status {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border: var(--borda);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.relato-status--ok   { background: #e5f5ec; border-color: #157347; color: #0f5132; }
+.relato-status--erro { background: var(--brand-suave); border-color: var(--brand-escuro); color: var(--brand-escuro); }
+.relato-status--info { background: var(--papel-2); color: var(--tinta-70); }
+
+/* Honeypot anti-spam: fora da tela, mas acessível a bots */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- Responsivo ---------- */
+@media (min-width: 900px) {
+  .mapa-layout { grid-template-columns: 300px 1fr; align-items: start; }
+  .mapa-painel { position: sticky; top: 5.5rem; }
+  #mapa { height: 68vh; }
+  .passos-mapa { grid-template-columns: repeat(3, 1fr); }
+  .cta-mapa { grid-template-columns: 1.4fr 1fr; align-items: center; }
+  .cta-mapa .acoes { margin-top: 0; }
+}
+
+/* ---------- Pausar animações (balão de acessibilidade) ---------- */
+.a11y-parado .pino--temp .pino__corpo { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pino--temp .pino__corpo { animation: none; }
+}
