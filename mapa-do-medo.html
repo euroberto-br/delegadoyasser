@@ -135,9 +135,10 @@
           medo em dado, e dado em ação.
         </p>
         <div class="aviso-legal" role="note">
-          <strong>Como funciona:</strong> os relatos são colaborativos e passam por
-          <strong>moderação</strong> antes de aparecer no mapa público. Eles não substituem
-          o boletim de ocorrência. <strong>Em caso de emergência, ligue 190.</strong>
+          <strong>Como funciona:</strong> os relatos são colaborativos, podem ser feitos de forma
+          <strong>anônima</strong> e passam por <strong>moderação</strong> antes de aparecer no
+          mapa público. Eles não substituem o boletim de ocorrência.
+          <strong>Em caso de emergência, ligue 190.</strong>
         </div>
       </div>
     </section>
@@ -151,9 +152,9 @@
             <button type="button" class="btn btn--primario btn-adicionar" id="botaoAdicionar">
               ＋ Adicionar um ponto
             </button>
-            <p class="mapa-painel__dica" id="dicaAdicionar" hidden>
-              Toque no mapa, no local exato do problema.
-              <button type="button" class="link-cancelar" id="cancelarAdicionar">cancelar</button>
+            <p class="mapa-painel__dica">
+              Leva menos de 1 minuto: <strong>local → o que acontece → envio</strong>.
+              Se preferir, relate de forma <strong>anônima</strong>.
             </p>
 
             <div class="mapa-painel__bloco">
@@ -167,8 +168,25 @@
           </aside>
 
           <!-- Mapa -->
-          <div class="mapa-wrap">
+          <div class="mapa-wrap" id="mapaWrap">
             <div id="mapa" role="application" aria-label="Mapa interativo de Goiás com pontos de insegurança"></div>
+
+            <!-- Pino central (modo "apontar no mapa": arrasta-se o mapa sob o pino) -->
+            <div class="mira" id="mira" hidden aria-hidden="true">
+              <span class="mira__pino"></span>
+              <span class="mira__ponto"></span>
+            </div>
+
+            <!-- Barra de confirmação do local -->
+            <div class="mapa-confirmar" id="mapaConfirmar" hidden role="region" aria-label="Confirmar local escolhido">
+              <p class="mapa-confirmar__txt" id="mapaConfirmarTxt" aria-live="polite">
+                Arraste o mapa até o pino apontar o local exato
+              </p>
+              <div class="mapa-confirmar__acoes">
+                <button type="button" class="btn btn--primario" id="confirmarLocal">✓ Confirmar este local</button>
+                <button type="button" class="btn" id="cancelarLocal">Cancelar</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -218,7 +236,7 @@
     </section>
   </main>
 
-  <!-- ===== PAINEL DO FORMULÁRIO (relato) ===== -->
+  <!-- ===== PAINEL DO FORMULÁRIO (relato em 3 passos) ===== -->
   <div class="relato-overlay" id="relatoOverlay" hidden></div>
   <aside class="relato-painel" id="relatoPainel" role="dialog" aria-modal="true"
          aria-labelledby="relatoTitulo" hidden tabindex="-1">
@@ -226,110 +244,209 @@
       <h2 id="relatoTitulo">Relatar um ponto</h2>
       <button type="button" class="relato-fechar" id="relatoFechar" aria-label="Fechar">✕</button>
     </div>
+
+    <!-- Indicador de progresso -->
+    <ol class="stepper" id="stepper" aria-label="Etapas do relato">
+      <li class="stepper__item stepper__item--ativo" aria-current="step">
+        <span class="stepper__num" aria-hidden="true">1</span>
+        <span class="stepper__rotulo">Local</span>
+      </li>
+      <li class="stepper__item">
+        <span class="stepper__num" aria-hidden="true">2</span>
+        <span class="stepper__rotulo">Relato</span>
+      </li>
+      <li class="stepper__item">
+        <span class="stepper__num" aria-hidden="true">3</span>
+        <span class="stepper__rotulo">Envio</span>
+      </li>
+    </ol>
+
     <form id="formRelato" class="relato-form" novalidate>
       <!-- Honeypot anti-spam -->
       <div class="hp" aria-hidden="true">
         <label>Não preencha este campo <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
       </div>
 
-      <div class="campo">
-        <label for="rCategoria">Tipo de risco *</label>
-        <select id="rCategoria" name="categoria" required>
-          <option value="">Selecione…</option>
-          <!-- opções preenchidas via JS -->
-        </select>
-      </div>
+      <!-- ===== PASSO 1 · LOCAL ===== -->
+      <section class="passo" id="passo1" aria-label="Passo 1 de 3: local">
+        <h3 class="passo__pergunta" tabindex="-1">Onde fica o ponto de risco?</h3>
 
-      <div class="campo">
-        <label for="rTitulo">Local / referência *</label>
-        <input type="text" id="rTitulo" name="titulo" maxlength="90" required
-               placeholder="Ex.: Praça central, ao lado da escola">
-      </div>
-
-      <!-- Localização: endereço estruturado, tocando no mapa ou pela localização -->
-      <fieldset class="campo campo--local">
-        <legend>Onde fica? *</legend>
-
-        <div class="campo">
-          <label for="rLogradouro">Rua / Avenida</label>
-          <input type="text" id="rLogradouro" name="logradouro" maxlength="120"
-                 autocomplete="off" placeholder="Ex.: Avenida Anhanguera">
-        </div>
-
-        <div class="endereco-linha">
-          <div class="campo">
-            <label for="rNumero">Número</label>
-            <input type="text" id="rNumero" name="numero" maxlength="12"
-                   inputmode="numeric" autocomplete="off" placeholder="Ex.: 1200">
-          </div>
-          <div class="campo">
-            <label for="rBairro">Bairro</label>
-            <input type="text" id="rBairro" name="bairro" maxlength="80"
-                   autocomplete="off" placeholder="Ex.: Setor Central">
+        <div class="campo busca-local">
+          <label for="rBusca">Busque o endereço ou um lugar conhecido</label>
+          <div class="busca-local__wrap">
+            <input type="search" id="rBusca" name="busca" maxlength="140"
+                   autocomplete="off" spellcheck="false" enterkeyhint="search"
+                   placeholder="Ex.: Av. Anhanguera, Setor Central, Goiânia"
+                   role="combobox" aria-expanded="false"
+                   aria-controls="listaSugestoes" aria-autocomplete="list">
+            <ul class="sugestoes" id="listaSugestoes" role="listbox"
+                aria-label="Sugestões de endereço" hidden></ul>
           </div>
         </div>
 
-        <div class="campo">
-          <label for="rCidade">Cidade *</label>
-          <input type="text" id="rCidade" name="cidade" maxlength="60" required
-                 autocomplete="off" placeholder="Ex.: Anápolis">
+        <p class="ou-divisor" aria-hidden="true">ou</p>
+
+        <div class="local-opcoes">
+          <button type="button" class="opcao-local" id="usarLocalizacao">
+            <span class="opcao-local__icone" aria-hidden="true">📡</span>
+            <span class="opcao-local__texto">
+              <strong>Usar minha localização</strong>
+              <small id="usarLocalizacaoNota">Ideal se você está no local agora</small>
+            </span>
+          </button>
+          <button type="button" class="opcao-local" id="escolherNoMapa">
+            <span class="opcao-local__icone" aria-hidden="true">🗺️</span>
+            <span class="opcao-local__texto">
+              <strong>Apontar no mapa</strong>
+              <small>Arraste o mapa até o ponto exato</small>
+            </span>
+          </button>
         </div>
 
-        <button type="button" class="btn btn--mini btn-localizar" id="buscarEndereco">🔍 Localizar no mapa</button>
-
-        <output id="rCoordTexto" class="coord-texto coord-texto--vazio">Nenhum local marcado ainda</output>
-
-        <div class="local-acoes">
-          <button type="button" class="link-geo" id="marcarNoMapa">Marcar tocando no mapa</button>
-          <button type="button" class="link-geo" id="usarLocalizacao">Usar minha localização</button>
+        <!-- Cartão do local escolhido -->
+        <div class="local-card" id="localCard" hidden>
+          <p class="local-card__rotulo">📍 Local marcado</p>
+          <p class="local-card__endereco" id="localCardEndereco">—</p>
+          <div class="local-card__acoes">
+            <button type="button" class="link-geo" id="ajustarNoMapa">Ajustar no mapa</button>
+          </div>
+          <details class="local-card__editar" id="editarEndereco">
+            <summary>Corrigir o endereço por escrito</summary>
+            <div class="local-card__campos">
+              <div class="campo">
+                <label for="rLogradouro">Rua / Avenida</label>
+                <input type="text" id="rLogradouro" name="logradouro" maxlength="120"
+                       autocomplete="off" placeholder="Ex.: Avenida Anhanguera">
+              </div>
+              <div class="endereco-linha">
+                <div class="campo">
+                  <label for="rNumero">Número</label>
+                  <input type="text" id="rNumero" name="numero" maxlength="12"
+                         inputmode="numeric" autocomplete="off" placeholder="1200">
+                </div>
+                <div class="campo">
+                  <label for="rBairro">Bairro</label>
+                  <input type="text" id="rBairro" name="bairro" maxlength="80"
+                         autocomplete="off" placeholder="Setor Central">
+                </div>
+              </div>
+              <div class="campo">
+                <label for="rCidade">Cidade *</label>
+                <input type="text" id="rCidade" name="cidade" maxlength="60"
+                       autocomplete="off" placeholder="Ex.: Anápolis">
+              </div>
+            </div>
+          </details>
         </div>
 
         <input type="hidden" name="lat" id="rLat">
         <input type="hidden" name="lng" id="rLng">
-      </fieldset>
 
-      <div class="campo">
-        <label for="rDescricao">O que acontece ali?</label>
-        <textarea id="rDescricao" name="descricao" rows="3" maxlength="400"
-                  placeholder="Descreva o problema. Evite citar nomes de pessoas."></textarea>
-      </div>
+        <div class="passo__nav">
+          <button type="button" class="btn btn--primario" id="paraPasso2" disabled>Continuar →</button>
+        </div>
+      </section>
 
-      <!-- Dados de contato (privados: só a equipe vê) -->
-      <div class="campo-grupo">
-        <p class="campo-grupo__titulo">Seus dados</p>
-        <p class="campo-grupo__nota">Usados só pela equipe para validar o relato e dar retorno. Não aparecem no mapa.</p>
+      <!-- ===== PASSO 2 · O QUE ACONTECE ===== -->
+      <section class="passo" id="passo2" hidden aria-label="Passo 2 de 3: o que acontece">
+        <h3 class="passo__pergunta" tabindex="-1">O que acontece ali?</h3>
+
+        <fieldset class="campo chips-campo">
+          <legend>Tipo de risco *</legend>
+          <div class="chips" id="chipsCategorias">
+            <!-- chips de categoria preenchidos via JS -->
+          </div>
+        </fieldset>
 
         <div class="campo">
-          <label for="rNome">Nome *</label>
-          <input type="text" id="rNome" name="nome" maxlength="80" required
-                 autocomplete="name" placeholder="Seu nome">
+          <label for="rTitulo">Ponto de referência *</label>
+          <input type="text" id="rTitulo" name="titulo" maxlength="90"
+                 placeholder="Ex.: Praça central, ao lado da escola">
         </div>
 
         <div class="campo">
-          <label for="rEmail">E-mail</label>
-          <input type="email" id="rEmail" name="email" maxlength="120"
-                 autocomplete="email" placeholder="voce@email.com">
+          <label for="rDescricao">Descreva o problema <span class="campo-opcional">(opcional)</span></label>
+          <textarea id="rDescricao" name="descricao" rows="3" maxlength="400"
+                    placeholder="Ex.: Trecho sem iluminação onde já houve assaltos à noite."></textarea>
+          <p class="campo-contador"><span id="descContador">0</span>/400 · evite citar nomes de pessoas</p>
         </div>
 
-        <div class="campo">
-          <label for="rTelefone">Telefone / WhatsApp</label>
-          <input type="tel" id="rTelefone" name="telefone" maxlength="20"
-                 autocomplete="tel" placeholder="(62) 90000-0000">
+        <div class="passo__nav passo__nav--dupla">
+          <button type="button" class="btn" id="voltarPasso1">← Voltar</button>
+          <button type="button" class="btn btn--primario" id="paraPasso3">Continuar →</button>
+        </div>
+      </section>
+
+      <!-- ===== PASSO 3 · IDENTIFICAÇÃO E ENVIO ===== -->
+      <section class="passo" id="passo3" hidden aria-label="Passo 3 de 3: identificação e envio">
+        <h3 class="passo__pergunta" tabindex="-1">Como você quer enviar?</h3>
+
+        <p class="resumo-relato" id="resumoRelato"></p>
+
+        <div class="identidade" role="radiogroup" aria-label="Forma de identificação">
+          <label class="identidade__opcao identidade__opcao--ativa">
+            <input type="radio" name="identidade" value="identificado" checked>
+            <span class="identidade__corpo">
+              <strong>👤 Com meus dados</strong>
+              <small>A equipe pode confirmar o relato e te dar retorno.
+              Seus dados <u>nunca</u> aparecem no mapa.</small>
+            </span>
+          </label>
+          <label class="identidade__opcao">
+            <input type="radio" name="identidade" value="anonimo">
+            <span class="identidade__corpo">
+              <strong>🕶️ Anonimamente</strong>
+              <small>Nenhum dado pessoal é enviado. O relato vale do mesmo jeito.</small>
+            </span>
+          </label>
         </div>
 
-        <p class="campo-dica">Informe ao menos um contato: e-mail ou telefone.</p>
-      </div>
+        <div class="dados-contato" id="dadosContato">
+          <div class="campo">
+            <label for="rNome">Nome *</label>
+            <input type="text" id="rNome" name="nome" maxlength="80"
+                   autocomplete="name" placeholder="Seu nome">
+          </div>
+          <div class="campo">
+            <label for="rEmail">E-mail</label>
+            <input type="email" id="rEmail" name="email" maxlength="120"
+                   autocomplete="email" placeholder="voce@email.com">
+          </div>
+          <div class="campo">
+            <label for="rTelefone">Telefone / WhatsApp</label>
+            <input type="tel" id="rTelefone" name="telefone" maxlength="20"
+                   autocomplete="tel" placeholder="(62) 90000-0000">
+          </div>
+          <p class="campo-dica">Informe ao menos um contato: e-mail ou telefone.</p>
+        </div>
 
-      <label class="consent">
-        <input type="checkbox" name="consentimento" id="rConsent" required>
-        <span>Confirmo que o relato é verdadeiro e de boa-fé. O ponto é exibido de forma
-        <strong>anônima</strong> no mapa; meus dados de contato ficam só com a equipe, para
-        validação e retorno.</span>
-      </label>
+        <label class="consent">
+          <input type="checkbox" name="consentimento" id="rConsent">
+          <span>Confirmo que o relato é verdadeiro e de boa-fé. O ponto aparece no mapa
+          <strong>sem nenhum dado pessoal</strong>.</span>
+        </label>
 
-      <button type="submit" class="btn btn--primario" id="relatoEnviar">Enviar relato</button>
+        <div class="passo__nav passo__nav--dupla">
+          <button type="button" class="btn" id="voltarPasso2">← Voltar</button>
+          <button type="submit" class="btn btn--primario" id="relatoEnviar">Enviar relato</button>
+        </div>
+      </section>
+
       <p class="relato-status" id="relatoStatus" role="status" aria-live="polite" hidden></p>
     </form>
+
+    <!-- ===== TELA DE SUCESSO ===== -->
+    <div class="relato-sucesso" id="relatoSucesso" hidden>
+      <span class="relato-sucesso__icone" aria-hidden="true">✓</span>
+      <h3 tabindex="-1">Relato enviado!</h3>
+      <p>Obrigado por ajudar. Seu relato passa por <strong>moderação</strong> antes de
+      aparecer no mapa público — isso evita trotes e injustiças.</p>
+      <p class="relato-sucesso__nota">Em caso de emergência, ligue <strong>190</strong>.</p>
+      <div class="relato-sucesso__acoes">
+        <button type="button" class="btn btn--primario" id="relatarOutro">Relatar outro ponto</button>
+        <button type="button" class="btn" id="sucessoFechar">Fechar</button>
+      </div>
+    </div>
   </aside>
 
   <!-- ===== FOOTER ===== -->

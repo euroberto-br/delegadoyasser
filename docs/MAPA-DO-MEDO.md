@@ -25,20 +25,22 @@ some ao recarregar). Isso serve para você ver o visual antes de publicar.
 1. Crie uma planilha no Google Sheets (ex.: **"Mapa do Medo — relatos"**).
 2. Na primeira linha, crie estas colunas (os nomes precisam bater; a ordem é livre):
 
-   | data | status | categoria | titulo | cidade | descricao | lat | lng | endereco | nome | email | telefone |
-   |------|--------|-----------|--------|--------|-----------|-----|-----|----------|------|-------|----------|
+   | data | status | categoria | titulo | cidade | descricao | lat | lng | endereco | nome | email | telefone | anonimo |
+   |------|--------|-----------|--------|--------|-----------|-----|-----|----------|------|-------|----------|---------|
 
    - **status**: `pendente` (padrão ao chegar) ou `aprovado` (aparece no mapa).
    - **categoria**: um destes códigos — `iluminacao`, `mato`, `violencia`,
      `policiamento`, `drogas`, `mulheres`, `infra`.
    - **lat / lng**: coordenadas (o site preenche sozinho).
-   - **endereco**: endereço digitado pela pessoa (ajuda a conferir o ponto).
+   - **endereco**: endereço digitado/confirmado pela pessoa (ajuda a conferir o ponto).
    - **nome / email / telefone**: contato de quem enviou — **dados privados**,
      usados só pela equipe. **Nunca** são exibidos no mapa público.
+   - **anonimo**: `sim` quando a pessoa escolheu **relato anônimo** (nesse caso
+     nome/email/telefone chegam vazios — é esperado, não é erro).
 
-> **Já publicou a versão anterior?** Adicione as 4 colunas novas (`endereco`,
-> `nome`, `email`, `telefone`) ao final da planilha e **atualize o código do
-> Apps Script** com a versão abaixo (que grava pelos nomes das colunas).
+> **Já publicou a versão anterior?** Adicione as colunas novas (`endereco`,
+> `nome`, `email`, `telefone`, `anonimo`) ao final da planilha e **atualize o
+> código do Apps Script** com a versão abaixo (que grava pelos nomes das colunas).
 
 ## Passo 2 — Publicar o Apps Script (recebe os relatos)
 
@@ -81,7 +83,7 @@ some ao recarregar). Isso serve para você ver o visual antes de publicar.
 // Grava cada campo na coluna de mesmo nome do cabeçalho (a ordem das colunas
 // pode mudar; colunas a mais são ignoradas). "data" e "status" são preenchidas
 // automaticamente. Colunas usadas: data | status | categoria | titulo | cidade |
-// descricao | lat | lng | endereco | nome | email | telefone
+// descricao | lat | lng | endereco | nome | email | telefone | anonimo
 function doPost(e) {
   try {
     var p = (e && e.parameter) || {};
@@ -112,7 +114,8 @@ function doPost(e) {
       endereco: corta(p.endereco, 160),
       nome: corta(p.nome, 80),
       email: corta(p.email, 120),
-      telefone: corta(p.telefone, 20)
+      telefone: corta(p.telefone, 20),
+      anonimo: corta(p.anonimo, 5)
     };
 
     var linha = cabecalho.map(function (nome) {
@@ -159,6 +162,10 @@ function json(obj) {
   essas colunas). O ponto em si é público e anônimo. Trate a planilha como base
   com dados pessoais: acesso restrito e 2FA. Oriente a não citar nomes de
   terceiros na descrição.
+- **Relato anônimo é opção legítima.** Quem escolhe `anonimo = sim` não envia
+  nenhum dado pessoal — a linha chega sem contato mesmo. Modere com um pouco
+  mais de atenção (não há como pedir confirmação), mas não descarte por padrão:
+  em tema de segurança, o anonimato costuma aumentar o número de relatos reais.
 - **Busca de endereço (geocodificação).** É feita pelo
   [Nominatim](https://nominatim.org/) do OpenStreetMap, gratuito e sem chave,
   restrito a Goiás. A política de uso pede volume baixo (≈1 busca/seg) — tranquilo

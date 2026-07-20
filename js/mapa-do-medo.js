@@ -3,6 +3,14 @@
    Mapa participativo de insegurança (Leaflet + OpenStreetMap).
    Vanilla JS. Depende apenas de Leaflet (carregado via CDN no HTML).
 
+   Relato em 3 passos (wizard):
+   1) Local  — busca de endereço com sugestões (autocomplete),
+               geolocalização ou "apontar no mapa" (pino central:
+               arrasta-se o mapa sob um pino fixo e confirma).
+   2) Relato — categoria em chips visuais, referência e descrição.
+   3) Envio  — identificado (com contato) OU anônimo (sem nenhum
+               dado pessoal), consentimento e envio.
+
    Fluxo de dados (mesmo padrão do resto do site):
    - Envio do relato  → POST (URLSearchParams) para um Web App do
      Apps Script (MAPA_ENDPOINT), que grava numa planilha Google.
@@ -31,8 +39,12 @@
   var SERVIDO_VIA_HTTP =
     location.protocol === "http:" || location.protocol === "https:";
 
-  /* Categorias — fonte única para legenda, <select>, pinos e popups.
-     (as 4 pedidas + sugestões: policiamento, drogas, insegurança p/ mulheres) */
+  // Nominatim (OpenStreetMap) — geocodificação gratuita, sem chave.
+  // viewbox = minLng,maxLat,maxLng,minLat → caixa de Goiás.
+  var NOMINATIM = "https://nominatim.openstreetmap.org";
+  var VIEWBOX_GO = "&bounded=1&viewbox=-53.6,-12.3,-45.7,-19.7";
+
+  /* Categorias — fonte única para legenda, chips, pinos e popups. */
   var CATEGORIAS = [
     { id: "iluminacao",   nome: "Iluminação / ruas escuras",       emoji: "💡", cor: "#d98200" },
     { id: "mato",         nome: "Mato alto / abandono",            emoji: "🌿", cor: "#2e7d32" },
@@ -54,6 +66,17 @@
     { lat: -16.823, lng: -49.246, categoria: "mulheres",     titulo: "Passagem isolada",           cidade: "Aparecida de Goiânia", descricao: "Passarela mal iluminada onde já houve casos de assédio." },
     { lat: -17.797, lng: -50.930, categoria: "drogas",       titulo: "Praça com uso de drogas",    cidade: "Rio Verde",            descricao: "Ponto de uso frequente; famílias deixaram de usar a praça." }
   ];
+
+  /* Utilitários */
+  function debounce(fn, ms) {
+    var t = null;
+    return function () {
+      var args = arguments, self = this;
+      clearTimeout(t);
+      t = setTimeout(function () { fn.apply(self, args); }, ms);
+    };
+  }
+  function val(el) { return el && el.value ? el.value.trim() : ""; }
 
   /* =============================================================
      2) MAPA
@@ -200,7 +223,7 @@
   }
 
   /* =============================================================
-     3) LEGENDA / FILTROS (gerada a partir das categorias)
+     3) LEGENDA / FILTROS + CHIPS DE CATEGORIA (do formulário)
      ============================================================= */
   var legendaEl = document.getElementById("legenda");
   if (legendaEl) {
@@ -239,114 +262,75 @@
     });
   }
 
-  // <select> do formulário
-  var selCategoria = document.getElementById("rCategoria");
-  if (selCategoria) {
+  // Chips de categoria (passo 2) — escolha visual em 1 toque
+  var chipsWrap = document.getElementById("chipsCategorias");
+  if (chipsWrap) {
     CATEGORIAS.forEach(function (c) {
-      var opt = document.createElement("option");
-      opt.value = c.id;
-      opt.textContent = c.emoji + "  " + c.nome;
-      selCategoria.appendChild(opt);
+      var label = document.createElement("label");
+      label.className = "chip";
+
+      var input = document.createElement("input");
+      input.type = "radio";
+      input.name = "categoria";
+      input.value = c.id;
+      input.className = "chip__radio";
+
+      var pino = document.createElement("span");
+      pino.className = "chip__pino";
+      pino.style.setProperty("--cor", c.cor);
+      pino.setAttribute("aria-hidden", "true");
+      pino.textContent = c.emoji;
+
+      var nome = document.createElement("span");
+      nome.className = "chip__nome";
+      nome.textContent = c.nome;
+
+      label.appendChild(input);
+      label.appendChild(pino);
+      label.appendChild(nome);
+      chipsWrap.appendChild(label);
+    });
+
+    chipsWrap.addEventListener("change", function () {
+      atualizarChips();
+      if (marcadorTemp) marcadorTemp.setIcon(iconeCategoria(categoriaSelecionada() || "infra", "pino--temp"));
+    });
+  }
+
+  function categoriaSelecionada() {
+    var el = document.querySelector('input[name="categoria"]:checked');
+    return el ? el.value : "";
+  }
+  function atualizarChips() {
+    if (!chipsWrap) return;
+    Array.prototype.forEach.call(chipsWrap.querySelectorAll(".chip"), function (l) {
+      var i = l.querySelector("input");
+      l.classList.toggle("chip--ativa", !!(i && i.checked));
     });
   }
 
   /* =============================================================
-     4) MODO "ADICIONAR PONTO"
-     ============================================================= */
-  var botaoAdicionar = document.getElementById("botaoAdicionar");
-  var dicaAdicionar = document.getElementById("dicaAdicionar");
-  var cancelarAdicionar = document.getElementById("cancelarAdicionar");
-  var mapaDiv = document.getElementById("mapa");
-
-  var modoAdicionar = false;
-  var marcadorTemp = null;
-
-  function entrarModoAdd() {
-    modoAdicionar = true;
-    if (dicaAdicionar) dicaAdicionar.hidden = false;
-    if (mapaDiv) mapaDiv.classList.add("mapa--modo-add");
-    if (botaoAdicionar) botaoAdicionar.setAttribute("aria-pressed", "true");
-  }
-  function sairModoAdd() {
-    modoAdicionar = false;
-    if (dicaAdicionar) dicaAdicionar.hidden = true;
-    if (mapaDiv) mapaDiv.classList.remove("mapa--modo-add");
-    if (botaoAdicionar) botaoAdicionar.setAttribute("aria-pressed", "false");
-  }
-  function limparTemp() {
-    if (marcadorTemp) { mapa.removeLayer(marcadorTemp); marcadorTemp = null; }
-  }
-
-  // "+ Adicionar um ponto" abre o painel; dentro dele a pessoa escolhe como
-  // definir o local: buscando o endereço, tocando no mapa ou pela localização.
-  if (botaoAdicionar) {
-    botaoAdicionar.addEventListener("click", function () { abrirPainel(); });
-  }
-  if (cancelarAdicionar) {
-    cancelarAdicionar.addEventListener("click", function () { sairModoAdd(); });
-  }
-
-  var ultimaCoordValida = null;
-
-  function atualizarCoord(lat, lng) {
-    latInput.value = lat.toFixed(6);
-    lngInput.value = lng.toFixed(6);
-    ultimaCoordValida = [lat, lng];
-    if (coordTexto) {
-      coordTexto.textContent = "📍 " + lat.toFixed(5) + ", " + lng.toFixed(5) + " — arraste o pino para ajustar";
-      coordTexto.classList.remove("coord-texto--vazio");
-    }
-  }
-
-  function marcarLocal(lat, lng) {
-    limparTemp();
-    marcadorTemp = L.marker([lat, lng], {
-      icon: iconeCategoria(selCategoria && selCategoria.value ? selCategoria.value : "infra", "pino--temp"),
-      zIndexOffset: 1000,
-      draggable: true
-    }).addTo(mapa);
-    marcadorTemp.on("dragend", function () {
-      var p = marcadorTemp.getLatLng();
-      if (!dentroDeGoias(p.lat, p.lng)) {
-        if (ultimaCoordValida) marcadorTemp.setLatLng(ultimaCoordValida);
-        mostrarStatus("O ponto precisa ficar dentro de Goiás. Arraste de volta para o estado.", "erro");
-        return;
-      }
-      atualizarCoord(p.lat, p.lng);
-      preencherEndereco(p.lat, p.lng); // ao mover o pino, atualiza os campos do endereço
-    });
-    atualizarCoord(lat, lng);
-  }
-
-  mapa.on("click", function (e) {
-    if (!modoAdicionar) return;
-    if (!dentroDeGoias(e.latlng.lat, e.latlng.lng)) {
-      L.popup({ closeButton: false, className: "aviso-fora" })
-        .setLatLng(e.latlng)
-        .setContent("Escolha um ponto dentro de Goiás.")
-        .openOn(mapa);
-      return; // permanece no modo de adição
-    }
-    marcarLocal(e.latlng.lat, e.latlng.lng);
-    preencherEndereco(e.latlng.lat, e.latlng.lng);
-    sairModoAdd();
-    abrirPainel();
-  });
-
-  /* =============================================================
-     5) PAINEL DO FORMULÁRIO (relato)
+     4) PAINEL (dialog) + NAVEGAÇÃO POR PASSOS
      ============================================================= */
   var painel = document.getElementById("relatoPainel");
   var overlay = document.getElementById("relatoOverlay");
   var fechar = document.getElementById("relatoFechar");
   var form = document.getElementById("formRelato");
+  var stepperEl = document.getElementById("stepper");
+  var stepperItens = stepperEl ? stepperEl.querySelectorAll(".stepper__item") : [];
+  var secoesPasso = [
+    document.getElementById("passo1"),
+    document.getElementById("passo2"),
+    document.getElementById("passo3")
+  ];
   var latInput = document.getElementById("rLat");
   var lngInput = document.getElementById("rLng");
-  var coordTexto = document.getElementById("rCoordTexto");
   var statusEl = document.getElementById("relatoStatus");
   var botaoEnviar = document.getElementById("relatoEnviar");
-  var usarLocalizacao = document.getElementById("usarLocalizacao");
+  var sucessoEl = document.getElementById("relatoSucesso");
+
   var focoAnterior = null;
+  var passoAtual = 1;
 
   function abrirPainel() {
     if (!painel) return;
@@ -357,11 +341,12 @@
   }
   function fecharPainel() {
     if (!painel) return;
+    if (sucessoEl && !sucessoEl.hidden) resetTudo(); // saiu da tela de sucesso → próxima abertura começa limpa
     painel.hidden = true;
     if (overlay) overlay.hidden = true;
     if (focoAnterior && focoAnterior.focus) focoAnterior.focus();
   }
-  // Esconde o painel sem resetar os campos (usado ao ir marcar no mapa)
+  // Esconde o painel sem resetar os campos (usado ao ir apontar no mapa)
   function ocultarPainel() {
     if (painel) painel.hidden = true;
     if (overlay) overlay.hidden = true;
@@ -369,155 +354,26 @@
 
   if (fechar) fechar.addEventListener("click", fecharPainel);
   if (overlay) overlay.addEventListener("click", fecharPainel);
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && painel && !painel.hidden) fecharPainel();
-  });
 
-  // Atualiza a cor do pino temporário quando muda a categoria no form
-  if (selCategoria) {
-    selCategoria.addEventListener("change", function () {
-      if (marcadorTemp && latInput.value) {
-        marcadorTemp.setIcon(iconeCategoria(selCategoria.value || "infra", "pino--temp"));
-      }
+  var botaoAdicionar = document.getElementById("botaoAdicionar");
+  if (botaoAdicionar) botaoAdicionar.addEventListener("click", abrirPainel);
+
+  function irPara(n) {
+    passoAtual = n;
+    secoesPasso.forEach(function (sec, i) { if (sec) sec.hidden = i + 1 !== n; });
+    Array.prototype.forEach.call(stepperItens, function (li, i) {
+      var num = i + 1;
+      li.classList.toggle("stepper__item--ativo", num === n);
+      li.classList.toggle("stepper__item--feito", num < n);
+      if (num === n) li.setAttribute("aria-current", "step");
+      else li.removeAttribute("aria-current");
+      var numEl = li.querySelector(".stepper__num");
+      if (numEl) numEl.textContent = num < n ? "✓" : String(num);
     });
-  }
-
-  // Geolocalização opcional
-  if (usarLocalizacao) {
-    usarLocalizacao.addEventListener("click", function () {
-      if (!navigator.geolocation) {
-        mostrarStatus("Seu navegador não permite usar a localização. Marque no mapa.", "info");
-        return;
-      }
-      usarLocalizacao.textContent = "Localizando…";
-      navigator.geolocation.getCurrentPosition(
-        function (pos) {
-          var lat = pos.coords.latitude, lng = pos.coords.longitude;
-          usarLocalizacao.textContent = "Usar minha localização";
-          if (!dentroDeGoias(lat, lng)) {
-            mostrarStatus("Sua localização está fora de Goiás. Marque o ponto no mapa, dentro do estado.", "erro");
-            return;
-          }
-          marcarLocal(lat, lng);
-          preencherEndereco(lat, lng);
-          mapa.setView([lat, lng], 15);
-        },
-        function () {
-          usarLocalizacao.textContent = "Usar minha localização";
-          mostrarStatus("Não foi possível obter sua localização. Marque no mapa.", "info");
-        },
-        { enableHighAccuracy: true, timeout: 8000 }
-      );
-    });
-  }
-
-  // Botão "Marcar tocando no mapa": esconde o painel e ativa o modo de clique
-  var marcarNoMapa = document.getElementById("marcarNoMapa");
-  if (marcarNoMapa) {
-    marcarNoMapa.addEventListener("click", function () {
-      ocultarPainel();
-      entrarModoAdd();
-    });
-  }
-
-  // Busca por endereço (geocodificação via Nominatim/OpenStreetMap — grátis, sem chave).
-  // Usa campos estruturados (rua, nº, bairro, cidade) → consulta ordenada e mais precisa.
-  var logradouroInput = document.getElementById("rLogradouro");
-  var numeroInput = document.getElementById("rNumero");
-  var bairroInput = document.getElementById("rBairro");
-  var cidadeInput = document.getElementById("rCidade");
-  var buscarEndereco = document.getElementById("buscarEndereco");
-
-  function val(el) { return el && el.value ? el.value.trim() : ""; }
-
-  // Endereço legível para gravar na planilha (coluna "endereco")
-  function enderecoComposto() {
-    var rua = val(logradouroInput), num = val(numeroInput), bairro = val(bairroInput);
-    var linha = rua + (num ? ", " + num : "");
-    return [linha, bairro].filter(Boolean).join(" — ");
-  }
-
-  function cidadeDoEndereco(r) {
-    var a = (r && r.address) || {};
-    return a.city || a.town || a.village || a.municipality || a.county || "";
-  }
-
-  function geocodificar() {
-    var rua = val(logradouroInput), num = val(numeroInput);
-    var bairro = val(bairroInput), cidade = val(cidadeInput);
-    if (!rua && !bairro && !cidade) {
-      mostrarStatus("Preencha ao menos a rua e a cidade para localizar.", "info");
-      return;
-    }
-    // Consulta ordenada: "rua, nº, bairro, cidade, Goiás, Brasil"
-    var partes = [];
-    if (rua) partes.push(rua + (num ? ", " + num : ""));
-    if (bairro) partes.push(bairro);
-    if (cidade) partes.push(cidade);
-    partes.push("Goiás");
-    partes.push("Brasil");
-    var q = partes.join(", ");
-
-    if (buscarEndereco) { buscarEndereco.disabled = true; buscarEndereco.textContent = "Buscando…"; }
-    // bounded=1 + viewbox restringe a Goiás (viewbox = minLng,maxLat,maxLng,minLat)
-    var url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=br" +
-      "&addressdetails=1&bounded=1&viewbox=-53.6,-12.3,-45.7,-19.7&q=" + encodeURIComponent(q);
-    fetch(url, { headers: { "Accept": "application/json" } })
-      .then(function (r) { return r.json(); })
-      .then(function (lista) {
-        if (!lista || !lista.length) {
-          mostrarStatus("Endereço não encontrado. Confira a rua/cidade ou marque no mapa.", "erro");
-          return;
-        }
-        var r0 = lista[0];
-        var lat = parseFloat(r0.lat), lng = parseFloat(r0.lon);
-        if (isNaN(lat) || isNaN(lng)) {
-          mostrarStatus("Endereço inválido. Marque no mapa.", "erro");
-          return;
-        }
-        if (!dentroDeGoias(lat, lng)) {
-          mostrarStatus("Esse endereço está fora de Goiás. O Mapa do Medo cobre apenas o estado de Goiás.", "erro");
-          return;
-        }
-        marcarLocal(lat, lng);
-        mapa.setView([lat, lng], 16);
-        var cid = cidadeDoEndereco(r0);
-        if (cid && cidadeInput && !cidadeInput.value.trim()) cidadeInput.value = cid;
-        mostrarStatus("Local encontrado! Confira no mapa — arraste o pino se precisar ajustar.", "ok");
-      })
-      .catch(function () {
-        mostrarStatus("Não foi possível buscar o endereço agora. Marque no mapa.", "erro");
-      })
-      .finally(function () {
-        if (buscarEndereco) { buscarEndereco.disabled = false; buscarEndereco.textContent = "🔍 Localizar no mapa"; }
-      });
-  }
-
-  if (buscarEndereco) buscarEndereco.addEventListener("click", geocodificar);
-  // Enter em qualquer campo do endereço dispara a busca
-  [logradouroInput, numeroInput, bairroInput, cidadeInput].forEach(function (el) {
-    if (!el) return;
-    el.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") { e.preventDefault(); geocodificar(); }
-    });
-  });
-
-  // Geocodificação reversa: preenche os campos de endereço a partir de uma
-  // coordenada (usado ao marcar no mapa, usar a localização ou arrastar o pino).
-  function preencherEndereco(lat, lng) {
-    var url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&zoom=18&lat=" +
-      encodeURIComponent(lat) + "&lon=" + encodeURIComponent(lng);
-    fetch(url, { headers: { "Accept": "application/json" } })
-      .then(function (r) { return r.json(); })
-      .then(function (res) {
-        var a = (res && res.address) || {};
-        if (logradouroInput) logradouroInput.value = a.road || a.pedestrian || a.footway || a.cycleway || "";
-        if (numeroInput) numeroInput.value = a.house_number || "";
-        if (bairroInput) bairroInput.value = a.suburb || a.neighbourhood || a.quarter || a.city_district || "";
-        var cid = a.city || a.town || a.village || a.municipality || a.county || "";
-        if (cidadeInput && cid) cidadeInput.value = cid;
-      })
-      .catch(function () { /* silencioso: mantém o que já estiver preenchido */ });
+    esconderStatus();
+    if (painel) painel.scrollTop = 0;
+    var pergunta = secoesPasso[n - 1] && secoesPasso[n - 1].querySelector(".passo__pergunta");
+    if (pergunta && !painel.hidden) pergunta.focus();
   }
 
   function mostrarStatus(msg, tipo) {
@@ -526,9 +382,464 @@
     statusEl.textContent = msg;
     statusEl.className = "relato-status relato-status--" + (tipo || "info");
   }
+  function esconderStatus() {
+    if (statusEl) { statusEl.hidden = true; statusEl.textContent = ""; }
+  }
 
   /* =============================================================
-     6) ENVIO DO RELATO
+     5) PASSO 1 — LOCAL
+     (busca com sugestões · geolocalização · pino central no mapa)
+     ============================================================= */
+  var buscaInput = document.getElementById("rBusca");
+  var sugestoesEl = document.getElementById("listaSugestoes");
+  var localCard = document.getElementById("localCard");
+  var localCardEndereco = document.getElementById("localCardEndereco");
+  var editarEndereco = document.getElementById("editarEndereco");
+  var ajustarNoMapa = document.getElementById("ajustarNoMapa");
+  var logradouroInput = document.getElementById("rLogradouro");
+  var numeroInput = document.getElementById("rNumero");
+  var bairroInput = document.getElementById("rBairro");
+  var cidadeInput = document.getElementById("rCidade");
+  var usarLocalizacao = document.getElementById("usarLocalizacao");
+  var usarLocalizacaoNota = document.getElementById("usarLocalizacaoNota");
+  var escolherNoMapa = document.getElementById("escolherNoMapa");
+  var btnParaPasso2 = document.getElementById("paraPasso2");
+
+  var mapaWrap = document.getElementById("mapaWrap");
+  var mira = document.getElementById("mira");
+  var barraConfirmar = document.getElementById("mapaConfirmar");
+  var barraTxt = document.getElementById("mapaConfirmarTxt");
+  var btnConfirmarLocal = document.getElementById("confirmarLocal");
+  var btnCancelarLocal = document.getElementById("cancelarLocal");
+
+  var marcadorTemp = null;
+  var ultimaCoordValida = null;
+  var modoMapa = false;
+
+  function limparTemp() {
+    if (marcadorTemp) { mapa.removeLayer(marcadorTemp); marcadorTemp = null; }
+  }
+
+  function colocarMarcadorTemp(lat, lng) {
+    limparTemp();
+    marcadorTemp = L.marker([lat, lng], {
+      icon: iconeCategoria(categoriaSelecionada() || "infra", "pino--temp"),
+      zIndexOffset: 1000,
+      draggable: true
+    }).addTo(mapa);
+    marcadorTemp.on("dragend", function () {
+      var p = marcadorTemp.getLatLng();
+      if (!dentroDeGoias(p.lat, p.lng)) {
+        if (ultimaCoordValida) marcadorTemp.setLatLng(ultimaCoordValida);
+        mostrarStatus("O ponto precisa ficar dentro de Goiás.", "erro");
+        return;
+      }
+      definirLocal(p.lat, p.lng, { vista: false });
+    });
+  }
+
+  // ---- Endereço (Nominatim) ----
+  function reverso(lat, lng) {
+    var url = NOMINATIM + "/reverse?format=jsonv2&addressdetails=1&zoom=18&lat=" +
+      encodeURIComponent(lat) + "&lon=" + encodeURIComponent(lng);
+    return fetch(url, { headers: { "Accept": "application/json" } })
+      .then(function (r) { return r.json(); })
+      .then(function (res) { return (res && res.address) || {}; });
+  }
+
+  function aplicarEndereco(a) {
+    if (logradouroInput) logradouroInput.value = a.road || a.pedestrian || a.footway || a.cycleway || "";
+    if (numeroInput) numeroInput.value = a.house_number || "";
+    if (bairroInput) bairroInput.value = a.suburb || a.neighbourhood || a.quarter || a.city_district || "";
+    var cid = a.city || a.town || a.village || a.municipality || a.county || "";
+    if (cidadeInput && cid) cidadeInput.value = cid;
+  }
+
+  function enderecoCurto(a) {
+    var rua = a.road || a.pedestrian || a.footway || "";
+    if (rua && a.house_number) rua += ", " + a.house_number;
+    var bairro = a.suburb || a.neighbourhood || a.quarter || "";
+    var cid = a.city || a.town || a.village || a.municipality || "";
+    return [rua, bairro, cid].filter(Boolean).join(" · ");
+  }
+
+  // Resumo legível do que está nos campos (mostrado no cartão do local)
+  function resumoEndereco() {
+    var rua = val(logradouroInput), num = val(numeroInput);
+    var linha = rua ? rua + (num ? ", " + num : "") : "";
+    var texto = [linha, val(bairroInput), val(cidadeInput)].filter(Boolean).join(" · ");
+    return texto || "Ponto marcado no mapa (sem endereço mapeado)";
+  }
+
+  // Endereço legível para gravar na planilha (coluna "endereco")
+  function enderecoComposto() {
+    var rua = val(logradouroInput), num = val(numeroInput), bairro = val(bairroInput);
+    var linha = rua + (num ? ", " + num : "");
+    return [linha, bairro].filter(Boolean).join(" — ");
+  }
+
+  // ---- Coração do passo 1: registrar a coordenada escolhida ----
+  function definirLocal(lat, lng, opcoes) {
+    opcoes = opcoes || {};
+    latInput.value = lat.toFixed(6);
+    lngInput.value = lng.toFixed(6);
+    ultimaCoordValida = [lat, lng];
+    colocarMarcadorTemp(lat, lng);
+    if (opcoes.vista !== false) mapa.setView([lat, lng], Math.max(mapa.getZoom(), 16));
+
+    if (localCard) localCard.hidden = false;
+    if (btnParaPasso2) btnParaPasso2.disabled = false;
+    esconderStatus();
+
+    if (opcoes.buscarEndereco === false) {
+      if (localCardEndereco) localCardEndereco.textContent = resumoEndereco();
+      return;
+    }
+    if (localCardEndereco) localCardEndereco.textContent = "Buscando endereço aproximado…";
+    reverso(lat, lng)
+      .then(function (a) { aplicarEndereco(a); })
+      .catch(function () { /* silencioso: usuário pode corrigir por escrito */ })
+      .then(function () {
+        if (localCardEndereco) localCardEndereco.textContent = resumoEndereco();
+      });
+  }
+
+  // Corrigir endereço por escrito atualiza o cartão na hora
+  [logradouroInput, numeroInput, bairroInput, cidadeInput].forEach(function (el) {
+    if (!el) return;
+    el.addEventListener("input", function () {
+      if (latInput.value && localCardEndereco) localCardEndereco.textContent = resumoEndereco();
+    });
+  });
+
+  // ---- Busca com sugestões (autocomplete) ----
+  var sugDados = [];
+  var sugAtiva = -1;
+  var buscaToken = 0;
+
+  function fecharSugestoes() {
+    if (!sugestoesEl) return;
+    sugestoesEl.hidden = true;
+    sugestoesEl.innerHTML = "";
+    sugDados = [];
+    sugAtiva = -1;
+    if (buscaInput) {
+      buscaInput.setAttribute("aria-expanded", "false");
+      buscaInput.removeAttribute("aria-activedescendant");
+    }
+  }
+
+  function destacarSugestao(i) {
+    sugAtiva = i;
+    Array.prototype.forEach.call(sugestoesEl.children, function (li, idx) {
+      li.setAttribute("aria-selected", idx === i ? "true" : "false");
+    });
+    if (i >= 0 && sugestoesEl.children[i]) {
+      buscaInput.setAttribute("aria-activedescendant", sugestoesEl.children[i].id);
+      sugestoesEl.children[i].scrollIntoView({ block: "nearest" });
+    } else {
+      buscaInput.removeAttribute("aria-activedescendant");
+    }
+  }
+
+  function escolherSugestao(i) {
+    var r = sugDados[i];
+    if (!r) return;
+    var a = r.address || {};
+    var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
+    aplicarEndereco(a);
+    if (buscaInput) buscaInput.value = enderecoCurto(a) || (r.display_name || "").split(",").slice(0, 2).join(",");
+    fecharSugestoes();
+    definirLocal(lat, lng, { buscarEndereco: false });
+  }
+
+  function renderSugestoes(lista) {
+    if (!sugestoesEl) return;
+    sugDados = (lista || []).filter(function (r) {
+      var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
+      return !isNaN(lat) && !isNaN(lng) && dentroDeGoias(lat, lng);
+    });
+    sugestoesEl.innerHTML = "";
+    sugAtiva = -1;
+
+    if (!sugDados.length) {
+      var vazio = document.createElement("li");
+      vazio.className = "sugestoes__vazio";
+      vazio.textContent = "Nada encontrado em Goiás — tente incluir a cidade, ou aponte no mapa.";
+      sugestoesEl.appendChild(vazio);
+    } else {
+      sugDados.forEach(function (r, i) {
+        var a = r.address || {};
+        var li = document.createElement("li");
+        li.id = "sugestao-" + i;
+        li.setAttribute("role", "option");
+        li.setAttribute("aria-selected", "false");
+
+        var principal = document.createElement("strong");
+        var rua = a.road || a.pedestrian || (r.display_name || "").split(",")[0];
+        principal.textContent = rua + (a.house_number ? ", " + a.house_number : "");
+
+        var sec = document.createElement("small");
+        var bairro = a.suburb || a.neighbourhood || "";
+        var cid = a.city || a.town || a.village || a.municipality || "";
+        sec.textContent = [bairro, cid].filter(Boolean).join(" · ") || "Goiás";
+
+        li.appendChild(principal);
+        li.appendChild(sec);
+        // mousedown (não click) para vencer o blur do input
+        li.addEventListener("mousedown", function (e) { e.preventDefault(); escolherSugestao(i); });
+        li.addEventListener("mousemove", function () { destacarSugestao(i); });
+        sugestoesEl.appendChild(li);
+      });
+    }
+    sugestoesEl.hidden = false;
+    buscaInput.setAttribute("aria-expanded", "true");
+  }
+
+  var buscarSugestoes = debounce(function () {
+    var q = val(buscaInput);
+    if (q.length < 3) { fecharSugestoes(); return; }
+    var token = ++buscaToken;
+    var url = NOMINATIM + "/search?format=jsonv2&limit=5&countrycodes=br&addressdetails=1" +
+      VIEWBOX_GO + "&q=" + encodeURIComponent(q);
+    fetch(url, { headers: { "Accept": "application/json" } })
+      .then(function (r) { return r.json(); })
+      .then(function (lista) {
+        if (token !== buscaToken) return; // resposta antiga → ignora
+        renderSugestoes(lista);
+      })
+      .catch(function () {
+        if (token === buscaToken) fecharSugestoes();
+      });
+  }, 400);
+
+  if (buscaInput) {
+    buscaInput.addEventListener("input", buscarSugestoes);
+    buscaInput.addEventListener("blur", function () { setTimeout(fecharSugestoes, 150); });
+    buscaInput.addEventListener("keydown", function (e) {
+      var abertas = sugestoesEl && !sugestoesEl.hidden && sugDados.length;
+      if (e.key === "ArrowDown" && abertas) {
+        e.preventDefault();
+        destacarSugestao(Math.min(sugAtiva + 1, sugDados.length - 1));
+      } else if (e.key === "ArrowUp" && abertas) {
+        e.preventDefault();
+        destacarSugestao(Math.max(sugAtiva - 1, 0));
+      } else if (e.key === "Enter") {
+        e.preventDefault(); // nunca envia o form a partir da busca
+        if (abertas) escolherSugestao(sugAtiva >= 0 ? sugAtiva : 0);
+      } else if (e.key === "Escape") {
+        fecharSugestoes();
+      }
+    });
+  }
+
+  // ---- Geolocalização ----
+  if (usarLocalizacao) {
+    usarLocalizacao.addEventListener("click", function () {
+      if (!navigator.geolocation) {
+        mostrarStatus("Seu navegador não permite usar a localização. Busque o endereço ou aponte no mapa.", "info");
+        return;
+      }
+      usarLocalizacao.disabled = true;
+      if (usarLocalizacaoNota) usarLocalizacaoNota.textContent = "Localizando…";
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          usarLocalizacao.disabled = false;
+          if (usarLocalizacaoNota) usarLocalizacaoNota.textContent = "Ideal se você está no local agora";
+          var lat = pos.coords.latitude, lng = pos.coords.longitude;
+          if (!dentroDeGoias(lat, lng)) {
+            mostrarStatus("Sua localização está fora de Goiás. Busque o endereço ou aponte no mapa, dentro do estado.", "erro");
+            return;
+          }
+          definirLocal(lat, lng);
+        },
+        function () {
+          usarLocalizacao.disabled = false;
+          if (usarLocalizacaoNota) usarLocalizacaoNota.textContent = "Ideal se você está no local agora";
+          mostrarStatus("Não foi possível obter sua localização. Busque o endereço ou aponte no mapa.", "info");
+        },
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
+    });
+  }
+
+  // ---- "Apontar no mapa" — pino central (arrasta-se o mapa, não o pino) ----
+  var barraToken = 0;
+
+  function atualizarBarra() {
+    if (!modoMapa || !barraTxt) return;
+    var c = mapa.getCenter();
+    if (!dentroDeGoias(c.lat, c.lng)) {
+      barraTxt.textContent = "Fora de Goiás — arraste de volta para dentro do estado.";
+      barraTxt.classList.add("mapa-confirmar__txt--erro");
+      if (btnConfirmarLocal) btnConfirmarLocal.disabled = true;
+      return;
+    }
+    barraTxt.classList.remove("mapa-confirmar__txt--erro");
+    if (btnConfirmarLocal) btnConfirmarLocal.disabled = false;
+    barraTxt.textContent = "Buscando endereço…";
+    var token = ++barraToken;
+    reverso(c.lat, c.lng)
+      .then(function (a) {
+        if (token !== barraToken || !modoMapa) return;
+        var txt = enderecoCurto(a);
+        barraTxt.textContent = txt ? "📍 " + txt : "📍 Local sem endereço mapeado — confira o pino e confirme.";
+      })
+      .catch(function () {
+        if (token === barraToken && modoMapa) barraTxt.textContent = "📍 Ajuste o pino e confirme o local.";
+      });
+  }
+  var atualizarBarraDebounce = debounce(atualizarBarra, 450);
+
+  function entrarModoMapa() {
+    modoMapa = true;
+    ocultarPainel();
+    fecharSugestoes();
+    limparTemp(); // enquanto escolhe, o pino central representa o ponto
+    if (mapaWrap) mapaWrap.classList.add("mapa-wrap--escolher");
+    if (mira) mira.hidden = false;
+    if (barraConfirmar) barraConfirmar.hidden = false;
+    if (latInput.value && lngInput.value) {
+      mapa.setView([parseFloat(latInput.value), parseFloat(lngInput.value)], Math.max(mapa.getZoom(), 16));
+    }
+    if (barraTxt) {
+      barraTxt.classList.remove("mapa-confirmar__txt--erro");
+      barraTxt.textContent = "Arraste o mapa até o pino apontar o local exato.";
+    }
+    if (mapaWrap) mapaWrap.scrollIntoView({ behavior: "smooth", block: "center" });
+    atualizarBarraDebounce();
+  }
+
+  function sairModoMapa() {
+    modoMapa = false;
+    if (mapaWrap) mapaWrap.classList.remove("mapa-wrap--escolher");
+    if (mira) mira.hidden = true;
+    if (barraConfirmar) barraConfirmar.hidden = true;
+  }
+
+  function cancelarModoMapa() {
+    sairModoMapa();
+    // Se já havia um ponto escolhido antes, devolve o marcador dele
+    if (latInput.value && lngInput.value) {
+      colocarMarcadorTemp(parseFloat(latInput.value), parseFloat(lngInput.value));
+    }
+    abrirPainel();
+  }
+
+  if (escolherNoMapa) escolherNoMapa.addEventListener("click", entrarModoMapa);
+  if (ajustarNoMapa) ajustarNoMapa.addEventListener("click", entrarModoMapa);
+  if (btnCancelarLocal) btnCancelarLocal.addEventListener("click", cancelarModoMapa);
+  if (btnConfirmarLocal) {
+    btnConfirmarLocal.addEventListener("click", function () {
+      var c = mapa.getCenter();
+      if (!dentroDeGoias(c.lat, c.lng)) return;
+      sairModoMapa();
+      definirLocal(c.lat, c.lng, { vista: false });
+      abrirPainel();
+    });
+  }
+
+  mapa.on("moveend", function () { if (modoMapa) atualizarBarraDebounce(); });
+  mapa.on("movestart", function () {
+    if (modoMapa && barraTxt && !barraTxt.classList.contains("mapa-confirmar__txt--erro")) {
+      barraTxt.textContent = "…";
+    }
+  });
+  // Tocar no mapa durante a escolha centraliza o pino ali (atalho natural)
+  mapa.on("click", function (e) { if (modoMapa) mapa.panTo(e.latlng); });
+
+  /* =============================================================
+     6) NAVEGAÇÃO ENTRE PASSOS + VALIDAÇÃO
+     ============================================================= */
+  var tituloInput = document.getElementById("rTitulo");
+  var descricaoInput = document.getElementById("rDescricao");
+  var descContador = document.getElementById("descContador");
+  var resumoRelato = document.getElementById("resumoRelato");
+  var dadosContato = document.getElementById("dadosContato");
+  var nomeInput = document.getElementById("rNome");
+  var emailInput = document.getElementById("rEmail");
+  var telefoneInput = document.getElementById("rTelefone");
+  var consentInput = document.getElementById("rConsent");
+
+  if (btnParaPasso2) {
+    btnParaPasso2.addEventListener("click", function () {
+      if (!latInput.value || !lngInput.value) {
+        mostrarStatus("Defina o local: busque o endereço, use sua localização ou aponte no mapa.", "erro");
+        return;
+      }
+      if (!dentroDeGoias(parseFloat(latInput.value), parseFloat(lngInput.value))) {
+        mostrarStatus("O ponto marcado está fora de Goiás. Ajuste para dentro do estado.", "erro");
+        return;
+      }
+      if (!val(cidadeInput)) {
+        if (editarEndereco) editarEndereco.open = true;
+        mostrarStatus("Não conseguimos identificar a cidade. Preencha em “Corrigir o endereço”.", "erro");
+        if (cidadeInput) cidadeInput.focus();
+        return;
+      }
+      irPara(2);
+    });
+  }
+
+  var voltarPasso1 = document.getElementById("voltarPasso1");
+  if (voltarPasso1) voltarPasso1.addEventListener("click", function () { irPara(1); });
+
+  var btnParaPasso3 = document.getElementById("paraPasso3");
+  if (btnParaPasso3) {
+    btnParaPasso3.addEventListener("click", function () {
+      if (!categoriaSelecionada()) {
+        mostrarStatus("Escolha o tipo de risco.", "erro");
+        return;
+      }
+      if (!val(tituloInput)) {
+        mostrarStatus("Dê um ponto de referência (ex.: “praça central, ao lado da escola”).", "erro");
+        if (tituloInput) tituloInput.focus();
+        return;
+      }
+      if (resumoRelato) {
+        var c = CAT[categoriaSelecionada()];
+        resumoRelato.textContent = (c ? c.emoji + " " + c.nome : "") + " — " + resumoEndereco();
+      }
+      irPara(3);
+    });
+  }
+
+  var voltarPasso2 = document.getElementById("voltarPasso2");
+  if (voltarPasso2) voltarPasso2.addEventListener("click", function () { irPara(2); });
+
+  // Contador de caracteres da descrição
+  if (descricaoInput && descContador) {
+    descricaoInput.addEventListener("input", function () {
+      descContador.textContent = String(descricaoInput.value.length);
+    });
+  }
+
+  // Identificado × anônimo
+  function relatoAnonimo() {
+    return !!(form && form.identidade && form.identidade.value === "anonimo");
+  }
+  function atualizarIdentidade() {
+    var anon = relatoAnonimo();
+    if (dadosContato) dadosContato.hidden = anon;
+    Array.prototype.forEach.call(document.querySelectorAll(".identidade__opcao"), function (label) {
+      var input = label.querySelector("input");
+      label.classList.toggle("identidade__opcao--ativa", !!(input && input.checked));
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="identidade"]'), function (radio) {
+    radio.addEventListener("change", function () { atualizarIdentidade(); esconderStatus(); });
+  });
+
+  // Esc: cancela o modo mapa > fecha sugestões > fecha o painel
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (modoMapa) { cancelarModoMapa(); return; }
+    if (sugestoesEl && !sugestoesEl.hidden) { fecharSugestoes(); return; }
+    if (painel && !painel.hidden) fecharPainel();
+  });
+
+  /* =============================================================
+     7) ENVIO DO RELATO
      ============================================================= */
   if (form) {
     form.addEventListener("submit", function (e) {
@@ -538,35 +849,45 @@
       var honeypot = form.querySelector('[name="website"]');
       if (honeypot && honeypot.value.trim() !== "") return;
 
-      if (!form.checkValidity()) {
-        mostrarStatus("Preencha os campos obrigatórios (*).", "erro");
-        form.reportValidity();
+      // Enter num campo dos passos 1–2 (submit implícito) → avança o passo
+      if (passoAtual === 1) { if (btnParaPasso2) btnParaPasso2.click(); return; }
+      if (passoAtual === 2) { if (btnParaPasso3) btnParaPasso3.click(); return; }
+
+      if (!latInput.value || !lngInput.value ||
+          !dentroDeGoias(parseFloat(latInput.value), parseFloat(lngInput.value))) {
+        irPara(1);
+        mostrarStatus("Defina o local do ponto, dentro de Goiás.", "erro");
         return;
       }
-      if (!latInput.value || !lngInput.value) {
-        mostrarStatus("Defina o local: busque o endereço, marque no mapa ou use sua localização.", "erro");
-        return;
+
+      var anon = relatoAnonimo();
+      if (!anon) {
+        if (!val(nomeInput)) {
+          mostrarStatus("Informe seu nome — ou escolha relatar anonimamente.", "erro");
+          if (nomeInput) nomeInput.focus();
+          return;
+        }
+        if (!val(emailInput) && !val(telefoneInput)) {
+          mostrarStatus("Informe ao menos um contato (e-mail ou telefone) — ou escolha relatar anonimamente.", "erro");
+          if (emailInput) emailInput.focus();
+          return;
+        }
       }
-      if (!dentroDeGoias(parseFloat(latInput.value), parseFloat(lngInput.value))) {
-        mostrarStatus("O ponto marcado está fora de Goiás. Ajuste para dentro do estado.", "erro");
-        return;
-      }
-      var emailV = form.email.value.trim();
-      var telefoneV = form.telefone.value.trim();
-      if (!emailV && !telefoneV) {
-        mostrarStatus("Informe ao menos um contato: e-mail ou telefone.", "erro");
+      if (!consentInput || !consentInput.checked) {
+        mostrarStatus("Confirme que o relato é verdadeiro e de boa-fé.", "erro");
         return;
       }
 
       var d = {
-        categoria: selCategoria.value,
-        titulo: form.titulo.value.trim(),
-        cidade: form.cidade.value.trim(),
-        descricao: form.descricao.value.trim(),
+        categoria: categoriaSelecionada(),
+        titulo: val(tituloInput),
+        cidade: val(cidadeInput),
+        descricao: val(descricaoInput),
         endereco: enderecoComposto(),
-        nome: form.nome.value.trim(),
-        email: emailV,
-        telefone: telefoneV,
+        nome: anon ? "" : val(nomeInput),
+        email: anon ? "" : val(emailInput),
+        telefone: anon ? "" : val(telefoneInput),
+        anonimo: anon,
         lat: parseFloat(latInput.value),
         lng: parseFloat(lngInput.value)
       };
@@ -574,7 +895,7 @@
       // Sem endpoint configurado (ou aberto via file://): simula o envio e
       // mostra o ponto localmente como "pendente" (só você vê), para demonstrar.
       if (!MAPA_ENDPOINT || !SERVIDO_VIA_HTTP) {
-        finalizarEnvioLocal(d, true);
+        aposEnvio(d);
         return;
       }
 
@@ -591,7 +912,8 @@
       corpo.set("nome", d.nome);
       corpo.set("email", d.email);
       corpo.set("telefone", d.telefone);
-      corpo.set("consentimento", form.consentimento.checked ? "sim" : "não");
+      corpo.set("anonimo", anon ? "sim" : "não");
+      corpo.set("consentimento", "sim");
 
       fetch(MAPA_ENDPOINT, {
         method: "POST",
@@ -601,7 +923,7 @@
         .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
         .then(function (res) {
           if (res && res.ok === false) throw new Error("recusado");
-          finalizarEnvioLocal(d, true);
+          aposEnvio(d);
         })
         .catch(function () {
           mostrarStatus("Não conseguimos enviar agora. Tente novamente em instantes.", "erro");
@@ -612,28 +934,49 @@
     });
   }
 
-  function finalizarEnvioLocal(d, comMensagem) {
+  // Sucesso: pino "pendente" no mapa + tela de confirmação
+  function aposEnvio(d) {
     limparTemp();
     d.pendente = true;
     adicionarPonto(d);
-    form.reset();
-    if (coordTexto) {
-      coordTexto.textContent = "Nenhum local marcado ainda";
-      coordTexto.classList.add("coord-texto--vazio");
+    if (form) form.hidden = true;
+    if (stepperEl) stepperEl.hidden = true;
+    if (sucessoEl) {
+      sucessoEl.hidden = false;
+      var h = sucessoEl.querySelector("h3");
+      if (h) h.focus();
     }
-    latInput.value = "";
-    lngInput.value = "";
-    if (comMensagem) {
-      mostrarStatus(
-        "Relato recebido! Ele passará por moderação antes de aparecer no mapa público. Obrigado por ajudar. 💛",
-        "ok"
-      );
-    }
-    setTimeout(fecharPainel, 2600);
   }
 
+  function resetTudo() {
+    if (form) form.reset(); // radios voltam ao padrão (identificado marcado)
+    limparTemp();
+    latInput.value = "";
+    lngInput.value = "";
+    ultimaCoordValida = null;
+    if (localCard) localCard.hidden = true;
+    if (editarEndereco) editarEndereco.open = false;
+    if (btnParaPasso2) btnParaPasso2.disabled = true;
+    if (descContador) descContador.textContent = "0";
+    fecharSugestoes();
+    atualizarChips();
+    atualizarIdentidade();
+    esconderStatus();
+    if (sucessoEl) sucessoEl.hidden = true;
+    if (form) form.hidden = false;
+    if (stepperEl) stepperEl.hidden = false;
+    irPara(1);
+  }
+
+  var relatarOutro = document.getElementById("relatarOutro");
+  if (relatarOutro) relatarOutro.addEventListener("click", resetTudo);
+  var sucessoFechar = document.getElementById("sucessoFechar");
+  if (sucessoFechar) sucessoFechar.addEventListener("click", fecharPainel);
+
+  atualizarIdentidade();
+
   /* =============================================================
-     7) CARREGAR PONTOS APROVADOS (planilha CSV) — ou exemplos
+     8) CARREGAR PONTOS APROVADOS (planilha CSV) — ou exemplos
      ============================================================= */
   function parseCSV(texto) {
     var linhas = [], linha = [], campo = "", aspas = false;
