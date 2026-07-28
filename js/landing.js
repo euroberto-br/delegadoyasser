@@ -754,6 +754,21 @@
      ============================================================= */
   var CADASTRO_ENDPOINT = "https://script.google.com/macros/s/AKfycbyhj3B2E1Knj_J2QcEpQptJtbvKOkzcct8wUTQu153SB81UYnbf5tTaIB19kccKk0FY/exec";
 
+  /* Links de missão com data-missao pré-selecionam a opção correspondente
+     no campo "Como deseja ajudar?" ao levar o visitante até o cadastro. */
+  var selectMissao = document.getElementById("missao");
+  if (selectMissao) {
+    document.querySelectorAll("a[data-missao]").forEach(function (link) {
+      link.addEventListener("click", function () {
+        var opcao = link.getAttribute("data-missao");
+        var existe = Array.prototype.some.call(selectMissao.options, function (o) {
+          return o.value === opcao || o.text === opcao;
+        });
+        if (existe) selectMissao.value = opcao;
+      });
+    });
+  }
+
   var form = document.getElementById("formCadastro");
   if (form) {
     var botao = form.querySelector('button[type="submit"]');
