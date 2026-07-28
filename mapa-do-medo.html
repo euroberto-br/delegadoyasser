@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#c8102e">
+
+  <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
+  <script>
+    if (window.top !== window.self) {
+      try { window.top.location.replace(window.location.href); }
+      catch (e) { document.documentElement.style.display = "none"; }
+    }
+  </script>
   <title>Mapa do Medo — Delegado Yasser | Segurança participativa em Goiás</title>
   <meta name="description" content="Mapa do Medo: marque no mapa de Goiás os pontos de insegurança — ruas escuras, mato alto, alto índice de violência e mais. Uma construção coletiva por um Brasil seguro.">
 
@@ -113,7 +121,9 @@
         <ul class="nav__links" id="navLinks">
           <li><a href="index.html#quem">Quem é</a></li>
           <li><a href="index.html#bandeiras">Bandeiras</a></li>
+          <li><a href="index.html#missoes">Missões</a></li>
           <li><a href="mapa-do-medo.html" aria-current="page">Mapa do Medo</a></li>
+          <li><a href="solicitar-reuniao.html">Convide o Yasser</a></li>
           <li><a href="index.html#noticias">Notícias</a></li>
           <li><a href="index.html#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
         </ul>
@@ -478,6 +488,7 @@
           <h3 class="rodape__titulo">Participe</h3>
           <ul>
             <li><a href="index.html#cadastro">Quero fazer parte</a></li>
+            <li><a href="solicitar-reuniao.html">Convide o Yasser para uma reunião</a></li>
             <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar o movimento (vaquinha)</a></li>
             <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
             <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
@@ -487,8 +498,10 @@
       </div>
       <p class="rodape__assinatura" aria-hidden="true">Brasil seguro</p>
       <div class="rodape__bottom">
-        &copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.
-        Mapa: &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>.
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.</p>
+        <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
+           (textos, imagens e marca) sem autorização prévia.</p>
+        <p>Mapa: &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>.</p>
       </div>
     </div>
   </footer>

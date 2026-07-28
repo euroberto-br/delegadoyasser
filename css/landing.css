@@ -466,6 +466,11 @@ a { color: var(--brand-escuro); }
   color: var(--tinta);
 }
 .nav__links a:not(.btn):hover { color: var(--brand-escuro); }
+.nav__links a[aria-current="page"]:not(.btn) {
+  color: var(--brand-escuro);
+  border-bottom: 3px solid var(--brand);
+  padding-bottom: 2px;
+}
 .nav__cta { padding: 0.6rem 1rem; font-size: 0.8rem; white-space: nowrap; }
 
 /* ---------- Hero ---------- */
@@ -1241,9 +1246,11 @@ a { color: var(--brand-escuro); }
   color: var(--papel);
   margin: 0 0 0.9rem;
 }
-.rodape ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
-.rodape ul a { text-decoration: none; font-size: 0.95rem; }
-.rodape ul a:hover { text-decoration: underline; }
+.rodape ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+/* Área de toque maior (WCAG 2.5.8): o link ocupa mais que a linha de texto */
+.rodape ul a { text-decoration: none; font-size: 0.95rem; display: inline-block; padding-block: 0.15rem; }
+.rodape ul a:hover,
+.rodape ul a:focus-visible { text-decoration: underline; }
 
 .rodape__social { display: flex; gap: 0.7rem; margin-top: 1.25rem; }
 .rodape__social a,
@@ -1255,6 +1262,8 @@ a { color: var(--brand-escuro); }
   border: 2px solid currentColor;
   color: var(--papel);
 }
+/* Alvo de toque ≥ 44px no rodapé (WCAG 2.5.5 AAA) */
+.rodape__social a { width: 2.75rem; height: 2.75rem; }
 .rodape__social svg { width: 1.2rem; height: 1.2rem; }
 
 /* Contraste mínimo de 3:1 para texto grande (WCAG 1.4.3), mantendo o ar de marca-d'água */
@@ -1295,12 +1304,18 @@ a { color: var(--brand-escuro); }
 
 .rodape__bottom {
   border-top: 1px solid rgba(252, 249, 245, 0.18);
-  padding-block: 1.25rem;
+  padding-block: 1.5rem;
   font-family: var(--fonte-mono);
   font-size: 0.75rem;
   letter-spacing: 0.04em;
+  line-height: 1.7;
   text-align: center;
+  display: grid;
+  gap: 0.4rem;
+  justify-items: center;
 }
+/* Cada informação em sua própria linha, com largura de leitura confortável */
+.rodape__bottom p { margin: 0; max-width: 68ch; }
 
 /* ---------- Reveal on scroll (só quando há JS; sem JS tudo fica visível) ---------- */
 /* Anima só com transform (sem opacity): texto nunca fica com contraste
@@ -1376,6 +1391,10 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   .materiais { grid-template-columns: repeat(2, 1fr); }
   .form-grid { grid-template-columns: 1fr 1fr; }
   .field--full { grid-column: 1 / -1; }
+
+  /* Rodapé em 2 colunas: sobre o Yasser em cima, navegações lado a lado */
+  .rodape__grid { grid-template-columns: repeat(2, 1fr); }
+  .rodape__grid > :first-child { grid-column: 1 / -1; }
 }
 
 /* ---------- ≥ 980px ---------- */
@@ -1408,4 +1427,5 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   .materiais { grid-template-columns: repeat(3, 1fr); }
   .cadastro-grid { grid-template-columns: 0.9fr 1.1fr; }
   .rodape__grid { grid-template-columns: 1.4fr 1fr 1fr; }
+  .rodape__grid > :first-child { grid-column: auto; }
 }

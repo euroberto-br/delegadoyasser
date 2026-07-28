@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#c8102e">
+
+  <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
+  <script>
+    if (window.top !== window.self) {
+      try { window.top.location.replace(window.location.href); }
+      catch (e) { document.documentElement.style.display = "none"; }
+    }
+  </script>
   <title>Delegado Yasser — Brasil Seguro | Pré-candidato a Deputado Estadual PT-GO</title>
   <meta name="description" content="Delegado Yasser Yassine, pré-candidato a deputado estadual pelo PT-GO. Brasil seguro começa com a gente: segurança pública com cuidado, prevenção e comunidade.">
 
@@ -189,11 +197,11 @@
         <ul class="nav__links" id="navLinks">
           <li><a href="#quem">Quem é</a></li>
           <li><a href="#bandeiras">Bandeiras</a></li>
-          <li><a href="#redes">Redes</a></li>
           <li><a href="#missoes">Missões</a></li>
           <!-- <li><a href="#agenda">Agenda</a></li> -->
+          <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
+          <li><a href="solicitar-reuniao.html">Convide o Yasser</a></li>
           <li><a href="#noticias">Notícias</a></li>
-          <li><a href="#momentos">Momentos</a></li>
           <li><a href="#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
         </ul>
       </nav>
@@ -736,12 +744,14 @@
             <li><a href="#radar">Radar</a></li>
             <!-- <li><a href="#agenda">Agenda de ações</a></li> -->
             <li><a href="#noticias">Notícias</a></li>
+            <li><a href="#momentos">Momentos</a></li>
           </ul>
         </nav>
         <nav aria-label="Participe">
           <h3 class="rodape__titulo">Participe</h3>
           <ul>
             <li><a href="#cadastro">Quero fazer parte</a></li>
+            <li><a href="solicitar-reuniao.html">Convide o Yasser para uma reunião</a></li>
             <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar o movimento (vaquinha)</a></li>
             <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
             <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
@@ -759,7 +769,9 @@
         <a href="acessibilidade.html" class="rodape__selo-link">Declaração de acessibilidade</a>
       </div>
       <div class="rodape__bottom">
-        &copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.</p>
+        <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
+           (textos, imagens e marca) sem autorização prévia.</p>
       </div>
     </div>
   </footer>

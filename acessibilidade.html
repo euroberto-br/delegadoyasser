@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#c8102e">
+
+  <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
+  <script>
+    if (window.top !== window.self) {
+      try { window.top.location.replace(window.location.href); }
+      catch (e) { document.documentElement.style.display = "none"; }
+    }
+  </script>
   <title>Declaração de Acessibilidade | Delegado Yasser</title>
   <meta name="description" content="Declaração de acessibilidade do site do Delegado Yasser Yassine: compromisso com as diretrizes WCAG 2.1 nível AA e canais para relatar barreiras.">
 
@@ -141,7 +149,9 @@
         </a>
       </div>
       <div class="rodape__bottom">
-        &copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.</p>
+        <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
+           (textos, imagens e marca) sem autorização prévia.</p>
       </div>
     </div>
   </footer>
