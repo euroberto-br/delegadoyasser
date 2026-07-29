@@ -25,20 +25,23 @@ some ao recarregar). Isso serve para você ver o visual antes de publicar.
 1. Crie uma planilha no Google Sheets (ex.: **"Mapa do Medo — relatos"**).
 2. Na primeira linha, crie estas colunas (os nomes precisam bater; a ordem é livre):
 
-   | data | status | categoria | titulo | cidade | descricao | lat | lng | endereco | nome | email | telefone | anonimo |
-   |------|--------|-----------|--------|--------|-----------|-----|-----|----------|------|-------|----------|---------|
+   | data | status | categoria | titulo | cidade | descricao | lat | lng | endereco | foto | nome | email | telefone | anonimo |
+   |------|--------|-----------|--------|--------|-----------|-----|-----|----------|------|------|-------|----------|---------|
 
    - **status**: `pendente` (padrão ao chegar) ou `aprovado` (aparece no mapa).
    - **categoria**: um destes códigos — `iluminacao`, `mato`, `violencia`,
      `policiamento`, `drogas`, `mulheres`, `infra`.
    - **lat / lng**: coordenadas (o site preenche sozinho).
    - **endereco**: endereço digitado/confirmado pela pessoa (ajuda a conferir o ponto).
+   - **foto**: URL da foto no Cloudinary (opcional; o site preenche sozinho quando
+     a pessoa anexa uma imagem). Fica vazia se não houver foto. É **pública** no
+     mapa quando o ponto é aprovado — confira a foto antes de aprovar.
    - **nome / email / telefone**: contato de quem enviou — **dados privados**,
      usados só pela equipe. **Nunca** são exibidos no mapa público.
    - **anonimo**: `sim` quando a pessoa escolheu **relato anônimo** (nesse caso
      nome/email/telefone chegam vazios — é esperado, não é erro).
 
-> **Já publicou a versão anterior?** Adicione as colunas novas (`endereco`,
+> **Já publicou a versão anterior?** Adicione as colunas novas (`endereco`, `foto`,
 > `nome`, `email`, `telefone`, `anonimo`) ao final da planilha e **atualize o
 > código do Apps Script** com a versão abaixo (que grava pelos nomes das colunas).
 
@@ -65,6 +68,47 @@ some ao recarregar). Isso serve para você ver o visual antes de publicar.
    var MAPA_CSV_URL = "https://docs.google.com/spreadsheets/d/e/XXXX/pub?output=csv";
    ```
 
+## Passo 3.5 — Fotos (Cloudinary) — opcional
+
+As pessoas podem **anexar uma foto** ao relato. A imagem é **reduzida no próprio
+navegador** para no máximo **200&nbsp;KB** e enviada direto para o
+[Cloudinary](https://cloudinary.com) (plano gratuito é suficiente). O que fica na
+planilha é só a **URL** da foto (coluna `foto`). Enquanto o Cloudinary não estiver
+configurado, o campo de foto **fica escondido** e o resto do mapa funciona normal.
+
+1. Crie uma conta grátis no [Cloudinary](https://cloudinary.com). No painel
+   (**Dashboard**) anote o **Cloud name** (algo como `delegadoyasser`).
+2. Crie um **upload preset não assinado** (isso permite o site enviar a foto
+   sem expor nenhuma senha/API secret no navegador):
+   - **Settings → Upload → Upload presets → Add upload preset**.
+   - **Signing Mode: Unsigned**.
+   - (Recomendado) defina uma **pasta** (ex.: `mapa-do-medo`) para organizar.
+   - Salve e copie o **nome do preset** (ex.: `mapa_do_medo`).
+3. Em `js/mapa-do-medo.js`, preencha:
+   ```js
+   var CLOUDINARY_CLOUD_NAME    = "SEU_CLOUD_NAME";    // ex.: "delegadoyasser"
+   var CLOUDINARY_UPLOAD_PRESET = "SEU_UPLOAD_PRESET"; // ex.: "mapa_do_medo"
+   var CLOUDINARY_FOLDER        = "mapa-medo";         // pasta destino ("" = raiz)
+   ```
+   > A pasta é enviada em cada upload (parâmetro `folder`). Para o preset **unsigned**
+   > aceitar isso, deixe **"Use filename or externally defined public ID"** ligado e
+   > **não** trave a pasta no preset — ou defina a mesma pasta no preset e deixe
+   > `CLOUDINARY_FOLDER` igual. Se cair na raiz mesmo assim, veja o item de diagnóstico
+   > abaixo.
+4. (Recomendado) No painel do Cloudinary, em **Settings → Security**, adicione o
+   domínio do site (`delegadoyasser.com.br`) em **Allowed fetch/upload origins**
+   para restringir de onde o preset pode ser usado.
+
+> **Moderação da foto:** como a foto vira **pública** no mapa quando o ponto é
+> aprovado, **abra a URL da coluna `foto` e confira a imagem antes de aprovar**.
+> Recuse (apague a linha) fotos com pessoas identificáveis, placas de veículos ou
+> conteúdo impróprio. O site já orienta a pessoa a não fotografar isso, mas a
+> conferência é sua.
+
+> **Limite de 200&nbsp;KB:** é aplicado no navegador antes do upload (redução de
+> dimensão + qualidade JPEG). Para ajustar, mude `FOTO_MAX_BYTES` / `FOTO_MAX_LADO`
+> no topo de `js/mapa-do-medo.js`.
+
 ## Passo 4 — Moderar
 
 - Relatos chegam com status `pendente` → **não** aparecem no mapa.
@@ -83,7 +127,7 @@ some ao recarregar). Isso serve para você ver o visual antes de publicar.
 // Grava cada campo na coluna de mesmo nome do cabeçalho (a ordem das colunas
 // pode mudar; colunas a mais são ignoradas). "data" e "status" são preenchidas
 // automaticamente. Colunas usadas: data | status | categoria | titulo | cidade |
-// descricao | lat | lng | endereco | nome | email | telefone | anonimo
+// descricao | lat | lng | endereco | foto | nome | email | telefone | anonimo
 function doPost(e) {
   try {
     var p = (e && e.parameter) || {};
@@ -112,6 +156,7 @@ function doPost(e) {
       lat: lat,
       lng: lng,
       endereco: corta(p.endereco, 160),
+      foto: corta(p.foto, 300),
       nome: corta(p.nome, 80),
       email: corta(p.email, 120),
       telefone: corta(p.telefone, 20),
@@ -150,10 +195,15 @@ function json(obj) {
 
 ## Observações importantes
 
-- **URLSearchParams, não FormData.** O site já envia o corpo como
-  `application/x-www-form-urlencoded` — é o formato que `e.parameter` do Apps
-  Script lê corretamente. Não troque por `FormData` (o Apps Script não parseia
-  `multipart/form-data` e embaralha os campos).
+- **URLSearchParams, não FormData (no relato).** O site já envia o corpo do
+  relato como `application/x-www-form-urlencoded` — é o formato que `e.parameter`
+  do Apps Script lê corretamente. Não troque por `FormData` (o Apps Script não
+  parseia `multipart/form-data` e embaralha os campos). **Exceção:** o upload da
+  **foto ao Cloudinary** usa `FormData` de propósito — é outro endpoint (a API do
+  Cloudinary), que exige `multipart/form-data`. Isso não afeta o POST do relato.
+- **Foto: reduzida no navegador, enviada ao Cloudinary.** A imagem nunca passa
+  pelo Apps Script — vai direto do navegador para o Cloudinary (máx. 200&nbsp;KB)
+  e só a **URL** chega na planilha (coluna `foto`). Configuração no Passo 3.5.
 - **Moderação é essencial.** Conteúdo público sobre violência tem risco de
   difamação/trote. O status `pendente` protege a imagem do movimento — nada
   aparece sem sua conferência.

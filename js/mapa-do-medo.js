@@ -36,6 +36,15 @@
   var MAPA_ENDPOINT = "https://script.google.com/macros/s/AKfycbzWzAUEDmvQCQbW_GwhTYtHbz7W5-n8OaxknSojOzbu38CKiWYKjoPyW2OwHSIORdew-w/exec"; // Web App do Apps Script (/exec) — recebe os relatos
   var MAPA_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSOdq3tocrX-iVKYZbdO_4VmDZZ0iwFNRQncCXoFh8SXHTeojgNukScoAPHBs6IWzxTfUh2rizujZbz/pub?output=csv";  // Planilha publicada como CSV — pontos aprovados
 
+  // Cloudinary — upload de fotos direto do navegador (upload preset "não assinado").
+  // Deixe em branco para desativar o envio de fotos. Guia em docs/MAPA-DO-MEDO.md.
+  var CLOUDINARY_CLOUD_NAME = "znbneca7";    // ex.: "delegadoyasser"
+  var CLOUDINARY_UPLOAD_PRESET = "mapa-medo-yasser"; // ex.: "mapa_do_medo" (preset unsigned)
+  var CLOUDINARY_FOLDER = "mapa-medo";       // pasta destino no Cloudinary ("" = raiz / o que o preset definir)
+  var FOTO_MAX_BYTES = 200 * 1024;   // teto de tamanho da foto enviada (200 KB)
+  var FOTO_MAX_LADO = 1600;          // maior dimensão (px) após redução
+  var FOTOS_ATIVAS = !!(CLOUDINARY_CLOUD_NAME && CLOUDINARY_UPLOAD_PRESET);
+
   var SERVIDO_VIA_HTTP =
     location.protocol === "http:" || location.protocol === "https:";
 
@@ -77,6 +86,81 @@
     };
   }
   function val(el) { return el && el.value ? el.value.trim() : ""; }
+  function formatarKB(bytes) { return Math.max(1, Math.round(bytes / 1024)) + " KB"; }
+
+  // Lê um File de imagem para um objeto Image (via object URL, liberado ao fim).
+  function carregarImagem(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () { URL.revokeObjectURL(url); resolve(img); };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("imagem inválida")); };
+      img.src = url;
+    });
+  }
+
+  // Reduz a imagem em canvas e exporta JPEG abaixo de FOTO_MAX_BYTES.
+  // Diminui primeiro a dimensão (se > FOTO_MAX_LADO) e depois a qualidade,
+  // em passos, até caber no teto. Resolve com um Blob JPEG.
+  function comprimirImagem(file) {
+    return carregarImagem(file).then(function (img) {
+      var lado = Math.max(img.width, img.height);
+      var escala = lado > FOTO_MAX_LADO ? FOTO_MAX_LADO / lado : 1;
+
+      function desenhar(fator) {
+        var w = Math.round(img.width * fator);
+        var h = Math.round(img.height * fator);
+        var canvas = document.createElement("canvas");
+        canvas.width = w; canvas.height = h;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, w, h);
+        return canvas;
+      }
+
+      function paraBlob(canvas, q) {
+        return new Promise(function (resolve) {
+          if (canvas.toBlob) canvas.toBlob(function (b) { resolve(b); }, "image/jpeg", q);
+          else {
+            var dataUrl = canvas.toDataURL("image/jpeg", q);
+            var bin = atob(dataUrl.split(",")[1]);
+            var arr = new Uint8Array(bin.length);
+            for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+            resolve(new Blob([arr], { type: "image/jpeg" }));
+          }
+        });
+      }
+
+      // Tenta qualidades decrescentes; se ainda estourar, reduz mais a dimensão.
+      var qualidades = [0.82, 0.7, 0.58, 0.45, 0.35];
+      function tentar(fator, idx) {
+        var canvas = desenhar(fator);
+        return paraBlob(canvas, qualidades[idx]).then(function (blob) {
+          if (blob && blob.size <= FOTO_MAX_BYTES) return blob;
+          if (idx < qualidades.length - 1) return tentar(fator, idx + 1);
+          if (fator > 0.35) return tentar(fator * 0.75, 0); // encolhe mais e recomeça
+          return blob; // melhor esforço (pode passar um pouco em fotos extremas)
+        });
+      }
+      return tentar(escala, 0);
+    });
+  }
+
+  // Envia um Blob ao Cloudinary (upload preset unsigned) e devolve a secure_url.
+  function enviarCloudinary(blob) {
+    var url = "https://api.cloudinary.com/v1_1/" + CLOUDINARY_CLOUD_NAME + "/image/upload";
+    var fd = new FormData();
+    fd.append("file", blob, "mapa-do-medo.jpg");
+    fd.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+    if (CLOUDINARY_FOLDER) fd.append("folder", CLOUDINARY_FOLDER);
+    return fetch(url, { method: "POST", body: fd })
+      .then(function (r) { return r.json().catch(function () { return {}; }); })
+      .then(function (res) {
+        if (res && res.secure_url) return res.secure_url;
+        var msg = (res && res.error && res.error.message) || "falha no upload";
+        if (window.console) console.error("Cloudinary:", msg, res);
+        throw new Error(msg);
+      });
+  }
 
   /* =============================================================
      2) MAPA
@@ -181,6 +265,24 @@
     titulo.textContent = d.titulo || "Ponto marcado";
     wrap.appendChild(titulo);
 
+    // Foto (opcional). Só aceita URLs http(s) — evita src perigosos vindos do CSV
+    // ou de object URLs locais (que valem só na sessão de quem enviou, no modo demo).
+    if (d.foto && /^https?:\/\//i.test(d.foto)) {
+      var foto = document.createElement("img");
+      foto.className = "popup__foto";
+      foto.loading = "lazy";
+      foto.alt = "Foto do local relatado";
+      foto.src = d.foto;
+      wrap.appendChild(foto);
+    } else if (d.foto && d.foto.indexOf("blob:") === 0) {
+      // Modo demo: mostra a miniatura local que a própria pessoa acabou de enviar.
+      var fotoLocal = document.createElement("img");
+      fotoLocal.className = "popup__foto";
+      fotoLocal.alt = "Foto do local (pré-visualização)";
+      fotoLocal.src = d.foto;
+      wrap.appendChild(fotoLocal);
+    }
+
     if (d.descricao) {
       var desc = document.createElement("p");
       desc.className = "popup__desc";
@@ -208,6 +310,16 @@
       title: (CAT[d.categoria] || CAT.infra).nome + " — " + (d.titulo || "")
     });
     m.bindPopup(popupEl(d));
+    // A foto carrega de forma assíncrona: ao terminar, recalcula o tamanho do
+    // popup e reposiciona (autoPan) para não ficar cortado no topo do mapa.
+    m.on("popupopen", function (ev) {
+      var el = ev.popup.getElement();
+      var img = el && el.querySelector(".popup__foto");
+      if (img && !img.complete) {
+        img.addEventListener("load", function () { ev.popup.update(); }, { once: true });
+        img.addEventListener("error", function () { ev.popup.update(); }, { once: true });
+      }
+    });
     var registro = { dados: d, marker: m, categoria: d.categoria };
     pontos.push(registro);
     if (filtros[d.categoria] !== false) m.addTo(camadaPontos);
@@ -839,6 +951,68 @@
   });
 
   /* =============================================================
+     6.5) FOTO (opcional) — compressão no navegador + preview
+     ============================================================= */
+  var fotoInput = document.getElementById("rFoto");
+  var fotoDrop = document.getElementById("fotoDrop");
+  var fotoPreview = document.getElementById("fotoPreview");
+  var fotoPreviewImg = document.getElementById("fotoPreviewImg");
+  var fotoInfo = document.getElementById("fotoInfo");
+  var fotoRemover = document.getElementById("fotoRemover");
+  var fotoUrlInput = document.getElementById("rFotoUrl");
+
+  var fotoBlob = null;        // Blob JPEG já comprimido, pronto para upload
+  var fotoPreviewUrl = null;  // object URL da miniatura (liberado ao trocar/remover)
+
+  // Sem Cloudinary configurado: esconde o campo (não há para onde enviar).
+  var campoFoto = fotoInput ? fotoInput.closest(".campo-foto") : null;
+  if (!FOTOS_ATIVAS && campoFoto) campoFoto.hidden = true;
+
+  function limparFoto() {
+    fotoBlob = null;
+    if (fotoPreviewUrl) { URL.revokeObjectURL(fotoPreviewUrl); fotoPreviewUrl = null; }
+    if (fotoInput) fotoInput.value = "";
+    if (fotoUrlInput) fotoUrlInput.value = "";
+    if (fotoPreviewImg) fotoPreviewImg.removeAttribute("src");
+    if (fotoPreview) fotoPreview.hidden = true;
+    if (fotoDrop) { fotoDrop.hidden = false; fotoDrop.classList.remove("foto-drop--carregando"); }
+    if (fotoInfo) fotoInfo.textContent = "";
+  }
+
+  if (FOTOS_ATIVAS && fotoInput) {
+    fotoInput.addEventListener("change", function () {
+      var file = fotoInput.files && fotoInput.files[0];
+      if (!file) { limparFoto(); return; }
+      if (!/^image\//.test(file.type)) {
+        mostrarStatus("Escolha um arquivo de imagem (JPG, PNG…).", "erro");
+        limparFoto();
+        return;
+      }
+      esconderStatus();
+      if (fotoDrop) fotoDrop.classList.add("foto-drop--carregando");
+      if (fotoInfo) fotoInfo.textContent = "Preparando imagem…";
+      comprimirImagem(file)
+        .then(function (blob) {
+          if (fotoPreviewUrl) URL.revokeObjectURL(fotoPreviewUrl);
+          fotoBlob = blob;
+          fotoPreviewUrl = URL.createObjectURL(blob);
+          if (fotoPreviewImg) fotoPreviewImg.src = fotoPreviewUrl;
+          if (fotoInfo) fotoInfo.textContent = "Pronta · " + formatarKB(blob.size);
+          if (fotoDrop) fotoDrop.hidden = true;
+          if (fotoPreview) fotoPreview.hidden = false;
+        })
+        .catch(function () {
+          mostrarStatus("Não foi possível preparar essa imagem. Tente outra foto.", "erro");
+          limparFoto();
+        })
+        .then(function () {
+          if (fotoDrop) fotoDrop.classList.remove("foto-drop--carregando");
+        });
+    });
+  }
+  if (fotoRemover) fotoRemover.addEventListener("click", limparFoto);
+
+  /* =============================================================
      7) ENVIO DO RELATO
      ============================================================= */
   if (form) {
@@ -889,48 +1063,73 @@
         telefone: anon ? "" : val(telefoneInput),
         anonimo: anon,
         lat: parseFloat(latInput.value),
-        lng: parseFloat(lngInput.value)
+        lng: parseFloat(lngInput.value),
+        foto: ""
       };
 
-      // Sem endpoint configurado (ou aberto via file://): simula o envio e
-      // mostra o ponto localmente como "pendente" (só você vê), para demonstrar.
-      if (!MAPA_ENDPOINT || !SERVIDO_VIA_HTTP) {
-        aposEnvio(d);
-        return;
+      function restaurarBotao() {
+        if (botaoEnviar) { botaoEnviar.disabled = false; botaoEnviar.textContent = "Enviar relato"; }
       }
 
-      if (botaoEnviar) { botaoEnviar.disabled = true; botaoEnviar.textContent = "Enviando…"; }
+      // Grava o relato (POST) — ou simula, quando não há backend/está em file://.
+      function finalizar(fotoUrl) {
+        d.foto = fotoUrl || "";
 
-      var corpo = new URLSearchParams();
-      corpo.set("categoria", d.categoria);
-      corpo.set("titulo", d.titulo);
-      corpo.set("cidade", d.cidade);
-      corpo.set("descricao", d.descricao);
-      corpo.set("lat", String(d.lat));
-      corpo.set("lng", String(d.lng));
-      corpo.set("endereco", d.endereco);
-      corpo.set("nome", d.nome);
-      corpo.set("email", d.email);
-      corpo.set("telefone", d.telefone);
-      corpo.set("anonimo", anon ? "sim" : "não");
-      corpo.set("consentimento", "sim");
-
-      fetch(MAPA_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body: corpo.toString()
-      })
-        .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
-        .then(function (res) {
-          if (res && res.ok === false) throw new Error("recusado");
+        // Sem endpoint (ou via file://): simula e mostra o ponto localmente como
+        // "pendente" (só você vê). Usa a miniatura local para pré-visualizar a foto.
+        if (!MAPA_ENDPOINT || !SERVIDO_VIA_HTTP) {
+          if (!d.foto && fotoPreviewUrl) d.foto = fotoPreviewUrl;
+          restaurarBotao();
           aposEnvio(d);
+          return;
+        }
+
+        if (botaoEnviar) { botaoEnviar.disabled = true; botaoEnviar.textContent = "Enviando…"; }
+
+        var corpo = new URLSearchParams();
+        corpo.set("categoria", d.categoria);
+        corpo.set("titulo", d.titulo);
+        corpo.set("cidade", d.cidade);
+        corpo.set("descricao", d.descricao);
+        corpo.set("lat", String(d.lat));
+        corpo.set("lng", String(d.lng));
+        corpo.set("endereco", d.endereco);
+        corpo.set("foto", d.foto);
+        corpo.set("nome", d.nome);
+        corpo.set("email", d.email);
+        corpo.set("telefone", d.telefone);
+        corpo.set("anonimo", anon ? "sim" : "não");
+        corpo.set("consentimento", "sim");
+
+        fetch(MAPA_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: corpo.toString()
         })
-        .catch(function () {
-          mostrarStatus("Não conseguimos enviar agora. Tente novamente em instantes.", "erro");
-        })
-        .finally(function () {
-          if (botaoEnviar) { botaoEnviar.disabled = false; botaoEnviar.textContent = "Enviar relato"; }
-        });
+          .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
+          .then(function (res) {
+            if (res && res.ok === false) throw new Error("recusado");
+            aposEnvio(d);
+          })
+          .catch(function () {
+            mostrarStatus("Não conseguimos enviar agora. Tente novamente em instantes.", "erro");
+          })
+          .finally(restaurarBotao);
+      }
+
+      // Com foto + Cloudinary ativo (e servido via HTTP): envia a imagem primeiro,
+      // depois grava o relato com a URL retornada. Sem foto: segue direto.
+      if (fotoBlob && FOTOS_ATIVAS && SERVIDO_VIA_HTTP) {
+        if (botaoEnviar) { botaoEnviar.disabled = true; botaoEnviar.textContent = "Enviando foto…"; }
+        enviarCloudinary(fotoBlob)
+          .then(function (url) { finalizar(url); })
+          .catch(function () {
+            restaurarBotao();
+            mostrarStatus("Não foi possível enviar a foto. Tente de novo — ou remova a foto e envie sem ela.", "erro");
+          });
+      } else {
+        finalizar("");
+      }
     });
   }
 
@@ -958,6 +1157,7 @@
     if (editarEndereco) editarEndereco.open = false;
     if (btnParaPasso2) btnParaPasso2.disabled = true;
     if (descContador) descContador.textContent = "0";
+    limparFoto();
     fecharSugestoes();
     atualizarChips();
     atualizarIdentidade();
@@ -1032,6 +1232,7 @@
             titulo: o.titulo || o.local || "Ponto marcado",
             cidade: o.cidade || "",
             descricao: o.descricao || "",
+            foto: o.foto || o.foto_url || "",
             data: o.data || ""
           });
           validos++;

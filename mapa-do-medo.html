@@ -382,6 +382,29 @@
           <p class="campo-contador"><span id="descContador">0</span>/400 · evite citar nomes de pessoas</p>
         </div>
 
+        <div class="campo campo-foto">
+          <label for="rFoto">Foto do local <span class="campo-opcional">(opcional)</span></label>
+          <input type="file" id="rFoto" name="foto" accept="image/*"
+                 capture="environment" class="foto-input">
+          <label class="foto-drop" id="fotoDrop" for="rFoto">
+            <span class="foto-drop__icone" aria-hidden="true">📷</span>
+            <span class="foto-drop__txt"><strong>Adicionar uma foto</strong><small>Tirar foto ou escolher da galeria</small></span>
+          </label>
+          <p class="campo-dica">
+            A imagem é reduzida automaticamente (máx. 200&nbsp;KB) antes do envio.
+            <strong>Não fotografe pessoas identificáveis nem placas de veículos.</strong>
+          </p>
+          <div class="foto-preview" id="fotoPreview" hidden>
+            <img class="foto-preview__img" id="fotoPreviewImg" alt="Pré-visualização da foto escolhida">
+            <div class="foto-preview__barra">
+              <span class="foto-preview__info" id="fotoInfo" aria-live="polite"></span>
+              <button type="button" class="foto-remover" id="fotoRemover">✕ Remover</button>
+            </div>
+          </div>
+        </div>
+
+        <input type="hidden" name="foto_url" id="rFotoUrl">
+
         <div class="passo__nav passo__nav--dupla">
           <button type="button" class="btn" id="voltarPasso1">← Voltar</button>
           <button type="button" class="btn btn--primario" id="paraPasso3">Continuar →</button>
