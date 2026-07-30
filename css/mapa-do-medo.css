@@ -469,6 +469,19 @@
 }
 .endereco-linha { display: grid; grid-template-columns: 1fr 1.6fr; gap: 0.5rem; }
 
+/* Campos de endereço para digitar (dentro da busca) */
+.endereco-manual { display: grid; gap: 0.6rem; margin-top: 0.85rem; }
+.endereco-manual__titulo {
+  margin: 0;
+  font-family: var(--fonte-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta-70);
+}
+.btn--linha { width: 100%; }
+
 /* Campo de foto (opcional) */
 .foto-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .foto-drop {
@@ -619,22 +632,14 @@
   text-transform: uppercase;
   color: var(--brand-escuro);
 }
-.local-card__endereco {
+.local-card__status {
   margin: 0;
-  font-weight: 700;
-  font-size: 0.98rem;
-  line-height: 1.4;
-}
-.local-card__acoes { display: flex; gap: 1.2rem; }
-.local-card__editar summary {
   font-family: var(--fonte-mono);
   font-size: 0.72rem;
-  font-weight: 600;
-  text-decoration: underline;
+  line-height: 1.45;
   color: var(--tinta-70);
-  cursor: pointer;
 }
-.local-card__campos { display: grid; gap: 0.6rem; margin-top: 0.6rem; }
+.local-card__acoes { display: flex; gap: 1.2rem; margin-top: 0.1rem; }
 
 /* Chips de categoria (passo 2) */
 .chips-campo { border: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }

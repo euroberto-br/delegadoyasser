@@ -293,6 +293,36 @@
             <ul class="sugestoes" id="listaSugestoes" role="listbox"
                 aria-label="Sugestões de endereço" hidden></ul>
           </div>
+
+          <!-- Campos para digitar / ajustar o endereço -->
+          <div class="endereco-manual">
+            <p class="endereco-manual__titulo">Ou digite o endereço</p>
+            <div class="campo">
+              <label for="rLogradouro">Rua / Avenida</label>
+              <input type="text" id="rLogradouro" name="logradouro" maxlength="120"
+                     autocomplete="off" placeholder="Ex.: Avenida Anhanguera">
+            </div>
+            <div class="endereco-linha">
+              <div class="campo">
+                <label for="rNumero">Número</label>
+                <input type="text" id="rNumero" name="numero" maxlength="12"
+                       inputmode="numeric" autocomplete="off" placeholder="1200">
+              </div>
+              <div class="campo">
+                <label for="rBairro">Bairro</label>
+                <input type="text" id="rBairro" name="bairro" maxlength="80"
+                       autocomplete="off" placeholder="Setor Central">
+              </div>
+            </div>
+            <div class="campo">
+              <label for="rCidade">Cidade *</label>
+              <input type="text" id="rCidade" name="cidade" maxlength="60"
+                     autocomplete="off" placeholder="Ex.: Anápolis">
+            </div>
+            <button type="button" class="btn btn--linha" id="localizarEndereco">
+              📍 Localizar este endereço no mapa
+            </button>
+          </div>
         </div>
 
         <p class="ou-divisor" aria-hidden="true">ou</p>
@@ -314,40 +344,13 @@
           </button>
         </div>
 
-        <!-- Cartão do local escolhido -->
+        <!-- Confirmação do local escolhido -->
         <div class="local-card" id="localCard" hidden>
           <p class="local-card__rotulo">📍 Local marcado</p>
-          <p class="local-card__endereco" id="localCardEndereco">—</p>
+          <p class="local-card__status" id="localCardEndereco" aria-live="polite">Confira e ajuste os campos acima.</p>
           <div class="local-card__acoes">
             <button type="button" class="link-geo" id="ajustarNoMapa">Ajustar no mapa</button>
           </div>
-          <details class="local-card__editar" id="editarEndereco">
-            <summary>Corrigir o endereço por escrito</summary>
-            <div class="local-card__campos">
-              <div class="campo">
-                <label for="rLogradouro">Rua / Avenida</label>
-                <input type="text" id="rLogradouro" name="logradouro" maxlength="120"
-                       autocomplete="off" placeholder="Ex.: Avenida Anhanguera">
-              </div>
-              <div class="endereco-linha">
-                <div class="campo">
-                  <label for="rNumero">Número</label>
-                  <input type="text" id="rNumero" name="numero" maxlength="12"
-                         inputmode="numeric" autocomplete="off" placeholder="1200">
-                </div>
-                <div class="campo">
-                  <label for="rBairro">Bairro</label>
-                  <input type="text" id="rBairro" name="bairro" maxlength="80"
-                         autocomplete="off" placeholder="Setor Central">
-                </div>
-              </div>
-              <div class="campo">
-                <label for="rCidade">Cidade *</label>
-                <input type="text" id="rCidade" name="cidade" maxlength="60"
-                       autocomplete="off" placeholder="Ex.: Anápolis">
-              </div>
-            </div>
-          </details>
         </div>
 
         <input type="hidden" name="lat" id="rLat">

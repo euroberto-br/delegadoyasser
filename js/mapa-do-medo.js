@@ -506,7 +506,6 @@
   var sugestoesEl = document.getElementById("listaSugestoes");
   var localCard = document.getElementById("localCard");
   var localCardEndereco = document.getElementById("localCardEndereco");
-  var editarEndereco = document.getElementById("editarEndereco");
   var ajustarNoMapa = document.getElementById("ajustarNoMapa");
   var logradouroInput = document.getElementById("rLogradouro");
   var numeroInput = document.getElementById("rNumero");
@@ -515,6 +514,7 @@
   var usarLocalizacao = document.getElementById("usarLocalizacao");
   var usarLocalizacaoNota = document.getElementById("usarLocalizacaoNota");
   var escolherNoMapa = document.getElementById("escolherNoMapa");
+  var localizarEndereco = document.getElementById("localizarEndereco");
   var btnParaPasso2 = document.getElementById("paraPasso2");
 
   var mapaWrap = document.getElementById("mapaWrap");
@@ -559,20 +559,34 @@
       .then(function (res) { return (res && res.address) || {}; });
   }
 
+  // Extração de cada parte do endereço a partir dos campos do Nominatim
+  // (a nomenclatura varia conforme o tipo de via/lugar).
+  function extrairLogradouro(a) {
+    return a.road || a.pedestrian || a.footway || a.cycleway || a.path || a.living_street || "";
+  }
+  function extrairBairro(a) {
+    return a.suburb || a.neighbourhood || a.quarter || a.city_district ||
+           a.residential || a.borough || a.allotments || "";
+  }
+  function extrairCidade(a) {
+    return a.city || a.town || a.village || a.municipality || a.hamlet || a.county || "";
+  }
+
   function aplicarEndereco(a) {
-    if (logradouroInput) logradouroInput.value = a.road || a.pedestrian || a.footway || a.cycleway || "";
+    a = a || {};
+    if (logradouroInput) logradouroInput.value = extrairLogradouro(a);
     if (numeroInput) numeroInput.value = a.house_number || "";
-    if (bairroInput) bairroInput.value = a.suburb || a.neighbourhood || a.quarter || a.city_district || "";
-    var cid = a.city || a.town || a.village || a.municipality || a.county || "";
+    if (bairroInput) bairroInput.value = extrairBairro(a);
+    // Cidade: só sobrescreve quando encontrada (nunca apaga uma cidade já conhecida).
+    var cid = extrairCidade(a);
     if (cidadeInput && cid) cidadeInput.value = cid;
   }
 
   function enderecoCurto(a) {
-    var rua = a.road || a.pedestrian || a.footway || "";
+    a = a || {};
+    var rua = extrairLogradouro(a);
     if (rua && a.house_number) rua += ", " + a.house_number;
-    var bairro = a.suburb || a.neighbourhood || a.quarter || "";
-    var cid = a.city || a.town || a.village || a.municipality || "";
-    return [rua, bairro, cid].filter(Boolean).join(" · ");
+    return [rua, extrairBairro(a), extrairCidade(a)].filter(Boolean).join(" · ");
   }
 
   // Resumo legível do que está nos campos (mostrado no cartão do local)
@@ -604,25 +618,88 @@
     esconderStatus();
 
     if (opcoes.buscarEndereco === false) {
-      if (localCardEndereco) localCardEndereco.textContent = resumoEndereco();
+      definirStatusLocal("Endereço preenchido — confira e ajuste os campos acima.");
       return;
     }
-    if (localCardEndereco) localCardEndereco.textContent = "Buscando endereço aproximado…";
+    definirStatusLocal("Buscando endereço aproximado…");
     reverso(lat, lng)
       .then(function (a) { aplicarEndereco(a); })
       .catch(function () { /* silencioso: usuário pode corrigir por escrito */ })
       .then(function () {
-        if (localCardEndereco) localCardEndereco.textContent = resumoEndereco();
+        definirStatusLocal(val(cidadeInput)
+          ? "Endereço aproximado preenchido — confira e ajuste os campos acima."
+          : "Não achamos o endereço exato aqui. Preencha os campos acima (a cidade é obrigatória).");
       });
   }
 
-  // Corrigir endereço por escrito atualiza o cartão na hora
+  // Texto de apoio no cartão do local (os campos separados mostram o endereço).
+  function definirStatusLocal(txt) {
+    if (localCardEndereco) localCardEndereco.textContent = txt;
+  }
+
+  // Ao editar os campos, dá um retorno curto (a cidade é obrigatória).
   [logradouroInput, numeroInput, bairroInput, cidadeInput].forEach(function (el) {
     if (!el) return;
     el.addEventListener("input", function () {
-      if (latInput.value && localCardEndereco) localCardEndereco.textContent = resumoEndereco();
+      if (!latInput.value) return;
+      definirStatusLocal(val(cidadeInput)
+        ? "Endereço conferido. Pode continuar."
+        : "Preencha a cidade (obrigatória) para continuar.");
     });
   });
+
+  // ---- Localizar no mapa a partir do endereço digitado (geocodificação estruturada) ----
+  function localizarEnderecoDigitado() {
+    var rua = val(logradouroInput), num = val(numeroInput);
+    var bairro = val(bairroInput), cidade = val(cidadeInput);
+    if (!cidade) {
+      mostrarStatus("Preencha ao menos a cidade para localizar no mapa.", "erro");
+      if (cidadeInput) cidadeInput.focus();
+      return;
+    }
+    if (!rua && !bairro) {
+      mostrarStatus("Preencha a rua ou o bairro para localizar melhor.", "erro");
+      if (logradouroInput) logradouroInput.focus();
+      return;
+    }
+
+    // Nominatim estruturado: street (nº + rua), city, state. O bairro entra em
+    // "street" quando não há rua, ajudando a achar o ponto.
+    var street = rua ? ((num ? num + " " : "") + rua) : bairro;
+    var params = [
+      "format=jsonv2", "addressdetails=1", "limit=1", "countrycodes=br",
+      "state=" + encodeURIComponent("Goiás"),
+      "city=" + encodeURIComponent(cidade),
+      "street=" + encodeURIComponent(street)
+    ];
+    var url = NOMINATIM + "/search?" + params.join("&") + VIEWBOX_GO;
+
+    if (localizarEndereco) { localizarEndereco.disabled = true; }
+    definirStatusLocal("Localizando o endereço digitado…");
+    fetch(url, { headers: { "Accept": "application/json" } })
+      .then(function (r) { return r.json(); })
+      .then(function (lista) {
+        var achou = (lista || []).filter(function (r) {
+          var la = parseFloat(r.lat), ln = parseFloat(r.lon);
+          return !isNaN(la) && !isNaN(ln) && dentroDeGoias(la, ln);
+        })[0];
+        if (!achou) {
+          definirStatusLocal("");
+          mostrarStatus("Não encontramos esse endereço em Goiás. Confira os campos ou use “Apontar no mapa”.", "erro");
+          return;
+        }
+        // Mantém o que a pessoa digitou (não sobrescreve com o reverso).
+        definirLocal(parseFloat(achou.lat), parseFloat(achou.lon), { buscarEndereco: false });
+      })
+      .catch(function () {
+        definirStatusLocal("");
+        mostrarStatus("Não foi possível localizar agora. Tente de novo ou use “Apontar no mapa”.", "erro");
+      })
+      .then(function () {
+        if (localizarEndereco) localizarEndereco.disabled = false;
+      });
+  }
+  if (localizarEndereco) localizarEndereco.addEventListener("click", localizarEnderecoDigitado);
 
   // ---- Busca com sugestões (autocomplete) ----
   var sugDados = [];
@@ -884,8 +961,7 @@
         return;
       }
       if (!val(cidadeInput)) {
-        if (editarEndereco) editarEndereco.open = true;
-        mostrarStatus("Não conseguimos identificar a cidade. Preencha em “Corrigir o endereço”.", "erro");
+        mostrarStatus("Não conseguimos identificar a cidade. Preencha o campo “Cidade”.", "erro");
         if (cidadeInput) cidadeInput.focus();
         return;
       }
@@ -1154,7 +1230,7 @@
     lngInput.value = "";
     ultimaCoordValida = null;
     if (localCard) localCard.hidden = true;
-    if (editarEndereco) editarEndereco.open = false;
+    definirStatusLocal("Confira e ajuste os campos acima.");
     if (btnParaPasso2) btnParaPasso2.disabled = true;
     if (descContador) descContador.textContent = "0";
     limparFoto();
