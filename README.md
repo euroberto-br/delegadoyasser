@@ -1,6 +1,6 @@
 # Site — Delegado Yasser Yassine · Brasil Seguro
 
-Site estático do pré-candidato a deputado estadual **Delegado Yasser Yassine
+Site estático do candidato a deputado estadual **Delegado Yasser Yassine
 (PT-GO)**. HTML, CSS e JavaScript separados, sem etapa de build — basta abrir
 os arquivos ou publicar a pasta.
 
