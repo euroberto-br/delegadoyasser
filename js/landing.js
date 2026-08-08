@@ -772,8 +772,29 @@
       if (document.hidden) parar(); else iniciar();
     });
 
-    irPara(0);
-    iniciar();
+    // O carrossel fica no fim da pagina e a maioria das visitas nunca chega
+    // nele, entao nada e baixado enquanto ele estiver longe da viewport: sem
+    // isso as duas primeiras fotos (~77 KB) vinham em toda visita, fora da
+    // tela. O autoplay tambem so comeca aqui, senao avancaria os slides — e
+    // baixaria as fotos — com o carrossel invisivel.
+    function ativar() {
+      irPara(0);
+      iniciar();
+    }
+
+    if ("IntersectionObserver" in window) {
+      var ioCarrossel = new IntersectionObserver(function (entradas) {
+        for (var k = 0; k < entradas.length; k++) {
+          if (!entradas[k].isIntersecting) continue;
+          ioCarrossel.disconnect();
+          ativar();
+          return;
+        }
+      }, { rootMargin: "300px" }); // margem para as fotos chegarem antes de aparecer
+      ioCarrossel.observe(carrossel);
+    } else {
+      ativar();
+    }
   }
 
   /* =============================================================

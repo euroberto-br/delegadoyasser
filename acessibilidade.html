@@ -42,6 +42,10 @@
 
   <link rel="stylesheet" href="css/landing.css">
 
+  <!-- Abre a conexão com o Clarity em paralelo: o script dele é injetado
+       por JS, então o navegador só descobriria o domínio tarde. ~80 ms. -->
+  <link rel="preconnect" href="https://www.clarity.ms">
+
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
