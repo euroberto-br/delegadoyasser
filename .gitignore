@@ -1,0 +1,6 @@
+# Logs gerados por editores/ferramentas — nunca devem ir para o site publicado
+*.log
+
+# Arquivos de sistema
+Thumbs.db
+.DS_Store

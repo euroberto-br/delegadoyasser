@@ -4,8 +4,7 @@
 User-agent: *
 Allow: /
 
-# Não indexar artefatos internos (relatórios de auditoria e material da equipe)
+# Não indexar artefatos internos (relatórios de auditoria)
 Disallow: /erros/
-Disallow: /docs/
 
 Sitemap: https://delegadoyasser.com.br/sitemap.xml
