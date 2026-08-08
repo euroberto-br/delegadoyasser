@@ -94,9 +94,11 @@
   <link rel="stylesheet" href="css/landing.css">
   <link rel="stylesheet" href="css/agenda.css">
 
-  <!-- Abre a conexão com o Clarity em paralelo: o script dele é injetado
-       por JS, então o navegador só descobriria o domínio tarde. ~80 ms. -->
+  <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
+       por JS, então o navegador só descobriria os domínios tarde. Carrega em
+       dois saltos — www serve o /tag e este puxa o script de scripts. ~200 ms. -->
   <link rel="preconnect" href="https://www.clarity.ms">
+  <link rel="preconnect" href="https://scripts.clarity.ms">
 
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
