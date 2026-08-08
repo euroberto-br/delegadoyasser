@@ -25,9 +25,9 @@
   <!-- Página em desenvolvimento: acompanha a landing. -->
   <meta name="robots" content="noindex, nofollow, noarchive">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
+  <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
 
   <script>
     try{
@@ -144,8 +144,11 @@
       <div class="rodape__selos">
         <a href="https://www.w3.org/WAI/WCAG2AA-Conformance" target="_blank" rel="noopener"
            title="Explicação da conformidade com o nível AA das WCAG 2 do W3C">
-          <img src="images/selo-wcag2aa.png" width="88" height="32"
-               alt="Selo de conformidade nível AA, Diretrizes de Acessibilidade para Conteúdo Web (WCAG 2) do W3C WAI">
+          <picture>
+            <source type="image/webp" srcset="images/selo-wcag2aa.webp">
+            <img src="images/selo-wcag2aa.png" width="88" height="32"
+               alt="Selo de conformidade nível AA, Diretrizes de Acessibilidade para Conteúdo Web (WCAG 2) do W3C WAI" loading="lazy" decoding="async">
+          </picture>
         </a>
       </div>
       <div class="rodape__bottom">

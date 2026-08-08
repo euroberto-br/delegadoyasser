@@ -647,18 +647,39 @@
     var reduzido = window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // Dimensoes de cada foto ("LARGURAxALTURA,..." em data-dims), usadas para
+    // emitir width/height e reservar a proporcao antes de a imagem chegar.
+    var dims = (carrossel.getAttribute("data-dims") || "").split(",");
+
     var slidesImg = [];
     var frag = document.createDocumentFragment();
     for (var i = 1; i <= total; i++) {
-      var li = document.createElement("li");
-      li.className = "carrossel__slide";
-      li.setAttribute("role", "group");
-      li.setAttribute("aria-roledescription", "slide");
-      li.setAttribute("aria-label", i + " de " + total);
+      // Slide e <div>, nao <li>: um <li> nao aceita role="group", e sobrescrever
+      // o papel dele invalidava a lista inteira para leitores de tela.
+      var slide = document.createElement("div");
+      slide.className = "carrossel__slide";
+      slide.setAttribute("role", "group");
+      slide.setAttribute("aria-roledescription", "slide");
+      slide.setAttribute("aria-label", i + " de " + total);
+
+      // Numeracao dos arquivos: 01..99 com zero a esquerda, 100 em diante sem
+      // preenchimento. slice(-2) sozinho quebraria a partir da foto 100 ("00").
+      var base = prefixo + (i < 100 ? ("0" + i).slice(-2) : String(i));
+
+      // <picture> serve o WebP (metade do peso) e mantem o JPEG como reserva.
+      var pic = document.createElement("picture");
+      var fonte = document.createElement("source");
+      fonte.type = "image/webp";
+      fonte.setAttribute("data-srcset", base + ".webp");
 
       var img = document.createElement("img");
       img.className = "carrossel__img";
-      img.setAttribute("data-src", prefixo + ("0" + i).slice(-2) + ".jpg");
+      img.setAttribute("data-src", base + ".jpg");
+      var d = (dims[i - 1] || "").split("x");
+      if (d.length === 2) {
+        img.setAttribute("width", d[0]);
+        img.setAttribute("height", d[1]);
+      }
       // O número da foto já é anunciado pelo aria-label do slide ("N de total"),
       // então o alt traz só a descrição, sem repetir o número.
       img.alt = "Delegado Yasser durante as ações do movimento Brasil Seguro";
@@ -667,8 +688,10 @@
       // como painel escuro, sem o ícone de imagem quebrada.
       img.addEventListener("error", function () { this.style.display = "none"; });
 
-      li.appendChild(img);
-      frag.appendChild(li);
+      pic.appendChild(fonte);
+      pic.appendChild(img);
+      slide.appendChild(pic);
+      frag.appendChild(slide);
       slidesImg.push(img);
     }
     trilho.appendChild(frag);
@@ -677,6 +700,13 @@
       if (idx < 0 || idx >= total) return;
       var im = slidesImg[idx];
       if (im && !im.src && im.getAttribute("data-src")) {
+        // O srcset do <source> tem de ser preenchido antes do src do <img>:
+        // na ordem inversa o navegador ja teria comecado a baixar o JPEG.
+        var fonte = im.parentNode.querySelector("source[data-srcset]");
+        if (fonte) {
+          fonte.srcset = fonte.getAttribute("data-srcset");
+          fonte.removeAttribute("data-srcset");
+        }
         im.src = im.getAttribute("data-src");
       }
     }

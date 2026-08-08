@@ -112,10 +112,9 @@
   }
   </script>
 
-  <!-- Fontes: Anton (display de cartaz) · Archivo (texto) · IBM Plex Mono (rótulos) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
+  <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Aplica preferências de acessibilidade salvas antes da pintura (evita flash) -->
   <script>
@@ -235,9 +234,14 @@
         <div class="hero__foto">
           <figure class="moldura">
             <span class="selo">12 anos de Polícia Civil</span>
-            <img src="images/yasser/yasser-terno-maos-unidas.jpg"
-                 alt="Delegado Yasser de blazer preto e camisa branca, sorrindo com as mãos unidas à frente do peito"
-                 width="900" height="1350" decoding="async" fetchpriority="high">
+            <picture>
+              <source type="image/webp"
+                      srcset="images/yasser/yasser-terno-maos-unidas-480.webp 480w, images/yasser/yasser-terno-maos-unidas-720.webp 720w, images/yasser/yasser-terno-maos-unidas-900.webp 900w"
+                      sizes="(max-width: 480px) 88vw, 400px">
+              <img src="images/yasser/yasser-terno-maos-unidas.jpg"
+                   alt="Delegado Yasser de blazer preto e camisa branca, sorrindo com as mãos unidas à frente do peito"
+                   width="900" height="1350" decoding="async" fetchpriority="high">
+            </picture>
           </figure>
         </div>
       </div>
@@ -263,9 +267,14 @@
           <div class="bio__foto reveal">
             <figure class="moldura">
               <span class="selo">Filho de professora e de imigrante</span>
-              <img src="images/yasser/yasser-kufiya-retrato.jpg"
-                   alt="Delegado Yasser sorrindo, vestindo o kufiya palestino sobre o blazer"
-                   width="900" height="1350" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp"
+                        srcset="images/yasser/yasser-kufiya-retrato-480.webp 480w, images/yasser/yasser-kufiya-retrato-720.webp 720w, images/yasser/yasser-kufiya-retrato-900.webp 900w"
+                        sizes="(max-width: 480px) 88vw, 400px">
+                <img src="images/yasser/yasser-kufiya-retrato.jpg"
+                     alt="Delegado Yasser sorrindo, vestindo o kufiya palestino sobre o blazer"
+                     width="900" height="1350" loading="lazy" decoding="async">
+              </picture>
               <figcaption>O kufiya do pai palestino, que chegou ao Brasil aos 18 anos</figcaption>
             </figure>
           </div>
@@ -396,9 +405,14 @@
           </div>
           <div class="redes-foto reveal">
             <figure class="moldura">
-              <img src="images/yasser/yasser-camiseta-lula.jpg"
-                   alt="Delegado Yasser de punho erguido, vestindo camiseta vermelha do Lula"
-                   width="900" height="1350" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp"
+                        srcset="images/yasser/yasser-camiseta-lula-480.webp 480w, images/yasser/yasser-camiseta-lula-720.webp 720w, images/yasser/yasser-camiseta-lula-900.webp 900w"
+                        sizes="(max-width: 480px) 88vw, 400px">
+                <img src="images/yasser/yasser-camiseta-lula.jpg"
+                     alt="Delegado Yasser de punho erguido, vestindo camiseta vermelha do Lula"
+                     width="900" height="1350" loading="lazy" decoding="async">
+              </picture>
               <figcaption>A militância que virou movimento</figcaption>
             </figure>
           </div>
@@ -430,9 +444,14 @@
         </div>
         <div class="causa-foto reveal">
           <figure class="moldura">
-            <img src="images/yasser/yasser-camisa-branca-chamando.jpg"
-                 alt="Delegado Yasser sorrindo, de camisa branca com as mangas dobradas, chamando com a mão tatuada para que a pessoa se aproxime"
-                 width="900" height="1350" loading="lazy" decoding="async">
+            <picture>
+              <source type="image/webp"
+                      srcset="images/yasser/yasser-camisa-branca-chamando-480.webp 480w, images/yasser/yasser-camisa-branca-chamando-720.webp 720w, images/yasser/yasser-camisa-branca-chamando-900.webp 900w"
+                      sizes="(max-width: 480px) 88vw, 400px">
+              <img src="images/yasser/yasser-camisa-branca-chamando.jpg"
+                   alt="Delegado Yasser sorrindo, de camisa branca com as mangas dobradas, chamando com a mão tatuada para que a pessoa se aproxime"
+                   width="900" height="1350" loading="lazy" decoding="async">
+            </picture>
             <figcaption>Vem com a gente: o convite é para todo mundo</figcaption>
           </figure>
         </div>
@@ -497,9 +516,14 @@
         </div>
         <div class="radar-foto reveal">
           <figure class="moldura">
-            <img src="images/yasser/yasser-retrato-serio.jpg"
-                 alt="Retrato sério do Delegado Yasser, mãos unidas sob o queixo"
-                 width="900" height="1350" loading="lazy" decoding="async">
+            <picture>
+              <source type="image/webp"
+                      srcset="images/yasser/yasser-retrato-serio-480.webp 480w, images/yasser/yasser-retrato-serio-720.webp 720w, images/yasser/yasser-retrato-serio-900.webp 900w"
+                      sizes="(max-width: 480px) 88vw, 400px">
+              <img src="images/yasser/yasser-retrato-serio.jpg"
+                   alt="Retrato sério do Delegado Yasser, mãos unidas sob o queixo"
+                   width="900" height="1350" loading="lazy" decoding="async">
+            </picture>
             <figcaption>Cada relato vira investigação de projeto</figcaption>
           </figure>
         </div>
@@ -602,14 +626,15 @@
         </div>
 
         <div class="carrossel reveal" id="carrossel" role="group"
-             data-total="92" data-prefixo="images/carrousel/carrousel-" data-autoplay="6000"
+             data-total="114" data-prefixo="images/carrousel/carrousel-" data-autoplay="6000"
+             data-dims="900x507,900x675,675x900,675x900,900x675,676x900,598x900,675x900,506x900,600x900,900x507,900x675,900x600,675x900,900x675,900x599,900x600,675x900,675x900,600x900,675x900,675x900,900x675,900x599,900x675,900x676,900x754,675x900,675x900,675x900,675x900,675x900,675x900,900x675,900x675,900x675,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,900x675,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,675x900,900x675,675x900,675x900,675x900,675x900,900x675,676x900,900x600,600x900,900x675,900x675,675x900,900x507,675x900,900x599,675x900,900x675,900x565,675x900,900x600,900x600,600x900,900x600,600x900,900x600,900x600,900x600,900x600,900x600,600x900,900x600,900x600,900x600,900x600,600x900,600x900,900x600,900x600,600x900,900x600,900x600"
              aria-roledescription="carrossel" aria-label="Fotos do movimento">
           <div class="carrossel__janela">
-            <ul class="carrossel__trilho" id="carrosselTrilho"></ul>
+            <div class="carrossel__trilho" id="carrosselTrilho"></div>
           </div>
           <button type="button" class="carrossel__seta carrossel__seta--prev" id="carrosselPrev" aria-label="Foto anterior">‹</button>
           <button type="button" class="carrossel__seta carrossel__seta--next" id="carrosselNext" aria-label="Próxima foto">›</button>
-          <p class="carrossel__contador" aria-live="polite" aria-atomic="true"><span class="sr-only">Foto </span><span id="carrosselAtual">1</span><span aria-hidden="true"> / </span><span class="sr-only">de </span><span id="carrosselTotal">92</span></p>
+          <p class="carrossel__contador" aria-live="polite" aria-atomic="true"><span class="sr-only">Foto </span><span id="carrosselAtual">1</span><span aria-hidden="true"> / </span><span class="sr-only">de </span><span id="carrosselTotal">114</span></p>
         </div>
       </div>
     </section>
@@ -622,9 +647,14 @@
           <h2>Entre para o time</h2>
           <p>Preencha seus dados, escolha como quer ajudar e a equipe vai direcionar você para o grupo certo. Brasil seguro começa com gente organizada.</p>
           <figure class="moldura reveal">
-            <img src="images/yasser/yasser-camisa-branca-celular.jpg"
-                 alt="Delegado Yasser sorrindo, de camisa branca com as mangas dobradas, segurando o celular e apontando para a tela"
-                 width="900" height="1350" loading="lazy" decoding="async">
+            <picture>
+              <source type="image/webp"
+                      srcset="images/yasser/yasser-camisa-branca-celular-480.webp 480w, images/yasser/yasser-camisa-branca-celular-720.webp 720w, images/yasser/yasser-camisa-branca-celular-900.webp 900w"
+                      sizes="(max-width: 480px) 88vw, 400px">
+              <img src="images/yasser/yasser-camisa-branca-celular.jpg"
+                   alt="Delegado Yasser sorrindo, de camisa branca com as mangas dobradas, segurando o celular e apontando para a tela"
+                   width="900" height="1350" loading="lazy" decoding="async">
+            </picture>
             <figcaption>Bem-vindo à Tropa de Elite do Amor</figcaption>
           </figure>
         </div>
@@ -739,8 +769,11 @@
       <div class="rodape__selos">
         <a href="https://www.w3.org/WAI/WCAG2AA-Conformance" target="_blank" rel="noopener"
            title="Explicação da conformidade com o nível AA das WCAG 2 do W3C">
-          <img src="images/selo-wcag2aa.png" width="88" height="32"
-               alt="Selo de conformidade nível AA, Diretrizes de Acessibilidade para Conteúdo Web (WCAG 2) do W3C WAI">
+          <picture>
+            <source type="image/webp" srcset="images/selo-wcag2aa.webp">
+            <img src="images/selo-wcag2aa.png" width="88" height="32"
+               alt="Selo de conformidade nível AA, Diretrizes de Acessibilidade para Conteúdo Web (WCAG 2) do W3C WAI" loading="lazy" decoding="async">
+          </picture>
         </a>
         <a href="acessibilidade.html" class="rodape__selo-link">Declaração de acessibilidade</a>
       </div>
@@ -759,9 +792,19 @@
       <div class="vw-plugin-top-wrapper"></div>
     </div>
   </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <!-- VLibras (tradutor de Libras do gov.br). Carregado só depois do load:
+       como <script> síncrono ele travava a renderização por ~850 ms. O widget
+       é um botão flutuante acionado pelo usuário, então aparecer um instante
+       mais tarde não muda o uso. -->
   <script>
-    try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
+    window.addEventListener("load", function () {
+      var s = document.createElement("script");
+      s.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
+      s.onload = function () {
+        try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
+      };
+      document.body.appendChild(s);
+    });
   </script>
 
   <script src="js/landing.js" defer></script>
