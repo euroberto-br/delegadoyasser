@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#c8102e">
+
+  <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
+  <script>
+    if (window.top !== window.self) {
+      try { window.top.location.replace(window.location.href); }
+      catch (e) { document.documentElement.style.display = "none"; }
+    }
+  </script>
+  <title>Termo de adesão — Voluntário(a) | Delegado Yasser</title>
+  <meta name="description" content="Preencha e assine o termo de adesão e compromisso de voluntário(a) da campanha do Delegado Yasser — Deputado Estadual — Eleições 2026.">
+
+  <!-- Página de uso interno: acessível só por link enviado pela coordenação.
+       Fora do sitemap e com noindex para não aparecer em buscadores. -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+  <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
+  <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Aplica preferências de acessibilidade salvas antes da pintura (evita flash) -->
+  <script>
+    try{
+      var t=localStorage.getItem('tema-cor');if(t&&t!=='vermelho')document.documentElement.setAttribute('data-theme',t);
+      var cc=localStorage.getItem('contraste');
+      if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
+      var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
+      if(localStorage.getItem('destacar-links')==='1')document.documentElement.classList.add('a11y-links');
+      if(localStorage.getItem('pausar-animacoes')==='1')document.documentElement.classList.add('a11y-parado');
+    }catch(e){}
+  </script>
+
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/termos.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#conteudo" accesskey="1">Pular para o conteúdo</a>
+
+  <!-- ===== BALÃO DE ACESSIBILIDADE ===== -->
+  <div class="acess-flutuante">
+    <button type="button" class="acess-flutuante__botao" id="acessToggle"
+            aria-expanded="false" aria-controls="acessPainel" aria-label="Opções de acessibilidade">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm8.5 0c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2z"/></svg>
+    </button>
+    <div class="acess-flutuante__painel" id="acessPainel" role="group" aria-label="Ferramentas de acessibilidade" hidden>
+      <p class="acess-flutuante__titulo">Acessibilidade</p>
+      <div class="acess-flutuante__linha">
+        <button type="button" id="fonteMenor" aria-label="Diminuir tamanho do texto">A−</button>
+        <span class="acess-flutuante__escala" id="fonteEscala" aria-live="polite">100%</span>
+        <button type="button" id="fonteMaior" aria-label="Aumentar tamanho do texto">A+</button>
+      </div>
+      <button type="button" id="contrasteAlto" class="acess-flutuante__toggle" aria-pressed="false">Alto contraste</button>
+      <button type="button" id="destacarLinks" class="acess-flutuante__toggle" aria-pressed="false">Destacar links</button>
+      <button type="button" id="pausarAnimacoes" class="acess-flutuante__toggle" aria-pressed="false">Pausar animações</button>
+      <button type="button" id="restaurarPadrao" class="acess-flutuante__toggle">Restaurar padrão</button>
+      <a href="acessibilidade.html">Declaração de acessibilidade</a>
+    </div>
+  </div>
+
+  <!-- ===== SELETOR DE COR (apenas pré-visualização) ===== -->
+  <div class="tema-switch" role="group" aria-label="Pré-visualização: cor do site">
+    <span class="tema-switch__label">Escolha sua cor</span>
+    <div class="tema-switch__opcoes">
+      <button type="button" class="tema-dot" data-tema="vermelho" style="--c:#c8102e" aria-label="Vermelho" aria-pressed="true"></button>
+      <button type="button" class="tema-dot" data-tema="roxo" style="--c:#7c3aed" aria-label="Roxo" aria-pressed="false"></button>
+      <button type="button" class="tema-dot" data-tema="azul" style="--c:#1d63d8" aria-label="Azul" aria-pressed="false"></button>
+      <button type="button" class="tema-dot" data-tema="verde" style="--c:#1f9d57" aria-label="Verde" aria-pressed="false"></button>
+      <button type="button" class="tema-dot" data-tema="laranja" style="--c:#e2640f" aria-label="Laranja" aria-pressed="false"></button>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="cabecalho" id="cabecalho">
+    <div class="container nav">
+      <a href="index.html#topo" class="logo">
+        <span class="logo__mark" aria-hidden="true">♥</span>
+        <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
+      </a>
+      <nav aria-label="Navegação principal">
+        <ul class="nav__links" id="navLinks">
+          <li><a href="index.html#quem">Quem é</a></li>
+          <li><a href="index.html#bandeiras">Bandeiras</a></li>
+          <li><a href="index.html#missoes">Missões</a></li>
+          <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
+          <li><a href="solicitar-reuniao.html">Convide o Yasser</a></li>
+          <li><a href="index.html#noticias">Notícias</a></li>
+          <li><a href="index.html#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
+        </ul>
+      </nav>
+      <button class="nav__toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- ===== INTRO ===== -->
+    <section class="secao secao--tinta termo-intro">
+      <div class="container">
+        <span class="eyebrow">Tropa de Elite do Amor</span>
+        <h1>Termo de adesão — <span class="marca">Voluntário(a)</span></h1>
+        <p class="termo-intro__sub">
+          Que bom ter você com a gente! Para formalizar sua participação
+          <strong>voluntária</strong> na campanha do Delegado Yasser, leia o termo,
+          preencha seus dados e assine ao final — o documento é gerado
+          automaticamente e fica registrado com a coordenação.
+        </p>
+        <div class="aviso-legal" role="note">
+          <strong>Importante:</strong> o trabalho voluntário é <strong>espontâneo e
+          não remunerado</strong>, sem carga horária obrigatória — você participa
+          conforme sua disponibilidade. Este termo não é contratação de cabo eleitoral.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TERMO + FORMULÁRIO ===== -->
+    <section class="secao" id="termo">
+      <div class="container termo-wrap">
+
+        <span class="eyebrow">Leia antes de assinar</span>
+        <h2>Termo de Adesão e Compromisso</h2>
+        <p class="hint">O texto abaixo é o conteúdo integral do documento que você vai assinar.
+           Use a rolagem para ler até o final.</p>
+
+        <!-- tabindex=0: a caixa rolável precisa ser alcançável e rolável pelo teclado -->
+        <div class="termo-texto" tabindex="0" role="region" aria-label="Texto integral do termo de adesão e compromisso do voluntário">
+          <h2>TERMO DE ADESÃO E COMPROMISSO – VOLUNTÁRIO(A) DE CAMPANHA</h2>
+          <p class="termo-texto__meta">
+            Campanha: Delegado Yasser – Deputado Estadual – Eleições 2026<br>
+            Voluntário(a): <em>[dados preenchidos no formulário abaixo]</em>
+          </p>
+          <p>Declaro minha adesão livre e voluntária às atividades da campanha, sem
+             remuneração e sem obrigação de cumprimento de carga horária, observando a
+             legislação eleitoral e as orientações da coordenação.</p>
+
+          <h3>Atividades voluntárias</h3>
+          <p>De acordo com minha disponibilidade e interesse, poderei:</p>
+          <ol>
+            <li>Participar de ações de rua, caminhadas, reuniões, feiras, visitas e eventos;</li>
+            <li>Conversar com eleitores e apresentar o candidato, suas propostas e seu número;</li>
+            <li>Distribuir material de propaganda eleitoral fornecido pela campanha, observando as regras eleitorais;</li>
+            <li>Convidar e mobilizar apoiadores para reuniões, eventos e ações;</li>
+            <li>Participar de atividades em bairros e comunidades;</li>
+            <li>Identificar apoiadores e lideranças locais e colocá-los em contato com a campanha;</li>
+            <li>Auxiliar voluntariamente na organização de eventos e ações de mobilização;</li>
+            <li>Compartilhar e divulgar, por iniciativa própria, conteúdos oficiais da campanha em minhas redes e grupos.</li>
+          </ol>
+
+          <h3>Regras de conduta</h3>
+          <p>Comprometo-me a:</p>
+          <ul>
+            <li>Não oferecer dinheiro, presentes, benefícios ou qualquer vantagem em troca de voto;</li>
+            <li>Não prometer vantagem pessoal em troca de apoio ou voto;</li>
+            <li>Não praticar ameaça, intimidação ou coação;</li>
+            <li>Não divulgar conscientemente informações falsas nem produzir conteúdo ofensivo, discriminatório ou ilegal;</li>
+            <li>Não realizar propaganda em locais ou de formas proibidas pela legislação eleitoral;</li>
+            <li>Não realizar despesas, contrair obrigações, receber ou movimentar recursos em nome da campanha sem autorização;</li>
+            <li>Utilizar eventual material recebido exclusivamente para atividades lícitas de campanha;</li>
+            <li>Tratar eleitores, candidatos, militantes, voluntários e integrantes da equipe com respeito.</li>
+          </ul>
+
+          <h3>Natureza voluntária</h3>
+          <p>Minha participação é espontânea e não remunerada, não havendo pagamento,
+             salário ou remuneração pelas atividades realizadas.</p>
+          <p>Não há carga horária obrigatória. A participação ocorrerá conforme minha
+             disponibilidade, podendo aderir às atividades para as quais tiver interesse
+             e disponibilidade.</p>
+          <p>Este termo não constitui contratação de cabo eleitoral nem prestação
+             remunerada de serviços de campanha.</p>
+          <p>Declaro que li, compreendi e concordo com as condições acima e
+             comprometo-me a observar a legislação eleitoral durante minha participação.</p>
+        </div>
+
+        <!-- ===== FORMULÁRIO ===== -->
+        <form class="form-card" id="formTermo" data-tipo="voluntario" data-idade-minima="16" novalidate>
+          <h3>Preencha seus dados ♥</h3>
+          <p class="hint">Os dados abaixo entram no termo e são usados só para o registro
+             da adesão voluntária e o contato da coordenação.</p>
+
+          <!-- Anti-spam: campo oculto que humanos não preenchem (honeypot) -->
+          <div class="hp" aria-hidden="true">
+            <label for="website">Não preencha este campo</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <fieldset class="termo-fieldset">
+            <legend>Identificação</legend>
+            <div class="form-grid form-grid--termo">
+              <div class="field field--full">
+                <label for="nome">Nome completo</label>
+                <input id="nome" name="nome" type="text" placeholder="Seu nome como no documento" autocomplete="name" maxlength="80" required>
+              </div>
+              <div class="field">
+                <label for="cpf">CPF</label>
+                <input id="cpf" name="cpf" type="text" inputmode="numeric" placeholder="000.000.000-00" autocomplete="off" maxlength="14" required>
+              </div>
+              <div class="field">
+                <label for="dataNascimento">Data de nascimento</label>
+                <input id="dataNascimento" name="data_nascimento" type="date" autocomplete="bday" required>
+              </div>
+              <div class="field">
+                <label for="rg">RG (nº do documento)</label>
+                <input id="rg" name="rg" type="text" inputmode="numeric" placeholder="Número do RG" maxlength="20" required>
+              </div>
+              <div class="field">
+                <label for="rgOrgao">Órgão emissor / UF</label>
+                <input id="rgOrgao" name="rg_orgao" type="text" placeholder="Ex.: SSP-GO" maxlength="20" required>
+              </div>
+              <div class="field field--full">
+                <label for="tituloEleitor">Título de eleitor (12 dígitos)</label>
+                <input id="tituloEleitor" name="titulo_eleitor" type="text" inputmode="numeric" placeholder="0000 0000 0000" maxlength="14" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="termo-fieldset">
+            <legend>Contato</legend>
+            <div class="form-grid form-grid--termo">
+              <div class="field">
+                <label for="telefone">Telefone / WhatsApp</label>
+                <input id="telefone" name="telefone" type="tel" placeholder="(62) 90000-0000" autocomplete="tel" maxlength="16" required>
+              </div>
+              <div class="field">
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" maxlength="120" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="termo-fieldset">
+            <legend>Endereço</legend>
+            <div class="form-grid form-grid--termo">
+              <div class="field">
+                <label for="cep">CEP</label>
+                <input id="cep" name="cep" type="text" inputmode="numeric" placeholder="00000-000" autocomplete="postal-code" maxlength="9" required>
+              </div>
+              <div class="field field--full">
+                <label for="endereco">Endereço (rua, número e complemento)</label>
+                <input id="endereco" name="endereco" type="text" placeholder="Ex.: Rua das Flores, 123, Qd 5 Lt 10" autocomplete="street-address" maxlength="160" required>
+              </div>
+              <div class="field">
+                <label for="bairro">Bairro / Setor</label>
+                <input id="bairro" name="bairro" type="text" placeholder="Ex.: Setor Central" maxlength="80" required>
+              </div>
+              <div class="field">
+                <label for="cidade">Cidade</label>
+                <input id="cidade" name="cidade" type="text" placeholder="Ex.: Goiânia" autocomplete="address-level2" maxlength="80" required>
+              </div>
+              <div class="field">
+                <label for="uf">Estado (UF)</label>
+                <select id="uf" name="uf" autocomplete="address-level1" required>
+                  <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+                  <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                  <option selected>GO</option>
+                  <option>MA</option><option>MT</option><option>MS</option><option>MG</option>
+                  <option>PA</option><option>PB</option><option>PR</option><option>PE</option>
+                  <option>PI</option><option>RJ</option><option>RN</option><option>RS</option>
+                  <option>RO</option><option>RR</option><option>SC</option><option>SP</option>
+                  <option>SE</option><option>TO</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="termo-fieldset">
+            <legend>Atuação na campanha</legend>
+            <div class="form-grid form-grid--termo">
+              <div class="field field--full">
+                <label for="municipioAtuacao">Município / Região de atuação</label>
+                <input id="municipioAtuacao" name="municipio_atuacao" type="text" placeholder="Ex.: Goiânia — Região Noroeste" maxlength="120" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="termo-fieldset">
+            <legend>Aceite e assinatura</legend>
+
+            <label class="check">
+              <input type="checkbox" name="aceite" value="sim" required>
+              <strong>Li e concordo com o Termo de Adesão e Compromisso do(a) Voluntário(a)</strong>
+              acima, e comprometo-me a observar a legislação eleitoral durante minha participação.
+            </label>
+
+            <label class="check">
+              <input type="checkbox" name="consentimento" value="sim" required>
+              Autorizo o uso dos meus dados exclusivamente para o registro desta adesão
+              voluntária e o contato da coordenação, conforme a LGPD.
+            </label>
+
+            <div class="form-grid" style="margin-top:1.25rem">
+              <fieldset class="field assinatura-modos-wrap" style="border:0;padding:0;margin:0">
+                <legend class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Como você prefere assinar?</legend>
+                <div class="assinatura-modos">
+                  <label class="assinatura-modo">
+                    <input type="radio" name="assinatura_modo" value="desenho" checked>
+                    <span>Desenhar assinatura</span>
+                  </label>
+                  <label class="assinatura-modo">
+                    <input type="radio" name="assinatura_modo" value="digitada">
+                    <span>Digitar assinatura</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <div class="field field--full" id="campoAssinaturaDigitada" hidden>
+                <label for="assinaturaDigitada">Digite seu nome completo (vale como assinatura)</label>
+                <input id="assinaturaDigitada" name="assinatura_texto" type="text"
+                       placeholder="Seu nome completo" maxlength="80" autocomplete="off">
+              </div>
+
+              <div class="field field--full">
+                <label for="assinaturaCanvas" id="assinaturaRotulo">Assinatura</label>
+                <div class="assinatura-pad" id="assinaturaPad">
+                  <canvas id="assinaturaCanvas" tabindex="0"
+                          aria-labelledby="assinaturaRotulo"
+                          aria-describedby="assinaturaDica"
+                          role="img"></canvas>
+                  <span class="assinatura-pad__dica" id="assinaturaDica">Assine aqui com o dedo, caneta ou mouse</span>
+                </div>
+                <div class="assinatura-acoes">
+                  <button type="button" class="btn" id="assinaturaLimpar">Limpar assinatura</button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn--primario">Assinar e enviar o termo</button>
+          <p class="form-status" id="formTermoStatus" role="status" aria-live="polite" hidden></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape__grid">
+        <div>
+          <div class="logo">
+            <span class="logo__mark" aria-hidden="true">♥</span>
+            <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
+          </div>
+          <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e candidato a deputado estadual pelo PT-GO. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
+          <div class="rodape__social">
+            <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+            <a href="https://chat.whatsapp.com/Hlgz2Q7nItW7bS8GaO4afE?mode=gi_t" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></a>
+          </div>
+        </div>
+        <nav aria-label="Navegação do rodapé">
+          <h3 class="rodape__titulo">Navegação</h3>
+          <ul>
+            <li><a href="index.html#quem">Quem é o Yasser</a></li>
+            <li><a href="index.html#bandeiras">Bandeiras</a></li>
+            <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
+            <li><a href="index.html#noticias">Notícias</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Participe">
+          <h3 class="rodape__titulo">Participe</h3>
+          <ul>
+            <li><a href="index.html#cadastro">Quero fazer parte</a></li>
+            <li><a href="solicitar-reuniao.html">Convide o Yasser para uma reunião</a></li>
+            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar o movimento (vaquinha)</a></li>
+            <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
+            <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
+            <li><a href="acessibilidade.html">Acessibilidade</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="rodape__assinatura" aria-hidden="true">Brasil seguro</p>
+      <div class="rodape__bottom">
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.</p>
+        <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
+           (textos, imagens e marca) sem autorização prévia.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== VLIBRAS ===== -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <!-- VLibras (tradutor de Libras do gov.br). Carregado só depois do load:
+       como <script> síncrono ele travava a renderização por ~850 ms. O widget
+       é um botão flutuante acionado pelo usuário, então aparecer um instante
+       mais tarde não muda o uso. -->
+  <script>
+    window.addEventListener("load", function () {
+      var s = document.createElement("script");
+      s.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
+      s.onload = function () {
+        try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
+      };
+      document.body.appendChild(s);
+    });
+  </script>
+
+  <!-- Moldura compartilhada (menu, seletor de cor, balão de acessibilidade) -->
+  <script src="js/landing.js" defer></script>
+  <!-- Lógica dos termos (máscaras, assinatura e envio) -->
+  <script src="js/termos.js" defer></script>
+</body>
+</html>

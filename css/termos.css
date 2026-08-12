@@ -1,0 +1,197 @@
+/* =============================================================
+   Delegado Yasser — Termos de Cabo Eleitoral e Voluntário
+   Estilos das páginas cabo-eleitoral.html e voluntario.html.
+   Usa os tokens de css/landing.css (--brand, --tinta, --papel…).
+   Estética "cartaz de rua × dossiê": bordas 2px, sombras duras.
+   ============================================================= */
+
+/* ---------- Intro ---------- */
+.termo-intro__sub {
+  max-width: 56ch;
+  font-size: 1.1rem;
+}
+.termo-intro__sub strong { color: var(--branco); }
+
+.aviso-legal {
+  margin-top: 1.6rem;
+  max-width: 62ch;
+  background: rgba(252, 249, 245, 0.08);
+  border: 2px solid var(--papel);
+  border-left-width: 6px;
+  padding: 0.9rem 1.1rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.aviso-legal strong { color: var(--branco); }
+
+/* ---------- Coluna central ---------- */
+.termo-wrap {
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+/* ---------- Caixa com o texto integral do termo ---------- */
+.termo-texto {
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+  padding: 1.4rem 1.5rem;
+  margin-bottom: 2rem;
+  max-height: 24rem;
+  overflow-y: auto;
+}
+.termo-texto:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+.termo-texto h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.termo-texto h3 {
+  font-family: var(--fonte-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 1.4rem 0 0.5rem;
+  color: var(--brand-escuro);
+}
+.termo-texto p,
+.termo-texto li {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--tinta);
+}
+.termo-texto ol,
+.termo-texto ul { padding-left: 1.3rem; margin: 0.4rem 0; }
+.termo-texto li { margin-bottom: 0.3rem; }
+.termo-texto .termo-texto__meta {
+  font-family: var(--fonte-mono);
+  font-size: 0.82rem;
+  color: var(--tinta-70);
+}
+
+/* ---------- Fieldsets do formulário ---------- */
+.termo-fieldset {
+  border: 0;
+  margin: 0 0 0.5rem;
+  padding: 0;
+}
+.termo-fieldset legend {
+  font-family: var(--fonte-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--brand-escuro);
+  margin-bottom: 0.9rem;
+  padding-top: 0.6rem;
+  border-top: 2px dashed var(--tinta-30, #cbbfc3);
+  width: 100%;
+}
+
+/* Grade em duas colunas no desktop */
+@media (min-width: 720px) {
+  .form-grid--termo { grid-template-columns: 1fr 1fr; }
+  .form-grid--termo .field--full { grid-column: 1 / -1; }
+}
+
+/* ---------- Assinatura ---------- */
+.assinatura-modos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+.assinatura-modo {
+  position: relative;
+  cursor: pointer;
+  margin: 0;
+}
+.assinatura-modo input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.assinatura-modo span {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--branco);
+  border: var(--borda);
+  border-radius: var(--raio);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.assinatura-modo input:checked + span {
+  background: var(--brand-escuro);
+  color: var(--branco);
+}
+.assinatura-modo input:focus-visible + span {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+.assinatura-modo:hover span { border-color: var(--brand-escuro); }
+
+.assinatura-pad {
+  position: relative;
+}
+.assinatura-pad canvas {
+  display: block;
+  width: 100%;
+  height: 180px;
+  background: var(--papel);
+  border: var(--borda);
+  border-radius: var(--raio);
+  cursor: crosshair;
+  touch-action: none; /* impede o scroll da página durante o traço no celular */
+}
+.assinatura-pad canvas:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+/* Linha-guia onde a assinatura "repousa" */
+.assinatura-pad::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 2.6rem;
+  border-bottom: 1px dashed var(--tinta-70);
+  pointer-events: none;
+}
+.assinatura-pad__dica {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.9rem;
+  text-align: center;
+  font-family: var(--fonte-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta-70);
+  pointer-events: none;
+}
+.assinatura-acoes {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+.assinatura-acoes .btn {
+  width: auto !important; /* anula o width:100% de .form-card .btn */
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+
+/* Campo da assinatura digitada (alternativa acessível ao desenho) */
+#campoAssinaturaDigitada input {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.3rem;
+}
