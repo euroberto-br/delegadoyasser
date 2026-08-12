@@ -360,8 +360,9 @@
           throw new Error(retorno.erro || "erro no servidor");
         }
         mostrarStatus(
-          "Termo enviado e registrado com sucesso! A coordenação da campanha " +
-            "recebeu o documento e entra em contato pelos dados informados. ♥",
+          "Termo enviado com sucesso! Agora ele passa pela aprovação da coordenação " +
+            "da campanha, que confere os dados e encaminha o documento final para " +
+            "você pelo WhatsApp ou e-mail informado. ♥",
           "ok"
         );
         form.reset();
