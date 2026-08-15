@@ -1,0 +1,85 @@
+# Repõe o número 13007 em título, meta tags, JSON-LD, sitemap e webmanifest —
+# as partes que o JavaScript do site NÃO alcança, porque crawler (WhatsApp,
+# Facebook, Google) lê o HTML cru sem executar script.
+#
+# O que aparece na TELA (banner inicial, pills, rodapé) não depende disto: vira
+# sozinho às 08:00 pelo relógio do visitante, via o script inline no <head>.
+# Este workflow cuida apenas do que precisa estar escrito no arquivo.
+name: Liberar campanha (16/08 às 08:00)
+
+on:
+  schedule:
+    # 11:00 UTC = 08:00 em Brasília (UTC-3; o Brasil não tem mais horário de
+    # verão). O cron do GitHub é sempre UTC.
+    - cron: "0 11 16 8 *"
+
+  # Escape hatch: o agendamento do GitHub pode atrasar em horário de pico.
+  workflow_dispatch:
+    inputs:
+      forcar:
+        description: "Liberar mesmo antes de 16/08/2026 08:00"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write # commitar a liberação
+  pages: write
+  id-token: write
+
+# Mesmo grupo do static.yml: os dois publicam o mesmo site.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  liberar:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Impede que um disparo manual acidental publique o número antes da hora.
+      - name: Conferir se já passou da hora
+        if: ${{ inputs.forcar != true }}
+        run: |
+          AGORA=$(date -u +%s)
+          LIBERACAO=$(date -u -d "2026-08-16 11:00:00" +%s)
+          if [ "$AGORA" -lt "$LIBERACAO" ]; then
+            echo "::error::Ainda não são 16/08/2026 08:00 (Brasília). Se for intencional, dispare de novo marcando 'forcar'."
+            exit 1
+          fi
+
+      - name: Repor o número nas meta tags
+        run: node liberar-campanha.js --liberar
+
+      - name: Commitar a liberação
+        run: |
+          if git diff --quiet; then
+            echo "Nada mudou — já estava liberado. Seguindo para o deploy."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Libera o 13007 em título, meta tags, JSON-LD, sitemap e manifest"
+          git push
+
+      # O push acima usa o GITHUB_TOKEN e, por regra do GitHub, NÃO dispara
+      # outros workflows — então o static.yml não roda. Por isso este workflow
+      # publica o Pages ele mesmo, repetindo os passos de lá.
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Remover ferramentas que não vão para o ar
+        run: rm -f liberar-campanha.js
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
