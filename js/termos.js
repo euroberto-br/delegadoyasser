@@ -1,6 +1,6 @@
 /* =============================================================
    Delegado Yasser — Termos (Cabo Eleitoral e Voluntário)
-   Máscaras (CPF/telefone/CEP/título), validação de CPF e idade,
+   Máscaras (CPF/telefone/CEP), validação de CPF e idade,
    assinatura (desenhada no canvas ou digitada) e envio do termo
    para o Google Apps Script, que gera o PDF no Google Drive.
    Guia completo em docs-privados/docs/TERMOS-CABO-VOLUNTARIO.md.
@@ -82,18 +82,6 @@
       var d = campoCep.value.replace(/\D/g, "").slice(0, 8);
       campoCep.value = d.length > 5 ? d.replace(/(\d{5})(\d{1,3})/, "$1-$2") : d;
       campoCep.setCustomValidity(d.length === 8 ? "" : "Informe o CEP completo (8 dígitos).");
-    });
-  }
-
-  /* ---------- Máscara do título de eleitor (12 dígitos) ---------- */
-  var campoTitulo = document.getElementById("tituloEleitor");
-  if (campoTitulo) {
-    campoTitulo.addEventListener("input", function () {
-      var d = campoTitulo.value.replace(/\D/g, "").slice(0, 12);
-      campoTitulo.value = d.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
-      campoTitulo.setCustomValidity(
-        d.length === 12 ? "" : "Informe os 12 dígitos do título de eleitor."
-      );
     });
   }
 

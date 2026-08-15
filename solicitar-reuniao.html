@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-campanha="pre">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#c8102e">
+  <meta name="theme-color" content="#f9120c">
 
   <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
   <script>
@@ -12,7 +12,34 @@
       catch (e) { document.documentElement.style.display = "none"; }
     }
   </script>
-  <title>Convide o Yasser para uma reunião | Agenda do movimento Brasil Seguro</title>
+
+  <!-- Liberação da propaganda de campanha (bloco inicial e o número 13007):
+       só a partir de 16/08/2026 às 08:00, horário de Brasília.
+
+       O HTML nasce com data-campanha="pre" e tudo que não pode aparecer antes
+       da hora leva a classe .so-campanha. Esconder é o estado PADRÃO: se este
+       script não rodar, o conteúdo continua oculto em vez de vazar.
+
+       A regra de ocultar é injetada aqui, e não só no css/landing.css, porque
+       quem já visitou o site pode ter o CSS antigo em cache — e aí veria o que
+       deveria estar bloqueado. Inline no <head> para não piscar na tela. -->
+  <script>
+    (function () {
+      var LIBERACAO = Date.parse("2026-08-16T11:00:00Z"); // 08:00 em Brasília (UTC-3)
+      var raiz = document.documentElement;
+
+      var trava = document.createElement("style");
+      trava.textContent =
+        '[data-campanha="pre"] .so-campanha{display:none !important}' +
+        '[data-campanha="on"] .pre-campanha{display:none !important}';
+      (document.head || raiz).appendChild(trava);
+
+      if (Date.now() >= LIBERACAO) {
+        raiz.setAttribute("data-campanha", "on");
+      }
+    })();
+  </script>
+  <title>Convide o Yasser para uma reunião | Agenda do movimento Goiás Seguro</title>
   <meta name="description" content="Convide o Delegado Yasser para uma reunião na sua comunidade: escolha o dia e o período, conte o motivo e a equipe responde a viabilidade.">
 
   <!-- Favicon -->
@@ -36,8 +63,8 @@
   <meta property="og:description" content="Organize uma conversa com a sua comunidade: escolha o dia e o período, conte o motivo e a equipe responde a viabilidade da reunião. Segurança pública se faz com escuta.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://delegadoyasser.com.br/solicitar-reuniao.html">
-  <meta property="og:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-terno-bracos-cruzados.jpg">
-  <meta property="og:image:secure_url" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-terno-bracos-cruzados.jpg">
+  <meta property="og:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-por-do-sol.jpg">
+  <meta property="og:image:secure_url" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-por-do-sol.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="900">
   <meta property="og:image:height" content="1350">
@@ -48,7 +75,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Convide o Yasser para uma reunião">
   <meta name="twitter:description" content="Escolha o dia e o período, conte o motivo e a equipe responde a viabilidade da reunião.">
-  <meta name="twitter:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-terno-bracos-cruzados.jpg">
+  <meta name="twitter:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-por-do-sol.jpg">
   <meta name="twitter:image:alt" content="Delegado Yasser Yassine">
 
   <!-- Dados estruturados -->
@@ -58,7 +85,7 @@
     "@type": "ContactPage",
     "name": "Convide o Yasser para uma reunião",
     "url": "https://delegadoyasser.com.br/solicitar-reuniao.html",
-    "description": "Página para solicitar uma data de reunião com o Delegado Yasser Yassine, do movimento Brasil Seguro.",
+    "description": "Página para solicitar uma data de reunião com o Delegado Yasser Yassine, do movimento Goiás Seguro.",
     "inLanguage": "pt-BR",
     "isPartOf": {
       "@type": "WebSite",
@@ -77,12 +104,11 @@
 
   <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
   <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/oswald-var-latin.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Aplica preferências de acessibilidade salvas antes da pintura (evita flash) -->
   <script>
     try{
-      var t=localStorage.getItem('tema-cor');if(t&&t!=='vermelho')document.documentElement.setAttribute('data-theme',t);
       var cc=localStorage.getItem('contraste');
       if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
       var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
@@ -91,7 +117,7 @@
     }catch(e){}
   </script>
 
-  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/landing.css?v=20260815">
   <link rel="stylesheet" href="css/agenda.css">
 
   <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
@@ -143,23 +169,12 @@
     </div>
   </div>
 
-  <!-- ===== SELETOR DE COR (apenas pré-visualização) ===== -->
-  <div class="tema-switch" role="group" aria-label="Pré-visualização: cor do site">
-    <span class="tema-switch__label">Escolha sua cor</span>
-    <div class="tema-switch__opcoes">
-      <button type="button" class="tema-dot" data-tema="vermelho" style="--c:#c8102e" aria-label="Vermelho" aria-pressed="true"></button>
-      <button type="button" class="tema-dot" data-tema="roxo" style="--c:#7c3aed" aria-label="Roxo" aria-pressed="false"></button>
-      <button type="button" class="tema-dot" data-tema="azul" style="--c:#1d63d8" aria-label="Azul" aria-pressed="false"></button>
-      <button type="button" class="tema-dot" data-tema="verde" style="--c:#1f9d57" aria-label="Verde" aria-pressed="false"></button>
-      <button type="button" class="tema-dot" data-tema="laranja" style="--c:#e2640f" aria-label="Laranja" aria-pressed="false"></button>
-    </div>
-  </div>
 
   <!-- ===== HEADER ===== -->
   <header class="cabecalho" id="cabecalho">
     <div class="container nav">
       <a href="index.html#topo" class="logo">
-        <span class="logo__mark" aria-hidden="true">♥</span>
+        <span class="logo__mark" aria-hidden="true">★</span>
         <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
       </a>
       <nav aria-label="Navegação principal">
@@ -170,6 +185,7 @@
           <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
           <li><a href="solicitar-reuniao.html" aria-current="page">Convide o Yasser</a></li>
           <li><a href="index.html#noticias">Notícias</a></li>
+          <li class="so-campanha"><span class="numero-pill"><small>Nº</small> 13007</span></li>
           <li><a href="index.html#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
         </ul>
       </nav>
@@ -329,7 +345,7 @@
         <div>
           <span class="eyebrow">Faça parte</span>
           <h2>Enquanto a reunião não chega, entre para o time</h2>
-          <p>A Tropa de Elite do Amor está construindo um Brasil seguro com cuidado, prevenção e comunidade.</p>
+          <p>A Tropa de Elite do Amor está construindo um Goiás seguro com cuidado, prevenção e comunidade.</p>
         </div>
         <div class="acoes">
           <a href="index.html#cadastro" class="btn btn--claro">Quero fazer parte</a>
@@ -345,8 +361,9 @@
       <div class="rodape__grid">
         <div>
           <div class="logo">
-            <span class="logo__mark" aria-hidden="true">♥</span>
+            <span class="logo__mark" aria-hidden="true">★</span>
             <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
+            <span class="numero-pill so-campanha"><small>Nº</small> 13007</span>
           </div>
           <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e candidato a deputado estadual pelo PT-GO. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
           <div class="rodape__social">
@@ -375,9 +392,9 @@
           </ul>
         </nav>
       </div>
-      <p class="rodape__assinatura" aria-hidden="true">Brasil seguro</p>
+      <p class="rodape__assinatura" aria-hidden="true">Goiás seguro</p>
       <div class="rodape__bottom">
-        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.</p>
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás Seguro<span class="so-campanha"> · Nº 13007</span>.</p>
         <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
            (textos, imagens e marca) sem autorização prévia.</p>
       </div>
@@ -407,7 +424,7 @@
   </script>
 
   <!-- Moldura compartilhada (menu, seletor de cor, balão de acessibilidade) -->
-  <script src="js/landing.js" defer></script>
+  <script src="js/landing.js?v=20260815" defer></script>
   <!-- Lógica do formulário de solicitação de reunião -->
   <script src="js/agenda.js" defer></script>
 </body>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-campanha="pre">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#c8102e">
+  <meta name="theme-color" content="#f9120c">
 
   <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
   <script>
@@ -12,8 +12,39 @@
       catch (e) { document.documentElement.style.display = "none"; }
     }
   </script>
-  <title>Delegado Yasser — Brasil Seguro | Candidato a Deputado Estadual PT-GO</title>
-  <meta name="description" content="Delegado Yasser Yassine, candidato a deputado estadual pelo PT-GO. Brasil seguro começa com a gente: segurança pública com cuidado, prevenção e comunidade.">
+
+  <!-- Liberação da propaganda de campanha (bloco inicial e o número 13007):
+       só a partir de 16/08/2026 às 08:00, horário de Brasília.
+
+       O HTML nasce com data-campanha="pre" e tudo que não pode aparecer antes
+       da hora leva a classe .so-campanha. Esconder é o estado PADRÃO: se este
+       script não rodar, o conteúdo continua oculto em vez de vazar.
+
+       A regra de ocultar é injetada aqui, e não só no css/landing.css, porque
+       quem já visitou o site pode ter o CSS antigo em cache — e aí veria o que
+       deveria estar bloqueado. Inline no <head> para não piscar na tela. -->
+  <script>
+    (function () {
+      var LIBERACAO = Date.parse("2026-08-16T11:00:00Z"); // 08:00 em Brasília (UTC-3)
+      var raiz = document.documentElement;
+
+      var trava = document.createElement("style");
+      trava.textContent =
+        '[data-campanha="pre"] .so-campanha{display:none !important}' +
+        '[data-campanha="on"] .pre-campanha{display:none !important}';
+      (document.head || raiz).appendChild(trava);
+
+      if (Date.now() >= LIBERACAO) {
+        raiz.setAttribute("data-campanha", "on");
+      }
+    })();
+  </script>
+  <!-- Título, meta tags e JSON-LD estão sem o número: crawler não executa JS,
+       então a única forma de o 13007 não circular em preview de link e busca é
+       ele não estar no arquivo. Rode `node liberar-campanha.js --liberar` em
+       16/08/2026 às 08:00 para repor tudo de uma vez. -->
+  <title>Delegado Yasser — Goiás Seguro para Todos | Candidato a Deputado Estadual PT-GO</title>
+  <meta name="description" content="Delegado Yasser Yassine, candidato a deputado estadual pelo PT-GO. Goiás seguro para todos: segurança pública com cuidado, prevenção e comunidade.">
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -30,7 +61,7 @@
   <meta name="author" content="Delegado Yasser Yassine">
   <meta name="publisher" content="Delegado Yasser Yassine">
   <meta name="copyright" content="Delegado Yasser Yassine">
-  <meta name="keywords" content="Delegado Yasser, Yasser Yassine, deputado estadual Goiás, PT-GO, segurança pública, Brasil Seguro, candidato a deputado estadual, política Goiás, delegado de polícia, Tropa de Elite do Amor">
+  <meta name="keywords" content="Delegado Yasser, Yasser Yassine, deputado estadual Goiás, PT-GO, segurança pública, Goiás Seguro, Goiás seguro para todos, candidato a deputado estadual, política Goiás, delegado de polícia, Tropa de Elite do Amor">
   <meta name="rating" content="general">
   <meta name="distribution" content="global">
   <meta name="revisit-after" content="7 days">
@@ -42,24 +73,24 @@
 
   <!-- Open Graph (Facebook · WhatsApp · LinkedIn) -->
   <meta property="og:site_name" content="Delegado Yasser Yassine">
-  <meta property="og:title" content="Delegado Yasser — Brasil Seguro">
+  <meta property="og:title" content="Delegado Yasser — Goiás Seguro para Todos">
   <meta property="og:description" content="Delegado Yasser Yassine, candidato a deputado estadual pelo PT-GO. Segurança pública com cuidado, prevenção e comunidade. Entre para a Tropa de Elite do Amor.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://delegadoyasser.com.br/">
-  <meta property="og:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-terno-bracos-cruzados.jpg">
-  <meta property="og:image:secure_url" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-terno-bracos-cruzados.jpg">
+  <meta property="og:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-por-do-sol.jpg">
+  <meta property="og:image:secure_url" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-por-do-sol.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="900">
   <meta property="og:image:height" content="1350">
-  <meta property="og:image:alt" content="Delegado Yasser Yassine">
+  <meta property="og:image:alt" content="Delegado Yasser Yassine, candidato a deputado estadual">
   <meta property="og:locale" content="pt_BR">
 
   <!-- Twitter / X Cards -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Delegado Yasser — Brasil Seguro">
+  <meta name="twitter:title" content="Delegado Yasser — Goiás Seguro para Todos">
   <meta name="twitter:description" content="Candidato a deputado estadual pelo PT-GO. Segurança pública com cuidado, prevenção e comunidade.">
-  <meta name="twitter:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-terno-bracos-cruzados.jpg">
-  <meta name="twitter:image:alt" content="Delegado Yasser Yassine">
+  <meta name="twitter:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-por-do-sol.jpg">
+  <meta name="twitter:image:alt" content="Delegado Yasser Yassine, candidato a deputado estadual">
 
   <!-- PWA / ícones de aplicativo -->
   <link rel="manifest" href="site.webmanifest">
@@ -88,9 +119,9 @@
         "name": "Delegado Yasser Yassine",
         "alternateName": "Delegado Yasser",
         "url": "https://delegadoyasser.com.br/",
-        "image": "https://delegadoyasser.com.br/images/yasser/yasser-retrato-terno-bracos-cruzados.jpg",
+        "image": "https://delegadoyasser.com.br/images/yasser/yasser-retrato-por-do-sol.jpg",
         "jobTitle": "Candidato a Deputado Estadual",
-        "description": "Delegado de polícia e candidato a deputado estadual pelo PT-GO, com bandeira de segurança pública com cuidado, prevenção e comunidade.",
+        "description": "Delegado de polícia e candidato a deputado estadual pelo PT-GO, com bandeira de segurança pública com cuidado, prevenção e comunidade — Goiás seguro para todos.",
         "email": "contato@delegadoyasser.com.br",
         "nationality": "Brasileiro",
         "affiliation": {
@@ -114,12 +145,11 @@
 
   <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
   <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/oswald-var-latin.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Aplica preferências de acessibilidade salvas antes da pintura (evita flash) -->
   <script>
     try{
-      var t=localStorage.getItem('tema-cor');if(t&&t!=='vermelho')document.documentElement.setAttribute('data-theme',t);
       var cc=localStorage.getItem('contraste');
       if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
       var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
@@ -128,7 +158,7 @@
     }catch(e){}
   </script>
 
-  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/landing.css?v=20260815">
 
   <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
        por JS, então o navegador só descobriria os domínios tarde. Carrega em
@@ -179,23 +209,12 @@
     </div>
   </div>
 
-  <!-- ===== SELETOR DE COR (apenas pré-visualização) ===== -->
-  <div class="tema-switch" role="group" aria-label="Pré-visualização: cor do site">
-    <span class="tema-switch__label">Escolha sua cor</span>
-    <div class="tema-switch__opcoes">
-      <button type="button" class="tema-dot" data-tema="vermelho" style="--c:#c8102e" aria-label="Vermelho" aria-pressed="true"></button>
-      <button type="button" class="tema-dot" data-tema="roxo" style="--c:#7c3aed" aria-label="Roxo" aria-pressed="false"></button>
-      <button type="button" class="tema-dot" data-tema="azul" style="--c:#1d63d8" aria-label="Azul" aria-pressed="false"></button>
-      <button type="button" class="tema-dot" data-tema="verde" style="--c:#1f9d57" aria-label="Verde" aria-pressed="false"></button>
-      <button type="button" class="tema-dot" data-tema="laranja" style="--c:#e2640f" aria-label="Laranja" aria-pressed="false"></button>
-    </div>
-  </div>
 
   <!-- ===== HEADER ===== -->
   <header class="cabecalho" id="cabecalho">
     <div class="container nav">
       <a href="#topo" class="logo">
-        <span class="logo__mark" aria-hidden="true">♥</span>
+        <span class="logo__mark" aria-hidden="true">★</span>
         <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
       </a>
       <nav aria-label="Navegação principal">
@@ -207,6 +226,7 @@
           <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
           <li><a href="solicitar-reuniao.html">Convide o Yasser</a></li>
           <li><a href="#noticias">Notícias</a></li>
+          <li class="so-campanha"><span class="numero-pill"><small>Nº</small> 13007</span></li>
           <li><a href="#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
         </ul>
       </nav>
@@ -215,12 +235,90 @@
   </header>
 
   <main id="conteudo">
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="topo">
+    <!-- O id="topo" vive no wrapper, e não no banner: o link da logomarca
+         (#topo) precisa continuar funcionando enquanto o banner está oculto. -->
+    <div id="topo">
+
+    <!-- ===== AVISO DE LIBERAÇÃO (só enquanto data-campanha="pre") =====
+         Ocupa o lugar do banner até 16/08/2026 08:00 e some sozinho na hora. -->
+    <section class="aviso-liberacao pre-campanha" aria-label="Aviso de liberação de conteúdo">
+      <div class="container aviso-liberacao__inner">
+        <p class="aviso-liberacao__eyebrow">Tropa de Elite do Amor</p>
+        <p class="aviso-liberacao__titulo">O grande dia está chegando</p>
+        <p class="aviso-liberacao__texto">
+          Estamos quase lá! Guarde a data:
+          <strong>16 de agosto de 2026, às 8h</strong> (horário de Brasília).
+          Venha construir com a gente um Goiás seguro para todos.
+        </p>
+        <!-- O relógio é decorativo: a data já está escrita por extenso acima.
+             aria-hidden evita que o leitor de tela anuncie os segundos mudando. -->
+        <ul class="aviso-liberacao__relogio" id="contagemLiberacao" aria-hidden="true">
+          <li><b data-contagem="d">--</b><span>dias</span></li>
+          <li><b data-contagem="h">--</b><span>horas</span></li>
+          <li><b data-contagem="m">--</b><span>min</span></li>
+          <li><b data-contagem="s">--</b><span>seg</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== HERO (recriação fiel da arte oficial — ver Material/HERO.PNG) =====
+         Fundo vermelho sólido, selo da logomarca à esquerda inclinado, ponta de
+         estrela azul/verde/amarela à direita e o candidato recortado por cima. -->
+    <section class="hero-poster so-campanha">
+
+      <!-- Arte da direita: ponta de estrela + foto recortada (decorativa) -->
+      <div class="hero-poster__arte" aria-hidden="true">
+        <span class="ponta ponta--azul"></span>
+        <span class="ponta ponta--verde"></span>
+        <span class="ponta ponta--amarela"></span>
+        <picture class="hero-poster__figura">
+          <source type="image/webp"
+                  srcset="images/yasser/yasser-recorte-hero-480.webp 480w, images/yasser/yasser-recorte-hero-720.webp 720w, images/yasser/yasser-recorte-hero-900.webp 900w"
+                  sizes="(max-width: 899px) 80vw, 46vw">
+          <img src="images/yasser/yasser-recorte-hero.png"
+               alt="" width="900" height="1252" decoding="async" fetchpriority="high">
+        </picture>
+      </div>
+
+      <!-- Estrela do PT -->
+      <span class="hero-poster__pt" aria-hidden="true">
+        <svg viewBox="0 0 100 100" focusable="false">
+          <polygon points="50,2 61,36 97,36 68,57 79,92 50,70 21,92 32,57 3,36 39,36" fill="#fff"/>
+          <!-- 26/y58 mantém o "PT" dentro do miolo da estrela: no tamanho
+               anterior (32) as letras invadiam a ponta de cima e os braços,
+               o que fazia a marca parecer torta. -->
+          <text x="50" y="58" text-anchor="middle"
+                font-family="Oswald, Archivo, sans-serif"
+                font-weight="700" font-size="26" fill="#f9120c">PT</text>
+        </svg>
+      </span>
+
+      <div class="hero-poster__inner">
+        <div class="selo-oficial" role="img"
+             aria-label="Delegado Yasser, 13007, candidato a Deputado Estadual — Goiás seguro para todos">
+          <span class="selo-oficial__fita" aria-hidden="true">
+            Deputado Estadual
+            <span class="selo-oficial__tag">★</span>
+          </span>
+          <span class="selo-oficial__caixa selo-oficial__caixa--verde" aria-hidden="true">
+            <span class="selo-oficial__delegado">Delegado</span>
+            <span class="selo-oficial__nome">Yasser</span>
+          </span>
+          <span class="selo-oficial__caixa selo-oficial__caixa--amarela" aria-hidden="true">
+            <span class="selo-oficial__numero">13007</span>
+          </span>
+          <span class="selo-oficial__slogan" aria-hidden="true">Goiás seguro para todos</span>
+        </div>
+      </div>
+    </section>
+    </div><!-- /#topo -->
+
+    <!-- ===== APRESENTAÇÃO ===== -->
+    <section class="hero" id="apresentacao">
       <div class="container hero__grid">
         <div class="hero__texto">
-          <span class="hero__selo"><span class="pt">PT-GO</span> Candidato a Deputado Estadual</span>
-          <h1>Brasil <span class="marca">seguro</span> começa com a gente.</h1>
+          <span class="hero__selo"><span class="pt">PT-GO<span class="so-campanha"> · Nº 13007</span></span> Candidato a Deputado Estadual</span>
+          <h1>Goiás <span class="marca">seguro</span> para todos.</h1>
           <p class="hero__sub">
             Sou delegado de carreira da Polícia Civil de Goiás, filho de uma professora da rede
             pública e de um imigrante palestino. São <strong>12 anos enfrentando o crime</strong>
@@ -228,7 +326,7 @@
           </p>
           <p class="hero__sub">
             Entre para a <a class="link-tropa" href="https://chat.whatsapp.com/Hlgz2Q7nItW7bS8GaO4afE?mode=gi_t" target="_blank" rel="noopener">Tropa de Elite do Amor</a>
-            e venha construir esse Brasil com a gente.
+            e venha construir esse Goiás com a gente.
           </p>
           <div class="acoes">
             <a href="#quem" class="btn">Conhecer o Yasser</a>
@@ -242,11 +340,11 @@
             <span class="selo">12 anos de Polícia Civil</span>
             <picture>
               <source type="image/webp"
-                      srcset="images/yasser/yasser-terno-maos-unidas-480.webp 480w, images/yasser/yasser-terno-maos-unidas-720.webp 720w, images/yasser/yasser-terno-maos-unidas-900.webp 900w"
+                      srcset="images/yasser/yasser-camisa-azul-praca-480.webp 480w, images/yasser/yasser-camisa-azul-praca-720.webp 720w, images/yasser/yasser-camisa-azul-praca-900.webp 900w"
                       sizes="(max-width: 480px) 88vw, 400px">
-              <img src="images/yasser/yasser-terno-maos-unidas.jpg"
-                   alt="Delegado Yasser de blazer preto e camisa branca, sorrindo com as mãos unidas à frente do peito"
-                   width="900" height="1350" decoding="async" fetchpriority="high">
+              <img src="images/yasser/yasser-camisa-azul-praca.jpg"
+                   alt="Delegado Yasser sorrindo em uma praça, de camisa azul-claro aberta sobre camiseta branca"
+                   width="900" height="1350" loading="lazy" decoding="async">
             </picture>
           </figure>
         </div>
@@ -256,10 +354,12 @@
     <!-- ===== FAIXA SLOGAN ===== -->
     <div class="faixa" aria-hidden="true">
       <div class="faixa__trilho">
-        <span>Brasil seguro começa com a gente ★</span>
+        <span>Goiás seguro para todos ★</span>
+        <span class="so-campanha">Delegado Yasser 13007 ★</span>
         <span>Cuidado ★ Prevenção ★ Comunidade ★</span>
         <span>Tropa de Elite do Amor ★</span>
-        <span>Brasil seguro começa com a gente ★</span>
+        <span>Goiás seguro para todos ★</span>
+        <span class="so-campanha">Delegado Yasser 13007 ★</span>
         <span>Cuidado ★ Prevenção ★ Comunidade ★</span>
         <span>Tropa de Elite do Amor ★</span>
       </div>
@@ -452,10 +552,10 @@
           <figure class="moldura">
             <picture>
               <source type="image/webp"
-                      srcset="images/yasser/yasser-camisa-branca-chamando-480.webp 480w, images/yasser/yasser-camisa-branca-chamando-720.webp 720w, images/yasser/yasser-camisa-branca-chamando-900.webp 900w"
+                      srcset="images/yasser/yasser-camisa-marinho-rua-480.webp 480w, images/yasser/yasser-camisa-marinho-rua-720.webp 720w, images/yasser/yasser-camisa-marinho-rua-900.webp 900w"
                       sizes="(max-width: 480px) 88vw, 400px">
-              <img src="images/yasser/yasser-camisa-branca-chamando.jpg"
-                   alt="Delegado Yasser sorrindo, de camisa branca com as mangas dobradas, chamando com a mão tatuada para que a pessoa se aproxime"
+              <img src="images/yasser/yasser-camisa-marinho-rua.jpg"
+                   alt="Delegado Yasser sorrindo, de camisa azul-marinho aberta sobre camiseta branca, caminhando por uma rua movimentada"
                    width="900" height="1350" loading="lazy" decoding="async">
             </picture>
             <figcaption>Vem com a gente: o convite é para todo mundo</figcaption>
@@ -489,9 +589,9 @@
         <div class="missoes">
           <article class="missao reveal">
             <span class="missao__pill">Radar</span>
-            <h3>Radar Brasil Seguro</h3>
+            <h3>Radar Goiás Seguro</h3>
             <p>Tem um lugar que você evita por medo? Rua escura, praça abandonada, ponto de ônibus inseguro. Registre no Mapa do Medo — cada relato vira investigação e projeto real.</p>
-            <a href="mapa-do-medo.html" class="link" aria-label="Radar Brasil Seguro — enviar relato no Mapa do Medo">Enviar relato no Mapa do Medo</a>
+            <a href="mapa-do-medo.html" class="link" aria-label="Radar Goiás Seguro — enviar relato no Mapa do Medo">Enviar relato no Mapa do Medo</a>
           </article>
           <article class="missao reveal">
             <span class="missao__pill">Território</span>
@@ -513,7 +613,7 @@
     <section class="secao secao--brand" id="radar">
       <div class="container radar">
         <div>
-          <span class="eyebrow">Radar Brasil Seguro</span>
+          <span class="eyebrow">Radar Goiás Seguro</span>
           <h2>Tem um lugar que você evita por medo?</h2>
           <p>Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro, escola vulnerável. Sua resposta vira projeto real.</p>
           <div class="acoes">
@@ -524,10 +624,10 @@
           <figure class="moldura">
             <picture>
               <source type="image/webp"
-                      srcset="images/yasser/yasser-retrato-serio-480.webp 480w, images/yasser/yasser-retrato-serio-720.webp 720w, images/yasser/yasser-retrato-serio-900.webp 900w"
+                      srcset="images/yasser/yasser-bracos-cruzados-camisa-branca-480.webp 480w, images/yasser/yasser-bracos-cruzados-camisa-branca-720.webp 720w, images/yasser/yasser-bracos-cruzados-camisa-branca-900.webp 900w"
                       sizes="(max-width: 480px) 88vw, 400px">
-              <img src="images/yasser/yasser-retrato-serio.jpg"
-                   alt="Retrato sério do Delegado Yasser, mãos unidas sob o queixo"
+              <img src="images/yasser/yasser-bracos-cruzados-camisa-branca.jpg"
+                   alt="Retrato sério do Delegado Yasser, de camisa branca, braços cruzados"
                    width="900" height="1350" loading="lazy" decoding="async">
             </picture>
             <figcaption>Cada relato vira investigação de projeto</figcaption>
@@ -628,7 +728,7 @@
         <div class="section-head reveal">
           <span class="eyebrow">No corpo a corpo</span>
           <h2>Momentos do movimento</h2>
-          <p>Registros do Delegado Yasser nas ruas, em eventos e no encontro com quem constrói o Brasil Seguro.</p>
+          <p>Registros do Delegado Yasser nas ruas, em eventos e no encontro com quem constrói um Goiás Seguro.</p>
         </div>
 
         <div class="carrossel reveal" id="carrossel" role="group"
@@ -651,7 +751,7 @@
         <div class="cadastro-info">
           <span class="eyebrow">Cadastro de voluntário</span>
           <h2>Entre para o time</h2>
-          <p>Preencha seus dados, escolha como quer ajudar e a equipe vai direcionar você para o grupo certo. Brasil seguro começa com gente organizada.</p>
+          <p>Preencha seus dados, escolha como quer ajudar e a equipe vai direcionar você para o grupo certo. Goiás seguro começa com gente organizada.</p>
           <figure class="moldura reveal">
             <picture>
               <source type="image/webp"
@@ -715,12 +815,13 @@
     </section>
 
     <!-- ===== CTA FINAL ===== -->
+    <div class="faixa-bandeira" aria-hidden="true"></div>
     <section class="secao secao--tinta">
       <div class="container">
         <div class="cta-final">
-          <span class="eyebrow">Brasil Seguro</span>
+          <span class="eyebrow">Goiás Seguro</span>
           <h2>Segurança pública de verdade não é espetáculo. É fazer cada um viver <span class="marca">seguro</span>. Na rua e em casa.</h2>
-          <p>Não perca a chance de fazer parte desse movimento. Sua participação transforma apoio em ação concreta. Vem com a gente construir esse Brasil.</p>
+          <p>Não perca a chance de fazer parte desse movimento. Sua participação transforma apoio em ação concreta. Vem com a gente construir esse Goiás — Delegado Yasser<span class="so-campanha">, 13007</span>.</p>
           <div class="acoes">
             <a href="#cadastro" class="btn btn--primario">Quero fazer parte</a>
             <a href="https://chat.whatsapp.com/Hlgz2Q7nItW7bS8GaO4afE?mode=gi_t" target="_blank" rel="noopener" class="btn">Ajude a ampliar essa rede</a>
@@ -737,8 +838,9 @@
       <div class="rodape__grid">
         <div>
           <div class="logo">
-            <span class="logo__mark" aria-hidden="true">♥</span>
+            <span class="logo__mark" aria-hidden="true">★</span>
             <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
+            <span class="numero-pill so-campanha"><small>Nº</small> 13007</span>
           </div>
           <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e candidato a deputado estadual pelo PT-GO. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
           <div class="rodape__social">
@@ -771,7 +873,7 @@
           </ul>
         </nav>
       </div>
-      <p class="rodape__assinatura" aria-hidden="true">Brasil seguro</p>
+      <p class="rodape__assinatura" aria-hidden="true">Goiás seguro</p>
       <div class="rodape__selos">
         <a href="https://www.w3.org/WAI/WCAG2AA-Conformance" target="_blank" rel="noopener"
            title="Explicação da conformidade com o nível AA das WCAG 2 do W3C">
@@ -784,7 +886,7 @@
         <a href="acessibilidade.html" class="rodape__selo-link">Declaração de acessibilidade</a>
       </div>
       <div class="rodape__bottom">
-        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.</p>
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás Seguro<span class="so-campanha"> · Nº 13007</span>.</p>
         <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
            (textos, imagens e marca) sem autorização prévia.</p>
       </div>
@@ -813,6 +915,6 @@
     });
   </script>
 
-  <script src="js/landing.js" defer></script>
+  <script src="js/landing.js?v=20260815" defer></script>
 </body>
 </html>

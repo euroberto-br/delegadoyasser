@@ -55,9 +55,9 @@
 
   /* Categorias — fonte única para legenda, chips, pinos e popups. */
   var CATEGORIAS = [
-    { id: "iluminacao",   nome: "Iluminação / ruas escuras",       emoji: "💡", cor: "#d98200" },
+    { id: "iluminacao",   nome: "Iluminação / ruas escuras",       emoji: "💡", cor: "#a05f00" },
     { id: "mato",         nome: "Mato alto / abandono",            emoji: "🌿", cor: "#2e7d32" },
-    { id: "violencia",    nome: "Alto índice de violência",        emoji: "⚠️", cor: "#c8102e" },
+    { id: "violencia",    nome: "Alto índice de violência",        emoji: "⚠️", cor: "#a10c08" },
     { id: "policiamento", nome: "Falta de policiamento / câmeras", emoji: "🚔", cor: "#1d63d8" },
     { id: "drogas",       nome: "Uso / tráfico de drogas",         emoji: "🚬", cor: "#6d28d9" },
     { id: "mulheres",     nome: "Insegurança para mulheres",       emoji: "🚺", cor: "#c2185b" },
@@ -205,7 +205,7 @@
     // Contorno vermelho da marca por cima da máscara
     var contorno = L.geoJSON(window.GOIAS_GEOJSON, {
       interactive: false,
-      style: { color: "#c8102e", weight: 3, opacity: 0.95, fill: false }
+      style: { color: "#f9120c", weight: 3, opacity: 0.95, fill: false }
     }).addTo(mapa);
 
     try {

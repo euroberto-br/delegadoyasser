@@ -1,5 +1,5 @@
 /* =============================================================
-   Delegado Yasser — Brasil Seguro
+   Delegado Yasser — Goiás Seguro para Todos · 13007
    Landing page · cartaz de rua × dossiê de delegacia
    Mobile-first · sem dependências
    ============================================================= */
@@ -9,22 +9,45 @@
    em ~900 ms e exigia conexão com dois domínios externos.
    Só os subconjuntos latin e latin-ext são servidos — o site é
    pt-BR e os subconjuntos cyrillic/vietnamese nunca são usados.
-   O Archivo é fonte variável: um único arquivo cobre 100–900.
+   Archivo e Oswald são fontes variáveis: um único arquivo cobre
+   toda a faixa de peso usada no site.
    -------------------------------------------------------------- */
 @font-face {
-  font-family: "Anton";
+  font-family: "Oswald";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 200 700;
+  font-stretch: 100%;
   font-display: swap;
-  src: url(../fonts/anton-latin.woff2) format("woff2");
+  src: url(../fonts/oswald-var-latin.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Anton";
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 200 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(../fonts/oswald-var-latin-ext.woff2) format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Substituta livre (Google Fonts, OFL) da "Brosign Brush" do manual da
+   campanha — o arquivo original é comercial e não está disponível no
+   pacote de identidade visual recebido. */
+@font-face {
+  font-family: "Caveat Brush";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../fonts/anton-latin-ext.woff2) format("woff2");
+  src: url(../fonts/caveatbrush-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Caveat Brush";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../fonts/caveatbrush-latin-ext.woff2) format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -97,32 +120,36 @@
 }
 
 /* ---------- Tokens ---------- */
+/* Paleta oficial do Manual de Identidade Visual da campanha
+   (Deputado Estadual Delegado Yasser 13007). --brand segue sendo o
+   vermelho principal para não reescrever cada regra do arquivo;
+   as demais cores da bandeirinha entram como tokens próprios. */
 :root {
-  --brand: #c8102e;          /* vermelho PT */
-  --brand-escuro: #8e0b20;
-  --brand-suave: #fbe9e7;
+  --brand: #f9120c;          /* vermelho oficial */
+  --brand-escuro: #a10c08;   /* escurecido p/ contraste ≥ 4,5:1 com texto branco */
+  --brand-suave: #fde6e5;
+  --verde: #2bba29;
+  --verde-escuro: #1c7d1a;
+  --amarelo: #f6d30b;
+  --amarelo-escuro: #8a6f00; /* escurecido p/ texto sobre amarelo (WCAG AA) */
+  --azul: #293ecf;
+  --azul-escuro: #1c2c93;
   --tinta: #181114;          /* quase-preto quente */
   --tinta-70: #4a3f43;
   --papel: #fcf9f5;          /* papel de cartaz */
   --papel-2: #f4ece4;
   --branco: #ffffff;
 
-  --fonte-display: "Anton", "Archivo Black", sans-serif;
+  --fonte-display: "Oswald", "Archivo Black", sans-serif;
   --fonte-texto: "Archivo", system-ui, sans-serif;
   --fonte-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --fonte-brush: "Caveat Brush", "Archivo", cursive;
 
   --sombra-dura: 6px 6px 0 var(--tinta);
   --sombra-brand: 8px 8px 0 var(--brand);
   --borda: 2px solid var(--tinta);
   --raio: 2px;
 }
-
-:root[data-theme="roxo"]    { --brand: #7c3aed; --brand-escuro: #5b21b6; --brand-suave: #f1e9fd; }
-:root[data-theme="azul"]    { --brand: #1d63d8; --brand-escuro: #123f8f; --brand-suave: #e6eefb; }
-/* Tons escurecidos para manter contraste mínimo de 4,5:1 (WCAG AA)
-   com texto branco sobre --brand (botões, seção "Apoie", destaque .marca) */
-:root[data-theme="verde"]   { --brand: #157347; --brand-escuro: #0f5132; --brand-suave: #e5f5ec; }
-:root[data-theme="laranja"] { --brand: #b45309; --brand-escuro: #7c3a06; --brand-suave: #fdeee2; }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -445,37 +472,120 @@ a { color: var(--brand-escuro); }
   box-shadow: 3px 3px 0 rgba(24, 17, 20, 0.25);
 }
 
-/* ---------- Seletor de cor (prévia) ---------- */
-.tema-switch {
-  position: fixed;
-  left: 0.9rem;
-  bottom: 0.9rem;
-  z-index: 60;
-  background: var(--branco);
-  border: var(--borda);
-  box-shadow: 4px 4px 0 var(--tinta);
-  padding: 0.5rem 0.7rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-.tema-switch__label {
-  font-family: var(--fonte-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
+/* ---------- Selo oficial (logomarca do Manual de Identidade Visual) ----------
+   "Deputado Estadual · Delegado Yasser · 13007 · Goiás seguro para todos".
+   Tamanho controlado por font-size no elemento raiz (todo o miolo usa em).
+   O manual permite ângulo 0º ou 11º — aplicamos --tilt conforme o contexto. */
+.selo-oficial {
+  --tilt: -5deg;
+  display: inline-block;
+  transform: rotate(var(--tilt));
+  font-family: var(--fonte-display);
   text-transform: uppercase;
+  line-height: 1;
+  filter: drop-shadow(5px 6px 0 rgba(24, 17, 20, 0.3));
 }
-.tema-switch__opcoes { display: flex; gap: 0.4rem; }
-.tema-dot {
-  width: 1.15rem;
-  height: 1.15rem;
-  border-radius: 50%;
-  border: 2px solid var(--tinta);
-  background: var(--c);
-  cursor: pointer;
-  padding: 0;
+
+/* Fita azul "Deputado Estadual" com a etiqueta branca da estrela na ponta */
+.selo-oficial__fita {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  background: var(--azul);
+  color: var(--branco);
+  font-size: 0.6em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.32em 0.5em 0.32em 0.8em;
+  margin-left: 0.5em;
+  position: relative;
+  z-index: 3;
+  transform: rotate(-1.5deg);
 }
-.tema-dot[aria-pressed="true"] { outline: 2px solid var(--tinta); outline-offset: 2px; }
+.selo-oficial__tag {
+  display: inline-grid;
+  place-items: center;
+  width: 1.7em;
+  height: 1.7em;
+  margin: -0.35em -1em -0.35em 0.1em;
+  background: var(--branco);
+  color: var(--brand);
+  font-size: 0.9em;
+  border-radius: 4px 4px 8px 4px;
+  transform: rotate(10deg);
+}
+
+/* Caixas verde (nome) e amarela (número) — a amarela nasce deslocada
+   à direita e mais larga, como na arte oficial. */
+/* width:max-content — cada caixa encolhe no próprio texto, então a amarela
+   ("13007") fica naturalmente mais larga que a verde ("YASSER"), como na arte */
+.selo-oficial__caixa { display: block; position: relative; width: max-content; }
+.selo-oficial__caixa--verde {
+  background: var(--verde);
+  color: var(--branco);
+  /* padding-top generoso: a fita azul repousa sobre o topo da caixa e o
+     "DELEGADO" precisa nascer abaixo dela */
+  padding: 1.15em 0.5em 0.2em;
+  margin-top: -0.9em;
+  z-index: 2;
+}
+.selo-oficial__caixa--amarela {
+  background: var(--amarelo);
+  margin-left: 0.85em;
+  margin-top: -0.1em;
+  padding: 0.02em 0.5em 0.08em;
+  z-index: 1;
+}
+.selo-oficial__delegado {
+  display: block;
+  font-family: var(--fonte-texto);
+  font-weight: 700;
+  font-size: 0.52em;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.1em;
+}
+.selo-oficial__nome {
+  display: block;
+  font-size: 2.15em;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+}
+.selo-oficial__numero {
+  display: block;
+  color: var(--brand);
+  font-size: 2.75em;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+}
+/* Slogan em brush direto sobre o vermelho (sem caixa), avançando
+   para além da caixa amarela — como no material. */
+.selo-oficial__slogan {
+  display: block;
+  color: var(--branco);
+  font-family: var(--fonte-brush);
+  font-weight: 400;
+  text-transform: none;
+  white-space: nowrap;
+  font-size: 1.25em;
+  margin-left: 0.9em;
+  margin-top: 0.12em;
+  /* width:0 — o slogan transborda de propósito e NÃO alarga o selo, senão
+     as caixas verde/amarela esticariam até a largura da frase */
+  width: 0;
+  overflow: visible;
+}
+
+/* Faixa diagonal (verde · amarelo · azul) — acento decorativo da bandeirinha
+   do manual, usado como divisor antes do CTA final. */
+.faixa-bandeira {
+  height: 10px;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--verde) 0 14px,
+    var(--amarelo) 14px 28px,
+    var(--azul) 28px 42px
+  );
+}
 
 /* ---------- Header ---------- */
 .cabecalho {
@@ -527,6 +637,31 @@ a { color: var(--brand-escuro); }
   font-weight: 500;
   letter-spacing: 0.08em;
   color: var(--tinta-70);
+}
+
+/* Número de urna — reforço obrigatório de campanha, reaproveitado no
+   cabeçalho, na faixa do rodapé e no CTA final. */
+.numero-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  background: var(--amarelo);
+  color: var(--brand-escuro);
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  padding: 0.2em 0.55em;
+  border: var(--borda);
+  box-shadow: 2px 2px 0 var(--tinta);
+  white-space: nowrap;
+}
+.numero-pill small {
+  font-family: var(--fonte-mono);
+  font-size: 0.6em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .nav__toggle {
@@ -623,6 +758,182 @@ a { color: var(--brand-escuro); }
 .hero__foto { position: relative; max-width: 420px; width: 100%; margin-inline: auto; }
 .hero__foto .moldura { transform: rotate(-1.2deg); }
 .hero__foto img { aspect-ratio: 4 / 5; }
+
+/* ---------- Hero-poster: recriação fiel da arte oficial (Material/HERO.PNG)
+   Fundo vermelho chapado · selo inclinado à esquerda · ponta de estrela
+   azul/verde/amarela sangrando à direita, com o candidato recortado. ---------- */
+.hero-poster {
+  position: relative;
+  background: var(--brand);
+  color: var(--branco);
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-poster__inner {
+  position: relative;
+  z-index: 3;
+  width: min(1120px, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: clamp(1.75rem, 5vw, 2.5rem);
+}
+/* 5.6vw mantém o slogan (que transborda o selo) dentro da tela no mobile */
+.hero-poster .selo-oficial { font-size: clamp(1.15rem, 5.6vw, 2.2rem); }
+
+/* --- Ponta de estrela + figura recortada --- */
+.hero-poster__arte {
+  position: relative;
+  z-index: 1;
+  width: min(86%, 520px);
+  margin: 0 0 0 auto;
+  aspect-ratio: 3 / 4;
+}
+.ponta {
+  position: absolute;
+  inset: 0;
+  /* vértice à esquerda, abrindo para a direita — a "ponta" da estrela */
+  clip-path: polygon(0% 62%, 38% 0%, 100% 0%, 100% 100%, 4% 100%);
+}
+.ponta--azul { background: var(--azul); }
+.ponta--verde { background: var(--verde); transform: translateX(11px); }
+.ponta--amarela { background: var(--amarelo); transform: translateX(22px); }
+
+.hero-poster__figura {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  display: block;
+}
+.hero-poster__figura img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* sombra sutil separa o recorte do amarelo, como na arte impressa */
+  filter: drop-shadow(-6px 0 10px rgba(24, 17, 20, 0.18));
+}
+
+/* Estrela do PT (forma de estrela, não círculo — igual à arte) */
+/* No mobile a estrela vai para o canto superior esquerdo (área vermelha
+   livre); no desktop ela volta para o vão entre o selo e a foto. */
+.hero-poster__pt {
+  position: absolute;
+  z-index: 4;
+  top: 4%;
+  left: 5%;
+  right: auto;
+  width: clamp(2.6rem, 11vw, 4.5rem);
+  aspect-ratio: 1;
+}
+.hero-poster__pt svg { width: 100%; height: 100%; display: block; }
+
+/* ---- Tablet/desktop: selo à esquerda e arte sangrando na borda direita ---- */
+@media (min-width: 700px) {
+  .hero-poster { min-height: clamp(400px, 42vw, 640px); display: flex; align-items: center; }
+  .hero-poster__inner { padding-right: 46%; padding-block: clamp(2rem, 5vw, 3.5rem); }
+  .hero-poster .selo-oficial { font-size: clamp(2rem, 3.6vw, 3rem); }
+
+  /* max-width evita que, em telas muito largas, a ponta amarela cresça
+     demais e a figura fique perdida no meio dela */
+  .hero-poster__arte {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(48%, 700px);
+    max-width: none;
+    margin: 0;
+    aspect-ratio: auto;
+  }
+  /* A figura estoura o topo do banner (108%), como na arte: o topo da
+     cabeça encosta na borda superior em vez de "flutuar" no meio. */
+  .hero-poster__figura {
+    width: auto;
+    height: 104%;
+    right: 1%;
+    bottom: 0;
+  }
+  .hero-poster__figura img { width: auto; height: 100%; object-fit: contain; object-position: bottom right; }
+  /* a estrela acompanha a borda da ponta amarela (que agora tem max-width) */
+  .hero-poster__pt { left: auto; right: min(40%, 620px); top: clamp(1rem, 3vw, 2rem); }
+}
+
+/* ---------- Liberação agendada do conteúdo de campanha ----------
+   O <html> nasce com data-campanha="pre" e o script inline do <head> troca
+   para "on" a partir de 16/08/2026 08:00 (horário de Brasília).
+
+   Esconder é o estado PADRÃO, e não o contrário: sem JS (ou com JS quebrado)
+   o .so-campanha simplesmente continua fora da página, em vez de vazar. */
+[data-campanha="pre"] .so-campanha { display: none !important; }
+[data-campanha="on"] .pre-campanha { display: none !important; }
+
+/* Aviso que ocupa o lugar do banner enquanto o conteúdo não foi liberado.
+   Fundo em --brand-escuro (e não --brand): o vermelho puro dá 4,10:1 com
+   texto branco e reprovaria no WCAG AA; o escuro dá 8,1:1. */
+.aviso-liberacao {
+  background: var(--brand-escuro);
+  color: var(--branco);
+  padding-block: clamp(2.75rem, 9vw, 5.5rem);
+}
+.aviso-liberacao__inner { text-align: center; }
+
+.aviso-liberacao__eyebrow {
+  margin: 0 0 0.85rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.aviso-liberacao__titulo {
+  margin: 0 0 0.7rem;
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+.aviso-liberacao__texto {
+  margin: 0 auto;
+  max-width: 46ch;
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+}
+/* evita quebrar a data no meio ("16 de agosto de / 2026") */
+.aviso-liberacao__texto strong { white-space: nowrap; }
+
+.aviso-liberacao__relogio {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 1.9rem 0 0;
+  padding: 0;
+}
+.aviso-liberacao__relogio li {
+  min-width: 4.6rem;
+  padding: 0.6rem 0.5rem;
+  background: var(--branco);
+  color: var(--tinta);
+  border: var(--borda);
+  box-shadow: 4px 4px 0 var(--tinta);
+}
+.aviso-liberacao__relogio b {
+  display: block;
+  font-family: var(--fonte-display);
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1;
+  /* tabular-nums impede os números "pularem" de largura a cada segundo */
+  font-variant-numeric: tabular-nums;
+}
+.aviso-liberacao__relogio span {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tinta-70);
+}
 
 /* ---------- Faixa marquee ---------- */
 .faixa {
@@ -1445,7 +1756,7 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
    Ajuda pessoas com baixa visão, sensibilidade à luz e alguns tipos de daltonismo. ---------- */
 :root[data-contraste="alto"] body { background: #000; color: #fff; }
 /* :where() zera a especificidade do filtro para as regras de link abaixo vencerem */
-:root[data-contraste="alto"] body :where(:not(img):not(svg):not(path):not(circle):not(rect):not(.tema-dot):not([vw]):not([vw] *)) {
+:root[data-contraste="alto"] body :where(:not(img):not(svg):not(path):not(circle):not(rect):not([vw]):not([vw] *)) {
   background-color: #000 !important;
   background-image: none !important;
   color: #fff !important;

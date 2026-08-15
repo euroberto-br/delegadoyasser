@@ -1,5 +1,5 @@
 /* =============================================================
-   Delegado Yasser — Brasil Seguro
+   Delegado Yasser — Goiás Seguro para Todos · 13007
    Scripts da landing (vanilla JS, sem dependências)
    ============================================================= */
 
@@ -108,35 +108,12 @@
     reveals.forEach(function (el) { el.classList.add("visivel"); });
   }
 
-  /* ---------- Seletor de cor (pré-visualização) ---------- */
-  var TEMAS = ["vermelho", "roxo", "azul", "verde", "laranja"];
-  var raiz = document.documentElement;
-  var dots = document.querySelectorAll(".tema-dot");
-
-  function aplicarTema(tema) {
-    if (TEMAS.indexOf(tema) === -1) tema = "vermelho";
-    if (tema === "vermelho") raiz.removeAttribute("data-theme");
-    else raiz.setAttribute("data-theme", tema);
-    dots.forEach(function (d) {
-      d.setAttribute("aria-pressed", String(d.dataset.tema === tema));
-    });
-    try { localStorage.setItem("tema-cor", tema); } catch (e) {}
-  }
-
-  if (dots.length) {
-    dots.forEach(function (d) {
-      d.addEventListener("click", function () { aplicarTema(d.dataset.tema); });
-    });
-    var salvo;
-    try { salvo = localStorage.getItem("tema-cor"); } catch (e) {}
-    if (salvo) aplicarTema(salvo);
-  }
-
   /* =============================================================
      Balão de acessibilidade: fonte, contraste, links e animações
      (padrão eMAG; preferências persistem via localStorage e são
      reaplicadas antes da pintura pelo script inline do <head>)
      ============================================================= */
+  var raiz = document.documentElement;
   var ESCALAS = [90, 100, 110, 120, 130]; // % do tamanho de fonte
   var escalaEl = document.getElementById("fonteEscala");
 
@@ -682,7 +659,7 @@
       }
       // O número da foto já é anunciado pelo aria-label do slide ("N de total"),
       // então o alt traz só a descrição, sem repetir o número.
-      img.alt = "Delegado Yasser durante as ações do movimento Brasil Seguro";
+      img.alt = "Delegado Yasser durante as ações do movimento Goiás Seguro";
       img.decoding = "async";
       // Se a foto falhar (link quebrado), esconde a imagem — o slide fica
       // como painel escuro, sem o ícone de imagem quebrada.
@@ -894,5 +871,67 @@
           travarBotao(false);
         });
     });
+  }
+
+  /* ---------- Liberação agendada do conteúdo de campanha ----------
+     O script inline do <head> já decidiu o estado inicial (para o bloco não
+     piscar antes de sumir). Aqui cuidamos do que depende do tempo passando:
+     a contagem regressiva e a virada automática às 08:00, para quem estiver
+     com a página aberta na hora. Ver .so-campanha / .pre-campanha no CSS. */
+  var LIBERACAO = Date.parse("2026-08-16T11:00:00Z"); // 08:00 em Brasília (UTC-3)
+
+  function liberado() {
+    return Date.now() >= LIBERACAO;
+  }
+
+  // Só o que está na página: título, meta tags e JSON-LD não são tratados aqui
+  // porque crawler não executa JS — esses saem do arquivo e voltam pelo
+  // liberar-campanha.js (ver comentário no <head> do index.html).
+  function liberar() {
+    raiz.setAttribute("data-campanha", "on");
+  }
+
+  if (liberado()) {
+    liberar();
+  } else {
+    var relogio = document.getElementById("contagemLiberacao");
+    var campos = {};
+
+    if (relogio) {
+      ["d", "h", "m", "s"].forEach(function (k) {
+        campos[k] = relogio.querySelector('[data-contagem="' + k + '"]');
+      });
+    }
+
+    var dois = function (n) { return n < 10 ? "0" + n : String(n); };
+
+    function tique() {
+      var falta = LIBERACAO - Date.now();
+
+      if (falta <= 0) {
+        liberar();
+        clearInterval(timer);
+        return;
+      }
+
+      if (!relogio) return;
+
+      var seg = Math.floor(falta / 1000);
+      campos.d.textContent = dois(Math.floor(seg / 86400));
+      campos.h.textContent = dois(Math.floor(seg / 3600) % 24);
+      campos.m.textContent = dois(Math.floor(seg / 60) % 60);
+      campos.s.textContent = dois(seg % 60);
+    }
+
+    tique();
+
+    // Com "Pausar animações" ligado (ou reduced motion no sistema) o relógio
+    // fica parado no valor inicial: só checamos de minuto em minuto se já deu
+    // a hora, o que evita conteúdo se atualizando sozinho na tela (WCAG 2.2.2).
+    var parado =
+      raiz.classList.contains("a11y-parado") ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var timer = setInterval(tique, parado ? 60000 : 1000);
   }
 })();

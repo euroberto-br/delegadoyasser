@@ -1,5 +1,5 @@
 {
-  "name": "Delegado Yasser Yassine — Brasil Seguro",
+  "name": "Delegado Yasser Yassine — Goiás Seguro para Todos",
   "short_name": "Delegado Yasser",
   "description": "Site oficial do Delegado Yasser Yassine, candidato a deputado estadual pelo PT-GO.",
   "lang": "pt-BR",
@@ -7,7 +7,7 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#c8102e",
+  "theme_color": "#f9120c",
   "background_color": "#fcf9f5",
   "icons": [
     {

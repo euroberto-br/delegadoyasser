@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-campanha="pre">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#c8102e">
+  <meta name="theme-color" content="#f9120c">
 
   <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
   <script>
@@ -11,6 +11,33 @@
       try { window.top.location.replace(window.location.href); }
       catch (e) { document.documentElement.style.display = "none"; }
     }
+  </script>
+
+  <!-- Liberação da propaganda de campanha (bloco inicial e o número 13007):
+       só a partir de 16/08/2026 às 08:00, horário de Brasília.
+
+       O HTML nasce com data-campanha="pre" e tudo que não pode aparecer antes
+       da hora leva a classe .so-campanha. Esconder é o estado PADRÃO: se este
+       script não rodar, o conteúdo continua oculto em vez de vazar.
+
+       A regra de ocultar é injetada aqui, e não só no css/landing.css, porque
+       quem já visitou o site pode ter o CSS antigo em cache — e aí veria o que
+       deveria estar bloqueado. Inline no <head> para não piscar na tela. -->
+  <script>
+    (function () {
+      var LIBERACAO = Date.parse("2026-08-16T11:00:00Z"); // 08:00 em Brasília (UTC-3)
+      var raiz = document.documentElement;
+
+      var trava = document.createElement("style");
+      trava.textContent =
+        '[data-campanha="pre"] .so-campanha{display:none !important}' +
+        '[data-campanha="on"] .pre-campanha{display:none !important}';
+      (document.head || raiz).appendChild(trava);
+
+      if (Date.now() >= LIBERACAO) {
+        raiz.setAttribute("data-campanha", "on");
+      }
+    })();
   </script>
   <title>Declaração de Acessibilidade | Delegado Yasser</title>
   <meta name="description" content="Declaração de acessibilidade do site do Delegado Yasser Yassine: compromisso com as diretrizes WCAG 2.1 nível AA e canais para relatar barreiras.">
@@ -27,11 +54,10 @@
 
   <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
   <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/oswald-var-latin.woff2" as="font" type="font/woff2" crossorigin>
 
   <script>
     try{
-      var t=localStorage.getItem('tema-cor');if(t&&t!=='vermelho')document.documentElement.setAttribute('data-theme',t);
       var cc=localStorage.getItem('contraste');
       if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
       var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
@@ -40,7 +66,7 @@
     }catch(e){}
   </script>
 
-  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/landing.css?v=20260815">
 
   <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
        por JS, então o navegador só descobriria os domínios tarde. Carrega em
@@ -93,8 +119,9 @@
   <header class="cabecalho">
     <div class="container nav">
       <a href="index.html" class="logo" aria-label="Delegado Yasser Yassine — voltar à página inicial">
-        <span class="logo__mark" aria-hidden="true">♥</span>
+        <span class="logo__mark" aria-hidden="true">★</span>
         <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
+        <span class="numero-pill so-campanha"><small>Nº</small> 13007</span>
       </a>
     </div>
   </header>
@@ -107,7 +134,7 @@
 
         <p>Este site foi desenvolvido para ser acessível a todas as pessoas, inclusive quem usa
         leitores de tela, navegação por teclado ou outras tecnologias assistivas. Acreditamos que
-        um Brasil seguro também é um Brasil sem barreiras.</p>
+        um Goiás seguro também é um Goiás sem barreiras.</p>
 
         <h2 style="font-size: clamp(1.4rem, 4vw, 1.9rem);">Conformidade</h2>
         <p>Buscamos conformidade com as <strong>Diretrizes de Acessibilidade para Conteúdo Web
@@ -158,7 +185,7 @@
         </a>
       </div>
       <div class="rodape__bottom">
-        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.</p>
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás Seguro<span class="so-campanha"> · Nº 13007</span>.</p>
         <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
            (textos, imagens e marca) sem autorização prévia.</p>
       </div>
@@ -172,14 +199,24 @@
       <div class="vw-plugin-top-wrapper"></div>
     </div>
   </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <!-- VLibras (tradutor de Libras do gov.br). Carregado só depois do load:
+       como <script> síncrono ele travava a renderização por ~850 ms. O widget
+       é um botão flutuante acionado pelo usuário, então aparecer um instante
+       mais tarde não muda o uso. -->
   <script>
-    try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
+    window.addEventListener("load", function () {
+      var s = document.createElement("script");
+      s.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
+      s.onload = function () {
+        try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
+      };
+      document.body.appendChild(s);
+    });
   </script>
 
   <script>
     document.getElementById('ano').textContent = new Date().getFullYear();
   </script>
-  <script src="js/landing.js" defer></script>
+  <script src="js/landing.js?v=20260815" defer></script>
 </body>
 </html>

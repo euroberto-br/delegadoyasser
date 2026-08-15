@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-campanha="pre">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#c8102e">
+  <meta name="theme-color" content="#f9120c">
 
   <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
   <script>
@@ -12,8 +12,35 @@
       catch (e) { document.documentElement.style.display = "none"; }
     }
   </script>
-  <title>Termo de contratação — Cabo Eleitoral | Delegado Yasser</title>
-  <meta name="description" content="Preencha e assine o termo de contratação e compromisso de cabo eleitoral da campanha do Delegado Yasser — Deputado Estadual — Eleições 2026.">
+
+  <!-- Liberação da propaganda de campanha (bloco inicial e o número 13007):
+       só a partir de 16/08/2026 às 08:00, horário de Brasília.
+
+       O HTML nasce com data-campanha="pre" e tudo que não pode aparecer antes
+       da hora leva a classe .so-campanha. Esconder é o estado PADRÃO: se este
+       script não rodar, o conteúdo continua oculto em vez de vazar.
+
+       A regra de ocultar é injetada aqui, e não só no css/landing.css, porque
+       quem já visitou o site pode ter o CSS antigo em cache — e aí veria o que
+       deveria estar bloqueado. Inline no <head> para não piscar na tela. -->
+  <script>
+    (function () {
+      var LIBERACAO = Date.parse("2026-08-16T11:00:00Z"); // 08:00 em Brasília (UTC-3)
+      var raiz = document.documentElement;
+
+      var trava = document.createElement("style");
+      trava.textContent =
+        '[data-campanha="pre"] .so-campanha{display:none !important}' +
+        '[data-campanha="on"] .pre-campanha{display:none !important}';
+      (document.head || raiz).appendChild(trava);
+
+      if (Date.now() >= LIBERACAO) {
+        raiz.setAttribute("data-campanha", "on");
+      }
+    })();
+  </script>
+  <title>Termo de compromisso — Cabo Eleitoral | Delegado Yasser</title>
+  <meta name="description" content="Preencha e assine o termo de compromisso de cabo eleitoral da campanha do Delegado Yasser — Deputado Estadual — Eleições 2026.">
 
   <!-- Página de uso interno: acessível só por link enviado pela coordenação.
        Fora do sitemap e com noindex para não aparecer em buscadores. -->
@@ -28,12 +55,11 @@
 
   <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
   <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/oswald-var-latin.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Aplica preferências de acessibilidade salvas antes da pintura (evita flash) -->
   <script>
     try{
-      var t=localStorage.getItem('tema-cor');if(t&&t!=='vermelho')document.documentElement.setAttribute('data-theme',t);
       var cc=localStorage.getItem('contraste');
       if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
       var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
@@ -42,7 +68,7 @@
     }catch(e){}
   </script>
 
-  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/landing.css?v=20260815">
   <link rel="stylesheet" href="css/termos.css">
 </head>
 <body>
@@ -70,23 +96,12 @@
     </div>
   </div>
 
-  <!-- ===== SELETOR DE COR (apenas pré-visualização) ===== -->
-  <div class="tema-switch" role="group" aria-label="Pré-visualização: cor do site">
-    <span class="tema-switch__label">Escolha sua cor</span>
-    <div class="tema-switch__opcoes">
-      <button type="button" class="tema-dot" data-tema="vermelho" style="--c:#c8102e" aria-label="Vermelho" aria-pressed="true"></button>
-      <button type="button" class="tema-dot" data-tema="roxo" style="--c:#7c3aed" aria-label="Roxo" aria-pressed="false"></button>
-      <button type="button" class="tema-dot" data-tema="azul" style="--c:#1d63d8" aria-label="Azul" aria-pressed="false"></button>
-      <button type="button" class="tema-dot" data-tema="verde" style="--c:#1f9d57" aria-label="Verde" aria-pressed="false"></button>
-      <button type="button" class="tema-dot" data-tema="laranja" style="--c:#e2640f" aria-label="Laranja" aria-pressed="false"></button>
-    </div>
-  </div>
 
   <!-- ===== HEADER ===== -->
   <header class="cabecalho" id="cabecalho">
     <div class="container nav">
       <a href="index.html#topo" class="logo">
-        <span class="logo__mark" aria-hidden="true">♥</span>
+        <span class="logo__mark" aria-hidden="true">★</span>
         <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
       </a>
       <nav aria-label="Navegação principal">
@@ -109,7 +124,7 @@
     <section class="secao secao--tinta termo-intro">
       <div class="container">
         <span class="eyebrow">Equipe de campanha</span>
-        <h1>Termo de contratação — <span class="marca">Cabo Eleitoral</span></h1>
+        <h1>Termo de compromisso — <span class="marca">Cabo Eleitoral</span></h1>
         <p class="termo-intro__sub">
           Você foi indicado(a) pela coordenação para atuar como <strong>cabo eleitoral</strong>
           da campanha do Delegado Yasser. Leia o termo com atenção, preencha seus dados
@@ -118,11 +133,11 @@
         </p>
         <div class="aviso-legal" role="note">
           <strong>Importante:</strong> o envio deste formulário <strong>ainda não
-          conclui a contratação</strong>. O termo passa pela <strong>aprovação da
+          formaliza o compromisso</strong>. O termo passa pela <strong>aprovação da
           coordenação da campanha</strong>, que confere os dados, preenche o
           <strong>período de atuação</strong> e a <strong>remuneração</strong> e
           encaminha o documento final para você pelo WhatsApp ou e-mail informado.
-          A contratação segue a legislação eleitoral e não gera vínculo empregatício.
+          O compromisso segue a legislação eleitoral e não gera vínculo empregatício.
         </div>
       </div>
     </section>
@@ -132,16 +147,16 @@
       <div class="container termo-wrap">
 
         <span class="eyebrow">Leia antes de assinar</span>
-        <h2>Termo de Contratação e Compromisso</h2>
+        <h2>Termo de Compromisso</h2>
         <p class="hint">O texto abaixo é o conteúdo integral do documento que você vai assinar.
            Use a rolagem para ler até o final.</p>
 
         <!-- tabindex=0: a caixa rolável precisa ser alcançável e rolável pelo teclado -->
-        <div class="termo-texto" tabindex="0" role="region" aria-label="Texto integral do termo de contratação e compromisso">
-          <h2>TERMO DE CONTRATAÇÃO E COMPROMISSO – CABO ELEITORAL</h2>
+        <div class="termo-texto" tabindex="0" role="region" aria-label="Texto integral do termo de compromisso">
+          <h2>TERMO DE COMPROMISSO – CABO ELEITORAL</h2>
           <p class="termo-texto__meta">
             Campanha: Delegado Yasser – Deputado Estadual – Eleições 2026<br>
-            Contratado(a): <em>[dados preenchidos no formulário abaixo]</em><br>
+            Cabo eleitoral: <em>[dados preenchidos no formulário abaixo]</em><br>
             Período: <em>[a definir pela coordenação]</em><br>
             Carga horária: [a definir pela coordenação]<br>
             Remuneração total: <em>[a definir pela coordenação]</em>
@@ -157,7 +172,7 @@
             <li>Distribuir material de propaganda eleitoral fornecido pela campanha, observando as regras eleitorais;</li>
             <li>Identificar e mobilizar apoiadores e auxiliar na organização das atividades de campanha;</li>
             <li>Visitar bairros, comunidades e locais indicados pela coordenação;</li>
-            <li>Informar corretamente os locais e atividades realizadas, quando solicitado para fins de controle e prestação de contas.</li>
+            <li>Informar corretamente os dias, horários, locais e atividades realizadas, quando solicitado pela coordenação.</li>
           </ol>
 
           <h3>Regras de conduta</h3>
@@ -169,13 +184,13 @@
             <li>Não realizar propaganda em locais ou de formas proibidas pela legislação eleitoral;</li>
             <li>Não realizar despesas, receber ou movimentar recursos em nome da campanha sem autorização;</li>
             <li>Utilizar materiais e recursos recebidos exclusivamente para atividades da campanha;</li>
-            <li>Cumprir a carga horária e as atividades definidas pela coordenação..</li>
+            <li>Cumprir a carga horária e as atividades definidas pela coordenação.</li>
           </ul>
 
           <h3>Condições</h3>
-          <p>A contratação destina-se exclusivamente à prestação de serviços de campanha e não gera vínculo empregatício com o candidato ou partido, nos termos do art. 100 da Lei nº 9.504/1997.</p>
+          <p>O compromisso destina-se exclusivamente à prestação de serviços de campanha e não gera vínculo empregatício com o candidato ou partido, nos termos do art. 100 da Lei nº 9.504/1997.</p>
           <p>A remuneração corresponde aos serviços efetivamente prestados e não está condicionada ao número de votos obtidos, eleitores convencidos, apoiadores mobilizados ou resultado da eleição.</p>
-          <p>O pagamento do valor acordado será realizado mediante transferência bancária ou PIX para conta de titularidade do(a) contratado(a), no número de parcelas acordadas.</p>
+          <p>O pagamento do valor acordado será realizado mediante transferência bancária ou PIX para conta de titularidade do(a) cabo eleitoral, no número de parcelas acordadas.</p>
 
           <p>Declaro que li, compreendi e concordo com este termo e comprometo-me a cumprir
              a legislação eleitoral durante toda a prestação dos serviços.</p>
@@ -184,8 +199,8 @@
         <!-- ===== FORMULÁRIO ===== -->
         <form class="form-card" id="formTermo" data-tipo="cabo" data-idade-minima="18" novalidate>
           <h3>Preencha seus dados ♥</h3>
-          <p class="hint">Os dados abaixo entram no termo e são usados só para a contratação,
-             o pagamento e o contato da coordenação.</p>
+          <p class="hint">Os dados abaixo entram no termo e são usados só para formalizar
+             o compromisso, o pagamento e o contato da coordenação.</p>
 
           <!-- Anti-spam: campo oculto que humanos não preenchem (honeypot) -->
           <div class="hp" aria-hidden="true">
@@ -215,10 +230,6 @@
               <div class="field">
                 <label for="rgOrgao">Órgão emissor / UF</label>
                 <input id="rgOrgao" name="rg_orgao" type="text" placeholder="Ex.: SSP-GO" maxlength="20" required>
-              </div>
-              <div class="field field--full">
-                <label for="tituloEleitor">Título de eleitor (12 dígitos)</label>
-                <input id="tituloEleitor" name="titulo_eleitor" type="text" inputmode="numeric" placeholder="0000 0000 0000" maxlength="14" required>
               </div>
             </div>
           </fieldset>
@@ -312,7 +323,7 @@
             <label class="check check--aceite">
               <input type="checkbox" name="aceite" value="sim" required>
               <span class="check-aceite__texto">
-                <strong>Li e concordo com o Termo de Contratação e Compromisso.</strong>
+                <strong>Li e concordo com o Termo de Compromisso.</strong>
                 <span>Comprometo-me a cumprir a legislação eleitoral durante toda
                 a prestação dos serviços.</span>
               </span>
@@ -320,8 +331,8 @@
 
             <label class="check">
               <input type="checkbox" name="consentimento" value="sim" required>
-              Autorizo o uso dos meus dados exclusivamente para a formalização desta
-              contratação, o pagamento dos serviços e o contato da coordenação,
+              Autorizo o uso dos meus dados exclusivamente para a formalização deste
+              compromisso, o pagamento dos serviços e o contato da coordenação,
               conforme a LGPD.
             </label>
 
@@ -379,7 +390,7 @@
       <div class="rodape__grid">
         <div>
           <div class="logo">
-            <span class="logo__mark" aria-hidden="true">♥</span>
+            <span class="logo__mark" aria-hidden="true">★</span>
             <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
           </div>
           <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e candidato a deputado estadual pelo PT-GO. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
@@ -409,9 +420,9 @@
           </ul>
         </nav>
       </div>
-      <p class="rodape__assinatura" aria-hidden="true">Brasil seguro</p>
+      <p class="rodape__assinatura" aria-hidden="true">Goiás seguro</p>
       <div class="rodape__bottom">
-        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Brasil Seguro.</p>
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás Seguro<span class="so-campanha"> · Nº 13007</span>.</p>
         <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
            (textos, imagens e marca) sem autorização prévia.</p>
       </div>
@@ -441,7 +452,7 @@
   </script>
 
   <!-- Moldura compartilhada (menu, seletor de cor, balão de acessibilidade) -->
-  <script src="js/landing.js" defer></script>
+  <script src="js/landing.js?v=20260815" defer></script>
   <!-- Lógica dos termos (máscaras, assinatura e envio) -->
   <script src="js/termos.js" defer></script>
 </body>
