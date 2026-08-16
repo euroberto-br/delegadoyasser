@@ -1,6 +1,20 @@
 # Logs gerados por editores/ferramentas — nunca devem ir para o site publicado
 *.log
 
+# Originais de câmera (RAW/HEIC) — pesados e nunca servidos pelo site, que só
+# usa .jpg/.webp/.png. Os originais ficam em ../Material, fora do repositório;
+# aqui a regra evita que uma cópia solta seja publicada por engano.
+*.HEIC
+*.heic
+*.CR3
+*.cr3
+*.CR2
+*.cr2
+*.ARW
+*.arw
+*.DNG
+*.dng
+
 # Arquivos de sistema
 Thumbs.db
 .DS_Store
