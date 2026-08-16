@@ -1545,6 +1545,104 @@ a { color: var(--brand-escuro); }
   .ig-grid { grid-template-columns: repeat(3, 1fr); align-items: start; }
 }
 
+/* Álbum: player do Spotify + links das demais plataformas */
+/* Coluna única: com cinco lojas, jogar a lista ao lado do player deixava a
+   coluna da direita duas vezes mais alta que a esquerda. */
+.trilha {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 2.5rem);
+}
+.trilha__player { max-width: 560px; }
+.trilha__player {
+  display: block;
+  width: 100%;
+  /* O card do Spotify tem altura propria de 152px e NAO estica para preencher
+     um iframe maior: com os 352px da variante com tracklist sobrava um vao
+     vazio enorme dentro da moldura. A lista completa fica no link ao lado. */
+  height: 152px;
+  /* Sem borda nem raio proprios: o card ja vem com cantos arredondados de 12px
+     e cor de fundo propria, entao uma moldura reta do site so criava sobra nos
+     cantos. Fica so a sombra dura, que amarra o bloco ao resto da pagina. */
+  border: 0;
+  box-shadow: var(--sombra-dura);
+  border-radius: 12px;
+  background: transparent;
+}
+.trilha__titulo {
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tinta-70);
+}
+.plataformas {
+  display: grid;
+  /* auto-fit: as lojas se acomodam em linha quando cabe e quebram sozinhas no
+     celular, sem precisar de breakpoint a cada loja nova. */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+/* Mesmo tratamento tipográfico da .redes-nota, com a cor trocada: aquela vive
+   em seção escura e esta em fundo claro. */
+.trilha__nota {
+  margin-top: 1.25rem;
+  max-width: 62ch;
+  font-size: 0.95rem;
+  color: var(--tinta-70);
+}
+.trilha__nota strong { color: var(--tinta); }
+.trilha__nota em {
+  font-style: normal;
+  font-family: var(--fonte-mono);
+  font-size: 0.85em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta);
+}
+
+.plataforma {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  text-decoration: none;
+  color: var(--tinta);
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: 4px 4px 0 var(--tinta);
+  font-family: var(--fonte-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+              background 0.15s ease, color 0.15s ease;
+}
+/* A seta marca "link externo" sem depender de cor, que sozinha não atende
+   ao critério 1.4.1 da WCAG. */
+.plataforma::after {
+  content: "\2197";
+  font-size: 1rem;
+  line-height: 1;
+}
+.plataforma:hover,
+.plataforma:focus-visible {
+  background: var(--brand);
+  color: var(--branco);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--tinta);
+}
+@media (prefers-reduced-motion: reduce) {
+  .plataforma { transition: none; }
+  .plataforma:hover,
+  .plataforma:focus-visible { transform: none; }
+}
+
 /* ---------- Cadastro ---------- */
 .cadastro-grid {
   display: grid;

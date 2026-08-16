@@ -746,6 +746,75 @@
       </div>
     </section>
 
+    <!-- ===== TRILHA SONORA ===== -->
+    <section class="secao secao--suave" id="trilha">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Trilha sonora</span>
+          <h2>Yasser Fun Festival</h2>
+          <p>Os jingles da campanha viraram álbum. Dá o play, escuta do começo ao fim e leva a mensagem junto com a música.</p>
+        </div>
+
+        <div class="trilha reveal">
+          <!-- Player oficial do Spotify. Carrega só quando chega perto da tela
+               (loading="lazy") e não recebe a permissão "autoplay": som que
+               começa sozinho quebra o critério 1.4.2 da WCAG, e o eMAG cobra
+               o mesmo controle sobre áudio automático. -->
+          <iframe class="trilha__player"
+                  src="https://open.spotify.com/embed/album/5fvuiXEJKhVEn5moslSkZj?utm_source=site"
+                  title="Player do álbum Yasser Fun Festival no Spotify"
+                  width="100%" height="152" loading="lazy"
+                  allow="clipboard-write; encrypted-media; picture-in-picture"></iframe>
+
+          <div class="trilha__lojas">
+            <h3 class="trilha__titulo" id="trilha-plataformas">Ouça também em</h3>
+            <!-- A lista também é a alternativa em texto ao player: o iframe
+                 some para quem bloqueia conteúdo de terceiros, e o álbum
+                 precisa continuar alcançável.
+
+                 Para acrescentar uma plataforma, basta repetir um <li>. Sem
+                 logomarcas de terceiros: o site inteiro identifica canais por
+                 nome em tipografia própria (ver .rede na seção Redes), e cada
+                 marca tem regra própria de uso do logo. -->
+            <ul class="plataformas" aria-labelledby="trilha-plataformas">
+              <li>
+                <a class="plataforma" href="https://open.spotify.com/album/5fvuiXEJKhVEn5moslSkZj?si=NbvqtnOZRcyPLGyF6khoPA&amp;utm_source=site"
+                   target="_blank" rel="noopener">Spotify<span class="sr-only"> (abre em nova aba)</span></a>
+              </li>
+              <li>
+                <a class="plataforma" href="https://music.youtube.com/playlist?list=OLAK5uy_mZizupLu1ZcRNN1AATkAXSZRHwSQPvC14&amp;si=W_gs62lQumjxfHX0"
+                   target="_blank" rel="noopener">YouTube Music<span class="sr-only"> (abre em nova aba)</span></a>
+              </li>
+              <li>
+                <a class="plataforma" href="https://music.apple.com/br/album/yasser-fun-festival/6802015981"
+                   target="_blank" rel="noopener">Apple Music<span class="sr-only"> (abre em nova aba)</span></a>
+              </li>
+              <li>
+                <!-- Endereço canônico do álbum. O link curto compartilhado
+                     (link.deezer.com/s/…) resolve para cá, mas links de
+                     compartilhamento do Deezer expiram; o /album/ID não. -->
+                <a class="plataforma" href="https://www.deezer.com/br/album/1055512132"
+                   target="_blank" rel="noopener">Deezer<span class="sr-only"> (abre em nova aba)</span></a>
+              </li>
+              <li>
+                <a class="plataforma" href="https://www.claromusica.com/dl.sh/ct/br/album/95055528"
+                   target="_blank" rel="noopener">Claro Música<span class="sr-only"> (abre em nova aba)</span></a>
+              </li>
+            </ul>
+
+            <!-- Instagram e TikTok não têm página de álbum como as lojas: as
+                 faixas entram na biblioteca de áudios, encontrável só de dentro
+                 do app. Por isso a menção é em texto, e não mais um botão. -->
+            <p class="trilha__nota">
+              As músicas também estão no <strong>Instagram</strong> e no <strong>TikTok</strong>:
+              procure por <em>Yasser Fun Festival</em> na biblioteca de áudios ao criar
+              seu reels ou vídeo e use na sua publicação.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== CADASTRO ===== -->
     <section class="secao" id="cadastro">
       <div class="container cadastro-grid">
@@ -860,6 +929,7 @@
             <!-- <li><a href="#agenda">Agenda de ações</a></li> -->
             <li><a href="#noticias">Notícias</a></li>
             <li><a href="#momentos">Momentos</a></li>
+            <li><a href="#trilha">Trilha sonora</a></li>
           </ul>
         </nav>
         <nav aria-label="Participe">
