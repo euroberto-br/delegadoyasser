@@ -15,7 +15,11 @@ delegadoyasser/
 ├── css/
 │   └── landing.css     Estilos do site (mobile-first, responsivo, temas de cor)
 ├── js/
-│   └── landing.js      Menu, carrossel, conteúdo dinâmico, ano do rodapé e formulário
+│   ├── landing.js      Menu, carrossel, conteúdo dinâmico, ano do rodapé e formulário
+│   ├── foto-com-yasser.js  Seção "Foto com o Yasser" (montagem no navegador)
+│   └── vendor/tfjs/    TensorFlow.js (Apache 2.0) — só baixado quando alguém monta uma foto
+├── models/
+│   └── segmentacao/    Modelo Selfie Segmentation do MediaPipe (Apache 2.0)
 ├── images/             Fotos do Yasser, favicons e ícones
 ├── docs/               Guias da equipe (ver abaixo)
 ├── erros/              Relatório de auditoria (não é publicado / bloqueado no robots)

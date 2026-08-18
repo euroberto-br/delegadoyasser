@@ -223,7 +223,7 @@
           <li><a href="#quem">Quem é</a></li>
           <li><a href="#bandeiras">Bandeiras</a></li>
           <li><a href="#missoes">Missões</a></li>
-          <!-- <li><a href="#agenda">Agenda</a></li> -->
+          <li class="so-campanha"><a href="#foto-com-yasser">Foto com o Yasser</a></li>
           <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
           <li><a href="solicitar-reuniao.html">Convide o Yasser</a></li>
           <li><a href="#noticias">Notícias</a></li>
@@ -522,6 +522,102 @@
               </picture>
               <figcaption>A militância que virou movimento</figcaption>
             </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOTO COM O YASSER =====
+         A montagem acontece toda no navegador de quem acessa (js/foto-com-yasser.js):
+         a foto enviada não sobe para lugar nenhum. -->
+    <section class="secao secao--suave so-campanha" id="foto-com-yasser">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Tire uma foto com o Delegado</span>
+          <h2>Sua foto ao lado do <span class="marca">13007</span></h2>
+          <p>Escolha uma foto sua, escolha o Yasser e leve os dois no mesmo cartaz.
+             A montagem é feita aqui mesmo, no seu aparelho: <strong>sua foto não é
+             enviada para lugar nenhum</strong> e não fica guardada em nenhum servidor.</p>
+        </div>
+
+        <div class="fcy" id="fotoComYasser">
+          <div class="fcy__controles">
+            <div class="fcy__passo">
+              <h3 id="fcy-passo-1"><span class="fcy__num" aria-hidden="true">1</span> Escolha sua foto</h3>
+              <p class="fcy__dica">De frente, com o rosto visível e boa luz — o recorte
+                 fica melhor assim. Vale foto da galeria ou da câmera.</p>
+              <label class="fcy__arquivo">
+                <input type="file" id="fcyArquivo" accept="image/*"
+                       aria-describedby="fcy-passo-1">
+                <span class="btn btn--primario">Escolher foto</span>
+              </label>
+            </div>
+
+            <div class="fcy__passo">
+              <h3 id="fcy-passo-2"><span class="fcy__num" aria-hidden="true">2</span> Escolha o Yasser</h3>
+              <ul class="fcy__poses" id="fcyPoses" aria-labelledby="fcy-passo-2"></ul>
+            </div>
+
+            <div class="fcy__passo">
+              <h3 id="fcy-passo-3"><span class="fcy__num" aria-hidden="true">3</span> Escolha o formato</h3>
+              <div class="fcy__formatos" id="fcyFormatos" role="group" aria-labelledby="fcy-passo-3">
+                <button type="button" class="fcy__formato" data-formato="quadrado" aria-pressed="true">
+                  Quadrado <small>feed</small>
+                </button>
+                <button type="button" class="fcy__formato" data-formato="story" aria-pressed="false">
+                  Story <small>stories e status</small>
+                </button>
+                <button type="button" class="fcy__formato" data-formato="retrato" aria-pressed="false">
+                  Retrato <small>feed alto</small>
+                </button>
+              </div>
+            </div>
+
+            <div class="fcy__passo">
+              <h3 id="fcy-passo-4"><span class="fcy__num" aria-hidden="true">4</span> Assine, se quiser</h3>
+              <div class="fcy__campos">
+                <div class="field">
+                  <label for="fcyNome">Seu nome <small>(opcional)</small></label>
+                  <input id="fcyNome" type="text" maxlength="22" placeholder="Maria"
+                         autocomplete="given-name">
+                </div>
+                <div class="field">
+                  <label for="fcyCidade">Sua cidade <small>(opcional)</small></label>
+                  <input id="fcyCidade" type="text" maxlength="22" placeholder="Anápolis"
+                         autocomplete="address-level2">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fcy__palco">
+            <div class="fcy__moldura">
+              <canvas id="fcyTela" width="1080" height="1080" role="img"
+                      aria-label="Área da montagem. Escolha uma foto para começar."></canvas>
+              <div class="fcy__vazio" id="fcyVazio">
+                <p><strong>Sua montagem aparece aqui.</strong></p>
+                <p>Escolha uma foto no passo 1 para começar.</p>
+              </div>
+              <div class="fcy__girando" aria-hidden="true"></div>
+            </div>
+
+            <p class="fcy__estado" id="fcyEstado" role="status" aria-live="polite"></p>
+
+            <div class="fcy__acoes" id="fcyAcoes" hidden>
+              <button type="button" class="btn btn--primario" id="fcyBaixar">Baixar imagem</button>
+              <button type="button" class="btn" id="fcyCompartilhar">Compartilhar</button>
+              <button type="button" class="btn" id="fcyZap">Enviar no WhatsApp</button>
+              <button type="button" class="btn fcy__trocar" id="fcyTrocar">Trocar minha foto</button>
+            </div>
+
+            <p class="fcy__nota">
+              O recorte é feito por um modelo que roda dentro do seu navegador.
+              Nenhuma imagem é enviada, salva ou compartilhada sem você mandar.
+              Depois de baixar, siga o Delegado no
+              <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">Instagram</a>,
+              no <a href="https://www.tiktok.com/@delegadoyasser" target="_blank" rel="noopener">TikTok</a>
+              e no <a href="https://www.threads.com/@delegadoyasser" target="_blank" rel="noopener">Threads</a>.
+            </p>
           </div>
         </div>
       </div>
@@ -956,6 +1052,10 @@
         </a>
         <a href="acessibilidade.html" class="rodape__selo-link">Declaração de acessibilidade</a>
       </div>
+      <p class="rodape__legal so-campanha">
+        ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL<br>
+        FEDERAÇÃO BRASIL DA ESPERANÇA (PT, PCdoB, PV) · CNPJ 68.454.985/0001-69
+      </p>
       <div class="rodape__bottom">
         <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás Seguro<span class="so-campanha"> · Nº 13007</span>.</p>
         <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
@@ -987,5 +1087,6 @@
   </script>
 
   <script src="js/landing.js?v=20260815" defer></script>
+  <script src="js/foto-com-yasser.js?v=20260817" defer></script>
 </body>
 </html>

@@ -1809,6 +1809,26 @@ a { color: var(--brand-escuro); }
   letter-spacing: 0.06em;
 }
 
+/* Identificação obrigatória da propaganda eleitoral. Vem antes do bloco de
+   direitos autorais e é o único texto do rodapé em caixa alta — é uma
+   declaração, não navegação. Contraste 7:1 sobre --tinta, porque informação
+   legal precisa ser legível, e não um rodapé cinza de contrato. */
+.rodape__legal {
+  margin: 0;
+  padding-block: 1.4rem;
+  border-top: 1px solid rgba(252, 249, 245, 0.18);
+  font-family: var(--fonte-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.9;
+  text-align: center;
+  color: #cfc4c8;
+}
+/* Sem text-transform de propósito: em caixa alta automática o "PCdoB" sairia
+   "PCDOB", que não é como o partido se escreve. O texto já vem maiúsculo do
+   HTML, com a grafia correta preservada. */
+
 .rodape__bottom {
   border-top: 1px solid rgba(252, 249, 245, 0.18);
   padding-block: 1.5rem;
@@ -1935,4 +1955,274 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   .cadastro-grid { grid-template-columns: 0.9fr 1.1fr; }
   .rodape__grid { grid-template-columns: 1.4fr 1fr 1fr; }
   .rodape__grid > :first-child { grid-column: auto; }
+}
+
+/* =============================================================
+   FOTO COM O YASSER
+   Monta o cartaz com a foto de quem visita ao lado do candidato.
+   O canvas ocupa o palco à direita; os quatro passos ficam à
+   esquerda, empilhados no celular.
+   ============================================================= */
+.fcy {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 2.75rem);
+  align-items: start;
+}
+
+/* O JS liga e desliga blocos desta seção pelo atributo hidden. Sem esta
+   regra, o display do próprio componente (flex, grid) vence o display:none
+   que o navegador aplica ao hidden, e o bloco continua na tela — o painel de
+   ações apareceria antes de existir montagem alguma para baixar. */
+.fcy [hidden] { display: none !important; }
+
+.fcy__passo + .fcy__passo { margin-top: 1.75rem; }
+
+.fcy__passo h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.fcy__num {
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex: none;
+  font-family: var(--fonte-display);
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--branco);
+  background: var(--brand-escuro);
+  border: var(--borda);
+  box-shadow: 3px 3px 0 var(--tinta);
+}
+
+.fcy__dica {
+  font-size: 0.92rem;
+  color: var(--tinta-70);
+  margin-bottom: 0.9rem;
+}
+
+/* O <input type="file"> nativo não aceita estilo; ele fica invisível por
+   cima do botão, que é quem aparece. O foco do teclado continua no input,
+   por isso o realce de foco é repassado para o botão. */
+.fcy__arquivo {
+  position: relative;
+  display: inline-block;
+}
+.fcy__arquivo input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.fcy__arquivo .btn { display: block; }
+.fcy__arquivo input:focus-visible + .btn {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* ---------- Escolha da pose ---------- */
+.fcy__poses {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+.fcy-pose {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.35rem 0.55rem;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--tinta);
+  background: var(--branco);
+  border: var(--borda);
+  border-radius: var(--raio);
+  box-shadow: 3px 3px 0 var(--tinta);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+/* Altura fixa e largura automática: as poses têm larguras diferentes, e é a
+   altura igual que alinha as miniaturas entre si. Fixar também reserva o
+   espaço antes de a imagem chegar, então a lista não pula quando o lazy
+   load termina. */
+.fcy-pose img {
+  height: 92px;
+  width: auto;
+  max-width: 100%;
+}
+.fcy-pose:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--tinta); }
+.fcy-pose[aria-pressed="true"] {
+  color: var(--branco);
+  background: var(--brand-escuro);
+  box-shadow: 5px 5px 0 var(--tinta);
+}
+.fcy-pose[aria-pressed="true"] img { background: rgba(255, 255, 255, 0.18); }
+
+/* ---------- Escolha do formato ---------- */
+.fcy__formatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.fcy__formato {
+  flex: 1 1 auto;
+  padding: 0.6rem 0.9rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tinta);
+  background: var(--branco);
+  border: var(--borda);
+  border-radius: var(--raio);
+  box-shadow: 3px 3px 0 var(--tinta);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.fcy__formato small {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  opacity: 0.75;
+}
+.fcy__formato:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--tinta); }
+.fcy__formato[aria-pressed="true"] {
+  color: var(--branco);
+  background: var(--brand-escuro);
+  box-shadow: 5px 5px 0 var(--tinta);
+}
+
+.fcy__campos { display: grid; gap: 0.9rem; }
+.fcy__campos .field label small {
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+/* ---------- Palco da montagem ---------- */
+.fcy__moldura {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 320px;
+  padding: 0.55rem;
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+}
+
+.fcy__moldura canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 68vh;
+  object-fit: contain;
+  background: var(--papel-2);
+}
+
+/* Enquanto não há foto, o canvas ainda existe (o JS desenha nele assim que
+   a montagem fica pronta), mas quem manda na tela é este aviso. */
+.fcy__vazio {
+  position: absolute;
+  inset: 0.55rem;
+  display: grid;
+  place-content: center;
+  gap: 0.3rem;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--tinta-70);
+  background: var(--papel-2);
+  border: 2px dashed rgba(24, 17, 20, 0.35);
+}
+.fcy__vazio p { margin: 0; }
+
+.fcy__girando {
+  position: absolute;
+  inset: 0.55rem;
+  display: none;
+  background: rgba(252, 249, 245, 0.86);
+}
+.fcy__girando::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border: 5px solid rgba(24, 17, 20, 0.18);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: fcy-girar 0.9s linear infinite;
+}
+.fcy--carregando .fcy__girando { display: block; }
+
+@keyframes fcy-girar { to { transform: rotate(360deg); } }
+
+.fcy__estado {
+  margin: 1rem 0 0;
+  min-height: 1.4em;
+  font-family: var(--fonte-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--tinta-70);
+}
+.fcy__estado:empty { margin-top: 0; }
+
+.fcy__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.4rem;
+}
+.fcy__acoes .btn { flex: 1 1 46%; }
+.fcy__trocar { flex-basis: 100%; }
+
+.fcy__nota {
+  margin: 1.2rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--tinta-70);
+}
+
+@media (min-width: 980px) {
+  .fcy { grid-template-columns: 0.95fr 1.05fr; }
+  .fcy__acoes .btn { flex: 1 1 auto; }
+  .fcy__trocar { flex-basis: auto; }
+}
+
+/* Alto contraste: as miniaturas e o canvas são conteúdo, não decoração —
+   a regra geral do modo já inverte os blocos, aqui só o estado escolhido
+   precisa continuar distinguível. */
+:root[data-contraste="alto"] .fcy-pose[aria-pressed="true"],
+:root[data-contraste="alto"] .fcy__formato[aria-pressed="true"] {
+  outline: 3px solid #ffef3f;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fcy-pose,
+  .fcy__formato { transition: none; }
+  .fcy-pose:hover,
+  .fcy__formato:hover { transform: none; }
+  .fcy__girando::after { animation-duration: 2.4s; }
 }
