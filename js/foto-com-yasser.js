@@ -58,17 +58,20 @@
   var CORPO = 2.75;
   var FOLGA_LADO = 0.06;
 
-  var VERMELHO = "#f9120c";
-  var VERMELHO_ESCURO = "#a10c08";
+  /* Cores tiradas por amostragem do material oficial da campanha
+     (Yasser/Recorte/Base.jpeg) — batem com os tokens do landing.css. */
+  var VERMELHO = "#f7130a";
+  var AZUL = "#293dd0";
+  var VERDE = "#2fba29";
+  var AMARELO = "#f5d302";
   var TINTA = "#181114";
   var PAPEL = "#fcf9f5";
-  // Cores da bandeirinha diagonal que atravessa o site (.faixa-bandeira).
-  var BANDEIRA = ["#2bba29", "#f6d30b", "#293ecf"];
 
-  var TITULO = "DELEGADO YASSER";
-  var SUBTITULO = "DEPUTADO ESTADUAL · PT-GO";
+  var CARGO = "DEPUTADO ESTADUAL";
+  var NOME_TOPO = "DELEGADO";
+  var NOME_BASE = "YASSER";
   var NUMERO = "13007";
-  var SLOGAN = "GOIÁS SEGURO PARA TODOS";
+  var SLOGAN = "Goiás seguro para todos";
   var SITE = "delegadoyasser.com.br";
   var INSTAGRAM = "@delegadoyasser";
   /* Identificação obrigatória da propaganda eleitoral. Vai na lateral da arte,
@@ -390,7 +393,9 @@
        cartaz. Um esmaecimento curto transforma o corte em acabamento. */
     var fator = altura / alturaPadrao;
     if (fator < 0.98) {
-      var alturaFade = Math.max(8, Math.round(altura * 0.09));
+      // Esmaecimento longo: sobre o fundo vermelho da arte, uma transição
+      // curta lê como borrão de roupa; alongada, dissolve na cor.
+      var alturaFade = Math.max(8, Math.round(altura * 0.20));
       var fade = s.createLinearGradient(0, altura - alturaFade, 0, altura);
       fade.addColorStop(0, "rgba(0,0,0,0)");
       fade.addColorStop(1, "rgba(0,0,0,1)");
@@ -461,6 +466,7 @@
         }
       })
       .catch(function (erro) {
+        if (window.console && console.warn) console.warn("[fcy]", erro);
         vazio.hidden = false;
         if (erro && erro.message === "sem-pessoa") {
           avisar("Não consegui encontrar uma pessoa nessa foto. Tente uma foto " +
@@ -501,30 +507,54 @@
     return tamanho;
   }
 
-  /* Faixa listrada em diagonal com as cores da bandeirinha, o mesmo detalhe
-     que atravessa o site. Como o padrão é diagonal, é mais direto girar o
-     contexto e pintar barras verticais dentro de um recorte do que montar um
-     pattern. */
-  function faixaBandeira(x, y, largura, altura) {
-    var passo = Math.max(6, Math.round(largura * 0.017));
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(x, y, largura, altura);
-    ctx.clip();
-    ctx.translate(x, y);
-    ctx.rotate(-Math.PI / 4);
-    var alcance = largura + altura;
-    var i = 0;
-    for (var d = -alcance; d < alcance; d += passo) {
-      ctx.fillStyle = BANDEIRA[i % BANDEIRA.length];
-      ctx.fillRect(d, -alcance, passo + 1, alcance * 2);
-      i++;
+  /* As três camadas de cor que ficam atrás da figura na arte da campanha:
+     azul por fora, verde no meio, amarelo por dentro.
+
+     Cada camada tem seu próprio quadrilátero, com os quatro cantos fora de
+     esquadro e nenhum lado paralelo ao vizinho — é o que dá o aspecto de
+     papel recortado e colado do material oficial. Retângulos concêntricos,
+     que foi a primeira tentativa, saíam com cara de moldura de apresentação.
+     Os vértices são fixos, e não sorteados: a mesma montagem tem de sair
+     igual toda vez que for gerada. */
+  var CAMADAS = [
+    { cor: "azul",    pts: [[0.02, 0.05], [0.97, 0.00], [1.00, 0.94], [0.00, 1.00]] },
+    { cor: "verde",   pts: [[0.10, 0.13], [0.90, 0.09], [0.94, 0.99], [0.06, 0.95]] },
+    { cor: "amarelo", pts: [[0.19, 0.24], [0.79, 0.19], [0.85, 1.00], [0.15, 0.92]] }
+  ];
+
+  function camadasAtras(cx, base, larg, alt) {
+    var cores = { azul: AZUL, verde: VERDE, amarelo: AMARELO };
+    var x0 = cx - larg / 2;
+    var y0 = base - alt;
+    for (var i = 0; i < CAMADAS.length; i++) {
+      var c = CAMADAS[i];
+      ctx.fillStyle = cores[c.cor];
+      ctx.beginPath();
+      for (var p = 0; p < c.pts.length; p++) {
+        var px = x0 + larg * c.pts[p][0];
+        var py = y0 + alt * c.pts[p][1];
+        ctx[p ? "lineTo" : "moveTo"](px, py);
+      }
+      ctx.closePath();
+      ctx.fill();
     }
+  }
+
+  /* Estrela de cinco pontas, o símbolo que acompanha o cargo na arte. */
+  function estrela(cx, cy, raio, cor) {
+    ctx.save();
+    ctx.fillStyle = cor;
+    ctx.beginPath();
+    for (var i = 0; i < 10; i++) {
+      var r = i % 2 ? raio * 0.42 : raio;
+      var a = -Math.PI / 2 + i * Math.PI / 5;
+      ctx[i ? "lineTo" : "moveTo"](cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+    }
+    ctx.closePath();
+    ctx.fill();
     ctx.restore();
   }
 
-  /* Nome de quem montou, como se assina embaixo de um documento. Volta vazio
-     quando os dois campos estão em branco — a faixa inteira some junto. */
   function assinatura() {
     var nome = (campoNome.value || "").trim();
     var cidade = (campoCidade.value || "").trim();
@@ -571,275 +601,239 @@
         ctx.textBaseline = "alphabetic";
         if (TEM_ESPACAMENTO) ctx.letterSpacing = "0px";
 
-        var borda = Math.round(W * 0.011);
-        // A margem abre espaço para a canaleta da identificação legal, que
-        // corre na vertical entre a borda e o conteúdo.
-        var margem = W * 0.075;
+        var margem = W * 0.062;
 
-        /* --- Fundo ----------------------------------------------------------
-           Claro, com a mesma queda de luz de um fundo de estúdio — é o fundo
-           das fotos do Yasser. A dupla passa a parecer fotografada junta, em
-           vez de duas figuras coladas sobre uma chapa de cor. */
-        var fundo = ctx.createRadialGradient(W / 2, H * 0.38, W * 0.08,
-                                             W / 2, H * 0.52, W * 0.95);
-        fundo.addColorStop(0, "#fdfbf9");
-        fundo.addColorStop(0.55, "#efe9e3");
-        fundo.addColorStop(1, "#d9d1ca");
-        ctx.fillStyle = fundo;
+        /* --- Fundo ---------------------------------------------------------- */
+        ctx.fillStyle = VERMELHO;
         ctx.fillRect(0, 0, W, H);
 
-        /* --- Faixa de baixo ---------------------------------------------------
-           Vermelha da campanha, com o número à esquerda e lema e contatos à
-           direita. Medida antes das figuras porque é ela que define até onde
-           a dupla desce. */
-        var quem = assinatura();
-        var tamAssin = Math.round(W * 0.062);
-        var tamDados = Math.round(W * 0.0285);
-        // Rodapé mais folgado no story: o quadro é o dobro de comprido e a
-        // dupla só cresce até onde a largura deixa, então sem isso sobraria
-        // fundo vazio entre o cabeçalho e as cabeças.
-        var padBarra = W * (ehStory ? 0.05 : 0.038);
-        var altBarra = padBarra * 2 + W * 0.034 * 1.35 + tamDados * 1.7;
-        if (ehStory) altBarra = Math.max(altBarra, H * 0.155);
-        var yBarra = H - altBarra - borda;
-        var altBandeira = Math.max(5, Math.round(W * 0.011));
+        /* --- Bloco de identificação: medidas ---------------------------------
+           As proporções vêm de medição direta da arte oficial de dobradinha
+           (Yasser/Recorte/Base2.jpeg, 896x1280), em múltiplos da largura:
+           tarja azul 0,042 de altura, bloco verde 0,203, bloco amarelo 0,220,
+           lema 0,050, e a pilha inteira com 0,50 de largura.
 
-        /* Faixa da assinatura: fica sobre o fundo claro, entre a dupla e o
-           rodapé. É de propósito — assinatura no papel, e não dentro de uma
-           tarja por cima da foto. Só existe quando alguém se identifica. */
-        var altAssinatura = quem
-          ? tamAssin * 1.24 + (quem.nome && quem.cidade ? tamDados * 1.45 : 0) +
-            W * 0.010
-          : 0;
-        var yAssinatura = yBarra - altBandeira - altAssinatura;
+           A escala varia por formato porque a peça original é 0,70 de
+           proporção. No quadrado, manter a pilha no tamanho original comeria
+           metade do cartaz e o topo dela bateria no queixo das duas pessoas. */
+        var escalaBloco = ehStory ? 1.12 : (H > W ? 0.90 : 0.76);
+        var largBloco = W * (ehStory ? 0.62 : 0.50) * (ehStory ? 1 : escalaBloco / 0.9);
+        var altCargo = W * 0.042 * escalaBloco;
+        var altVerde = W * 0.203 * escalaBloco;
+        var altAmarelo = W * 0.220 * escalaBloco;
+        var altLema = W * 0.050 * escalaBloco;
+        var altBloco = altCargo + altVerde + altAmarelo + altLema;
 
-        /* --- Cabeçalho ------------------------------------------------------
-           Alinhado à esquerda, com o número em selo à direita: o bloco de
-           identificação de um cartaz, não a pilha centralizada do santinho.
+        var xBloco = W * (ehStory ? 0.13 : 0.24);
+        var yBloco = H - altBloco - H * 0.012;
 
-           No story o nome quebra em duas linhas e fica bem maior, e o selo
-           sai de cena. É o que resolve o formato: são 1080 px de largura para
-           duas pessoas lado a lado num quadro de 1920 px de altura, e a dupla
-           só cresce até onde a largura deixa. Antes eu preenchia o resto
-           esticando as figuras para fora do quadro, e era isso que decepava
-           ombros e braços. Agora quem ocupa a altura é a tipografia, e as
-           duas cabem inteiras. */
-        var yTopo = borda + H * (ehStory ? 0.05 : 0.038);
-        var linhasTitulo = ehStory ? ["DELEGADO", "YASSER"] : [TITULO];
-        var comSelo = !ehStory;
+        /* --- Figuras ---------------------------------------------------------
+           Yasser à esquerda e a pessoa à direita, no lugar que na arte de
+           dobradinha é do Lula. Os dois sobem até quase o topo e descem
+           sangrando pela base — é assim na peça original, e é o que mantém os
+           rostos bem acima do bloco.
 
-        var tamSelo = Math.round(W * 0.062);
-        usarFonte("700", tamSelo, "Oswald", Math.round(W * 0.004) + "px");
-        var largSelo = ctx.measureText(NUMERO).width + W * 0.055;
-        var altSelo = tamSelo * 1.5;
-
-        var larguraNome = W - margem * 2 - (comSelo ? largSelo + W * 0.03 : 0);
-        var tamTitulo = W * (ehStory ? 0.23 : 0.098);
-        for (var t = 0; t < linhasTitulo.length; t++) {
-          tamTitulo = ajustarFonte(linhasTitulo[t], "Oswald", "700", tamTitulo,
-                                   larguraNome);
-        }
-        var alturaLinha = tamTitulo * (linhasTitulo.length > 1 ? 0.86 : 1.0);
-        var tamCargo = ajustarFonte(SUBTITULO, "IBM Plex Mono", "500",
-                                    W * 0.0235, larguraNome,
-                                    Math.round(W * 0.0035) + "px");
-        var altCabecalho = Math.max(
-          alturaLinha * linhasTitulo.length + tamCargo * 2.1,
-          comSelo ? altSelo : 0);
-
-        /* --- Figuras --------------------------------------------------------
-           Pessoa e Yasser vêm do mesmo enquadramento, então basta desenhar as
-           duas com a mesma altura e a mesma base.
-
-           A aproximação entre elas é proporcional ao tamanho delas, e não à
-           largura do quadro: cada recorte carrega sua própria folga lateral, e
-           com um valor fixo essas folgas somadas abriam um vão no meio da arte
-           justamente quando as figuras cresciam. */
-        /* Cada recorte carrega 6% de folga transparente em cada lado, e no meio
-           da arte essas duas folgas se somavam num vão que deixava a dupla com
-           cara de duas fotos coladas. Este valor as encosta pelos ombros; acima
-           de ~0,20 o Yasser começa a cobrir o ombro de quem está do lado. */
-        var APROXIMA = 0.18;
-        /* Com assinatura, a dupla desce um pouco além do topo dessa faixa: o
-           nome fica na margem esquerda e as figuras vivem no centro, então o
-           avanço cai em área vazia e as duas ganham altura. */
-        var baseFiguras = (quem ? yAssinatura + tamAssin * 0.55
-                                : yBarra + altBarra * 0.05);
-        var tetoFiguras = yTopo + altCabecalho + H * 0.016;
-
+           No story a dupla se apoia dentro do bloco em vez de sangrar: num
+           quadro tão alto ela não cresce o bastante para chegar à base, e o
+           pé dos recortes terminaria à vista no meio da arte. */
         var pessoa = estado.pessoa;
+        var ATRAS = 0.94;          // o Yasser fica meio passo atrás
+        var APROXIMA = 0.36;
+
+        /* O Yasser é ancorado com folga na margem esquerda e nunca é cortado:
+           é o candidato, e cortá-lo era o efeito colateral de centralizar um
+           conjunto mais largo que o quadro. Quem pode sangrar pela direita é a
+           pessoa — que é justamente como o Lula aparece na peça original. */
+        var xInicioYasser = W * 0.02;
+        var sangraDireita = W * 1.28 - xInicioYasser;
+
         var propYasser = imgYasser.naturalWidth / imgYasser.naturalHeight;
-        // A largura da pessoa acompanha o recorte dela, que pode ser mais curto
-        // que o padrão quando a foto não mostra o corpo todo.
         var largPorAltura = pessoa
           ? (pessoa.canvas.width / pessoa.canvas.height) * pessoa.fator : 0;
+        var conjuntoPorAltura = propYasser * ATRAS + largPorAltura - APROXIMA;
 
-        var altura = baseFiguras - tetoFiguras;
-        var larguraPorAltura = propYasser + largPorAltura - APROXIMA;
-        // Nunca mais que a largura do quadro: sangrar para fora corta ombros
-        // e braços, e é exatamente o que o story não deve fazer.
-        var maxLarg = W - borda * 2;
-        if (altura * larguraPorAltura > maxLarg) {
-          altura = maxLarg / larguraPorAltura;
+        var baseFiguras, altura;
+        if (ehStory) {
+          baseFiguras = yBloco + altCargo + altVerde * 0.5;
+          altura = Math.min(baseFiguras - H * 0.09,
+                            sangraDireita / conjuntoPorAltura);
+        } else {
+          /* Encostada na borda de baixo, e não passando dela: sobe a dupla
+             inteira no quadro sem deixar o pé dos recortes à vista. O retrato
+             sobe mais um pouco — é o formato com mais altura sobrando acima
+             das cabeças, e o esmaecimento longo da base disfarça o pé que
+             passa a ficar dentro do quadro. */
+          baseFiguras = H * (estado.formato === "retrato" ? 0.955 : 0.99);
+          altura = Math.min(H * 0.97, sangraDireita / conjuntoPorAltura);
         }
 
-        var sobreposicao = altura * APROXIMA;
-        var largYasser = altura * propYasser;
-        var largPessoa = altura * largPorAltura;
+        var altYasser = altura * ATRAS;
+        var largYasser = altYasser * propYasser;
         var altPessoa = pessoa ? altura * pessoa.fator : 0;
-        var xInicio = (W - (largYasser + largPessoa - sobreposicao)) / 2;
-        var yFiguras = baseFiguras - altura;
+        var largPessoa = altura * largPorAltura;
+        var conjunto = largYasser + largPessoa - altura * APROXIMA;
+
+        // Ancorado à esquerda pelo Yasser, e não centrado: centralizar um
+        // conjunto mais largo que o quadro jogava metade dele para fora.
+        var xYasser = xInicioYasser;
+        var xPessoa = xYasser + largYasser - altura * APROXIMA;
+        var yYasser = baseFiguras - altYasser;
+        var yPessoa = baseFiguras - altPessoa;
+
+        /* --- Camadas de cor atrás da dupla ------------------------------------ */
+        camadasAtras(W * 0.47, yYasser + altura * 0.60, W * 0.52, altura * 0.62);
 
         /* --- Dupla ------------------------------------------------------------ */
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(borda, borda, W - borda * 2, baseFiguras - borda);
-        ctx.clip();
-
-        // Sombra discreta: sobre fundo claro ela só precisa descolar as figuras,
-        // não recortá-las como acontecia sobre o vermelho chapado.
         function comSombra(desenhaFn) {
           ctx.save();
-          ctx.shadowColor = "rgba(40,30,26,0.32)";
-          ctx.shadowBlur = W * 0.045;
+          ctx.shadowColor = "rgba(20,10,8,0.35)";
+          ctx.shadowBlur = W * 0.035;
           ctx.shadowOffsetX = W * 0.004;
-          ctx.shadowOffsetY = W * 0.012;
+          ctx.shadowOffsetY = W * 0.010;
           desenhaFn();
           ctx.restore();
         }
 
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, 0, W, H);
+        ctx.clip();
+        comSombra(function () {
+          ctx.drawImage(imgYasser, xYasser, yYasser, largYasser, altYasser);
+        });
         if (pessoa) {
-          // Alinhamento pelo topo: os dois recortes começam a mesma distância
-          // acima do alto da cabeça, então topos alinhados são rostos alinhados.
           comSombra(function () {
-            ctx.drawImage(pessoa.canvas, xInicio, yFiguras, largPessoa, altPessoa);
+            ctx.drawImage(pessoa.canvas, xPessoa, yPessoa, largPessoa, altPessoa);
           });
         }
-        comSombra(function () {
-          ctx.drawImage(imgYasser, xInicio + largPessoa - sobreposicao, yFiguras,
-                        largYasser, altura);
-        });
         ctx.restore();
 
-        /* --- Cabeçalho, por cima ---------------------------------------------- */
-        usarFonte("700", tamTitulo, "Oswald");
-        ctx.fillStyle = TINTA;
+        /* --- Bloco de identificação ------------------------------------------- */
+        var padBloco = W * 0.020 * escalaBloco;
+        var y = yBloco;
+
+        // Tarja azul do cargo, mais estreita que o bloco, com a estrela na ponta.
+        var tamCargo = Math.round(altCargo * 0.62);
+        var largCargo = largBloco * 0.52;
+        ctx.fillStyle = AZUL;
+        ctx.fillRect(xBloco - padBloco * 0.8, y, largCargo, altCargo);
+        usarFonte("800", tamCargo, "Archivo", Math.round(W * 0.001) + "px");
+        var tamCargoFinal = ajustarFonte(CARGO, "Archivo", "800", tamCargo,
+                                         largCargo - padBloco * 2.2);
+        ctx.fillStyle = "#ffffff";
         ctx.textAlign = "left";
-        for (var n = 0; n < linhasTitulo.length; n++) {
-          ctx.fillText(linhasTitulo[n], margem,
-                       yTopo + alturaLinha * n + tamTitulo * 0.78);
-        }
+        ctx.fillText(CARGO, xBloco, y + altCargo * 0.72);
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(xBloco - padBloco * 0.8 + largCargo, y + altCargo * 0.5,
+                altCargo * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+        estrela(xBloco - padBloco * 0.8 + largCargo, y + altCargo * 0.5,
+                altCargo * 0.4, VERMELHO);
+        y += altCargo;
 
-        var yCargo = yTopo + alturaLinha * linhasTitulo.length + tamCargo * 1.2;
-        usarFonte("500", tamCargo, "IBM Plex Mono",
-                  Math.round(W * 0.0035) + "px");
-        ctx.fillStyle = "rgba(24,17,20,0.72)";
-        ctx.fillText(SUBTITULO, margem, yCargo);
+        // Bloco verde: DELEGADO pequeno em cima, YASSER gigante embaixo.
+        ctx.fillStyle = VERDE;
+        ctx.fillRect(xBloco, y, largBloco, altVerde);
+        var tamDelegado = Math.round(altVerde * 0.22);
+        usarFonte("500", tamDelegado, "Oswald", Math.round(W * 0.003) + "px");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(NOME_TOPO, xBloco + padBloco, y + altVerde * 0.26);
+        var tamNome = ajustarFonte(NOME_BASE, "Oswald", "700", altVerde * 0.86,
+                                   largBloco - padBloco * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(NOME_BASE, xBloco + padBloco, y + altVerde * 0.95);
+        y += altVerde;
 
-        // No story o número já domina o rodapé; repeti-lo num selo aqui em
-        // cima só competiria com o nome em duas linhas.
-        if (comSelo) {
-          ctx.fillStyle = VERMELHO_ESCURO;
-          ctx.fillRect(W - margem - largSelo, yTopo, largSelo, altSelo);
-          usarFonte("700", tamSelo, "Oswald", Math.round(W * 0.004) + "px");
-          ctx.fillStyle = "#ffffff";
-          ctx.textAlign = "center";
-          ctx.fillText(NUMERO, W - margem - largSelo / 2 + W * 0.002,
-                       yTopo + altSelo * 0.76);
-        }
+        // Bloco amarelo com o número em vermelho.
+        ctx.fillStyle = AMARELO;
+        ctx.fillRect(xBloco, y, largBloco, altAmarelo + altLema);
+        var tamNumero = ajustarFonte(NUMERO, "Oswald", "700", altAmarelo * 0.92,
+                                     largBloco - padBloco * 2);
+        ctx.fillStyle = VERMELHO;
+        ctx.fillText(NUMERO, xBloco + padBloco, y + altAmarelo * 0.86);
+        y += altAmarelo;
 
-        /* --- Assinatura -------------------------------------------------------
-           Manuscrita e rubricada, escrita no fundo claro como quem assina
-           embaixo de um documento. */
+        // Lema manuscrito, em branco sobre o fim do bloco amarelo.
+        var tamLema = ajustarFonte(SLOGAN, "Caveat Brush", "400", altLema * 1.25,
+                                   largBloco - padBloco * 1.4);
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(SLOGAN, xBloco + padBloco, y + altLema * 0.82);
+
+        /* --- Assinatura de quem montou -----------------------------------------
+           Numa etiqueta clara, e não solta sobre o vermelho: escrita à mão em
+           branco sobre o fundo da campanha o contraste ficava em ~4:1, baixo
+           demais para um texto miúdo e cursivo. Sobre o papel passa de 14:1, e
+           a etiqueta ainda reforça a ideia de assinar num pedaço de papel. */
+        var quem = assinatura();
         if (quem) {
           var nomeAssin = quem.nome || quem.cidade;
-          var yNome = yAssinatura + W * 0.006;
+          var temCidade = !!(quem.nome && quem.cidade);
+          var textoCidade = temCidade
+            ? quem.cidade.toUpperCase() + " · GOIÁS" : "";
+
+          var tamAssin = Math.round(W * 0.048);
+          var tamCidade = Math.round(W * 0.022);
+          ajustarFonte(nomeAssin, "Caveat Brush", "400", tamAssin, W * 0.34);
+          var largTexto = ctx.measureText(nomeAssin).width;
+          if (temCidade) {
+            ajustarFonte(textoCidade, "IBM Plex Mono", "500", tamCidade,
+                         W * 0.34, Math.round(W * 0.003) + "px");
+            largTexto = Math.max(largTexto, ctx.measureText(textoCidade).width);
+          }
+
+          var padEtiq = W * 0.024;
+          var largEtiq = largTexto + padEtiq * 2;
+          var altEtiq = padEtiq * 1.4 + tamAssin * 1.05 +
+                        (temCidade ? tamCidade * 1.7 : 0);
+          var yAssin = H * 0.028;
+
+          ctx.fillStyle = PAPEL;
+          ctx.fillRect(W - margem - largEtiq, yAssin, largEtiq, altEtiq);
+
           usarFonte("400", tamAssin, "Caveat Brush");
           ctx.fillStyle = TINTA;
           ctx.textAlign = "left";
-          ctx.fillText(nomeAssin, margem, yNome + tamAssin * 0.78);
-          rubrica(margem - W * 0.004, yNome + tamAssin * 0.99,
-                  Math.max(ctx.measureText(nomeAssin).width, W * 0.11), VERMELHO);
+          ctx.fillText(nomeAssin, W - margem - largEtiq + padEtiq,
+                       yAssin + padEtiq * 0.65 + tamAssin * 0.78);
+          rubrica(W - margem - largEtiq + padEtiq * 0.7,
+                  yAssin + padEtiq * 0.65 + tamAssin * 0.99,
+                  Math.max(ctx.measureText(nomeAssin).width, W * 0.09), VERMELHO);
 
-          if (quem.nome && quem.cidade) {
-            ajustarFonte(quem.cidade.toUpperCase() + " · GOIÁS", "IBM Plex Mono",
-                         "500", tamDados, (W - margem * 2) * 0.5,
-                         Math.round(W * 0.003) + "px");
-            ctx.fillStyle = "rgba(24,17,20,0.62)";
-            ctx.fillText(quem.cidade.toUpperCase() + " · GOIÁS", margem,
-                         yNome + tamAssin * 1.28 + tamDados);
+          if (temCidade) {
+            usarFonte("500", tamCidade, "IBM Plex Mono",
+                      Math.round(W * 0.003) + "px");
+            ctx.fillStyle = "rgba(24,17,20,0.72)";
+            ctx.fillText(textoCidade, W - margem - largEtiq + padEtiq,
+                         yAssin + altEtiq - padEtiq * 0.65);
           }
         }
 
-        /* --- Faixa de baixo ---------------------------------------------------- */
-        faixaBandeira(borda, yBarra - altBandeira, W - borda * 2, altBandeira);
-        ctx.fillStyle = VERMELHO_ESCURO;
-        ctx.fillRect(borda, yBarra, W - borda * 2, altBarra);
-
-        var yLinha = yBarra + padBarra;
-        var alturaLivre = altBarra - padBarra * 2;
-
-        // O número ocupa a coluna da esquerda por inteiro; no story, onde a
-        // faixa é bem mais alta, um teto evita que ele fique desproporcional
-        // ao lado do texto.
-        ajustarFonte(NUMERO, "Oswald", "700",
-                     Math.min(alturaLivre * 1.15, W * 0.16), W * 0.4,
-                     Math.round(W * 0.005) + "px");
-        var largNumero = ctx.measureText(NUMERO).width;
-        var altNumero = parseInt(ctx.font, 10) || alturaLivre;
-        ctx.fillStyle = "#ffffff";
-        ctx.textAlign = "left";
-        ctx.fillText(NUMERO, margem,
-                     yBarra + altBarra / 2 + altNumero * 0.36);
-
-        var xFilete = margem + largNumero + W * 0.042;
-        ctx.fillStyle = "rgba(255,255,255,0.45)";
-        ctx.fillRect(xFilete, yLinha, Math.max(3, W * 0.004), alturaLivre);
-
-        var xTexto = xFilete + W * 0.038;
-        var largTexto = W - margem - xTexto;
-
-        /* Lema e contatos andam juntos, centrados na altura da faixa. Fixar um
-           no topo e outro na base abria um buraco no meio quando a faixa
-           cresce — que é o caso do story. */
-        var tamLema = ajustarFonte(SLOGAN, "Archivo", "800", W * 0.038, largTexto);
-        var alturaDireita = tamLema + tamDados * 1.9;
-        var yDireita = yBarra + (altBarra - alturaDireita) / 2;
-        var yDados = yDireita + tamLema + tamDados * 1.5;
-
-        ctx.fillStyle = "#ffffff";
-        ctx.fillText(SLOGAN, xTexto, yDireita + tamLema * 0.86);
-
-        var contatos = SITE + "  ·  " + INSTAGRAM;
-        ajustarFonte(contatos, "IBM Plex Mono", "500", tamDados, largTexto,
-                     Math.round(W * 0.002) + "px");
-        ctx.fillStyle = "rgba(255,255,255,0.92)";
-        ctx.fillText(contatos, xTexto, yDados);
+        /* --- Contatos ----------------------------------------------------------
+           Em duas linhas, à direita do bloco: numa linha só eles passavam por
+           cima do lema manuscrito, que ocupa a base do bloco amarelo. */
+        var larguraLivre = W - (xBloco + largBloco) - margem * 0.6;
+        var tamContato = ajustarFonte(SITE, "IBM Plex Mono", "500", W * 0.021,
+                                      larguraLivre, Math.round(W * 0.001) + "px");
+        ctx.fillStyle = "rgba(255,255,255,0.94)";
+        ctx.textAlign = "right";
+        ctx.fillText(SITE, W - margem * 0.6, H - H * 0.016 - tamContato * 1.45);
+        ctx.fillText(INSTAGRAM, W - margem * 0.6, H - H * 0.016);
         ctx.textAlign = "center";
 
         /* --- Identificação legal, na lateral ----------------------------------
            Girada 90°, lida de baixo para cima como lombada de livro, rente à
-           borda esquerda e bem apagada. Fica por cima de tudo para acompanhar
-           a peça em qualquer compartilhamento, mas com opacidade baixa o
-           bastante para não competir com a foto. */
-        var alturaLegal = yBarra - borda - W * 0.03;
-        var tamLegal = ajustarFonte(LEGAL, "IBM Plex Mono", "500", W * 0.019,
-                                    alturaLegal, Math.round(W * 0.0015) + "px");
+           borda esquerda e bem apagada. */
+        ajustarFonte(LEGAL, "IBM Plex Mono", "500", W * 0.018, H * 0.70,
+                     Math.round(W * 0.0015) + "px");
         ctx.save();
-        ctx.translate(borda + W * 0.028, yBarra - W * 0.015);
+        ctx.translate(W * 0.020, H * 0.88);
         ctx.rotate(-Math.PI / 2);
         ctx.textAlign = "left";
-        ctx.fillStyle = "rgba(24,17,20,0.32)";
+        ctx.fillStyle = "rgba(255,255,255,0.45)";
         ctx.fillText(LEGAL, 0, 0);
         ctx.restore();
         ctx.textAlign = "center";
-
-        /* --- Borda do cartaz -------------------------------------------------
-           Desenhada por último para ficar por cima de tudo, inclusive de
-           qualquer figura que sangre pela lateral. */
-        ctx.strokeStyle = TINTA;
-        ctx.lineWidth = borda * 2;   // metade sai do canvas e some
-        ctx.strokeRect(0, 0, W, H);
 
         atualizarDescricao();
       });
@@ -851,19 +845,21 @@
     var quem = assinatura();
     var assinado = "";
     if (quem) {
-      assinado = " Logo acima do rodapé, assinado à mão por " +
+      assinado = " No alto, à esquerda, assinado à mão por " +
                  (quem.nome || quem.cidade) +
                  (quem.nome && quem.cidade ? ", de " + quem.cidade : "") + ".";
     }
     tela.setAttribute(
       "aria-label",
-      "Cartaz no formato " + FORMATOS[estado.formato].rotulo.toLowerCase() +
-      ", sobre fundo claro de estúdio: sua foto ao lado do Delegado Yasser " +
-      poseAtual().alt + ". No alto, o nome Delegado Yasser, a linha " +
-      "Deputado Estadual PT-GO e o número 13007 num selo vermelho." +
-      assinado +
-      " Na faixa vermelha do rodapé, o número 13007 em destaque, o lema " +
-      "Goiás Seguro para Todos e os contatos " + SITE + " e " + INSTAGRAM +
+      "Cartaz de campanha no formato " +
+      FORMATOS[estado.formato].rotulo.toLowerCase() +
+      ", sobre fundo vermelho com recortes em azul, verde e amarelo: sua foto " +
+      "em destaque e, ao lado e um pouco atrás, o Delegado Yasser " +
+      poseAtual().alt + "." + assinado +
+      " Embaixo, à esquerda, a tarja azul Deputado Estadual com a estrela, o " +
+      "bloco verde Delegado Yasser, o bloco amarelo com o número 13007 em " +
+      "vermelho e o lema Goiás seguro para todos. No canto, os contatos " +
+      SITE + " e " + INSTAGRAM +
       ". Na lateral esquerda, em letras pequenas na vertical: " + LEGAL + "."
     );
   }
