@@ -15,6 +15,7 @@ Licença Apache 2.0 · https://github.com/tensorflow/tfjs
 | `tf-converter.min.js` | 315 KB | carrega o modelo em formato graph-model |
 | `tf-backend-webgl.min.js` | 390 KB | execução na GPU |
 | `tf-backend-cpu.min.js` | 129 KB | reserva para aparelhos sem WebGL utilizável |
+| `blazeface.min.umd.js` | 11 KB | detector de rosto (`@tensorflow-models/blazeface`) |
 
 Os pacotes são avulsos, e não o guarda-chuva `@tensorflow/tfjs`, que traria
 junto o `tfjs-layers` — grande e sem uso aqui. Em troca, os métodos
@@ -37,3 +38,15 @@ Modelo do MediaPipe (Google), licença Apache 2.0, em formato TensorFlow.js
 cada pixel, a probabilidade de ser pessoa.
 
 Origem: `https://tfhub.dev/mediapipe/tfjs-model/selfie_segmentation/general/1`
+
+## BlazeFace — `../../models/rosto/`
+
+Detector de rosto do Google, licença Apache 2.0, em formato TensorFlow.js
+(`model.json` + 392 KB de pesos). Devolve a caixa de cada rosto da imagem.
+
+É dele que sai a escala da montagem: o recorte de quem envia a foto é
+montado em múltiplos da caixa do rosto, e os seis recortes do Yasser foram
+medidos com o mesmo detector. Trocar os recortes do Yasser exige remedi-los
+e atualizar `ROSTO_ACIMA` e `ROSTO_ABAIXO` em `js/foto-com-yasser.js`.
+
+Origem: `https://tfhub.dev/tensorflow/tfjs-model/blazeface/1/default/1`

@@ -9,20 +9,26 @@
    servido pelo próprio domínio em models/segmentacao/, executado pelo
    TensorFlow.js que está em js/vendor/tfjs/.
 
-   Peso: os ~1,1 MB do TensorFlow.js e os ~330 KB do modelo só são
+   O tamanho do rosto sai do BlazeFace (também Apache 2.0), em
+   models/rosto/.
+
+   Peso: os ~1,1 MB do TensorFlow.js e os ~790 KB dos dois modelos só são
    baixados quando alguém escolhe uma foto — quem passa pela seção sem
    usar não paga nada por ela.
 
    Como pessoa e Yasser acabam do mesmo tamanho
    --------------------------------------------
-   Os recortes do Yasser foram exportados num enquadramento fixo: do alto
-   da cabeça, 0,11 rosto de folga para cima e 2,75 rostos para baixo, o
-   que termina na altura do quadril. A foto de quem acessa passa pelo
-   mesmo enquadramento aqui no navegador, medido do mesmo jeito. Com os
-   dois recortes na mesma proporção, a montagem só precisa desenhá-los
-   com a mesma altura — não há escala a calcular na hora, e portanto não
-   há escala para errar quando a foto vem de muito perto ou de corpo
-   inteiro.
+   O rosto das duas é medido, não deduzido. O detector devolve a caixa do
+   rosto, e o recorte é montado em múltiplos dela: 0,70 caixa acima do
+   alto do rosto e 3,28 abaixo, o que termina na altura do quadril. Os
+   seis recortes do Yasser foram medidos com esse mesmo detector, então
+   basta desenhar os dois com a mesma altura para os rostos baterem —
+   venha a foto de perto, de longe ou de corpo inteiro.
+
+   A primeira versão adivinhava o rosto pela silhueta, procurando onde o
+   contorno estreitava para achar o queixo. Funcionava nas fotos de
+   estúdio usadas em teste e errava em quase tudo que chegava de verdade:
+   cabelo comprido, boné, mão perto do rosto, corpo inteiro.
    ============================================================= */
 
 (function () {
@@ -52,11 +58,23 @@
     retrato:  { largura: 1080, altura: 1350, rotulo: "Retrato" }
   };
 
-  /* Enquadramento padrão, em múltiplos da altura do rosto. Mudar estes
-     números exige reexportar os recortes do Yasser com os mesmos valores. */
-  var FOLGA_TOPO = 0.11;
-  var CORPO = 2.75;
+  /* Enquadramento padrão, em múltiplos da caixa do rosto devolvida pelo
+     detector. Os dois primeiros valores saíram de medir os seis recortes do
+     Yasser com o mesmo detector: nele, o rosto começa a 0,175 da altura do
+     arquivo e a caixa mede 0,251 — ou seja, 0,70 caixa acima do alto do rosto
+     e 3,28 abaixo. Reexportar os recortes com outro enquadramento exige
+     remedi-los e atualizar estes números. */
+  var ROSTO_ACIMA = 0.70;
+  var ROSTO_ABAIXO = 3.28;
   var FOLGA_LADO = 0.06;
+
+  /* Corte da máscara de segmentação. Antes a rampa começava em 0,40, e num
+     fundo cheio isso deixava passar retalhos de céu e de parede em volta da
+     pessoa; subir o piso resolve a maior parte, e o resto cai no filtro que
+     mantém só o corpo ligado ao rosto. */
+  var LIMIAR_MASCARA = 0.5;
+  var RAMPA_INI = 0.5;
+  var RAMPA_FIM = 0.78;
 
   /* Cores tiradas por amostragem do material oficial da campanha
      (Yasser/Recorte/Base.jpeg) — batem com os tokens do landing.css. */
@@ -84,6 +102,7 @@
   var CAMINHO_POSES = "images/foto-com-yasser/";
   var CAMINHO_TFJS = "js/vendor/tfjs/";
   var CAMINHO_MODELO = "models/segmentacao/model.json";
+  var CAMINHO_ROSTO = "models/rosto/model.json";
 
   /* ---------- Elementos ---------- */
   var entradaFoto = document.getElementById("fcyArquivo");
@@ -111,6 +130,7 @@
 
   var imagensPose = {};
   var modelo = null;
+  var detectorRosto = null;
   var tfPronto = null;
 
   /* =============================================================
@@ -170,7 +190,7 @@
      Recorte da pessoa
      ============================================================= */
 
-  function prepararTensorFlow() {
+  function prepararModelos() {
     if (tfPronto) return tfPronto;
     tfPronto = carregarScript(CAMINHO_TFJS + "tf-core.min.js")
       .then(function () {
@@ -178,6 +198,9 @@
           carregarScript(CAMINHO_TFJS + "tf-converter.min.js"),
           carregarScript(CAMINHO_TFJS + "tf-backend-webgl.min.js")
         ]);
+      })
+      .then(function () {
+        return carregarScript(CAMINHO_TFJS + "blazeface.min.umd.js");
       })
       .then(function () {
         return window.tf.setBackend("webgl").catch(function () { return false; });
@@ -190,8 +213,13 @@
         }
       })
       .then(function () { return window.tf.ready(); })
-      .then(function () { return window.tf.loadGraphModel(CAMINHO_MODELO); })
-      .then(function (m) { modelo = m; });
+      .then(function () {
+        return Promise.all([
+          window.tf.loadGraphModel(CAMINHO_MODELO),
+          window.blazeface.load({ modelUrl: CAMINHO_ROSTO, maxFaces: 5 })
+        ]);
+      })
+      .then(function (m) { modelo = m[0]; detectorRosto = m[1]; });
     return tfPronto;
   }
 
@@ -216,11 +244,91 @@
     });
   }
 
+  /* Caixa do maior rosto da foto, ou null.
+
+     Medir o rosto de verdade substituiu a leitura da silhueta que havia aqui
+     antes — aquela procurava onde o contorno "estreitava" para adivinhar o
+     queixo, e errava em tudo que fugisse de um retrato de estúdio: cabelo
+     comprido, boné, mão perto do rosto, foto de corpo inteiro. O tamanho do
+     rosto é o que precisa bater entre as duas pessoas da montagem, então
+     agora ele é medido, e não deduzido.
+
+     Pega o maior rosto de propósito: em foto com mais gente, quem enviou
+     costuma ser quem está mais perto da câmera — e numa camiseta estampada
+     com um rosto, o estampado é sempre menor que o de quem a veste. */
+  function acharRosto(imagem) {
+    return detectorRosto.estimateFaces(imagem, false).then(function (caras) {
+      if (!caras || !caras.length) return null;
+      var melhor = null, maior = 0;
+      for (var i = 0; i < caras.length; i++) {
+        var alt = caras[i].bottomRight[1] - caras[i].topLeft[1];
+        if (alt > maior) { maior = alt; melhor = caras[i]; }
+      }
+      if (!melhor || maior < 12) return null;
+      return {
+        topo: melhor.topLeft[1],
+        altura: maior,
+        centroX: (melhor.topLeft[0] + melhor.bottomRight[0]) / 2
+      };
+    });
+  }
+
+  /* Apaga tudo que não faz parte do corpo de quem está na foto.
+
+     O modelo de segmentação é leve e, em fundo cheio — rua, interior de
+     carro —, deixa manchas soltas com probabilidade alta. Sem esta limpeza
+     elas chegavam à arte como retalhos de céu e de parede em volta da
+     pessoa. Aqui só sobrevive o pedaço ligado ao rosto detectado. */
+  function manterCorpoDoRosto(dados, largura, altura, xRosto, yRosto) {
+    var dentro = new Uint8Array(dados.length);
+    var i;
+    for (i = 0; i < dados.length; i++) {
+      if (dados[i] > LIMIAR_MASCARA) dentro[i] = 1;
+    }
+
+    var partida = Math.round(yRosto) * largura + Math.round(xRosto);
+    if (!dentro[partida]) {
+      // O centro do rosto pode cair num furo da máscara (óculos, boné): procura
+      // o pixel de corpo mais próximo numa espiral curta.
+      var achou = -1;
+      for (var r = 4; r < Math.max(largura, altura) && achou < 0; r += 4) {
+        for (var a = 0; a < 16 && achou < 0; a++) {
+          var ang = a * Math.PI / 8;
+          var px = Math.round(xRosto + Math.cos(ang) * r);
+          var py = Math.round(yRosto + Math.sin(ang) * r);
+          if (px >= 0 && px < largura && py >= 0 && py < altura &&
+              dentro[py * largura + px]) {
+            achou = py * largura + px;
+          }
+        }
+      }
+      if (achou < 0) return null;
+      partida = achou;
+    }
+
+    // Preenchimento em largura a partir do rosto; fila em Int32Array porque
+    // um array comum com milhões de posições engasga em celular.
+    var fila = new Int32Array(dados.length);
+    var ini = 0, fim = 0;
+    var corpo = new Uint8Array(dados.length);
+    fila[fim++] = partida;
+    corpo[partida] = 1;
+    while (ini < fim) {
+      var p = fila[ini++];
+      var x = p % largura, y = (p - x) / largura;
+      if (x > 0 && dentro[p - 1] && !corpo[p - 1]) { corpo[p - 1] = 1; fila[fim++] = p - 1; }
+      if (x < largura - 1 && dentro[p + 1] && !corpo[p + 1]) { corpo[p + 1] = 1; fila[fim++] = p + 1; }
+      if (y > 0 && dentro[p - largura] && !corpo[p - largura]) { corpo[p - largura] = 1; fila[fim++] = p - largura; }
+      if (y < altura - 1 && dentro[p + largura] && !corpo[p + largura]) { corpo[p + largura] = 1; fila[fim++] = p + largura; }
+    }
+    return corpo;
+  }
+
   /* Aplica a máscara sobre a foto e devolve um canvas RGBA.
      A transição usa uma rampa em vez de um corte seco: borda dura entrega
      serrilhado, e o recorte de um modelo leve nunca é bom o bastante para
      aguentar corte seco. */
-  function aplicarMascara(imagem, dados) {
+  function aplicarMascara(imagem, dados, corpo) {
     var lona = document.createElement("canvas");
     lona.width = imagem.width;
     lona.height = imagem.height;
@@ -230,153 +338,51 @@
     var quadro = c.getImageData(0, 0, lona.width, lona.height);
     var px = quadro.data;
     for (var i = 0; i < dados.length; i++) {
-      var a = (dados[i] - 0.40) / 0.25;   // rampa entre 0,40 e 0,65
+      var a = corpo[i] ? (dados[i] - RAMPA_INI) / (RAMPA_FIM - RAMPA_INI) : 0;
       px[i * 4 + 3] = Math.round((a < 0 ? 0 : (a > 1 ? 1 : a)) * 255);
     }
     c.putImageData(quadro, 0, 0);
     return lona;
   }
 
-  /* Trecho contínuo de uma linha da máscara que contém (ou está mais perto
-     de) um x. Seguir um único trecho, em vez de somar a linha inteira, é o
-     que impede uma mão levantada ao lado do rosto de entrar na conta. */
-  function trechoEm(dados, largura, linha, alvo) {
-    var base = linha * largura;
-    var achouIni = -1, achouFim = -1, menorDist = Infinity, ini = -1;
-    for (var i = 0; i <= largura; i++) {
-      var dentro = i < largura && dados[base + i] > 0.5;
-      if (dentro && ini < 0) {
-        ini = i;
-      } else if (!dentro && ini >= 0) {
-        var dist = (alvo >= ini && alvo < i) ? 0 : Math.abs((ini + i) / 2 - alvo);
-        if (dist < menorDist) { menorDist = dist; achouIni = ini; achouFim = i; }
-        ini = -1;
-      }
-    }
-    return achouIni < 0 ? null : { ini: achouIni, fim: achouFim };
-  }
+  /* Recorta a pessoa no mesmo enquadramento dos recortes do Yasser, contado
+     em múltiplos da caixa do rosto: ROSTO_ACIMA para cima do alto da caixa e
+     ROSTO_ABAIXO para baixo. Os dois valores vieram de medir os seis recortes
+     do Yasser com este mesmo detector, então desenhar os dois com a mesma
+     altura basta para os rostos saírem do mesmo tamanho.
 
-  /* Encontra o alto da cabeça e o queixo pela forma da silhueta.
+     Quando a foto não tem corpo até onde o enquadramento pede, o recorte
+     termina onde a pessoa termina e `fator` registra que fração da altura
+     padrão foi possível. */
+  function enquadrarPorRosto(lona, rosto) {
+    var alturaPadrao = (ROSTO_ACIMA + ROSTO_ABAIXO) * rosto.altura;
+    var topo = Math.round(rosto.topo - ROSTO_ACIMA * rosto.altura);
+    var baseIdeal = Math.round(rosto.topo + ROSTO_ABAIXO * rosto.altura);
 
-     Nada de "a cabeça está nos primeiros 30% da imagem": isso vale para um
-     retrato de meio corpo, mas numa foto de corpo inteiro 30% já é o tórax.
-     Aqui a busca desce da cabeça até o ponto mais estreito e confirma o
-     pescoço quando a largura volta a subir nos ombros — a proporção da curva
-     é a mesma numa selfie e num retrato de corpo inteiro. */
-  function medirSilhueta(dados, largura, altura) {
-    var y, x;
-
-    var y0 = -1, y1 = -1;
-    for (y = 0; y < altura; y++) {
-      for (x = 0; x < largura; x++) {
-        if (dados[y * largura + x] > 0.5) {
-          if (y0 < 0) y0 = y;
-          y1 = y;
-          break;
-        }
-      }
-    }
-    if (y0 < 0) return null;
-
-    var alt = y1 - y0;
-    if (alt < altura * 0.08) return null;   // recorte pequeno demais para confiar
-
-    var primeiro = trechoEm(dados, largura, y0, largura / 2);
-    var centro = primeiro ? (primeiro.ini + primeiro.fim) / 2 : largura / 2;
-
-    var perfil = new Float32Array(altura);
-    for (y = y0; y <= y1; y++) {
-      var t = trechoEm(dados, largura, y, centro);
-      if (!t) continue;
-      perfil[y] = t.fim - t.ini;
-      // O centro acompanha o corpo devagar: seguir um salto brusco costuma
-      // significar que a trilha pulou para um braço.
-      centro += ((t.ini + t.fim) / 2 - centro) * 0.25;
-    }
-
-    var janela = Math.max(3, Math.round(alt * 0.012));
-    var suave = new Float32Array(altura);
-    var soma = 0;
-    for (y = 0; y < altura; y++) {
-      soma += perfil[y];
-      if (y >= janela) soma -= perfil[y - janela];
-      suave[y] = soma / Math.min(y + 1, janela);
-    }
-    var atraso = Math.floor(janela / 2);   // a média móvel acima adianta o sinal
-    function larguraEm(linha) {
-      var i = linha + atraso;
-      return suave[i < altura ? i : altura - 1];
-    }
-
-    var QUEDA = 0.82, SUBIDA = 1.22;
-    var maiorLargura = larguraEm(y0);
-    var vale = -1, menorLargura = 0, descendo = false;
-
-    for (y = y0 + 1; y <= y1; y++) {
-      var w = larguraEm(y);
-      if (w <= 0) continue;
-      if (!descendo) {
-        if (w > maiorLargura) {
-          maiorLargura = w;
-        } else if (w < maiorLargura * QUEDA) {
-          descendo = true; vale = y; menorLargura = w;
-        }
-      } else if (w < menorLargura) {
-        vale = y; menorLargura = w;
-      } else if (w > menorLargura * SUBIDA) {
-        break;                 // os ombros começaram: o vale é o pescoço
-      }
-    }
-
-    /* Duas situações em que a leitura não é confiável, ambas típicas de quem
-       está cortado pela borda do quadro:
-
-       - a silhueta nunca estreitou, então não há queixo nenhum a apontar;
-       - o "queixo" encontrado deixaria o rosto com mais da metade da figura
-         e ainda sobra corpo abaixo dele. Rosto assim só existe num retrato
-         fechado, e num retrato fechado não sobra corpo — o que foi medido,
-         portanto, é o tronco.
-
-       Nos dois casos vale mais assumir um enquadramento comum de meio corpo
-       do que aceitar a medida. */
-    var duvidoso = vale > 0 && (vale - y0) > alt * 0.55 && (y1 - vale) > alt * 0.15;
-    if (vale < 0 || duvidoso) vale = y0 + Math.round(alt * 0.32);
-
-    return { topo: y0, base: y1, rosto: vale - y0 };
-  }
-
-  /* Recorta a pessoa no mesmo enquadramento dos recortes do Yasser.
-
-     Quando a foto não tem corpo até onde o enquadramento pede — um retrato
-     fechado no rosto, por exemplo —, o recorte termina onde a pessoa termina
-     e `fator` registra que fração da altura padrão foi possível. A montagem
-     usa esse fator para desenhar a figura mais curta em vez de mais estreita:
-     o rosto sai do tamanho certo de qualquer jeito, e é o rosto que precisa
-     bater com o do Yasser. */
-  function enquadrar(lona, medida) {
-    var rosto = medida.rosto;
-    var alturaPadrao = (FOLGA_TOPO + CORPO) * rosto;
-    var topo = Math.round(medida.topo - FOLGA_TOPO * rosto);
-    var base = Math.round(Math.min(medida.topo + CORPO * rosto, medida.base));
-    var altura = base - topo;
-    if (altura < 8) return null;
-
-    // Extremos horizontais dentro da faixa que vai ficar.
     var yIni = Math.max(0, topo);
-    var yFim = Math.min(lona.height, base);
+    var yFim = Math.min(lona.height, baseIdeal);
+    if (yFim - yIni < 8) return null;
+
     var quadro = lona.getContext("2d")
-      .getImageData(0, yIni, lona.width, Math.max(1, yFim - yIni));
+      .getImageData(0, yIni, lona.width, yFim - yIni);
     var px = quadro.data;
-    var esquerda = lona.width, direita = 0;
+    var esquerda = lona.width, direita = 0, ultima = yIni;
     for (var l = 0; l < yFim - yIni; l++) {
+      var temLinha = false;
       for (var x = 0; x < lona.width; x++) {
         if (px[(l * lona.width + x) * 4 + 3] > 128) {
           if (x < esquerda) esquerda = x;
           if (x > direita) direita = x;
+          temLinha = true;
         }
       }
+      if (temLinha) ultima = yIni + l;
     }
     if (direita <= esquerda) return null;
+
+    var base = Math.min(baseIdeal, ultima + 2);
+    var altura = base - topo;
+    if (altura < 8) return null;
 
     var folga = Math.round((direita - esquerda) * FOLGA_LADO);
     var x0 = esquerda - folga;
@@ -390,11 +396,9 @@
     s.drawImage(lona, -x0, -topo);
 
     /* Corpo interrompido antes da hora terminaria num corte reto no meio do
-       cartaz. Um esmaecimento curto transforma o corte em acabamento. */
+       cartaz. Um esmaecimento longo transforma o corte em acabamento. */
     var fator = altura / alturaPadrao;
     if (fator < 0.98) {
-      // Esmaecimento longo: sobre o fundo vermelho da arte, uma transição
-      // curta lê como borrão de roupa; alongada, dissolve na cor.
       var alturaFade = Math.max(8, Math.round(altura * 0.20));
       var fade = s.createLinearGradient(0, altura - alturaFade, 0, altura);
       fade.addColorStop(0, "rgba(0,0,0,0)");
@@ -427,23 +431,31 @@
         lona.getContext("2d").drawImage(original, 0, 0, lona.width, lona.height);
         URL.revokeObjectURL(url);
 
-        avisar("Recortando você da foto…");
-        return prepararTensorFlow().then(function () { return lona; });
+        avisar("Procurando seu rosto na foto…");
+        return prepararModelos().then(function () { return lona; });
       })
       .then(function (lona) {
-        var mascara = calcularMascara(lona);
-        return mascara.data().then(function (dados) {
-          mascara.dispose();
-          var medida = medirSilhueta(dados, lona.width, lona.height);
-          if (!medida) throw new Error("sem-pessoa");
-          var enquadrada = enquadrar(aplicarMascara(lona, dados), medida);
-          if (!enquadrada) throw new Error("sem-pessoa");
-          estado.pessoa = enquadrada;
-          if (window.FCY_DEBUG && window.console) {
-            console.log("[fcy]", JSON.stringify(medida), "fator",
-                        enquadrada.fator.toFixed(3), "foto",
-                        lona.width + "x" + lona.height);
-          }
+        return acharRosto(lona).then(function (rosto) {
+          if (!rosto) throw new Error("sem-rosto");
+          avisar("Recortando você da foto…");
+          var mascara = calcularMascara(lona);
+          return mascara.data().then(function (dados) {
+            mascara.dispose();
+            var corpo = manterCorpoDoRosto(dados, lona.width, lona.height,
+                                           rosto.centroX,
+                                           rosto.topo + rosto.altura * 0.6);
+            if (!corpo) throw new Error("sem-pessoa");
+            var enquadrada = enquadrarPorRosto(
+              aplicarMascara(lona, dados, corpo), rosto);
+            if (!enquadrada) throw new Error("sem-pessoa");
+            estado.pessoa = enquadrada;
+            if (window.FCY_DEBUG && window.console) {
+              console.log("[fcy] rosto", JSON.stringify(rosto), "fator",
+                          enquadrada.fator.toFixed(3), "recorte",
+                          enquadrada.canvas.width + "x" + enquadrada.canvas.height,
+                          "foto", lona.width + "x" + lona.height);
+            }
+          });
         });
       })
       .then(function () { return desenhar(); })
@@ -457,7 +469,7 @@
           tela.scrollIntoView({ block: "center",
                                 behavior: suave ? "smooth" : "auto" });
         }
-        if (estado.pessoa.fator < 0.55) {
+        if (estado.pessoa.fator < 0.5) {
           avisar("Pronto! A sua foto está bem fechada no rosto — se quiser, " +
                  "tente outra que mostre os ombros: a montagem fica mais " +
                  "parecida com uma foto dos dois juntos.");
@@ -468,9 +480,12 @@
       .catch(function (erro) {
         if (window.console && console.warn) console.warn("[fcy]", erro);
         vazio.hidden = false;
-        if (erro && erro.message === "sem-pessoa") {
-          avisar("Não consegui encontrar uma pessoa nessa foto. Tente uma foto " +
-                 "mais próxima, com boa luz e o rosto visível.");
+        if (erro && erro.message === "sem-rosto") {
+          avisar("Não encontrei um rosto nessa foto. Tente uma em que o rosto " +
+                 "apareça de frente, com boa luz e sem óculos escuros.");
+        } else if (erro && erro.message === "sem-pessoa") {
+          avisar("Não consegui recortar você dessa foto. Tente outra, de " +
+                 "preferência com o fundo mais limpo.");
         } else {
           avisar("Não foi possível montar a foto. Verifique sua conexão e tente " +
                  "de novo.");
@@ -638,50 +653,66 @@
            pé dos recortes terminaria à vista no meio da arte. */
         var pessoa = estado.pessoa;
         var ATRAS = 0.94;          // o Yasser fica meio passo atrás
-        var APROXIMA = 0.36;
 
-        /* O Yasser é ancorado com folga na margem esquerda e nunca é cortado:
-           é o candidato, e cortá-lo era o efeito colateral de centralizar um
-           conjunto mais largo que o quadro. Quem pode sangrar pela direita é a
-           pessoa — que é justamente como o Lula aparece na peça original. */
-        var xInicioYasser = W * 0.02;
-        var sangraDireita = W * 1.28 - xInicioYasser;
+        /* O cartaz é dividido em duas faixas fixas: o Yasser mora na esquerda
+           e quem enviou a foto, na direita. Antes as duas dividiam um espaço
+           calculado a partir das proporções dos recortes, e o layout mudava a
+           cada foto — uma selfie larga empurrava o Yasser para fora, uma foto
+           estreita deixava um vão no meio. Com faixa fixa, a arte sai igual
+           independentemente do que chega. */
+        var centroYasser = W * 0.28;
+        var centroPessoa = W * 0.72;
+        var LARG_FAIXA = W * 0.60;   // passa um pouco da metade: as duas se tocam
 
         var propYasser = imgYasser.naturalWidth / imgYasser.naturalHeight;
         var largPorAltura = pessoa
           ? (pessoa.canvas.width / pessoa.canvas.height) * pessoa.fator : 0;
-        var conjuntoPorAltura = propYasser * ATRAS + largPorAltura - APROXIMA;
 
-        var baseFiguras, altura;
+        var topoFiguras, altura;
         if (ehStory) {
-          baseFiguras = yBloco + altCargo + altVerde * 0.5;
-          altura = Math.min(baseFiguras - H * 0.09,
-                            sangraDireita / conjuntoPorAltura);
+          topoFiguras = H * 0.12;
+          altura = (yBloco + altCargo + altVerde * 0.5) - topoFiguras;
         } else {
-          /* Encostada na borda de baixo, e não passando dela: sobe a dupla
-             inteira no quadro sem deixar o pé dos recortes à vista. O retrato
-             sobe mais um pouco — é o formato com mais altura sobrando acima
-             das cabeças, e o esmaecimento longo da base disfarça o pé que
-             passa a ficar dentro do quadro. */
-          baseFiguras = H * (estado.formato === "retrato" ? 0.955 : 0.99);
-          altura = Math.min(H * 0.97, sangraDireita / conjuntoPorAltura);
+          topoFiguras = H * (estado.formato === "retrato" ? 0.10 : 0.045);
+          altura = H * (estado.formato === "retrato" ? 0.86 : 0.95) - topoFiguras;
+        }
+        // Nenhuma das duas passa da própria faixa.
+        altura = Math.min(altura, LARG_FAIXA / (propYasser * ATRAS));
+        if (largPorAltura > 0) {
+          altura = Math.min(altura, LARG_FAIXA / largPorAltura);
         }
 
         var altYasser = altura * ATRAS;
         var largYasser = altYasser * propYasser;
         var altPessoa = pessoa ? altura * pessoa.fator : 0;
         var largPessoa = altura * largPorAltura;
-        var conjunto = largYasser + largPessoa - altura * APROXIMA;
 
-        // Ancorado à esquerda pelo Yasser, e não centrado: centralizar um
-        // conjunto mais largo que o quadro jogava metade dele para fora.
-        var xYasser = xInicioYasser;
-        var xPessoa = xYasser + largYasser - altura * APROXIMA;
-        var yYasser = baseFiguras - altYasser;
-        var yPessoa = baseFiguras - altPessoa;
+        /* Alinhadas pelo topo, e não pela base: como os dois recortes têm o
+           mesmo enquadramento em relação ao rosto, topos iguais são rostos
+           iguais. Alinhar pela base deixava o rosto de quem mandou foto de
+           busto mais baixo que o do Yasser. */
+        var xYasser = centroYasser - largYasser / 2;
+        var xPessoa = centroPessoa - largPessoa / 2;
+        var yYasser = topoFiguras + (altura - altYasser);
+        var yPessoa = topoFiguras;
+
+        /* Foto sem corpo até o quadril termina antes do rodapé, e o
+           esmaecimento ficava à vista no meio do cartaz. Desce a pessoa o
+           necessário para o pé sumir atrás do bloco — no máximo um pouco,
+           porque o que não pode é o rosto dela descolar do rosto do Yasser. */
+        if (pessoa && pessoa.fator < 0.98) {
+          var faltaCobrir = yBloco - (yPessoa + altPessoa);
+          if (faltaCobrir > 0) {
+            yPessoa += Math.min(faltaCobrir, altura * 0.24);
+          }
+        }
 
         /* --- Camadas de cor atrás da dupla ------------------------------------ */
-        camadasAtras(W * 0.47, yYasser + altura * 0.60, W * 0.52, altura * 0.62);
+        /* As camadas param na altura do peito. Descendo mais, o esmaecimento
+           da base de quem mandou foto sem corpo caía em cima do verde e do
+           amarelo e virava um borrão colorido; terminando aqui, ele dissolve
+           no vermelho liso do fundo. */
+        camadasAtras(W * 0.5, topoFiguras + altura * 0.50, W * 0.54, altura * 0.48);
 
         /* --- Dupla ------------------------------------------------------------ */
         function comSombra(desenhaFn) {
