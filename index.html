@@ -159,7 +159,7 @@
     }catch(e){}
   </script>
 
-  <link rel="stylesheet" href="css/landing.css?v=20260815">
+  <link rel="stylesheet" href="css/landing.css?v=20260827">
 
   <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
        por JS, então o navegador só descobriria os domínios tarde. Carrega em
@@ -221,7 +221,7 @@
       <nav aria-label="Navegação principal">
         <ul class="nav__links" id="navLinks">
           <li><a href="#quem">Quem é</a></li>
-          <li><a href="#bandeiras">Bandeiras</a></li>
+          <li><a href="propostas.html">Propostas</a></li>
           <li><a href="#missoes">Missões</a></li>
           <li class="so-campanha"><a href="#foto-com-yasser">Foto com o Yasser</a></li>
           <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
@@ -473,8 +473,90 @@
       </div>
     </section>
 
+    <!-- ===== PROPOSTAS (resumo — a lista completa vive em propostas.html) ===== -->
+    <section class="secao secao--suave" id="propostas">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Compromissos de mandato</span>
+          <h2>As <span class="marca">propostas</span></h2>
+          <p>Bandeira sem proposta é discurso. Estes são os compromissos que o Yasser
+             vai defender, articular e fiscalizar na Assembleia.</p>
+        </div>
+
+        <article class="proposta-destaque reveal">
+          <p class="proposta-destaque__selo">Destaque · Trabalho e direitos</p>
+          <h3>Fim da escala 6x1</h3>
+          <p>Defender o fim da escala 6x1 e a sua aprovação no Congresso Nacional,
+             <strong>sem redução salarial</strong>. Trabalhar seis dias para descansar um
+             não é jornada: é desgaste. Quem produz a riqueza do país precisa de tempo
+             para a família, para estudar e para viver.</p>
+        </article>
+
+        <ul class="eixos">
+          <li class="eixo eixo--seguranca reveal">
+            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <h3 class="eixo__titulo">Segurança pública</h3>
+            <ul class="eixo__itens">
+              <li>SUIP: investigação integrada entre as polícias</li>
+              <li>Revitalizar os espaços do medo</li>
+              <li>Polícia mais perto da população</li>
+            </ul>
+          </li>
+          <li class="eixo eixo--educacao reveal">
+            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
+            <h3 class="eixo__titulo">Educação</h3>
+            <ul class="eixo__itens">
+              <li>Concurso e estabilidade para educadores</li>
+              <li>Revisão do GoiásTec, com ensino presencial</li>
+              <li>Educação inclusiva e educação do campo</li>
+            </ul>
+            <p class="eixo__mais">e outras propostas</p>
+          </li>
+          <li class="eixo eixo--moradia reveal">
+            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+            <h3 class="eixo__titulo">Moradia</h3>
+            <ul class="eixo__itens">
+              <li>Regularização do Acampamento Lambari</li>
+              <li>Regularização fundiária social</li>
+              <li>Material de construção mais barato</li>
+            </ul>
+            <p class="eixo__mais">e outras propostas</p>
+          </li>
+          <li class="eixo eixo--transporte reveal">
+            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1"/><path d="M2 11h20"/><path d="M8 4v7"/><path d="M16 4v7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M9 18h6"/></svg></span>
+            <h3 class="eixo__titulo">Transporte</h3>
+            <ul class="eixo__itens">
+              <li>Fiscalizar o subsídio das empresas</li>
+              <li>Passagem mais barata para estudantes</li>
+            </ul>
+          </li>
+          <li class="eixo eixo--saude reveal">
+            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></span>
+            <h3 class="eixo__titulo">Saúde</h3>
+            <ul class="eixo__itens">
+              <li>Emendas para a estrutura dos hospitais</li>
+              <li>Concursos para suprir o déficit</li>
+              <li>Atendimento regionalizado perto de casa</li>
+            </ul>
+          </li>
+          <li class="eixo eixo--direitos reveal">
+            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.7 2.7 0 0 0 16 4a2.7 2.7 0 0 0-5 1.8c0 1.1.8 2 1.5 2.7L16 12Z"/></svg></span>
+            <h3 class="eixo__titulo">Direitos humanos e cultura</h3>
+            <ul class="eixo__itens">
+              <li>Valorização da cultura árabe</li>
+              <li>Frente Parlamentar pelo povo palestino</li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="acoes reveal">
+          <a href="propostas.html" class="btn btn--primario">Ver todas as propostas</a>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== FRASES ===== -->
-    <section class="secao secao--suave" id="frases">
+    <section class="secao" id="frases">
       <div class="container">
         <div class="section-head reveal">
           <span class="eyebrow">No que a gente acredita</span>
@@ -1036,6 +1118,7 @@
           <ul>
             <li><a href="#quem">Quem é o Yasser</a></li>
             <li><a href="#bandeiras">Bandeiras</a></li>
+            <li><a href="propostas.html">Propostas</a></li>
             <li><a href="#redes">Redes</a></li>
             <li><a href="#missoes">Missões</a></li>
             <li><a href="#radar">Radar</a></li>

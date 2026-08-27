@@ -3,13 +3,19 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://delegadoyasser.com.br/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg</image:loc>
       <image:title>Delegado Yasser Yassine — 13007</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://delegadoyasser.com.br/propostas.html</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://delegadoyasser.com.br/mapa-do-medo.html</loc>

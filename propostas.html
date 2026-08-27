@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-campanha="pre">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f9120c">
+
+  <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
+  <script>
+    if (window.top !== window.self) {
+      try { window.top.location.replace(window.location.href); }
+      catch (e) { document.documentElement.style.display = "none"; }
+    }
+  </script>
+
+  <!-- Liberação da propaganda de campanha (o número 13007 e o selo legal):
+       só a partir de 16/08/2026 às 08:00, horário de Brasília. As propostas
+       em si não são propaganda eleitoral e ficam visíveis desde já — só a
+       moldura compartilhada obedece à trava. -->
+  <script>
+    (function () {
+      var LIBERACAO = Date.parse("2026-08-16T11:00:00Z"); // 08:00 em Brasília (UTC-3)
+      var raiz = document.documentElement;
+
+      var trava = document.createElement("style");
+      trava.textContent =
+        '[data-campanha="pre"] .so-campanha{display:none !important}' +
+        '[data-campanha="on"] .pre-campanha{display:none !important}';
+      (document.head || raiz).appendChild(trava);
+
+      if (Date.now() >= LIBERACAO) {
+        raiz.setAttribute("data-campanha", "on");
+      }
+    })();
+  </script>
+
+  <title>Propostas — Delegado Yasser | Compromissos para Goiás</title>
+  <meta name="description" content="As propostas do Delegado Yasser para Goiás: segurança pública, trabalho, educação, moradia, transporte, saúde e direitos humanos. O fim da escala 6x1, o SUIP e a revitalização dos espaços do medo.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+  <!-- ===== SEO ===== -->
+  <link rel="canonical" href="https://delegadoyasser.com.br/propostas.html">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Delegado Yasser Yassine">
+  <meta name="geo.region" content="BR-GO">
+  <meta name="geo.placename" content="Goiás, Brasil">
+  <meta name="geo.country" content="BR">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="Delegado Yasser Yassine">
+  <meta property="og:title" content="Propostas — Delegado Yasser">
+  <meta property="og:description" content="Os compromissos do Delegado Yasser para Goiás em segurança pública, trabalho, educação, moradia, transporte, saúde e direitos humanos.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://delegadoyasser.com.br/propostas.html">
+  <meta property="og:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg">
+  <meta property="og:image:secure_url" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="900">
+  <meta property="og:image:height" content="1350">
+  <meta property="og:image:alt" content="Delegado Yasser Yassine">
+  <meta property="og:locale" content="pt_BR">
+
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Propostas — Delegado Yasser">
+  <meta name="twitter:description" content="Os compromissos do Delegado Yasser para Goiás em segurança pública, trabalho, educação, moradia, transporte, saúde e direitos humanos.">
+  <meta name="twitter:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg">
+  <meta name="twitter:image:alt" content="Delegado Yasser Yassine">
+
+  <!-- Dados estruturados -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Propostas do Delegado Yasser",
+    "url": "https://delegadoyasser.com.br/propostas.html",
+    "description": "As propostas do Delegado Yasser para Goiás, organizadas por frente: segurança pública, trabalho e direitos, educação, moradia, transporte, saúde e direitos humanos e cultura.",
+    "inLanguage": "pt-BR",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Delegado Yasser Yassine",
+      "url": "https://delegadoyasser.com.br/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Propostas de mandato para o estado de Goiás"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Frentes de atuação",
+      "numberOfItems": 7,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Segurança pública" },
+        { "@type": "ListItem", "position": 2, "name": "Trabalho e direitos" },
+        { "@type": "ListItem", "position": 3, "name": "Educação" },
+        { "@type": "ListItem", "position": 4, "name": "Moradia" },
+        { "@type": "ListItem", "position": 5, "name": "Transporte" },
+        { "@type": "ListItem", "position": 6, "name": "Saúde" },
+        { "@type": "ListItem", "position": 7, "name": "Direitos humanos e cultura" }
+      ]
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://delegadoyasser.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "Propostas", "item": "https://delegadoyasser.com.br/propostas.html" }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
+  <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/oswald-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Aplica preferências de acessibilidade salvas antes da pintura (evita flash) -->
+  <script>
+    try{
+      var cc=localStorage.getItem('contraste');
+      if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
+      var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
+      if(localStorage.getItem('destacar-links')==='1')document.documentElement.classList.add('a11y-links');
+      if(localStorage.getItem('pausar-animacoes')==='1')document.documentElement.classList.add('a11y-parado');
+    }catch(e){}
+  </script>
+
+  <link rel="stylesheet" href="css/landing.css?v=20260827">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BKFLZQW72Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BKFLZQW72Y');
+  </script>
+</head>
+<body>
+
+  <a class="skip-link" href="#conteudo" accesskey="1">Pular para o conteúdo</a>
+
+  <!-- ===== BALÃO DE ACESSIBILIDADE ===== -->
+  <div class="acess-flutuante">
+    <button type="button" class="acess-flutuante__botao" id="acessToggle"
+            aria-expanded="false" aria-controls="acessPainel" aria-label="Opções de acessibilidade">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm8.5 0c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2z"/></svg>
+    </button>
+    <div class="acess-flutuante__painel" id="acessPainel" role="group" aria-label="Ferramentas de acessibilidade" hidden>
+      <p class="acess-flutuante__titulo">Acessibilidade</p>
+      <div class="acess-flutuante__linha">
+        <button type="button" id="fonteMenor" aria-label="Diminuir tamanho do texto">A−</button>
+        <span class="acess-flutuante__escala" id="fonteEscala" aria-live="polite">100%</span>
+        <button type="button" id="fonteMaior" aria-label="Aumentar tamanho do texto">A+</button>
+      </div>
+      <button type="button" id="contrasteAlto" class="acess-flutuante__toggle" aria-pressed="false">Alto contraste</button>
+      <button type="button" id="destacarLinks" class="acess-flutuante__toggle" aria-pressed="false">Destacar links</button>
+      <button type="button" id="pausarAnimacoes" class="acess-flutuante__toggle" aria-pressed="false">Pausar animações</button>
+      <button type="button" id="restaurarPadrao" class="acess-flutuante__toggle">Restaurar padrão</button>
+      <a href="acessibilidade.html">Declaração de acessibilidade</a>
+    </div>
+  </div>
+
+
+  <!-- ===== HEADER ===== -->
+  <header class="cabecalho" id="cabecalho">
+    <div class="container nav">
+      <a href="index.html#topo" class="logo">
+        <span class="logo__mark" aria-hidden="true">★</span>
+        <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
+      </a>
+      <nav aria-label="Navegação principal">
+        <ul class="nav__links" id="navLinks">
+          <li><a href="index.html#quem">Quem é</a></li>
+          <li><a href="propostas.html" aria-current="page">Propostas</a></li>
+          <li><a href="index.html#missoes">Missões</a></li>
+          <li class="so-campanha"><a href="index.html#foto-com-yasser">Foto com o Yasser</a></li>
+          <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
+          <li><a href="solicitar-reuniao.html">Convide o Yasser</a></li>
+          <li><a href="index.html#noticias">Notícias</a></li>
+          <li class="so-campanha"><span class="numero-pill"><small>Nº</small> 13007</span></li>
+          <li><a href="index.html#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
+        </ul>
+      </nav>
+      <button class="nav__toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ===== INTRO ===== -->
+    <section class="secao secao--tinta">
+      <div class="container">
+        <span class="eyebrow">Compromissos de mandato</span>
+        <h1>As <span class="marca">propostas</span></h1>
+        <p class="props-intro">
+          De <strong>segurança pública</strong> e <strong>direitos do trabalhador</strong>
+          a educação, moradia, transporte, saúde e direitos humanos. Não é uma lista
+          de intenções bonitas: é o que o Yasser se compromete a defender, articular
+          e fiscalizar na Assembleia Legislativa de Goiás.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== ÍNDICE + LISTA COMPLETA ===== -->
+    <section class="secao">
+      <div class="container">
+
+        <nav class="props-indice reveal" aria-labelledby="indice-titulo">
+          <p class="props-indice__titulo" id="indice-titulo">Ir direto para</p>
+          <ul>
+            <li><a href="#seguranca">Segurança pública</a></li>
+            <li><a href="#trabalho">Trabalho e direitos</a></li>
+            <li><a href="#educacao">Educação</a></li>
+            <li><a href="#moradia">Moradia</a></li>
+            <li><a href="#transporte">Transporte</a></li>
+            <li><a href="#saude">Saúde</a></li>
+            <li><a href="#direitos">Direitos humanos e cultura</a></li>
+          </ul>
+        </nav>
+
+        <div class="propostas-corpo">
+
+          <!-- ----- SEGURANÇA PÚBLICA ----- -->
+          <section class="eixo-bloco eixo--seguranca" id="seguranca" aria-labelledby="eixo-seguranca">
+            <div class="eixo-bloco__cabeca reveal">
+              <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+              <h2 id="eixo-seguranca">Segurança pública</h2>
+            </div>
+            <ol class="propostas-lista">
+              <li class="proposta reveal">
+                <h3>SUIP — Sistema Único de Inquérito Policial</h3>
+                <p>Articular nacionalmente a criação do SUIP, integrando investigações e
+                   informações entre as polícias e preservando a autonomia dos estados.
+                   Investigação que conversa entre si chega em quem manda, não só em quem obedece.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Espaços do medo revitalizados</h3>
+                <p>Destinar emendas e articular Estado e municípios na recuperação de áreas
+                   abandonadas — iluminação, segurança, cultura, esporte, lazer e ocupação
+                   comunitária. Você pode apontar esses lugares no
+                   <a href="mapa-do-medo.html">Mapa do Medo</a>.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Polícia mais perto da população</h3>
+                <p>Aproximar os agentes de segurança das comunidades, fortalecendo o diálogo,
+                   a humanização do atendimento e a prevenção — antes que o crime aconteça.</p>
+              </li>
+            </ol>
+          </section>
+
+          <!-- ----- TRABALHO E DIREITOS ----- -->
+          <section class="eixo-bloco eixo--trabalho" id="trabalho" aria-labelledby="eixo-trabalho">
+            <div class="eixo-bloco__cabeca reveal">
+              <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+              <h2 id="eixo-trabalho">Trabalho e direitos</h2>
+            </div>
+            <ol class="propostas-lista">
+              <li class="proposta proposta--destaque reveal">
+                <p class="proposta__selo">Destaque</p>
+                <h3>Fim da escala 6x1</h3>
+                <p>Defender o fim da escala 6x1 e a sua aprovação no Congresso Nacional,
+                   <strong>sem redução salarial</strong>. Trabalhar seis dias para descansar um
+                   não é jornada: é desgaste. Quem produz a riqueza do país precisa de tempo
+                   para a família, para estudar e para viver.</p>
+              </li>
+            </ol>
+          </section>
+
+          <!-- ----- EDUCAÇÃO ----- -->
+          <section class="eixo-bloco eixo--educacao" id="educacao" aria-labelledby="eixo-educacao">
+            <div class="eixo-bloco__cabeca reveal">
+              <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
+              <h2 id="eixo-educacao">Educação</h2>
+            </div>
+            <ol class="propostas-lista">
+              <li class="proposta reveal">
+                <h3>Concurso e estabilidade para educadores</h3>
+                <p>Defender a realização de concursos públicos, a valorização salarial e a
+                   estabilidade de quem está na sala de aula.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Revisão do GoiásTec</h3>
+                <p>Rever o modelo do GoiásTec, priorizando o ensino presencial com professores
+                   habilitados em cada disciplina. Tela não substitui professor.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Educação inclusiva de verdade</h3>
+                <p>Fortalecer a educação inclusiva com acessibilidade nas escolas e capacitação
+                   permanente das equipes.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Educação do campo</h3>
+                <p>Investir em infraestrutura, conectividade e transporte escolar na zona rural,
+                   e criar condições para que os educadores permaneçam no campo.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Escola sem violência de gênero</h3>
+                <p>Prevenir a violência de gênero nas escolas e fortalecer a rede de proteção
+                   das meninas e mulheres que estudam e trabalham nelas.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Sociologia e Ciências Humanas</h3>
+                <p>Defender a permanência da Sociologia e das Ciências Humanas no currículo,
+                   com concursos para professores habilitados na área.</p>
+              </li>
+            </ol>
+          </section>
+
+          <!-- ----- MORADIA ----- -->
+          <section class="eixo-bloco eixo--moradia" id="moradia" aria-labelledby="eixo-moradia">
+            <div class="eixo-bloco__cabeca reveal">
+              <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+              <h2 id="eixo-moradia">Moradia</h2>
+            </div>
+            <ol class="propostas-lista">
+              <li class="proposta reveal">
+                <h3>Regularização do Acampamento Lambari</h3>
+                <p>Apoiar a regularização do Acampamento Lambari, com infraestrutura,
+                   assistência técnica e fomento à agricultura familiar.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Fiscalizar obras paradas e imóveis ociosos</h3>
+                <p>Cobrar a retomada de moradias populares paralisadas e dar destino social
+                   aos imóveis estaduais desocupados.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Regularização fundiária social</h3>
+                <p>Fortalecer a regularização fundiária de interesse social, reduzindo custos
+                   e entraves burocráticos para quem já mora no lugar há anos.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Material de construção mais barato</h3>
+                <p>Articular a redução tributária sobre materiais destinados à habitação
+                   social, para que reformar e construir caiba no orçamento da família.</p>
+              </li>
+            </ol>
+          </section>
+
+          <!-- ----- TRANSPORTE ----- -->
+          <section class="eixo-bloco eixo--transporte" id="transporte" aria-labelledby="eixo-transporte">
+            <div class="eixo-bloco__cabeca reveal">
+              <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1"/><path d="M2 11h20"/><path d="M8 4v7"/><path d="M16 4v7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M9 18h6"/></svg></span>
+              <h2 id="eixo-transporte">Transporte</h2>
+            </div>
+            <ol class="propostas-lista">
+              <li class="proposta reveal">
+                <h3>Fiscalizar o subsídio do transporte</h3>
+                <p>Acompanhar de perto o dinheiro público repassado às empresas, cobrando
+                   melhoria da frota, acessibilidade e redução da tarifa.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Passagem mais barata para estudantes</h3>
+                <p>Ampliar os descontos e buscar a gratuidade intermunicipal para estudantes
+                   e jovens. Ninguém deve deixar de estudar por causa da passagem.</p>
+              </li>
+            </ol>
+          </section>
+
+          <!-- ----- SAÚDE ----- -->
+          <section class="eixo-bloco eixo--saude" id="saude" aria-labelledby="eixo-saude">
+            <div class="eixo-bloco__cabeca reveal">
+              <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></span>
+              <h2 id="eixo-saude">Saúde</h2>
+            </div>
+            <ol class="propostas-lista">
+              <li class="proposta reveal">
+                <h3>Emendas para a estrutura dos hospitais</h3>
+                <p>Destinar emendas para a infraestrutura hospitalar e fiscalizar cada real
+                   até a obra ficar pronta e o equipamento funcionar.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Concursos para suprir o déficit</h3>
+                <p>Cobrar concursos públicos e planejamento de pessoal para acabar com a falta
+                   crônica de profissionais na rede estadual.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Atendimento perto de casa</h3>
+                <p>Fortalecer o atendimento regionalizado, financiando Policlínicas, Santas
+                   Casas e Consórcios Intermunicipais de Saúde.</p>
+              </li>
+            </ol>
+          </section>
+
+          <!-- ----- DIREITOS HUMANOS E CULTURA ----- -->
+          <section class="eixo-bloco eixo--direitos" id="direitos" aria-labelledby="eixo-direitos">
+            <div class="eixo-bloco__cabeca reveal">
+              <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.7 2.7 0 0 0 16 4a2.7 2.7 0 0 0-5 1.8c0 1.1.8 2 1.5 2.7L16 12Z"/></svg></span>
+              <h2 id="eixo-direitos">Direitos humanos e cultura</h2>
+            </div>
+            <ol class="propostas-lista">
+              <li class="proposta reveal">
+                <h3>Valorização da cultura árabe</h3>
+                <p>Reconhecer e valorizar a cultura árabe, que é parte da formação de Goiás
+                   e da história da própria família do Yasser.</p>
+              </li>
+              <li class="proposta reveal">
+                <h3>Frente Parlamentar pelo povo palestino</h3>
+                <p>Propor e liderar a Frente Parlamentar Estadual em Defesa dos Direitos
+                   Humanos do Povo Palestino.</p>
+              </li>
+            </ol>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA FINAL ===== -->
+    <section class="secao secao--brand">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Proposta não se cumpre sozinha</span>
+          <h2>Some com a gente</h2>
+          <p>Cada uma dessas propostas precisa de gente cobrando, acompanhando e
+             empurrando. Entre na rede e ajude a transformar papel em política pública.</p>
+        </div>
+        <div class="acoes reveal">
+          <a href="index.html#cadastro" class="btn btn--claro">Quero fazer parte</a>
+          <a href="solicitar-reuniao.html" class="btn">Convide o Yasser para uma reunião</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape__grid">
+        <div>
+          <div class="logo">
+            <span class="logo__mark" aria-hidden="true">★</span>
+            <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
+            <span class="numero-pill so-campanha"><small>Nº</small> 13007</span>
+          </div>
+          <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e candidato a deputado estadual pelo PT-GO. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
+          <div class="rodape__social">
+            <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+            <a href="https://chat.whatsapp.com/Hlgz2Q7nItW7bS8GaO4afE?mode=gi_t" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></a>
+          </div>
+        </div>
+        <nav aria-label="Navegação do rodapé">
+          <h3 class="rodape__titulo">Navegação</h3>
+          <ul>
+            <li><a href="index.html#quem">Quem é o Yasser</a></li>
+            <li><a href="index.html#bandeiras">Bandeiras</a></li>
+            <li><a href="propostas.html">Propostas</a></li>
+            <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
+            <li><a href="index.html#noticias">Notícias</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Participe">
+          <h3 class="rodape__titulo">Participe</h3>
+          <ul>
+            <li><a href="index.html#cadastro">Quero fazer parte</a></li>
+            <li><a href="solicitar-reuniao.html">Convide o Yasser para uma reunião</a></li>
+            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar o movimento (vaquinha)</a></li>
+            <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
+            <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
+            <li><a href="acessibilidade.html">Acessibilidade</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="rodape__assinatura" aria-hidden="true">Goiás seguro</p>
+      <p class="rodape__legal so-campanha">
+        ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL<br>
+        FEDERAÇÃO BRASIL DA ESPERANÇA (PT, PCdoB, PV) · CNPJ 68.454.985/0001-69
+      </p>
+      <div class="rodape__bottom">
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás Seguro<span class="so-campanha"> · Nº 13007</span>.</p>
+        <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
+           (textos, imagens e marca) sem autorização prévia.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== VLIBRAS (tradução para Língua Brasileira de Sinais — widget oficial gov.br) ===== -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script>
+    window.addEventListener("load", function () {
+      var s = document.createElement("script");
+      s.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
+      s.onload = function () {
+        try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
+      };
+      document.body.appendChild(s);
+    });
+  </script>
+
+  <!-- Moldura compartilhada (menu, seletor de cor, balão de acessibilidade) -->
+  <script src="js/landing.js?v=20260827" defer></script>
+</body>
+</html>

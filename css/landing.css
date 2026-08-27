@@ -2281,3 +2281,256 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   .fcy__formato:hover { transform: none; }
   .fcy__girando::after { animation-duration: 2.4s; }
 }
+
+/* =============================================================
+   PROPOSTAS
+   Servem duas telas: o resumo na home (#propostas) e a página
+   completa (propostas.html). Cada eixo carrega um acento de cor
+   em --acento / --acento-tint; o texto usa sempre a variante
+   escura do token, para manter contraste ≥ 4,5:1 sobre o papel.
+   ============================================================= */
+.eixo,
+.eixo-bloco {
+  --acento: var(--brand-escuro);
+  --acento-tint: var(--brand-suave);
+}
+/* Sete eixos para cinco cores de marca: dois acentos se repetem, mas nunca
+   em eixos vizinhos na ordem em que a página os apresenta. */
+.eixo--seguranca  { --acento: var(--brand-escuro);   --acento-tint: #fde6e5; }
+.eixo--trabalho   { --acento: var(--amarelo-escuro); --acento-tint: #fbf1c8; }
+.eixo--educacao   { --acento: var(--azul-escuro);    --acento-tint: #e4e7fa; }
+.eixo--moradia    { --acento: var(--verde-escuro);   --acento-tint: #e1f5e0; }
+.eixo--transporte { --acento: var(--tinta);          --acento-tint: #eae3de; }
+.eixo--saude      { --acento: var(--brand-escuro);   --acento-tint: #fde6e5; }
+.eixo--direitos   { --acento: var(--azul-escuro);    --acento-tint: #e4e7fa; }
+
+/* ---------- Selo do eixo (ícone quadrado, comum às duas telas) ---------- */
+.eixo__ico {
+  width: 2.9rem;
+  height: 2.9rem;
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: var(--acento-tint);
+  border: var(--borda);
+  color: var(--acento);
+}
+.eixo__ico svg { width: 1.5rem; height: 1.5rem; }
+
+/* ---------- Destaque (a proposta que puxa a fila) ---------- */
+.proposta-destaque {
+  background: var(--tinta);
+  color: var(--papel);
+  border: var(--borda);
+  box-shadow: var(--sombra-brand);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+}
+.proposta-destaque__selo {
+  display: inline-block;
+  font-family: var(--fonte-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  background: var(--brand);
+  color: var(--branco);
+  padding: 0.3rem 0.7rem;
+  margin: 0 0 1rem;
+}
+.proposta-destaque h2,
+.proposta-destaque h3 {
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+  line-height: 1.05;
+  margin-bottom: 0.5rem;
+}
+.proposta-destaque p:last-child { margin: 0; color: #ddd2cc; }
+.proposta-destaque strong { color: var(--papel); }
+
+/* ---------- Resumo na home: cartões por eixo ---------- */
+.eixos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+.eixo {
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+  padding: 1.5rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+}
+.eixo__titulo {
+  margin: 1rem 0 0.9rem;
+  font-size: 1.15rem;
+}
+.eixo__itens {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.95rem;
+  color: var(--tinta-70);
+}
+.eixo__itens li {
+  position: relative;
+  padding-left: 1.15rem;
+  margin-bottom: 0.45rem;
+}
+.eixo__itens li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.5rem;
+  height: 2px;
+  background: var(--acento);
+}
+/* Empurrado para a base do cartão: no grid os cartões têm a mesma altura,
+   e a contagem restante fica alinhada entre eles em vez de flutuar solta. */
+.eixo__mais {
+  margin: auto 0 0;
+  padding-top: 0.55rem;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--tinta-70);
+}
+
+/* ---------- Página completa: chamada de abertura ---------- */
+.props-intro {
+  max-width: 46rem;
+  font-size: clamp(1.02rem, 2.2vw, 1.2rem);
+  color: #ddd2cc;
+  margin: 0;
+}
+.props-intro strong { color: var(--papel); }
+
+/* ---------- Página completa: índice de atalho ---------- */
+.props-indice {
+  border: var(--borda);
+  background: var(--branco);
+  box-shadow: var(--sombra-dura);
+  padding: 1.25rem 1.3rem;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+.props-indice__titulo {
+  margin: 0 0 0.85rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--brand-escuro);
+}
+.props-indice ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.props-indice a {
+  display: inline-block;
+  font-family: var(--fonte-texto);
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--tinta);
+  background: var(--papel-2);
+  border: 1.5px solid var(--tinta);
+  padding: 0.45rem 0.8rem;
+}
+.props-indice a:hover,
+.props-indice a:focus-visible { background: var(--tinta); color: var(--papel); }
+
+/* ---------- Página completa: blocos por eixo ---------- */
+.propostas-corpo {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+}
+
+.eixo-bloco__cabeca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding-bottom: 0.9rem;
+  margin-bottom: 1.6rem;
+  border-bottom: var(--borda);
+}
+.eixo-bloco__cabeca h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+}
+
+.propostas-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.1rem;
+}
+.proposta {
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+  padding: 1.3rem 1.3rem 1.2rem;
+}
+.proposta h3 { margin: 0 0 0.35rem; font-size: 1.08rem; }
+
+.proposta p { margin: 0; color: var(--tinta-70); font-size: 0.98rem; }
+.proposta a { font-weight: 700; }
+
+/* Uma proposta pode ser promovida a manchete: ocupa a linha inteira do grid e
+   inverte para o fundo escuro, virando o único bloco em tinta no meio dos
+   cartões brancos. É o tratamento da bandeira de campanha. */
+.proposta--destaque {
+  grid-column: 1 / -1;
+  background: var(--tinta);
+  color: var(--papel);
+  box-shadow: var(--sombra-brand);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+}
+.proposta--destaque h3 {
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  line-height: 1.05;
+  margin-bottom: 0.5rem;
+}
+.proposta--destaque p { color: #ddd2cc; font-size: 1.02rem; }
+.proposta--destaque strong { color: var(--papel); }
+.proposta--destaque .proposta__selo {
+  display: inline-block;
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  background: var(--brand);
+  color: var(--branco);
+  padding: 0.25rem 0.6rem;
+  margin: 0 0 0.8rem;
+}
+
+
+@media (min-width: 640px) {
+  .eixos { grid-template-columns: repeat(2, 1fr); }
+  .propostas-lista { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 980px) {
+  .eixos { grid-template-columns: repeat(3, 1fr); }
+  .propostas-lista { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Alto contraste: o acento perde a função de cor, então a borda esquerda
+   marca o cartão e o número volta a ser texto comum. */
+:root[data-contraste="alto"] .proposta,
+:root[data-contraste="alto"] .eixo { box-shadow: none; }
