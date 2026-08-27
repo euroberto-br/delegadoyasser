@@ -529,7 +529,7 @@
 
     <!-- ===== FOTO COM O YASSER =====
          A montagem acontece toda no navegador de quem acessa (js/foto-com-yasser.js):
-         a foto enviada não sobe para lugar nenhum. -->
+         a foto escolhida não sobe para lugar nenhum. -->
     <section class="secao secao--suave so-campanha" id="foto-com-yasser">
       <div class="container">
         <div class="section-head reveal">
@@ -544,8 +544,9 @@
           <div class="fcy__controles">
             <div class="fcy__passo">
               <h3 id="fcy-passo-1"><span class="fcy__num" aria-hidden="true">1</span> Escolha sua foto</h3>
-              <p class="fcy__dica">De frente, com o rosto visível e boa luz — o recorte
-                 fica melhor assim. Vale foto da galeria ou da câmera.</p>
+              <p class="fcy__dica">Vale foto da galeria ou da câmera, de qualquer
+                 tamanho. Ela entra na moldura branca do cartaz e o enquadramento
+                 fica com você.</p>
               <label class="fcy__arquivo">
                 <input type="file" id="fcyArquivo" accept="image/*"
                        aria-describedby="fcy-passo-1">
@@ -592,13 +593,28 @@
 
           <div class="fcy__palco">
             <div class="fcy__moldura">
-              <canvas id="fcyTela" width="1080" height="1080" role="img"
+              <canvas id="fcyTela" width="1080" height="1080" role="img" tabindex="0"
+                      aria-describedby="fcy-ajuda-enquadrar"
                       aria-label="Área da montagem. Escolha uma foto para começar."></canvas>
               <div class="fcy__vazio" id="fcyVazio">
                 <p><strong>Sua montagem aparece aqui.</strong></p>
                 <p>Escolha uma foto no passo 1 para começar.</p>
               </div>
               <div class="fcy__girando" aria-hidden="true"></div>
+            </div>
+
+            <!-- Enquadramento: fica junto da montagem, e não na lista de passos,
+                 porque só faz sentido com a foto já na tela. -->
+            <div class="fcy__ajuste" id="fcyAjuste" hidden>
+              <div class="fcy__zoom">
+                <label for="fcyZoom">Aproximar</label>
+                <input type="range" id="fcyZoom" min="1" max="3" step="0.05" value="1">
+              </div>
+              <button type="button" class="btn fcy__centralizar" id="fcyCentralizar">Centralizar</button>
+              <p class="fcy__dica" id="fcy-ajuda-enquadrar">Arraste a foto dentro da
+                 moldura para enquadrar. Pelo teclado: dê foco na montagem e use as
+                 setas para mover (com Shift, passos maiores), <kbd>+</kbd> e
+                 <kbd>−</kbd> para aproximar e <kbd>Home</kbd> para voltar ao começo.</p>
             </div>
 
             <p class="fcy__estado" id="fcyEstado" role="status" aria-live="polite"></p>
@@ -611,8 +627,9 @@
             </div>
 
             <p class="fcy__nota">
-              O recorte é feito por um modelo que roda dentro do seu navegador.
-              Nenhuma imagem é enviada, salva ou compartilhada sem você mandar.
+              A montagem é feita pelo seu próprio navegador, com a foto que está
+              no seu aparelho. Nenhuma imagem é enviada, salva ou compartilhada
+              sem você mandar.
               Depois de baixar, siga o Delegado no
               <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">Instagram</a>,
               no <a href="https://www.tiktok.com/@delegadoyasser" target="_blank" rel="noopener">TikTok</a>

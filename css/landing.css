@@ -2136,6 +2136,61 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   max-height: 68vh;
   object-fit: contain;
   background: var(--papel-2);
+  /* O canvas é arrastável para enquadrar a foto: sem isto o navegador
+     entende o arrasto como seleção de página e o gesto de tocar e puxar
+     rola a tela em vez de mover a foto. */
+  touch-action: none;
+}
+.fcy--comfoto .fcy__moldura canvas { cursor: grab; }
+.fcy--comfoto .fcy__moldura canvas:active { cursor: grabbing; }
+.fcy__moldura canvas:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* ---------- Enquadramento ---------- */
+.fcy__ajuste {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.7rem 1rem;
+  margin-top: 0.9rem;
+}
+.fcy__zoom {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.fcy__zoom label {
+  font-family: var(--fonte-display);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.fcy__zoom input[type="range"] {
+  flex: 1 1 auto;
+  min-width: 8rem;
+  accent-color: var(--brand);
+}
+.fcy__centralizar { padding-inline: 1rem; }
+/* Em tela estreita o controle deslizante e o botão não cabem lado a lado sem
+   espremer o slider a ponto de não dar para arrastar. */
+@media (max-width: 30em) {
+  .fcy__ajuste { grid-template-columns: 1fr; }
+  .fcy__centralizar { justify-self: stretch; }
+}
+.fcy__ajuste .fcy__dica {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.fcy__ajuste kbd {
+  font-family: var(--fonte-mono);
+  font-size: 0.85em;
+  padding: 0.05em 0.35em;
+  border: 1px solid rgba(24, 17, 20, 0.3);
+  border-radius: 4px;
+  background: var(--papel-2);
 }
 
 /* Enquanto não há foto, o canvas ainda existe (o JS desenha nele assim que

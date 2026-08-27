@@ -16,10 +16,7 @@ delegadoyasser/
 │   └── landing.css     Estilos do site (mobile-first, responsivo, temas de cor)
 ├── js/
 │   ├── landing.js      Menu, carrossel, conteúdo dinâmico, ano do rodapé e formulário
-│   ├── foto-com-yasser.js  Seção "Foto com o Yasser" (montagem no navegador)
-│   └── vendor/tfjs/    TensorFlow.js (Apache 2.0) — só baixado quando alguém monta uma foto
-├── models/
-│   └── segmentacao/    Modelo Selfie Segmentation do MediaPipe (Apache 2.0)
+│   └── foto-com-yasser.js  Seção "Foto com o Yasser" (montagem no navegador)
 ├── images/             Fotos do Yasser, favicons e ícones
 ├── docs/               Guias da equipe (ver abaixo)
 ├── erros/              Relatório de auditoria (não é publicado / bloqueado no robots)
@@ -32,6 +29,12 @@ delegadoyasser/
 
 > **Legado:** `css/styles.css` e `js/main.js` eram da antiga página "Em construção"
 > e não são mais usados por nenhuma página. Podem ser removidos com segurança.
+
+> **Removido em ago/2026:** `js/vendor/tfjs/` (TensorFlow.js) e `models/`
+> (Selfie Segmentation e BlazeFace, do MediaPipe) serviam ao recorte automático
+> da seção "Foto com o Yasser". A arte nova põe a foto numa moldura branca, sem
+> recorte, e as pastas foram apagadas — o site não depende mais de nenhuma
+> biblioteca de terceiros. Estão no histórico do git, se um dia fizerem falta.
 
 ## Páginas
 
