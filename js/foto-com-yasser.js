@@ -125,10 +125,21 @@
   var INSTAGRAM = "@delegadoyasser";
   /* Identificação obrigatória da propaganda eleitoral. Vai na lateral
      direita, em vertical: precisa acompanhar a peça onde quer que ela seja
-     compartilhada, sem disputar espaço com a foto. */
-  var LEGAL = "ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL · " +
-              "FEDERAÇÃO BRASIL DA ESPERANÇA (PT, PCdoB, PV) · " +
-              "CNPJ 68.454.985/0001-69";
+     compartilhada, sem disputar espaço com a foto.
+
+     Em DUAS linhas, e não numa só: o nome da coligação traz quatro legendas
+     e deixa a identificação com ~200 caracteres. Numa linha única a
+     ajustarFonte() teria de encolher até o piso de 8 px e ainda assim
+     estouraria a altura no formato quadrado, que é o mais apertado. Partida
+     em duas, a linha mais longa fica menor que a de antes — ou seja, o corpo
+     da letra não diminui em nenhum formato. */
+  var LEGAL_CARGO = "ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL · " +
+                    "CNPJ 68.454.985/0001-69";
+  var LEGAL_COLIGACAO = "COLIGAÇÃO BRASIL PRONTO PRA MAIS · PSB / PDT / " +
+                        "FEDERAÇÃO FÉ BRASIL (PT / PCdoB / PV) / " +
+                        "FEDERAÇÃO PSOL-REDE (PSOL / REDE)";
+  // Versão corrida, para a descrição textual da imagem (leitor de tela).
+  var LEGAL = LEGAL_CARGO + " · " + LEGAL_COLIGACAO;
 
   var CAMINHO_POSES = "images/foto-com-yasser/";
   var ARQUIVO_RODAPE = CAMINHO_POSES + "rodape.webp";
@@ -629,15 +640,22 @@
 
         /* --- Identificação legal, na lateral -----------------------------------
            Girada 90°, lida de baixo para cima como lombada de livro, rente à
-           borda direita — a esquerda é do Delegado e do adesivo. */
-        ajustarFonte(ctx, LEGAL, "IBM Plex Mono", "500", W * 0.017,
-                     alturaArte * 0.72, (W * 0.0015) + "px");
+           borda direita — a esquerda é do Delegado e do adesivo.
+
+           As duas linhas são medidas pela mais longa, para saírem no mesmo
+           corpo. Depois do rotate(-90°) o eixo y local aponta para a direita
+           da tela, então o deslocamento negativo joga a segunda linha para
+           dentro da arte, encostando na primeira. */
+        var corpoLegal = ajustarFonte(ctx, LEGAL_COLIGACAO, "IBM Plex Mono", "500",
+                                      W * 0.017, alturaArte * 0.72,
+                                      (W * 0.0015) + "px");
         ctx.save();
         ctx.translate(W * 0.982, alturaArte * 0.965);
         ctx.rotate(-Math.PI / 2);
         ctx.textAlign = "left";
         ctx.fillStyle = "rgba(16,29,63,0.55)";
-        ctx.fillText(LEGAL, 0, 0);
+        ctx.fillText(LEGAL_CARGO, 0, 0);
+        ctx.fillText(LEGAL_COLIGACAO, 0, -corpoLegal * 1.35);
         ctx.restore();
         ctx.textAlign = "left";
 
