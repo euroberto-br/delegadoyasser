@@ -2449,6 +2449,54 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
 .props-indice a:hover,
 .props-indice a:focus-visible { background: var(--tinta); color: var(--papel); }
 
+/* ---------- Banner do Mapa do Medo ---------- */
+.banner-mapa {
+  display: grid;
+  gap: 1.25rem;
+  align-items: center;
+  background: var(--brand-escuro);
+  color: var(--branco);
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+}
+.banner-mapa__ico {
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  flex: none;
+  border: 2px solid var(--branco);
+  color: var(--branco);
+}
+.banner-mapa__ico svg { width: 1.9rem; height: 1.9rem; }
+.banner-mapa__selo {
+  display: inline-block;
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin: 0 0 0.6rem;
+  color: var(--branco);
+  opacity: 0.85;
+}
+.banner-mapa h2 {
+  font-size: clamp(1.35rem, 3.5vw, 1.9rem);
+  margin-bottom: 0.5rem;
+  color: var(--branco);
+}
+.banner-mapa__texto p:last-child { margin: 0; color: #ffe4e2; }
+.banner-mapa__btn { justify-self: start; }
+
+@media (min-width: 760px) {
+  .banner-mapa {
+    grid-template-columns: auto 1fr auto;
+    gap: 1.75rem;
+  }
+  .banner-mapa__btn { justify-self: end; }
+}
+
 /* ---------- Página completa: blocos por eixo ---------- */
 .propostas-corpo {
   display: grid;
@@ -2477,6 +2525,8 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   gap: 1.1rem;
 }
 .proposta {
+  display: flex;
+  flex-direction: column;
   background: var(--branco);
   border: var(--borda);
   box-shadow: var(--sombra-dura);
@@ -2486,6 +2536,51 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
 
 .proposta p { margin: 0; color: var(--tinta-70); font-size: 0.98rem; }
 .proposta a { font-weight: 700; }
+
+/* ---------- Abertura e chamada de cada eixo ---------- */
+.eixo-bloco__intro {
+  max-width: 46rem;
+  margin: -0.4rem 0 1.6rem;
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  color: var(--tinta-70);
+}
+
+.eixo-bloco__cta {
+  margin: 1.1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(24, 17, 20, 0.22);
+  font-size: 0.95rem;
+  color: var(--tinta-70);
+}
+/* Sublinhado explicito: no eixo Transporte o --acento e a propria cor do
+   texto, e ai o link so se distinguiria pelo peso da fonte (WCAG 1.4.1). */
+.eixo-bloco__cta a {
+  color: var(--acento);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Compartilhar uma proposta no WhatsApp ---------- */
+.proposta__zap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  align-self: flex-start;
+  margin-top: auto;      /* cola no pe do cartao, alinhado entre os vizinhos */
+  padding-top: 1rem;
+  font-family: var(--fonte-texto);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  color: var(--verde-escuro);
+}
+.proposta__zap svg { width: 1.05rem; height: 1.05rem; flex: none; }
+.proposta__zap span { border-bottom: 2px solid currentColor; }
+.proposta__zap:hover span,
+.proposta__zap:focus-visible span { border-bottom-color: transparent; }
+.proposta--destaque .proposta__zap { color: var(--verde); }
 
 /* Uma proposta pode ser promovida a manchete: ocupa a linha inteira do grid e
    inverte para o fundo escuro, virando o único bloco em tinta no meio dos
