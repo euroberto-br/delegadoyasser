@@ -93,6 +93,30 @@
 
   <link rel="stylesheet" href="css/landing.css?v=20260831">
   <link rel="stylesheet" href="css/termos.css">
+
+  <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
+       por JS, então o navegador só descobriria os domínios tarde. Carrega em
+       dois saltos — www serve o /tag e este puxa o script de scripts. ~200 ms. -->
+  <link rel="preconnect" href="https://www.clarity.ms">
+  <link rel="preconnect" href="https://scripts.clarity.ms">
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xltc65hll6");
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BKFLZQW72Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BKFLZQW72Y');
+  </script>
 </head>
 <body>
 
@@ -213,7 +237,11 @@
         </div>
 
         <!-- ===== FORMULÁRIO ===== -->
-        <form class="form-card" id="formTermo" data-tipo="voluntario" data-idade-minima="16" novalidate>
+        <!-- data-clarity-mask: o Clarity grava replay da sessão, e aqui a pessoa
+             digita CPF, RG e endereço e desenha a assinatura. O atributo manda
+             mascarar a subárvore inteira, em vez de depender do modo de máscara
+             configurado no painel. -->
+        <form class="form-card" id="formTermo" data-clarity-mask="True" data-tipo="voluntario" data-idade-minima="16" novalidate>
           <h3>Preencha seus dados ♥</h3>
           <p class="hint">Os dados abaixo entram no termo e são usados só para o registro
              da adesão voluntária e o contato da coordenação.</p>

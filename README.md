@@ -222,12 +222,17 @@ O site não tem build nem framework, mas carrega de terceiros:
 - **Leaflet 1.9.4** (unpkg, com verificação de integridade SRI) e blocos do
   **OpenStreetMap** — só no mapa participativo.
 - **VLibras** (gov.br) — nas páginas de conteúdo.
-- **Google Analytics** (`G-BKFLZQW72Y`) e **Microsoft Clarity**.
+- **Google Analytics** (`G-BKFLZQW72Y`) e **Microsoft Clarity** (`xltc65hll6`)
+  — nas sete páginas de conteúdo. Ao criar uma página nova, copie os dois blocos
+  do fim do `<head>` do `index.html`; o stub de redirecionamento fica de fora de
+  propósito (ele desvia em milissegundos, e o script não chegaria a rodar).
 - **Player do Spotify** (álbum de jingles) — só no `index.html`.
 
-> Analytics não está em todas as páginas: hoje o `gtag` falta em
-> `voluntario.html` e `cabo-eleitoral.html`, e o Clarity falta em mais algumas.
-> Se a medição precisar ser completa, é isso que está faltando.
+> Nos dois termos, o `<form id="formTermo">` leva `data-clarity-mask="True"`: o
+> Clarity grava replay da sessão e ali a pessoa digita CPF, RG e endereço e
+> desenha a assinatura. O atributo mascara a subárvore inteira, sem depender do
+> modo de máscara configurado no painel. **Qualquer formulário novo com dado
+> pessoal precisa do mesmo atributo.**
 
 ## Publicação
 
