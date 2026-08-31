@@ -1,5 +1,5 @@
 /* =============================================================
-   Delegado Yasser — Mapa do Medo
+   Delegado Yasser — Goiás Seguro para Todos
    Mapa participativo de insegurança (Leaflet + OpenStreetMap).
    Vanilla JS. Depende apenas de Leaflet (carregado via CDN no HTML).
 
@@ -149,7 +149,7 @@
   function enviarCloudinary(blob) {
     var url = "https://api.cloudinary.com/v1_1/" + CLOUDINARY_CLOUD_NAME + "/image/upload";
     var fd = new FormData();
-    fd.append("file", blob, "mapa-do-medo.jpg");
+    fd.append("file", blob, "goias-seguro-para-todos.jpg");
     fd.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
     if (CLOUDINARY_FOLDER) fd.append("folder", CLOUDINARY_FOLDER);
     return fetch(url, { method: "POST", body: fd })

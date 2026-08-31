@@ -2347,8 +2347,30 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   line-height: 1.05;
   margin-bottom: 0.5rem;
 }
-.proposta-destaque p:last-child { margin: 0; color: #ddd2cc; }
+/* O destaque tem dois parágrafos: o selo fica fora da regra de cor, e o último
+   perde a margem porque o link de saída vem logo depois. */
+.proposta-destaque p:not(.proposta-destaque__selo) { color: #ddd2cc; }
+.proposta-destaque p:last-of-type { margin-bottom: 0; }
 .proposta-destaque strong { color: var(--papel); }
+
+/* Saída do destaque para o eixo de onde a proposta veio. Vive sobre o fundo
+   escuro do .proposta-destaque, por isso a cor clara. */
+.proposta-destaque__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  margin-top: 1rem;
+  color: var(--papel);
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.proposta-destaque__link:hover span,
+.proposta-destaque__link:focus-visible span { transform: translateX(3px); }
 
 /* ---------- Resumo na home: cartões por eixo ---------- */
 .eixos {
@@ -2391,15 +2413,30 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   height: 2px;
   background: var(--acento);
 }
-/* Empurrado para a base do cartão: no grid os cartões têm a mesma altura,
-   e a contagem restante fica alinhada entre eles em vez de flutuar solta. */
+/* Link para o eixo correspondente em propostas.html. Empurrado para a base do
+   cartão: no grid os cartões têm a mesma altura, e o link fica alinhado entre
+   eles em vez de flutuar solto. Herda --acento, então cada eixo leva a própria
+   cor (sempre a variante escura, contraste >= 4,5:1 sobre o branco). */
 .eixo__mais {
   margin: auto 0 0;
-  padding-top: 0.55rem;
+  padding-top: 0.9rem;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;          /* alvo de toque confortável (eMAG/WCAG 2.5.8) */
   font-size: 0.88rem;
-  font-style: italic;
-  color: var(--tinta-70);
+  font-weight: 800;
+  color: var(--acento);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
+/* inline-block tira a seta do sublinhado herdado do link (decoração de
+   ancestral não se remove no filho inline) */
+.eixo__mais span,
+.proposta-destaque__link span { display: inline-block; transition: transform 0.15s ease; }
+.eixo__mais:hover span,
+.eixo__mais:focus-visible span { transform: translateX(3px); }
 
 /* ---------- Página completa: chamada de abertura ---------- */
 .props-intro {
@@ -2449,7 +2486,7 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
 .props-indice a:hover,
 .props-indice a:focus-visible { background: var(--tinta); color: var(--papel); }
 
-/* ---------- Banner do Mapa do Medo ---------- */
+/* ---------- Banner do Goiás Seguro para Todos ---------- */
 .banner-mapa {
   display: grid;
   gap: 1.25rem;

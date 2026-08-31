@@ -224,7 +224,7 @@
           <li><a href="propostas.html">Propostas</a></li>
           <li><a href="#missoes">Missões</a></li>
           <li class="so-campanha"><a href="#foto-com-yasser">Foto com o Yasser</a></li>
-          <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
+          <li><a href="goias-seguro-para-todos.html">Goiás Seguro para Todos</a></li>
           <li><a href="solicitar-reuniao.html">Convide o Yasser</a></li>
           <li><a href="#noticias">Notícias</a></li>
           <li class="so-campanha"><span class="numero-pill"><small>Nº</small> 13007</span></li>
@@ -479,39 +479,58 @@
         <div class="section-head reveal">
           <span class="eyebrow">Compromissos de mandato</span>
           <h2>As <span class="marca">propostas</span></h2>
-          <p>Bandeira sem proposta é discurso. Estes são os compromissos que o Yasser
-             vai defender, articular e fiscalizar na Assembleia.</p>
+          <p>Bandeira sem proposta é discurso. São sete frentes — de <strong>segurança
+             pública</strong> e <strong>direitos do trabalhador</strong> a educação, moradia,
+             transporte, saúde e direitos humanos — que o Yasser se compromete a defender,
+             articular e fiscalizar na Assembleia Legislativa de Goiás.</p>
         </div>
 
+        <!-- Este bloco é o RESUMO de propostas.html e precisa continuar batendo com ela.
+             Regras de sincronia, se a lista completa mudar:
+             1. os eixos aparecem na mesma ordem da página completa. Segurança pública
+                abre como DESTAQUE (é a frente do delegado e a com mais propostas) e, por
+                isso, não se repete entre os cartões — o mesmo destaque marca a proposta
+                de abertura do eixo em propostas.html;
+             2. cada item do cartão usa o TÍTULO EXATO da proposta em propostas.html,
+                escolhendo as primeiras/mais representativas na ordem em que aparecem lá;
+             3. o link do rodapé leva à âncora do eixo na página completa. O nome do eixo
+                vai num .sr-only: na tela os seis links dizem só "Ver as propostas", mas
+                o leitor de tela lê "Ver as propostas de educação" e não repete seis
+                rótulos idênticos. -->
+
         <article class="proposta-destaque reveal">
-          <p class="proposta-destaque__selo">Destaque · Trabalho e direitos</p>
-          <h3>Fim da escala 6x1</h3>
-          <p>Defender o fim da escala 6x1 e a sua aprovação no Congresso Nacional,
-             <strong>sem redução salarial</strong>. Trabalhar seis dias para descansar um
-             não é jornada: é desgaste. Quem produz a riqueza do país precisa de tempo
-             para a família, para estudar e para viver.</p>
+          <p class="proposta-destaque__selo">Destaque · Segurança pública</p>
+          <h3>SUIP — Sistema Único de Inquérito Policial</h3>
+          <p>Articular nacionalmente a criação do SUIP, integrando investigações e
+             informações entre as polícias e <strong>preservando a autonomia dos
+             estados</strong>. Investigação que conversa entre si chega em quem manda,
+             não só em quem obedece.</p>
+          <p>O Yasser é delegado de carreira da Polícia Civil de Goiás — segurança pública
+             é a frente com mais compromissos do mandato.</p>
+          <a href="propostas.html#seguranca" class="proposta-destaque__link">Ver as propostas<span class="sr-only"> de segurança pública</span>
+             <span aria-hidden="true">&rarr;</span></a>
         </article>
 
         <ul class="eixos">
-          <li class="eixo eixo--seguranca reveal">
-            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
-            <h3 class="eixo__titulo">Segurança pública</h3>
+          <li class="eixo eixo--trabalho reveal">
+            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+            <h3 class="eixo__titulo">Trabalho e direitos</h3>
             <ul class="eixo__itens">
-              <li>SUIP: investigação integrada entre as polícias</li>
-              <li>Força-tarefa contra golpes no Pix</li>
-              <li>Delegacia da Mulher aberta 24 horas</li>
+              <li>Fim da escala 6x1</li>
             </ul>
-            <p class="eixo__mais">e outras propostas</p>
+            <a class="eixo__mais" href="propostas.html#trabalho">Ver as propostas<span class="sr-only"> de trabalho e direitos</span>
+               <span aria-hidden="true">&rarr;</span></a>
           </li>
           <li class="eixo eixo--educacao reveal">
             <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
             <h3 class="eixo__titulo">Educação</h3>
             <ul class="eixo__itens">
               <li>Concurso e estabilidade para educadores</li>
-              <li>Revisão do GoiásTec, com ensino presencial</li>
-              <li>Educação inclusiva e educação do campo</li>
+              <li>Revisão do GoiásTec</li>
+              <li>Educação inclusiva de verdade</li>
             </ul>
-            <p class="eixo__mais">e outras propostas</p>
+            <a class="eixo__mais" href="propostas.html#educacao">Ver as propostas<span class="sr-only"> de educação</span>
+               <span aria-hidden="true">&rarr;</span></a>
           </li>
           <li class="eixo eixo--moradia reveal">
             <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
@@ -521,15 +540,18 @@
               <li>Regularização fundiária social</li>
               <li>Material de construção mais barato</li>
             </ul>
-            <p class="eixo__mais">e outras propostas</p>
+            <a class="eixo__mais" href="propostas.html#moradia">Ver as propostas<span class="sr-only"> de moradia</span>
+               <span aria-hidden="true">&rarr;</span></a>
           </li>
           <li class="eixo eixo--transporte reveal">
             <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1"/><path d="M2 11h20"/><path d="M8 4v7"/><path d="M16 4v7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M9 18h6"/></svg></span>
             <h3 class="eixo__titulo">Transporte</h3>
             <ul class="eixo__itens">
-              <li>Fiscalizar o subsídio das empresas</li>
+              <li>Fiscalizar o subsídio do transporte</li>
               <li>Passagem mais barata para estudantes</li>
             </ul>
+            <a class="eixo__mais" href="propostas.html#transporte">Ver as propostas<span class="sr-only"> de transporte</span>
+               <span aria-hidden="true">&rarr;</span></a>
           </li>
           <li class="eixo eixo--saude reveal">
             <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></span>
@@ -537,8 +559,10 @@
             <ul class="eixo__itens">
               <li>Emendas para a estrutura dos hospitais</li>
               <li>Concursos para suprir o déficit</li>
-              <li>Atendimento regionalizado perto de casa</li>
+              <li>Atendimento perto de casa</li>
             </ul>
+            <a class="eixo__mais" href="propostas.html#saude">Ver as propostas<span class="sr-only"> de saúde</span>
+               <span aria-hidden="true">&rarr;</span></a>
           </li>
           <li class="eixo eixo--direitos reveal">
             <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.7 2.7 0 0 0 16 4a2.7 2.7 0 0 0-5 1.8c0 1.1.8 2 1.5 2.7L16 12Z"/></svg></span>
@@ -547,6 +571,8 @@
               <li>Valorização da cultura árabe</li>
               <li>Frente Parlamentar pelo povo palestino</li>
             </ul>
+            <a class="eixo__mais" href="propostas.html#direitos">Ver as propostas<span class="sr-only"> de direitos humanos e cultura</span>
+               <span aria-hidden="true">&rarr;</span></a>
           </li>
         </ul>
 
@@ -787,8 +813,8 @@
           <article class="missao reveal">
             <span class="missao__pill">Radar</span>
             <h3>Radar Goiás Seguro</h3>
-            <p>Tem um lugar que você evita por medo? Rua escura, praça abandonada, ponto de ônibus inseguro. Registre no Mapa do Medo — cada relato vira investigação e projeto real.</p>
-            <a href="mapa-do-medo.html" class="link" aria-label="Radar Goiás Seguro — enviar relato no Mapa do Medo">Enviar relato no Mapa do Medo</a>
+            <p>Tem um lugar que você evita por medo? Rua escura, praça abandonada, ponto de ônibus inseguro. Registre no Goiás Seguro para Todos — cada relato vira investigação e projeto real.</p>
+            <a href="goias-seguro-para-todos.html" class="link" aria-label="Radar Goiás Seguro — enviar relato">Enviar relato no Goiás Seguro para Todos</a>
           </article>
           <article class="missao reveal">
             <span class="missao__pill">Território</span>
@@ -814,7 +840,7 @@
           <h2>Tem um lugar que você evita por medo?</h2>
           <p>Conte para a gente: rua escura, praça abandonada, ponto de ônibus inseguro, escola vulnerável. Sua resposta vira projeto real.</p>
           <div class="acoes">
-            <a href="mapa-do-medo.html" class="btn btn--claro">Enviar um relato</a>
+            <a href="goias-seguro-para-todos.html" class="btn btn--claro">Enviar um relato</a>
           </div>
         </div>
         <div class="radar-foto reveal">

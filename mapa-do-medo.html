@@ -1,641 +1,86 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-campanha="pre">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f9120c">
 
-  <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
-  <script>
-    if (window.top !== window.self) {
-      try { window.top.location.replace(window.location.href); }
-      catch (e) { document.documentElement.style.display = "none"; }
-    }
-  </script>
+  <!-- =============================================================
+       REDIRECIONAMENTO — página renomeada
+       =============================================================
+       "Mapa do Medo" virou "Goiás Seguro para Todos" e o arquivo passou a ser
+       goias-seguro-para-todos.html. Este arquivo fica no lugar do antigo
+       porque o endereço /mapa-do-medo.html já circulou em WhatsApp, panfletos
+       e resultados de busca — apagá-lo daria 404 para quem clicar.
 
-  <!-- Liberação da propaganda de campanha (bloco inicial e o número 13007):
-       só a partir de 16/08/2026 às 08:00, horário de Brasília.
+       O GitHub Pages não faz redirecionamento de servidor (não há 301), então
+       o desvio é feito no próprio HTML, em três camadas:
+         1. <link rel="canonical">  → diz ao Google qual é o endereço válido;
+         2. <meta http-equiv="refresh" content="0"> → desvia sem JavaScript;
+         3. location.replace()      → desvia antes de pintar a tela e preserva
+                                      ?query e #âncora, além de não deixar
+                                      entrada no histórico (o "voltar" não
+                                      cai de novo aqui).
+       O link visível abaixo é a saída para quem tiver script e refresh
+       bloqueados — exigência do eMAG/WCAG 2.2.1.
 
-       O HTML nasce com data-campanha="pre" e tudo que não pode aparecer antes
-       da hora leva a classe .so-campanha. Esconder é o estado PADRÃO: se este
-       script não rodar, o conteúdo continua oculto em vez de vazar.
-
-       A regra de ocultar é injetada aqui, e não só no css/landing.css, porque
-       quem já visitou o site pode ter o CSS antigo em cache — e aí veria o que
-       deveria estar bloqueado. Inline no <head> para não piscar na tela. -->
+       Pode ser removido quando os buscadores já tiverem reindexado o novo
+       endereço e o antigo não aparecer mais em nenhum material de campanha.
+       ============================================================= -->
+  <link rel="canonical" href="https://delegadoyasser.com.br/goias-seguro-para-todos.html">
+  <meta http-equiv="refresh" content="0; url=goias-seguro-para-todos.html">
   <script>
     (function () {
-      var LIBERACAO = Date.parse("2026-08-16T11:00:00Z"); // 08:00 em Brasília (UTC-3)
-      var raiz = document.documentElement;
-
-      var trava = document.createElement("style");
-      trava.textContent =
-        '[data-campanha="pre"] .so-campanha{display:none !important}' +
-        '[data-campanha="on"] .pre-campanha{display:none !important}';
-      (document.head || raiz).appendChild(trava);
-
-      if (Date.now() >= LIBERACAO) {
-        raiz.setAttribute("data-campanha", "on");
-      }
+      var destino = "goias-seguro-para-todos.html" + window.location.search + window.location.hash;
+      window.location.replace(destino);
     })();
   </script>
-  <title>Mapa do Medo — Delegado Yasser | Segurança participativa em Goiás</title>
-  <meta name="description" content="Marque no mapa de Goiás os pontos de insegurança da sua cidade: ruas escuras, mato alto, áreas de violência. Segurança pública feita com a população.">
 
-  <!-- Favicon -->
+  <title>Página movida — Goiás Seguro para Todos | Delegado Yasser</title>
+  <meta name="description" content="O Mapa do Medo agora se chama Goiás Seguro para Todos. Você está sendo levado para a nova página.">
+
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
-  <!-- ===== SEO ===== -->
-  <link rel="canonical" href="https://delegadoyasser.com.br/mapa-do-medo.html">
-  <meta name="robots" content="index, follow, max-image-preview:large">
-  <meta name="author" content="Delegado Yasser Yassine">
-  <meta name="geo.region" content="BR-GO">
-  <meta name="geo.placename" content="Goiás, Brasil">
-  <meta name="geo.country" content="BR">
-
-  <!-- Open Graph -->
-  <meta property="og:site_name" content="Delegado Yasser Yassine">
-  <meta property="og:title" content="Mapa do Medo — Delegado Yasser">
-  <meta property="og:description" content="Marque no mapa de Goiás os pontos de insegurança da sua cidade. Segurança pública se faz com cuidado, prevenção e comunidade.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://delegadoyasser.com.br/mapa-do-medo.html">
-  <meta property="og:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg">
-  <meta property="og:image:secure_url" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg">
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="900">
-  <meta property="og:image:height" content="1350">
-  <meta property="og:image:alt" content="Delegado Yasser Yassine">
-  <meta property="og:locale" content="pt_BR">
-
-  <!-- Twitter / X Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Mapa do Medo — Delegado Yasser">
-  <meta name="twitter:description" content="Marque no mapa de Goiás os pontos de insegurança da sua cidade. Segurança pública se faz com cuidado, prevenção e comunidade.">
-  <meta name="twitter:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg">
-  <meta name="twitter:image:alt" content="Delegado Yasser Yassine">
-
-  <!-- Dados estruturados -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Mapa do Medo",
-    "url": "https://delegadoyasser.com.br/mapa-do-medo.html",
-    "description": "Mapa colaborativo dos pontos de insegurança de Goiás: a população marca ruas escuras, mato alto e áreas de alto índice de violência.",
-    "inLanguage": "pt-BR",
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Delegado Yasser Yassine",
-      "url": "https://delegadoyasser.com.br/"
-    },
-    "about": {
-      "@type": "Thing",
-      "name": "Segurança pública participativa em Goiás"
-    },
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://delegadoyasser.com.br/" },
-        { "@type": "ListItem", "position": 2, "name": "Mapa do Medo", "item": "https://delegadoyasser.com.br/mapa-do-medo.html" }
-      ]
+  <style>
+    :root { color-scheme: light; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: #fcf9f5;
+      color: #1c1a19;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.6;
+      text-align: center;
     }
-  }
-  </script>
-
-  <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
-  <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/oswald-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-
-  <!-- Aplica preferências de acessibilidade salvas antes da pintura (evita flash) -->
-  <script>
-    try{
-      var cc=localStorage.getItem('contraste');
-      if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
-      var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
-      if(localStorage.getItem('destacar-links')==='1')document.documentElement.classList.add('a11y-links');
-      if(localStorage.getItem('pausar-animacoes')==='1')document.documentElement.classList.add('a11y-parado');
-    }catch(e){}
-  </script>
-
-  <!-- Leaflet (mapa) — CDN oficial com verificação de integridade (SRI).
-       O mapa fica bem abaixo da dobra e o leaflet.js é defer, então a folha
-       não precisa travar a primeira pintura: media="print" faz o navegador
-       baixá-la sem bloquear e o onload a promove para todas as mídias.
-       Isso tirava ~900 ms do caminho crítico desta página. -->
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""
-        media="print" onload="this.media='all'; this.onload=null;">
-  <noscript>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  </noscript>
-
-  <link rel="stylesheet" href="css/landing.css?v=20260831">
-  <link rel="stylesheet" href="css/mapa-do-medo.css">
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BKFLZQW72Y"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-BKFLZQW72Y');
-  </script>
+    main { max-width: 34rem; }
+    h1 { font-size: 1.5rem; line-height: 1.25; margin: 0 0 0.75rem; }
+    p { margin: 0 0 1.25rem; }
+    a.btn {
+      display: inline-block;
+      padding: 14px 26px;
+      min-height: 44px;
+      box-sizing: border-box;
+      border-radius: 10px;
+      background: #f9120c;
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    a.btn:hover, a.btn:focus-visible { background: #c60d08; }
+    a.btn:focus-visible { outline: 3px solid #1c1a19; outline-offset: 3px; }
+  </style>
 </head>
 <body>
-
-  <a class="skip-link" href="#conteudo" accesskey="1">Pular para o conteúdo</a>
-
-  <!-- ===== BALÃO DE ACESSIBILIDADE ===== -->
-  <div class="acess-flutuante">
-    <button type="button" class="acess-flutuante__botao" id="acessToggle"
-            aria-expanded="false" aria-controls="acessPainel" aria-label="Opções de acessibilidade">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm8.5 0c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2z"/></svg>
-    </button>
-    <div class="acess-flutuante__painel" id="acessPainel" role="group" aria-label="Ferramentas de acessibilidade" hidden>
-      <p class="acess-flutuante__titulo">Acessibilidade</p>
-      <div class="acess-flutuante__linha">
-        <button type="button" id="fonteMenor" aria-label="Diminuir tamanho do texto">A−</button>
-        <span class="acess-flutuante__escala" id="fonteEscala" aria-live="polite">100%</span>
-        <button type="button" id="fonteMaior" aria-label="Aumentar tamanho do texto">A+</button>
-      </div>
-      <button type="button" id="contrasteAlto" class="acess-flutuante__toggle" aria-pressed="false">Alto contraste</button>
-      <button type="button" id="destacarLinks" class="acess-flutuante__toggle" aria-pressed="false">Destacar links</button>
-      <button type="button" id="pausarAnimacoes" class="acess-flutuante__toggle" aria-pressed="false">Pausar animações</button>
-      <button type="button" id="restaurarPadrao" class="acess-flutuante__toggle">Restaurar padrão</button>
-      <a href="acessibilidade.html">Declaração de acessibilidade</a>
-    </div>
-  </div>
-
-
-  <!-- ===== HEADER ===== -->
-  <header class="cabecalho" id="cabecalho">
-    <div class="container nav">
-      <a href="index.html#topo" class="logo">
-        <span class="logo__mark" aria-hidden="true">★</span>
-        <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
-      </a>
-      <nav aria-label="Navegação principal">
-        <ul class="nav__links" id="navLinks">
-          <li><a href="index.html#quem">Quem é</a></li>
-          <li><a href="propostas.html">Propostas</a></li>
-          <li><a href="index.html#missoes">Missões</a></li>
-          <li class="so-campanha"><a href="index.html#foto-com-yasser">Foto com o Yasser</a></li>
-          <li><a href="mapa-do-medo.html" aria-current="page">Mapa do Medo</a></li>
-          <li><a href="solicitar-reuniao.html">Convide o Yasser</a></li>
-          <li><a href="index.html#noticias">Notícias</a></li>
-          <li class="so-campanha"><span class="numero-pill"><small>Nº</small> 13007</span></li>
-          <li><a href="index.html#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
-        </ul>
-      </nav>
-      <button class="nav__toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">☰</button>
-    </div>
-  </header>
-
-  <main id="conteudo">
-    <!-- ===== INTRO ===== -->
-    <section class="secao secao--tinta mapa-intro">
-      <div class="container">
-        <span class="eyebrow">Segurança participativa</span>
-        <h1>Mapa <span class="marca">do Medo</span></h1>
-        <p class="mapa-intro__sub">
-          Ninguém conhece a insegurança do seu bairro melhor do que quem mora nele.
-          Marque no mapa de Goiás os pontos de risco — <strong>ruas escuras, mato alto,
-          locais com alto índice de violência</strong> e outros — e ajude a transformar
-          medo em dado, e dado em ação.
-        </p>
-        <div class="aviso-legal" role="note">
-          <strong>Como funciona:</strong> os relatos são colaborativos, podem ser feitos de forma
-          <strong>anônima</strong> e passam por <strong>moderação</strong> antes de aparecer no
-          mapa público. Eles não substituem o boletim de ocorrência.
-          <strong>Em caso de emergência, ligue 190.</strong>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== MAPA ===== -->
-    <section class="secao mapa-secao">
-      <div class="container">
-        <div class="mapa-layout">
-          <!-- Painel lateral: ação + filtros -->
-          <aside class="mapa-painel" aria-label="Controles do mapa">
-            <button type="button" class="btn btn--primario btn-adicionar" id="botaoAdicionar">
-              ＋ Adicionar um ponto
-            </button>
-            <p class="mapa-painel__dica">
-              Leva menos de 1 minuto: <strong>local → o que acontece → envio</strong>.
-              Se preferir, relate de forma <strong>anônima</strong>.
-            </p>
-
-            <div class="mapa-painel__bloco">
-              <p class="mapa-painel__titulo">Tipos de risco</p>
-              <ul class="legenda" id="legenda" aria-label="Filtrar por tipo de risco">
-                <!-- preenchido via JS a partir das categorias -->
-              </ul>
-            </div>
-
-            <p class="mapa-nota" id="mapaNota" aria-live="polite"></p>
-          </aside>
-
-          <!-- Mapa -->
-          <div class="mapa-wrap" id="mapaWrap">
-            <div id="mapa" role="application" aria-label="Mapa interativo de Goiás com pontos de insegurança"></div>
-
-            <!-- Pino central (modo "apontar no mapa": arrasta-se o mapa sob o pino) -->
-            <div class="mira" id="mira" hidden aria-hidden="true">
-              <span class="mira__pino"></span>
-              <span class="mira__ponto"></span>
-            </div>
-
-            <!-- Barra de confirmação do local -->
-            <div class="mapa-confirmar" id="mapaConfirmar" hidden role="region" aria-label="Confirmar local escolhido">
-              <p class="mapa-confirmar__txt" id="mapaConfirmarTxt" aria-live="polite">
-                Arraste o mapa até o pino apontar o local exato
-              </p>
-              <div class="mapa-confirmar__acoes">
-                <button type="button" class="btn btn--primario" id="confirmarLocal">✓ Confirmar este local</button>
-                <button type="button" class="btn" id="cancelarLocal">Cancelar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== COMO FUNCIONA ===== -->
-    <section class="secao secao--suave">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Passo a passo</span>
-          <h2>De relato a mudança</h2>
-          <p>O mapa é só o começo. A informação vira pauta, cobrança e projeto de lei.</p>
-        </div>
-        <ol class="passos-mapa">
-          <li class="passo-mapa">
-            <span class="passo-mapa__num">1</span>
-            <h3>Você marca</h3>
-            <p>Aponta no mapa o local e o tipo de risco: rua escura, mato alto, ponto de violência.</p>
-          </li>
-          <li class="passo-mapa">
-            <span class="passo-mapa__num">2</span>
-            <h3>A equipe modera</h3>
-            <p>Cada relato é conferido antes de entrar no mapa público, evitando trotes e injustiças.</p>
-          </li>
-          <li class="passo-mapa">
-            <span class="passo-mapa__num">3</span>
-            <h3>Vira ocupação</h3>
-            <p>Cada marcação ajuda a transformar abandono em presença do Estado e da comunidade:
-            iluminação, limpeza, câmeras e policiamento onde hoje há medo.</p>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ===== CTA ===== -->
-    <section class="secao secao--brand">
-      <div class="container cta-mapa">
-        <div>
-          <span class="eyebrow">Faça parte</span>
-          <h2>Sua rua no mapa, sua voz no debate</h2>
-          <p>Entre para a rede que está construindo um Goiás seguro com cuidado, prevenção e comunidade.</p>
-        </div>
-        <div class="acoes">
-          <a href="index.html#cadastro" class="btn btn--claro">Quero fazer parte</a>
-          <a href="https://chat.whatsapp.com/Hlgz2Q7nItW7bS8GaO4afE?mode=gi_t" class="btn" target="_blank" rel="noopener">Entrar no grupo do WhatsApp</a>
-        </div>
-      </div>
-    </section>
+  <main>
+    <h1>Esta página mudou de nome</h1>
+    <p>O <strong>Mapa do Medo</strong> agora se chama <strong>Goiás Seguro para Todos</strong>.
+       Estamos levando você para lá.</p>
+    <p><a class="btn" href="goias-seguro-para-todos.html">Ir para Goiás Seguro para Todos</a></p>
   </main>
-
-  <!-- ===== PAINEL DO FORMULÁRIO (relato em 3 passos) ===== -->
-  <div class="relato-overlay" id="relatoOverlay" hidden></div>
-  <aside class="relato-painel" id="relatoPainel" role="dialog" aria-modal="true"
-         aria-labelledby="relatoTitulo" hidden tabindex="-1">
-    <div class="relato-painel__topo">
-      <h2 id="relatoTitulo">Relatar um ponto</h2>
-      <button type="button" class="relato-fechar" id="relatoFechar" aria-label="Fechar">✕</button>
-    </div>
-
-    <!-- Indicador de progresso -->
-    <ol class="stepper" id="stepper" aria-label="Etapas do relato">
-      <li class="stepper__item stepper__item--ativo" aria-current="step">
-        <span class="stepper__num" aria-hidden="true">1</span>
-        <span class="stepper__rotulo">Local</span>
-      </li>
-      <li class="stepper__item">
-        <span class="stepper__num" aria-hidden="true">2</span>
-        <span class="stepper__rotulo">Relato</span>
-      </li>
-      <li class="stepper__item">
-        <span class="stepper__num" aria-hidden="true">3</span>
-        <span class="stepper__rotulo">Envio</span>
-      </li>
-    </ol>
-
-    <form id="formRelato" class="relato-form" novalidate>
-      <!-- Honeypot anti-spam -->
-      <div class="hp" aria-hidden="true">
-        <label>Não preencha este campo <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-      </div>
-
-      <!-- ===== PASSO 1 · LOCAL ===== -->
-      <section class="passo" id="passo1" aria-label="Passo 1 de 3: local">
-        <h3 class="passo__pergunta" tabindex="-1">Onde fica o ponto de risco?</h3>
-
-        <div class="campo busca-local">
-          <label for="rBusca">Busque o endereço ou um lugar conhecido</label>
-          <div class="busca-local__wrap">
-            <input type="search" id="rBusca" name="busca" maxlength="140"
-                   autocomplete="off" spellcheck="false" enterkeyhint="search"
-                   placeholder="Ex.: Av. Anhanguera, Setor Central, Goiânia"
-                   role="combobox" aria-expanded="false"
-                   aria-controls="listaSugestoes" aria-autocomplete="list">
-            <ul class="sugestoes" id="listaSugestoes" role="listbox"
-                aria-label="Sugestões de endereço" hidden></ul>
-          </div>
-
-          <!-- Campos para digitar / ajustar o endereço -->
-          <div class="endereco-manual">
-            <p class="endereco-manual__titulo">Ou digite o endereço</p>
-            <div class="campo">
-              <label for="rLogradouro">Rua / Avenida</label>
-              <input type="text" id="rLogradouro" name="logradouro" maxlength="120"
-                     autocomplete="off" placeholder="Ex.: Avenida Anhanguera">
-            </div>
-            <div class="endereco-linha">
-              <div class="campo">
-                <label for="rNumero">Número</label>
-                <input type="text" id="rNumero" name="numero" maxlength="12"
-                       inputmode="numeric" autocomplete="off" placeholder="1200">
-              </div>
-              <div class="campo">
-                <label for="rBairro">Bairro</label>
-                <input type="text" id="rBairro" name="bairro" maxlength="80"
-                       autocomplete="off" placeholder="Setor Central">
-              </div>
-            </div>
-            <div class="campo">
-              <label for="rCidade">Cidade *</label>
-              <input type="text" id="rCidade" name="cidade" maxlength="60"
-                     autocomplete="off" placeholder="Ex.: Anápolis">
-            </div>
-            <button type="button" class="btn btn--linha" id="localizarEndereco">
-              📍 Localizar este endereço no mapa
-            </button>
-          </div>
-        </div>
-
-        <p class="ou-divisor" aria-hidden="true">ou</p>
-
-        <div class="local-opcoes">
-          <button type="button" class="opcao-local" id="usarLocalizacao">
-            <span class="opcao-local__icone" aria-hidden="true">📡</span>
-            <span class="opcao-local__texto">
-              <strong>Usar minha localização</strong>
-              <small id="usarLocalizacaoNota">Ideal se você está no local agora</small>
-            </span>
-          </button>
-          <button type="button" class="opcao-local" id="escolherNoMapa">
-            <span class="opcao-local__icone" aria-hidden="true">🗺️</span>
-            <span class="opcao-local__texto">
-              <strong>Apontar no mapa</strong>
-              <small>Arraste o mapa até o ponto exato</small>
-            </span>
-          </button>
-        </div>
-
-        <!-- Confirmação do local escolhido -->
-        <div class="local-card" id="localCard" hidden>
-          <p class="local-card__rotulo">📍 Local marcado</p>
-          <p class="local-card__status" id="localCardEndereco" aria-live="polite">Confira e ajuste os campos acima.</p>
-          <div class="local-card__acoes">
-            <button type="button" class="link-geo" id="ajustarNoMapa">Ajustar no mapa</button>
-          </div>
-        </div>
-
-        <input type="hidden" name="lat" id="rLat">
-        <input type="hidden" name="lng" id="rLng">
-
-        <div class="passo__nav">
-          <button type="button" class="btn btn--primario" id="paraPasso2" disabled>Continuar →</button>
-        </div>
-      </section>
-
-      <!-- ===== PASSO 2 · O QUE ACONTECE ===== -->
-      <section class="passo" id="passo2" hidden aria-label="Passo 2 de 3: o que acontece">
-        <h3 class="passo__pergunta" tabindex="-1">O que acontece ali?</h3>
-
-        <fieldset class="campo chips-campo">
-          <legend>Tipo de risco *</legend>
-          <div class="chips" id="chipsCategorias">
-            <!-- chips de categoria preenchidos via JS -->
-          </div>
-        </fieldset>
-
-        <div class="campo">
-          <label for="rTitulo">Ponto de referência *</label>
-          <input type="text" id="rTitulo" name="titulo" maxlength="90"
-                 placeholder="Ex.: Praça central, ao lado da escola">
-        </div>
-
-        <div class="campo">
-          <label for="rDescricao">Descreva o problema <span class="campo-opcional">(opcional)</span></label>
-          <textarea id="rDescricao" name="descricao" rows="3" maxlength="400"
-                    placeholder="Ex.: Trecho sem iluminação onde já houve assaltos à noite."></textarea>
-          <p class="campo-contador"><span id="descContador">0</span>/400 · evite citar nomes de pessoas</p>
-        </div>
-
-        <div class="campo campo-foto">
-          <label for="rFoto">Foto do local <span class="campo-opcional">(opcional)</span></label>
-          <input type="file" id="rFoto" name="foto" accept="image/*"
-                 capture="environment" class="foto-input">
-          <label class="foto-drop" id="fotoDrop" for="rFoto">
-            <span class="foto-drop__icone" aria-hidden="true">📷</span>
-            <span class="foto-drop__txt"><strong>Adicionar uma foto</strong><small>Tirar foto ou escolher da galeria</small></span>
-          </label>
-          <p class="campo-dica">
-            A imagem é reduzida automaticamente (máx. 200&nbsp;KB) antes do envio.
-            <strong>Não fotografe pessoas identificáveis nem placas de veículos.</strong>
-          </p>
-          <div class="foto-preview" id="fotoPreview" hidden>
-            <img class="foto-preview__img" id="fotoPreviewImg" alt="Pré-visualização da foto escolhida">
-            <div class="foto-preview__barra">
-              <span class="foto-preview__info" id="fotoInfo" aria-live="polite"></span>
-              <button type="button" class="foto-remover" id="fotoRemover">✕ Remover</button>
-            </div>
-          </div>
-        </div>
-
-        <input type="hidden" name="foto_url" id="rFotoUrl">
-
-        <div class="passo__nav passo__nav--dupla">
-          <button type="button" class="btn" id="voltarPasso1">← Voltar</button>
-          <button type="button" class="btn btn--primario" id="paraPasso3">Continuar →</button>
-        </div>
-      </section>
-
-      <!-- ===== PASSO 3 · IDENTIFICAÇÃO E ENVIO ===== -->
-      <section class="passo" id="passo3" hidden aria-label="Passo 3 de 3: identificação e envio">
-        <h3 class="passo__pergunta" tabindex="-1">Como você quer enviar?</h3>
-
-        <p class="resumo-relato" id="resumoRelato"></p>
-
-        <div class="identidade" role="radiogroup" aria-label="Forma de identificação">
-          <label class="identidade__opcao identidade__opcao--ativa">
-            <input type="radio" name="identidade" value="identificado" checked>
-            <span class="identidade__corpo">
-              <strong>👤 Com meus dados</strong>
-              <small>A equipe pode confirmar o relato e te dar retorno.
-              Seus dados <u>nunca</u> aparecem no mapa.</small>
-            </span>
-          </label>
-          <label class="identidade__opcao">
-            <input type="radio" name="identidade" value="anonimo">
-            <span class="identidade__corpo">
-              <strong>🕶️ Anonimamente</strong>
-              <small>Nenhum dado pessoal é enviado. O relato vale do mesmo jeito.</small>
-            </span>
-          </label>
-        </div>
-
-        <div class="dados-contato" id="dadosContato">
-          <div class="campo">
-            <label for="rNome">Nome *</label>
-            <input type="text" id="rNome" name="nome" maxlength="80"
-                   autocomplete="name" placeholder="Seu nome">
-          </div>
-          <div class="campo">
-            <label for="rEmail">E-mail</label>
-            <input type="email" id="rEmail" name="email" maxlength="120"
-                   autocomplete="email" placeholder="voce@email.com">
-          </div>
-          <div class="campo">
-            <label for="rTelefone">Telefone / WhatsApp</label>
-            <input type="tel" id="rTelefone" name="telefone" maxlength="20"
-                   autocomplete="tel" placeholder="(62) 90000-0000">
-          </div>
-          <p class="campo-dica">Informe ao menos um contato: e-mail ou telefone.</p>
-        </div>
-
-        <label class="consent">
-          <input type="checkbox" name="consentimento" id="rConsent">
-          <span>Confirmo que o relato é verdadeiro e de boa-fé. O ponto aparece no mapa
-          <strong>sem nenhum dado pessoal</strong>.</span>
-        </label>
-
-        <div class="passo__nav passo__nav--dupla">
-          <button type="button" class="btn" id="voltarPasso2">← Voltar</button>
-          <button type="submit" class="btn btn--primario" id="relatoEnviar">Enviar relato</button>
-        </div>
-      </section>
-
-      <p class="relato-status" id="relatoStatus" role="status" aria-live="polite" hidden></p>
-    </form>
-
-    <!-- ===== TELA DE SUCESSO ===== -->
-    <div class="relato-sucesso" id="relatoSucesso" hidden>
-      <span class="relato-sucesso__icone" aria-hidden="true">✓</span>
-      <h3 tabindex="-1">Relato enviado!</h3>
-      <p>Obrigado por ajudar. Seu relato passa por <strong>moderação</strong> antes de
-      aparecer no mapa público — isso evita trotes e injustiças.</p>
-      <p class="relato-sucesso__nota">Em caso de emergência, ligue <strong>190</strong>.</p>
-      <div class="relato-sucesso__acoes">
-        <button type="button" class="btn btn--primario" id="relatarOutro">Relatar outro ponto</button>
-        <button type="button" class="btn" id="sucessoFechar">Fechar</button>
-      </div>
-    </div>
-  </aside>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="rodape">
-    <div class="container">
-      <div class="rodape__grid">
-        <div>
-          <div class="logo">
-            <span class="logo__mark" aria-hidden="true">★</span>
-            <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
-            <span class="numero-pill so-campanha"><small>Nº</small> 13007</span>
-          </div>
-          <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e candidato a deputado estadual pelo PT-GO. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
-          <div class="rodape__social">
-            <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
-            <a href="https://chat.whatsapp.com/Hlgz2Q7nItW7bS8GaO4afE?mode=gi_t" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></a>
-          </div>
-        </div>
-        <nav aria-label="Navegação do rodapé">
-          <h3 class="rodape__titulo">Navegação</h3>
-          <ul>
-            <li><a href="index.html#quem">Quem é o Yasser</a></li>
-            <li><a href="index.html#bandeiras">Bandeiras</a></li>
-            <li><a href="propostas.html">Propostas</a></li>
-            <li><a href="mapa-do-medo.html">Mapa do Medo</a></li>
-            <li><a href="index.html#noticias">Notícias</a></li>
-          </ul>
-        </nav>
-        <nav aria-label="Participe">
-          <h3 class="rodape__titulo">Participe</h3>
-          <ul>
-            <li><a href="index.html#cadastro">Quero fazer parte</a></li>
-            <li><a href="solicitar-reuniao.html">Convide o Yasser para uma reunião</a></li>
-            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar o movimento (vaquinha)</a></li>
-            <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
-            <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
-            <li><a href="acessibilidade.html">Acessibilidade</a></li>
-          </ul>
-        </nav>
-      </div>
-      <p class="rodape__assinatura" aria-hidden="true">Goiás seguro</p>
-      <p class="rodape__legal so-campanha">
-        ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL<br>
-        COLIGAÇÃO BRASIL PRONTO PRA MAIS<br>
-        PSB / PDT / FEDERAÇÃO FÉ BRASIL (PT / PCdoB / PV) / FEDERAÇÃO PSOL-REDE (PSOL / REDE)<br>
-        CNPJ 68.454.985/0001-69
-      </p>
-      <div class="rodape__bottom">
-        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás Seguro<span class="so-campanha"> · Nº 13007</span>.</p>
-        <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
-           (textos, imagens e marca) sem autorização prévia.</p>
-        <p>Mapa: &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ===== VLIBRAS ===== -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <!-- VLibras (tradutor de Libras do gov.br). Carregado só depois do load:
-       como <script> síncrono ele travava a renderização por ~850 ms. O widget
-       é um botão flutuante acionado pelo usuário, então aparecer um instante
-       mais tarde não muda o uso. -->
-  <script>
-    window.addEventListener("load", function () {
-      var s = document.createElement("script");
-      s.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
-      s.onload = function () {
-        try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
-      };
-      document.body.appendChild(s);
-    });
-  </script>
-
-  <!-- Leaflet JS — CDN oficial com SRI -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
-
-  <!-- Moldura compartilhada (menu, seletor de cor, balão de acessibilidade) -->
-  <script src="js/landing.js?v=20260815" defer></script>
-  <!-- Fronteira de Goiás (malha oficial IBGE, embutida) -->
-  <script src="js/goias-geo.js" defer></script>
-  <!-- Lógica do Mapa do Medo -->
-  <script src="js/mapa-do-medo.js" defer></script>
 </body>
 </html>

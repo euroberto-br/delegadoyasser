@@ -764,6 +764,14 @@ section { padding: 64px 0; }
   .cadastro-grid { grid-template-columns: 0.9fr 1.1fr; gap: 52px; }
 }
 
+/* O rótulo "Goiás Seguro para Todos" é mais longo que o antigo: entre 980px e
+   1180px o menu recebe um respiro menor para o cabeçalho não quebrar em duas
+   linhas. Acima de 1180px o espaçamento original volta. */
+@media (min-width: 980px) and (max-width: 1180px) {
+  .nav__links { gap: 16px; }
+  .nav__links a:not(.btn) { font-size: 0.86rem; }
+}
+
 /* ---------- Acessibilidade: movimento reduzido ---------- */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto; }
