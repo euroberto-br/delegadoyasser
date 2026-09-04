@@ -159,7 +159,7 @@
     }catch(e){}
   </script>
 
-  <link rel="stylesheet" href="css/landing.css?v=20260831">
+  <link rel="stylesheet" href="css/landing.css?v=20260903">
 
   <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
        por JS, então o navegador só descobriria os domínios tarde. Carrega em
@@ -222,6 +222,7 @@
         <ul class="nav__links" id="navLinks">
           <li><a href="#quem">Quem é</a></li>
           <li><a href="propostas.html">Propostas</a></li>
+          <li class="so-campanha"><a href="#leve-na-urna">Leve na urna</a></li>
           <li><a href="#missoes">Missões</a></li>
           <li class="so-campanha"><a href="#foto-com-yasser">Foto com o Yasser</a></li>
           <li><a href="goias-seguro-para-todos.html">Goiás Seguro para Todos</a></li>
@@ -578,6 +579,192 @@
 
         <div class="acoes reveal">
           <a href="propostas.html" class="btn btn--primario">Ver todas as propostas</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LEVE NA URNA =====
+         A lista de números da campanha: os cargos na ordem em que a urna
+         pergunta, para imprimir, salvar como imagem ou mandar no WhatsApp.
+
+         Regras de manutenção:
+         1. a ORDEM das linhas é a ordem real da urna (federal, estadual,
+            senador 1, senador 2, governador, presidente) — não reordenar por
+            importância, porque a peça serve para acompanhar a votação;
+         2. números e nomes aqui e em js/leve-na-urna.js (CARGOS) precisam
+            bater: este HTML é o que sai na impressão, o JS é o que vira imagem;
+         3. o texto legal da coligação é o mesmo do rodapé do site — se mudar
+            lá, muda aqui e no JS. -->
+    <section class="secao secao--suave so-campanha" id="leve-na-urna">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Domingo, 4 de outubro</span>
+          <h2>Leve na <span class="marca">urna</span></h2>
+          <p>Os números na mesma ordem em que a urna vai pedir. <strong>Imprima, salve
+             no celular ou mande para quem você quer convencer</strong> — no dia da
+             votação é só digitar e confirmar.</p>
+        </div>
+
+        <div class="lnu" id="leveNaUrna">
+
+          <!-- ---- A PEÇA (é isto, e só isto, que sai na impressão) ---- -->
+          <article class="lnu__peca" id="lnuPeca" aria-labelledby="lnu-peca-titulo">
+            <p class="lnu__bandeira" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </p>
+
+            <header class="lnu__cabeca">
+              <p class="lnu__data">Eleições 2026 · Goiás · 4 de outubro</p>
+              <h3 class="lnu__titulo" id="lnu-peca-titulo">Meu voto</h3>
+              <p class="lnu__sub">Na ordem em que a urna pergunta</p>
+            </header>
+
+            <ol class="lnu__lista">
+
+              <li class="lnu__linha lnu__linha--livre">
+                <p class="lnu__cargo">
+                  <span class="lnu__ordem" aria-hidden="true">1</span>
+                  <span>Deputado Federal</span>
+                </p>
+                <div class="lnu__num">
+                  <label class="sr-only" for="lnuFederal">Número do seu candidato a deputado federal, quatro dígitos (opcional)</label>
+                  <input class="lnu__campo" id="lnuFederal" type="text" inputmode="numeric"
+                         pattern="[0-9]*" maxlength="4" autocomplete="off"
+                         placeholder="0000" aria-describedby="lnu-federal-dica">
+                </div>
+                <p class="lnu__quem" id="lnu-federal-dica"><strong>Voto livre</strong>
+                   <span>Anote o número do seu candidato de confiança.</span></p>
+              </li>
+
+              <li class="lnu__linha lnu__linha--destaque">
+                <p class="lnu__cargo">
+                  <span class="lnu__ordem" aria-hidden="true">2</span>
+                  <span>Deputado Estadual</span>
+                </p>
+                <p class="lnu__num">
+                  <span class="sr-only">Número 1 3 0 0 7</span>
+                  <span class="lnu__casas" aria-hidden="true"><b>1</b><b>3</b><b>0</b><b>0</b><b>7</b></span>
+                </p>
+                <p class="lnu__quem"><strong>Delegado Yasser</strong>
+                   <span>PT · Goiás Seguro para Todos</span></p>
+              </li>
+
+              <li class="lnu__linha lnu__linha--azul">
+                <p class="lnu__cargo">
+                  <span class="lnu__ordem" aria-hidden="true">3</span>
+                  <span>Senador <small>1º voto</small></span>
+                </p>
+                <p class="lnu__num">
+                  <span class="sr-only">Número 5 0 0</span>
+                  <span class="lnu__casas" aria-hidden="true"><b>5</b><b>0</b><b>0</b></span>
+                </p>
+                <p class="lnu__quem"><strong>Cíntia Dias</strong>
+                   <span>Suplentes: Fernando Isaac e Paulo Rochitld</span></p>
+              </li>
+
+              <li class="lnu__linha lnu__linha--verde">
+                <p class="lnu__cargo">
+                  <span class="lnu__ordem" aria-hidden="true">4</span>
+                  <span>Senador <small>2º voto</small></span>
+                </p>
+                <p class="lnu__num">
+                  <span class="sr-only">Número 4 0 0</span>
+                  <span class="lnu__casas" aria-hidden="true"><b>4</b><b>0</b><b>0</b></span>
+                </p>
+                <p class="lnu__quem"><strong>Isaura Lemos</strong></p>
+              </li>
+
+              <li class="lnu__linha lnu__linha--amarelo">
+                <p class="lnu__cargo">
+                  <span class="lnu__ordem" aria-hidden="true">5</span>
+                  <span>Governador</span>
+                </p>
+                <p class="lnu__num">
+                  <span class="sr-only">Número 1 3</span>
+                  <span class="lnu__casas" aria-hidden="true"><b>1</b><b>3</b></span>
+                </p>
+                <p class="lnu__quem"><strong>Luís Cesar Bueno</strong>
+                   <span>Vice: Carlos Mundim</span></p>
+              </li>
+
+              <li class="lnu__linha lnu__linha--vermelho">
+                <p class="lnu__cargo">
+                  <span class="lnu__ordem" aria-hidden="true">6</span>
+                  <span>Presidente</span>
+                </p>
+                <p class="lnu__num">
+                  <span class="sr-only">Número 1 3</span>
+                  <span class="lnu__casas" aria-hidden="true"><b>1</b><b>3</b></span>
+                </p>
+                <p class="lnu__quem"><strong>Lula</strong>
+                   <span>Vice: Geraldo Alckmin</span></p>
+              </li>
+
+            </ol>
+
+            <p class="lnu__grito">
+              <span class="lnu__grito__num" aria-hidden="true">13007</span>
+              <span class="sr-only">Número 1 3 0 0 7.</span>
+              <span class="lnu__grito__nome">Delegado Yasser<small>Deputado Estadual</small></span>
+            </p>
+
+            <footer class="lnu__rodape">
+              <img class="lnu__qr" src="images/qr-leve-na-urna.png" width="592" height="592"
+                   alt="QR Code que leva a delegadoyasser.com.br, onde esta lista pode ser impressa de novo"
+                   loading="lazy" decoding="async">
+              <div>
+                <p class="lnu__site">delegadoyasser.com.br</p>
+                <p class="lnu__legal">
+                  ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL<br>
+                  COLIGAÇÃO GOIÁS PODE MAIS<br>
+                  FEDERAÇÃO BRASIL DA ESPERANÇA (PT / PCdoB / PV) · FEDERAÇÃO PSOL-REDE (PSOL / REDE) · PSB · PDT<br>
+                  CNPJ 68.454.985/0001-69
+                </p>
+              </div>
+            </footer>
+          </article>
+
+          <!-- ---- O que fazer com ela. Nada daqui sai na impressão. ---- -->
+          <div class="lnu__lado">
+            <div class="lnu__bloco">
+              <h3>Leve com você</h3>
+              <p class="lnu__dica">Baixe a imagem para a galeria do celular ou mande a
+                 folha direto para a impressora. A imagem é montada aqui mesmo, no seu
+                 aparelho — nada é enviado para lugar nenhum.</p>
+
+              <div class="lnu__formatos" id="lnuFormatos" role="group" aria-label="Formato da imagem">
+                <button type="button" class="lnu__formato" data-formato="quadrado" aria-pressed="true">
+                  Quadrado <small>feed e conversa</small>
+                </button>
+                <button type="button" class="lnu__formato" data-formato="story" aria-pressed="false">
+                  Story <small>stories e status</small>
+                </button>
+              </div>
+
+              <div class="lnu__acoes">
+                <button type="button" class="btn btn--primario" id="lnuBaixar">Baixar imagem</button>
+                <button type="button" class="btn" id="lnuImprimir">Imprimir a folha</button>
+                <button type="button" class="btn" id="lnuCompartilhar">Compartilhar</button>
+                <button type="button" class="btn" id="lnuZap">Enviar no WhatsApp</button>
+              </div>
+
+              <p class="lnu__estado" id="lnuEstado" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="lnu__bloco lnu__bloco--nota">
+              <h3>Na hora de votar</h3>
+              <ol class="lnu__passos">
+                <li>A urna pede os cargos <strong>nessa ordem</strong>, do deputado federal ao presidente.</li>
+                <li>Digite o número, <strong>confira a foto e o nome na tela</strong> e aperte <b>CONFIRMA</b>.</li>
+                <li>Errou? Aperte <b>CORRIGE</b> e digite de novo — dá tempo, antes de confirmar.</li>
+                <li>Leve um documento oficial com foto. O título não é obrigatório.</li>
+              </ol>
+              <p class="lnu__dica">Não sabe onde vota? Consulte o
+                 <a href="https://www.tse.jus.br/servicos-eleitorais/titulo-e-local-de-votacao/consulta-por-nome"
+                    target="_blank" rel="noopener">site do TSE<span class="sr-only"> (abre em nova aba)</span></a>.</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -1146,6 +1333,7 @@
             <li><a href="#quem">Quem é o Yasser</a></li>
             <li><a href="#bandeiras">Bandeiras</a></li>
             <li><a href="propostas.html">Propostas</a></li>
+            <li class="so-campanha"><a href="#leve-na-urna">Leve na urna</a></li>
             <li><a href="#redes">Redes</a></li>
             <li><a href="#missoes">Missões</a></li>
             <li><a href="#radar">Radar</a></li>
@@ -1181,8 +1369,8 @@
       </div>
       <p class="rodape__legal so-campanha">
         ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL<br>
-        COLIGAÇÃO BRASIL PRONTO PRA MAIS<br>
-        PSB / PDT / FEDERAÇÃO FÉ BRASIL (PT / PCdoB / PV) / FEDERAÇÃO PSOL-REDE (PSOL / REDE)<br>
+        COLIGAÇÃO GOIÁS PODE MAIS<br>
+        FEDERAÇÃO BRASIL DA ESPERANÇA (PT / PCdoB / PV) / FEDERAÇÃO PSOL-REDE (PSOL / REDE) / PSB / PDT<br>
         CNPJ 68.454.985/0001-69
       </p>
       <div class="rodape__bottom">
@@ -1216,6 +1404,7 @@
   </script>
 
   <script src="js/landing.js?v=20260815" defer></script>
-  <script src="js/foto-com-yasser.js?v=20260828" defer></script>
+  <script src="js/foto-com-yasser.js?v=20260903" defer></script>
+  <script src="js/leve-na-urna.js?v=20260903" defer></script>
 </body>
 </html>

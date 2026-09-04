@@ -135,9 +135,9 @@
      da letra não diminui em nenhum formato. */
   var LEGAL_CARGO = "ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL · " +
                     "CNPJ 68.454.985/0001-69";
-  var LEGAL_COLIGACAO = "COLIGAÇÃO BRASIL PRONTO PRA MAIS · PSB / PDT / " +
-                        "FEDERAÇÃO FÉ BRASIL (PT / PCdoB / PV) / " +
-                        "FEDERAÇÃO PSOL-REDE (PSOL / REDE)";
+  var LEGAL_COLIGACAO = "COLIGAÇÃO GOIÁS PODE MAIS · " +
+                        "FEDERAÇÃO BRASIL DA ESPERANÇA (PT / PCdoB / PV) / " +
+                        "FEDERAÇÃO PSOL-REDE (PSOL / REDE) / PSB / PDT";
   // Versão corrida, para a descrição textual da imagem (leitor de tela).
   var LEGAL = LEGAL_CARGO + " · " + LEGAL_COLIGACAO;
 

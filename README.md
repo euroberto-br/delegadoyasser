@@ -30,7 +30,8 @@ delegadoyasser/
 │   ├── goias-geo.js               Contorno de Goiás (malha do IBGE) usado pelo mapa
 │   ├── agenda.js                  Formulário de solicitar-reuniao.html
 │   ├── termos.js                  Formulários dos dois termos (gera o PDF)
-│   └── foto-com-yasser.js         Seção "Foto com o Yasser" (montagem no navegador)
+│   ├── foto-com-yasser.js         Seção "Foto com o Yasser" (montagem no navegador)
+│   └── leve-na-urna.js            Seção "Leve na urna": gera a imagem e imprime
 ├── fonts/                         Fontes .woff2 servidas pelo próprio domínio
 ├── images/                        Fotos, carrossel (114 fotos em jpg+webp), favicons e selos
 ├── .github/workflows/             Publicação no GitHub Pages (ver "Publicação")
@@ -55,8 +56,9 @@ delegadoyasser/
 ## Páginas
 
 - **`index.html`** — a página inicial servida na raiz do domínio. Reúne quem é o
-  Yasser, o resumo das propostas, as missões do movimento, o mapa, notícias,
-  carrossel de fotos, "Foto com o Yasser" e o formulário de cadastro.
+  Yasser, o resumo das propostas, **"Leve na urna"**, as missões do movimento,
+  o mapa, notícias, carrossel de fotos, "Foto com o Yasser" e o formulário de
+  cadastro.
 - **`propostas.html`** — a lista completa, dividida em **sete eixos**: segurança
   pública, trabalho e direitos, educação, moradia, transporte, saúde e direitos
   humanos e cultura. Cada eixo tem uma âncora própria (`#seguranca`, `#trabalho`,
@@ -79,6 +81,45 @@ estão num comentário HTML no próprio bloco: mesma ordem de eixos, **título e
 de cada proposta, e segurança pública abrindo como destaque nas duas páginas
 (o selo "Destaque" em `propostas.html` fica na proposta do SUIP). Se a lista
 completa mudar, ajuste o resumo junto.
+
+### "Leve na urna" (`#leve-na-urna`)
+
+A lista de números para o dia da votação — a "cola" da campanha — fica na home,
+logo abaixo do resumo de propostas, e tem item próprio no menu e no rodapé de
+todas as páginas. Serve para três coisas: **imprimir**, **baixar como imagem** e
+**mandar no WhatsApp**.
+
+A mesma informação existe em duas mídias, e não há etapa de build que gere uma a
+partir da outra — **se um número mudar, mude nos dois lugares**:
+
+| Onde | O quê |
+| --- | --- |
+| `index.html`, `.lnu__peca` | a folha que aparece na tela e sai na impressora |
+| `js/leve-na-urna.js`, `CARGOS` | a mesma folha redesenhada em `<canvas>` para virar imagem |
+
+Pontos que não são óbvios olhando o código:
+
+- **A ordem das linhas é a da urna** (deputado federal, deputado estadual,
+  senador 1, senador 2, governador, presidente), não a da importância. A peça
+  serve para acompanhar a votação tecla a tecla.
+- **A linha do deputado federal é um campo**, e não um número fixo: na peça
+  oficial ela vem em branco. Quem já escolheu anota o próprio número, que fica
+  no `localStorage` (`leve-na-urna-federal`) e reaparece na imagem e no papel.
+  Quem não escolheu imprime a casa vazia e escreve à caneta.
+- **A impressão é preto no branco**, com moldura no lugar do vermelho e do
+  amarelo (bloco `@media print` no fim de `css/landing.css`). É de propósito: a
+  folha foi feita para ser fotocopiada e para sobreviver a navegador com
+  "imprimir cores de fundo" desligado, que é o padrão. A mesma regra força o
+  layout de três colunas — o A4 tem ~703 px úteis, abaixo do corte de 720 px, e
+  sem isso a peça passaria para uma segunda página.
+- **`images/qr-leve-na-urna.png`** aponta para `delegadoyasser.com.br/#leve-na-urna`:
+  quem recebe o papel impresso volta para a página e imprime a sua cópia. Foi
+  gerado com [segno](https://pypi.org/project/segno/)
+  (`segno.make(url, error='m').save(..., scale=16, border=2)`).
+- **O texto legal da coligação** aparece em quatro lugares: o rodapé de todas as
+  páginas (`.rodape__legal`), a folha (`.lnu__legal`), `LEGAL` em
+  `js/leve-na-urna.js` e `LEGAL_COLIGACAO` em `js/foto-com-yasser.js`. Se a
+  coordenação mudar a composição, os quatro mudam juntos.
 
 ### Seções ocultas
 

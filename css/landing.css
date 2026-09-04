@@ -1927,12 +1927,19 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
 /* ---------- ≥ 980px ---------- */
 @media (min-width: 980px) {
   .nav__toggle { display: none; }
+  /* flex-wrap porque a linha do menu não cabe em tela de notëook: com nove
+     itens ela pede ~1.560 px, e sem quebrar o "Quero fazer parte" ficava
+     para fora da tela em 1280 e 1440 — cortado, não rolando, porque o body
+     tem overflow-x: hidden. Quebrando, o cabeçalho ganha uma segunda linha
+     nessas larguras e nada some. */
   .nav__links {
     position: static;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1.15rem;
+    justify-content: flex-end;
+    gap: 0.5rem 1rem;
     padding: 0;
     background: none;
     border: 0;
@@ -2666,3 +2673,537 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
    marca o cartão e o número volta a ser texto comum. */
 :root[data-contraste="alto"] .proposta,
 :root[data-contraste="alto"] .eixo { box-shadow: none; }
+
+/* =============================================================
+   LEVE NA URNA (#leve-na-urna) · a lista de números para levar
+   =============================================================
+
+   São duas peças no mesmo bloco:
+
+   .lnu__peca   a folha em si — cabeçalho, as seis linhas de cargo, o
+                grito do 13007 e o rodapé legal com o QR. É o único
+                pedaço da página que sai na impressão (ver @media print
+                no fim deste arquivo) e é ela que o canvas de
+                js/leve-na-urna.js redesenha para virar imagem.
+   .lnu__lado   o que fazer com a folha: formato, botões e as
+                instruções de votação. Nada disso é impresso.
+
+   As casas de dígito são arredondadas de propósito — é a única forma
+   arredondada do site, e serve para lembrar a tecla da urna. O tamanho
+   sai de --casa, definido por linha: a do 13007 é maior que as outras
+   porque o número do Yasser é o motivo da peça existir.
+
+   Cor por linha vem de --acento (a tarja lateral e o número da ordem).
+   A linha do 13007 inverte o esquema: fundo vermelho escuro (contraste
+   ≥ 7:1 com o branco) e teclas amarelas com dígito preto.
+   ============================================================= */
+
+/* O cabeçalho é fixo no topo (~61 px). Sem esta folga, quem chega pelo
+   item "Leve na urna" do menu cai com o título da seção escondido atrás
+   dele. */
+#leve-na-urna { scroll-margin-top: 4.75rem; }
+
+.lnu {
+  display: grid;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+/* ---------- A folha ---------- */
+.lnu__peca {
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: var(--sombra-brand);
+  overflow: hidden;
+}
+
+/* A bandeirinha de cores da campanha, como na peça oficial. */
+.lnu__bandeira {
+  display: flex;
+  margin: 0;
+  height: 12px;
+}
+.lnu__bandeira span { flex: 1; }
+.lnu__bandeira span:nth-child(1) { background: var(--azul); }
+.lnu__bandeira span:nth-child(2) { background: var(--verde); }
+.lnu__bandeira span:nth-child(3) { background: var(--amarelo); }
+.lnu__bandeira span:nth-child(4) { background: var(--brand); }
+.lnu__bandeira span:nth-child(5) { background: var(--azul); }
+.lnu__bandeira span:nth-child(6) { background: var(--verde); }
+
+.lnu__cabeca {
+  padding: 1.4rem clamp(1rem, 4vw, 1.9rem) 0.9rem;
+  text-align: center;
+}
+.lnu__data,
+.lnu__sub {
+  margin: 0;
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tinta-70);
+}
+.lnu__titulo {
+  margin: 0.35rem 0 0.25rem;
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(2.1rem, 8vw, 3.4rem);
+  line-height: 0.95;
+}
+
+/* ---------- As seis linhas ---------- */
+.lnu__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--borda);
+}
+
+/* No celular a linha empilha: rótulo, teclas e nome, um sob o outro. As
+   cinco teclas do 13007 sozinhas já ocupam ~258 px — lado a lado com o
+   rótulo e o nome, elas estourariam a tela de 320 px. */
+.lnu__linha {
+  --acento: var(--tinta-70);
+  --casa: 2.4rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "cargo"
+    "num"
+    "quem";
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.9rem clamp(0.9rem, 3.5vw, 1.6rem);
+  border-bottom: 1px solid rgba(24, 17, 20, 0.18);
+  border-left: 6px solid var(--acento);
+}
+.lnu__linha:last-child { border-bottom: 0; }
+
+.lnu__linha--livre     { --acento: var(--tinta-70); }
+.lnu__linha--azul      { --acento: var(--azul); }
+.lnu__linha--verde     { --acento: var(--verde-escuro); }
+.lnu__linha--amarelo   { --acento: var(--amarelo); }
+.lnu__linha--vermelho  { --acento: var(--brand); }
+
+.lnu__cargo {
+  grid-area: cargo;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  font-family: var(--fonte-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.lnu__cargo small {
+  display: block;
+  font-family: var(--fonte-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--tinta-70);
+}
+.lnu__ordem {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--branco);
+  background: var(--tinta);
+  border: var(--borda);
+}
+
+.lnu__num {
+  grid-area: num;
+  margin: 0;
+  justify-self: start;
+}
+.lnu__casas {
+  display: flex;
+  gap: 0.28rem;
+}
+.lnu__casas b {
+  display: grid;
+  place-items: center;
+  width: var(--casa);
+  height: calc(var(--casa) * 1.2);
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  font-size: calc(var(--casa) * 0.8);
+  line-height: 1;
+  color: var(--tinta);
+  background: var(--brand-suave);
+  border: var(--borda);
+  border-radius: 8px;
+}
+
+/* A casa do deputado federal é a única em branco na peça oficial: aqui
+   ela virou campo, para quem já escolheu anotar o próprio número — na
+   tela, na imagem baixada e no papel. Borda tracejada porque é o único
+   lugar da folha que espera alguma coisa de quem lê. */
+.lnu__campo {
+  width: calc(var(--casa) * 4 + 0.9rem);
+  height: calc(var(--casa) * 1.2);
+  padding: 0 0 0 0.28em;
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  font-size: calc(var(--casa) * 0.72);
+  line-height: 1;
+  text-align: center;
+  letter-spacing: 0.28em;
+  color: var(--tinta);
+  background: var(--branco);
+  border: 2px dashed var(--tinta);
+  border-radius: 8px;
+}
+.lnu__campo::placeholder { color: rgba(24, 17, 20, 0.28); }
+
+.lnu__quem {
+  grid-area: quem;
+  margin: 0;
+  align-self: start;
+}
+.lnu__quem strong {
+  display: block;
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.15;
+}
+.lnu__quem span {
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--tinta-70);
+}
+
+/* A linha do 13007 — o motivo da peça. */
+.lnu__linha--destaque {
+  --acento: var(--amarelo);
+  --casa: 3rem;
+  color: var(--branco);
+  background: var(--brand-escuro);
+  border-bottom-color: var(--brand-escuro);
+}
+.lnu__linha--destaque .lnu__cargo small,
+.lnu__linha--destaque .lnu__quem span { color: #f7d9d7; }
+.lnu__linha--destaque .lnu__ordem {
+  color: var(--tinta);
+  background: var(--amarelo);
+  border-color: var(--amarelo);
+}
+.lnu__linha--destaque .lnu__casas b {
+  background: var(--amarelo);
+  border-color: var(--tinta);
+  box-shadow: 3px 3px 0 rgba(24, 17, 20, 0.45);
+}
+.lnu__linha--destaque .lnu__quem strong { font-size: 1.25rem; }
+
+/* ---------- O grito: 13007 do tamanho que cabe ---------- */
+.lnu__grito {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.2rem 1.1rem;
+  margin: 0;
+  padding: 1rem clamp(0.9rem, 3.5vw, 1.6rem) 1.15rem;
+  color: var(--papel);
+  background: var(--tinta);
+  border-top: var(--borda);
+}
+.lnu__grito__num {
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  font-size: clamp(3.6rem, 15vw, 6rem);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  color: var(--amarelo);
+}
+.lnu__grito__nome {
+  font-family: var(--fonte-display);
+  font-weight: 500;
+  font-size: clamp(1.2rem, 4.5vw, 1.7rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+.lnu__grito__nome small {
+  display: block;
+  font-family: var(--fonte-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #cbbfba;
+}
+
+/* ---------- Rodapé legal da folha ---------- */
+.lnu__rodape {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem clamp(0.9rem, 3.5vw, 1.6rem);
+  background: var(--papel-2);
+  border-top: 1px solid rgba(24, 17, 20, 0.18);
+}
+.lnu__qr {
+  flex: none;
+  width: 74px;
+  height: 74px;
+  border: var(--borda);
+  background: var(--branco);
+}
+.lnu__site {
+  margin: 0 0 0.25rem;
+  font-family: var(--fonte-display);
+  font-weight: 500;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.lnu__legal {
+  margin: 0;
+  font-family: var(--fonte-mono);
+  font-size: 0.58rem;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  color: var(--tinta-70);
+}
+
+/* ---------- A coluna de ações (fora da folha) ---------- */
+.lnu__lado {
+  display: grid;
+  gap: 1.25rem;
+}
+.lnu__bloco {
+  padding: clamp(1.1rem, 4vw, 1.5rem);
+  background: var(--branco);
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+}
+.lnu__bloco h3 {
+  margin-bottom: 0.5rem;
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+.lnu__bloco--nota { background: var(--papel-2); }
+
+.lnu__dica {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--tinta-70);
+  margin-bottom: 0.9rem;
+}
+.lnu__dica:last-child { margin-bottom: 0; }
+
+.lnu__formatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.lnu__formato {
+  flex: 1 1 auto;
+  padding: 0.6rem 0.9rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tinta);
+  background: var(--branco);
+  border: var(--borda);
+  border-radius: var(--raio);
+  box-shadow: 3px 3px 0 var(--tinta);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.lnu__formato small {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  opacity: 0.75;
+}
+.lnu__formato:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--tinta); }
+.lnu__formato[aria-pressed="true"] {
+  color: var(--branco);
+  background: var(--brand-escuro);
+  box-shadow: 5px 5px 0 var(--tinta);
+}
+
+.lnu__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+.lnu__acoes .btn { flex: 1 1 46%; }
+
+.lnu__estado {
+  margin: 1rem 0 0;
+  min-height: 1.4em;
+  font-family: var(--fonte-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--tinta-70);
+}
+.lnu__estado:empty { margin: 0; min-height: 0; }
+
+.lnu__passos {
+  margin: 0 0 0.9rem;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.lnu__passos li { margin-bottom: 0.45rem; }
+.lnu__passos b {
+  font-family: var(--fonte-mono);
+  font-size: 0.82em;
+  letter-spacing: 0.06em;
+  padding: 0.1em 0.35em;
+  background: var(--tinta);
+  color: var(--papel);
+}
+
+/* A partir daqui a linha vira rótulo | teclas | nome, lado a lado. O corte
+   é em 720 px e não antes: abaixo disso, as cinco teclas do 13007 mais as
+   duas colunas de texto não cabem sem espremer o nome do candidato. */
+@media (min-width: 720px) {
+  .lnu__linha {
+    --casa: 2.5rem;
+    grid-template-columns: 8.5rem auto 1fr;
+    grid-template-areas: "cargo num quem";
+    gap: 1.1rem;
+  }
+  .lnu__quem { align-self: center; }
+  .lnu__cargo { line-height: 1.02; }
+  .lnu__linha--destaque { --casa: 3.2rem; }
+}
+
+/* A folha ganha a coluna larga; as ações vão para um trilho estreito ao
+   lado. minmax(0, …) porque sem ele o conteúdo das linhas impede a coluna
+   de encolher e a grade vaza para fora do container. */
+@media (min-width: 980px) {
+  .lnu { grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.55fr); }
+  .lnu__linha--destaque { --casa: 2.9rem; }
+  .lnu__linha--destaque .lnu__quem strong { font-size: 1.15rem; }
+}
+
+/* Alto contraste: o modo já achata fundo e sombra de tudo. O que precisa
+   voltar é a separação entre uma tecla e outra e o estado escolhido. */
+:root[data-contraste="alto"] .lnu__casas b,
+:root[data-contraste="alto"] .lnu__campo,
+:root[data-contraste="alto"] .lnu__ordem { border: 2px solid #fff !important; }
+:root[data-contraste="alto"] .lnu__formato[aria-pressed="true"] {
+  outline: 3px solid #ffef3f;
+  outline-offset: 2px;
+}
+:root[data-contraste="alto"] .lnu__grito__num { color: #ffef3f !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lnu__formato { transition: none; }
+  .lnu__formato:hover { transform: none; }
+}
+
+/* =============================================================
+   IMPRESSÃO
+   =============================================================
+   Sai só a folha, em preto sobre branco. Nada de fundo colorido:
+   a peça foi feita para ser fotocopiada e para sobreviver a
+   navegador com "imprimir cores de fundo" desligado — que é o
+   padrão. Por isso a linha do 13007 troca o vermelho por moldura
+   grossa, e o grito troca a tarja preta por número gigante.
+   ============================================================= */
+@media print {
+  @page { size: A4 portrait; margin: 12mm; }
+
+  html, body { background: #fff !important; color: #000 !important; }
+
+  /* Fora tudo que não é a folha: cabeçalho, rodapé do site, balão de
+     acessibilidade, VLibras, e o resto das seções da página. */
+  body > *:not(main),
+  main > *:not(#leve-na-urna),
+  #leve-na-urna .section-head,
+  #leve-na-urna .lnu__lado { display: none !important; }
+
+  #leve-na-urna,
+  #leve-na-urna .container,
+  .lnu { display: block !important; padding: 0 !important; margin: 0 !important; width: auto !important; }
+
+  .lnu__peca {
+    border: 2px solid #000 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .lnu__bandeira { display: none !important; }
+
+  /* A folha A4 tem ~703 px úteis com margem de 12 mm — abaixo do corte de
+     720 px, então sem esta regra a impressão cairia no empilhamento de
+     celular e a peça passaria para uma segunda página. */
+  .lnu__linha {
+    --casa: 2.4rem;
+    grid-template-columns: 8.5rem auto 1fr;
+    grid-template-areas: "cargo num quem";
+    gap: 0.9rem;
+    border-bottom: 1px solid #000 !important;
+    border-left: 0 !important;
+    padding-block: 0.55rem;
+    break-inside: avoid;
+  }
+  .lnu__linha--destaque { --casa: 3rem; }
+  .lnu__quem { align-self: center; }
+  .lnu__cargo { line-height: 1.02; }
+  .lnu__ordem {
+    color: #000 !important;
+    background: #fff !important;
+    border: 2px solid #000 !important;
+  }
+  .lnu__casas b,
+  .lnu__campo {
+    color: #000 !important;
+    background: #fff !important;
+    border: 2px solid #000 !important;
+    box-shadow: none !important;
+  }
+  .lnu__quem span,
+  .lnu__cargo small,
+  .lnu__legal,
+  .lnu__data,
+  .lnu__sub { color: #000 !important; }
+
+  /* O destaque do 13007 no papel é moldura, não cor. */
+  .lnu__linha--destaque {
+    color: #000 !important;
+    background: #fff !important;
+    border: 3px solid #000 !important;
+  }
+  .lnu__linha--destaque .lnu__casas b { border-width: 3px !important; }
+
+  .lnu__grito {
+    color: #000 !important;
+    background: #fff !important;
+    border-top: 3px solid #000 !important;
+  }
+  .lnu__grito__num { color: #000 !important; }
+  .lnu__grito__nome small { color: #000 !important; }
+
+  .lnu__rodape { background: #fff !important; border-top: 1px solid #000 !important; }
+
+  /* O reveal move os blocos para baixo até entrarem na tela; no papel
+     não há rolagem, então tudo precisa estar no lugar. */
+  .reveal { transform: none !important; opacity: 1 !important; }
+
+  a[href]::after { content: none !important; }
+}
