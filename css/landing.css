@@ -1759,7 +1759,9 @@ a { color: var(--brand-escuro); }
 .rodape ul a:hover,
 .rodape ul a:focus-visible { text-decoration: underline; }
 
-.rodape__social { display: flex; gap: 0.7rem; margin-top: 1.25rem; }
+/* flex-wrap: são seis ícones de 44 px (alvo de toque mínimo), 320 px no total —
+   mais do que cabe numa tela de 320. Quebram em duas fileiras em vez de vazar. */
+.rodape__social { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.25rem; }
 .rodape__social a,
 .topbar-social a {
   display: grid;
