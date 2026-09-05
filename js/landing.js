@@ -49,7 +49,8 @@
     });
 
     window.addEventListener("resize", function () {
-      if (window.innerWidth >= 980) fecharMenu();
+      // 1160 é onde o CSS troca a gaveta pelo menu na horizontal
+      if (window.innerWidth >= 1160) fecharMenu();
     });
   }
 

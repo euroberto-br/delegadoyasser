@@ -1924,14 +1924,21 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   .rodape__grid > :first-child { grid-column: 1 / -1; }
 }
 
-/* ---------- ≥ 980px ---------- */
-@media (min-width: 980px) {
+/* ---------- Menu na horizontal: ≥ 1160px ----------
+   O corte é aqui, e não nos 980 px do resto do layout, porque é a partir
+   daqui que a linha do menu cabe. A conta, com o container de 1.120:
+   logo 262 + folga 16 + menu 814 = 1.092, e o container só chega a 1.120
+   com a janela em 1.160. Abaixo disso vale o menu-gaveta, que já existe.
+   O espaço entre os itens é 0,75rem e não 1rem porque com 1rem a linha
+   pedia 838 px e sobravam 4 px — qualquer rótulo um fio maior quebrava.
+   O `flex-wrap` fica como rede de segurança: se um rótulo crescer, o
+   cabeçalho ganha uma segunda linha em vez de jogar o "Quero fazer parte"
+   para fora da tela — que foi o que acontecia antes, sem rolagem, porque
+   o body tem overflow-x: hidden.
+   Se mexer neste valor, mexa junto no `window.innerWidth >= 1160` de
+   js/landing.js, que fecha a gaveta ao voltar para a horizontal. */
+@media (min-width: 1160px) {
   .nav__toggle { display: none; }
-  /* flex-wrap porque a linha do menu não cabe em tela de notëook: com nove
-     itens ela pede ~1.560 px, e sem quebrar o "Quero fazer parte" ficava
-     para fora da tela em 1280 e 1440 — cortado, não rolando, porque o body
-     tem overflow-x: hidden. Quebrando, o cabeçalho ganha uma segunda linha
-     nessas larguras e nada some. */
   .nav__links {
     position: static;
     display: flex;
@@ -1939,13 +1946,16 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    gap: 0.5rem 1rem;
+    gap: 0.5rem 0.75rem;
     padding: 0;
     background: none;
     border: 0;
   }
   .nav__links a:not(.btn) { font-size: 0.75rem; white-space: nowrap; }
+}
 
+/* ---------- ≥ 980px ---------- */
+@media (min-width: 980px) {
   .hero__grid { grid-template-columns: 1.15fr 0.85fr; }
   .hero__foto { justify-self: end; width: 100%; }
 

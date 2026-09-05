@@ -121,6 +121,30 @@ Pontos que não são óbvios olhando o código:
   `js/leve-na-urna.js` e `LEGAL_COLIGACAO` em `js/foto-com-yasser.js`. Se a
   coordenação mudar a composição, os quatro mudam juntos.
 
+### O menu do topo cabe em uma linha — e só por isso tem sete itens
+
+O container do site tem 1.120 px e o logo come 262. Sobram **842 px** para o
+menu, que hoje pede **814**. É uma folga de 28 px: **cada item novo no topo
+tira o menu da linha única**, e aí alguma coisa some ou o cabeçalho vira duas
+linhas.
+
+Por isso "Notícias", "Foto com o Yasser" e "Convide o Yasser" saíram do topo em
+04/09/2026 — os três continuam alcançáveis pelo rodapé. Antes disso o botão
+"Quero fazer parte" ficava **cortado** em 1280 e 1440 px, e ninguém via: o
+`overflow-x: hidden` do `body` esconde o estouro em vez de deixar rolar.
+
+Duas defesas no CSS, para o problema não voltar calado:
+
+- o menu na horizontal só vale a partir de **1160 px** (`@media (min-width: 1160px)`,
+  no fim de `css/landing.css`); abaixo disso vale o menu-gaveta. Se mexer nesse
+  valor, mexa junto no `window.innerWidth >= 1160` de `js/landing.js`;
+- `.nav__links` tem `flex-wrap: wrap`, então o pior caso é o cabeçalho ganhar
+  uma segunda linha — nunca mais um item para fora da tela.
+
+Para conferir depois de mexer no menu, sirva o site com
+`python -m http.server` e meça a altura do `#cabecalho`: **69 px é uma linha**,
+~112 px são duas.
+
 ### Seções ocultas
 
 Duas seções do `index.html` estão **ocultas** com o atributo `hidden` (marcadas
