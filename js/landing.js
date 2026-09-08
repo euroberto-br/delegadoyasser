@@ -874,6 +874,48 @@
     });
   }
 
+  /* ---------- Compartilhar as propostas no WhatsApp ----------
+     O href do botao ja sai pronto do HTML, com uma mensagem neutra que
+     funciona sem JS. Aqui so acrescentamos o numero da urna quando a
+     propaganda de campanha esta liberada (data-campanha="on"): o numero e
+     propaganda eleitoral e nao pode vazar antes da hora, nem mesmo dentro de
+     um texto de compartilhamento. Ver a liberacao agendada mais abaixo. */
+  var zapPropostas = document.getElementById("zapPropostas");
+
+  if (zapPropostas) {
+    var montarMensagemPropostas = function () {
+      var assinatura =
+        raiz.getAttribute("data-campanha") === "on"
+          ? "*Delegado Yasser Yassine · 13007*\n_Candidato a Deputado Estadual · PT-GO_"
+          : "*Delegado Yasser Yassine*\n_Polícia Civil de Goiás · Goiás Seguro_";
+
+      return [
+        assinatura,
+        "",
+        "Propostas para Goiás em sete frentes:",
+        "",
+        "• Segurança pública",
+        "• Trabalho e direitos",
+        "• Educação",
+        "• Moradia",
+        "• Transporte",
+        "• Saúde",
+        "• Direitos humanos e cultura",
+        "",
+        "Leia a lista completa:",
+        "https://delegadoyasser.com.br/propostas.html"
+      ].join("\n");
+    };
+
+    var atualizarZapPropostas = function () {
+      zapPropostas.href =
+        "https://wa.me/?text=" + encodeURIComponent(montarMensagemPropostas());
+    };
+
+    atualizarZapPropostas();
+    document.addEventListener("campanha:liberada", atualizarZapPropostas);
+  }
+
   /* ---------- Liberação agendada do conteúdo de campanha ----------
      O script inline do <head> já decidiu o estado inicial (para o bloco não
      piscar antes de sumir). Aqui cuidamos do que depende do tempo passando:
@@ -890,6 +932,9 @@
   // liberar-campanha.js (ver comentário no <head> do index.html).
   function liberar() {
     raiz.setAttribute("data-campanha", "on");
+    // Quem monta texto a partir do estado da campanha (ex.: a mensagem de
+    // compartilhamento das propostas) se reescreve ao ouvir este evento.
+    document.dispatchEvent(new CustomEvent("campanha:liberada"));
   }
 
   if (liberado()) {

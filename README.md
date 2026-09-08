@@ -12,6 +12,8 @@ Domínio oficial: **https://delegadoyasser.com.br** (apex, sem `www`).
 delegadoyasser/
 ├── index.html                     Página inicial — o site completo
 ├── propostas.html                 Lista completa das propostas, por eixo
+├── propostas-delegado-yasser.pdf  As propostas em PDF — GERADO a partir do
+│                                  @media print de propostas.html (ver seção)
 ├── goias-seguro-para-todos.html   Mapa participativo de insegurança
 ├── mapa-do-medo.html              Só redireciona para o arquivo acima (ver "Renomeações")
 ├── solicitar-reuniao.html         Convite para o Yasser visitar a comunidade
@@ -81,6 +83,43 @@ estão num comentário HTML no próprio bloco: mesma ordem de eixos, **título e
 de cada proposta, e segurança pública abrindo como destaque nas duas páginas
 (o selo "Destaque" em `propostas.html` fica na proposta do SUIP). Se a lista
 completa mudar, ajuste o resumo junto.
+
+### Compartilhamento das propostas — e o PDF, que é gerado
+
+No fim de `propostas.html` há **um único** ponto de compartilhamento
+(`#compartilhar`), com duas saídas. Antes existia um link "envie para alguém" em
+cada proposta; eles saíram porque, com a lista crescendo, viraram ruído repetido
+no meio da leitura.
+
+| Saída | Como funciona |
+| --- | --- |
+| **Enviar no WhatsApp** | O `href` já sai pronto do HTML, com uma mensagem neutra que funciona sem JS. O `landing.js` reescreve o texto acrescentando o **13007** quando a propaganda está liberada (`data-campanha="on"`), e escuta o evento `campanha:liberada` para reescrever também em quem estiver com a página aberta na virada. O número é propaganda eleitoral e não pode vazar antes da hora, nem dentro de um texto de compartilhamento. |
+| **Baixar as propostas em PDF** | Arquivo estático `propostas-delegado-yasser.pdf`, na raiz. |
+
+**O PDF não se atualiza sozinho.** Ele é gerado a partir do `@media print` da
+própria `propostas.html` (bloco "PROPOSTAS EM PAPEL / PDF" no fim de
+`css/landing.css`), então **se a lista de propostas mudar, o PDF precisa ser
+gerado de novo**:
+
+```bash
+python -m http.server 8731 --bind 127.0.0.1        # servir a pasta
+chrome --headless=new --no-pdf-header-footer \
+       --print-to-pdf=propostas-delegado-yasser.pdf \
+       http://127.0.0.1:8731/propostas.html
+```
+
+O documento sai em **preto sobre branco**, pela mesma razão da folha da urna: é
+feito para ser fotocopiado e para sobreviver a navegador com "imprimir cores de
+fundo" desligado. Por isso a tarja vermelha do título vira sublinhado, os cartões
+viram lista de uma coluna com fio à esquerda, e o `<strong>` da abertura — que na
+tela é quase branco sobre fundo escuro — volta para o preto. O cabeçalho e o
+rodapé do arquivo (`.folha-cabeca` / `.folha-pe`) só existem no papel: na tela
+levam `.so-impressao`, que é `display: none`.
+
+Uma armadilha relacionada: o `@media print` da folha da urna começava em
+`main > *:not(#leve-na-urna)`, o que apagava o conteúdo de **qualquer outra
+página** do site na impressão. As regras agora ficam presas a
+`body:has(#leve-na-urna)`.
 
 ### "Leve na urna" (`#leve-na-urna`)
 

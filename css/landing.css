@@ -130,6 +130,7 @@
   --brand-suave: #fde6e5;
   --verde: #2bba29;
   --verde-escuro: #1c7d1a;
+  --verde-zap: #146312;    /* botao WhatsApp: 7.44:1 com texto branco */
   --amarelo: #f6d30b;
   --amarelo-escuro: #8a6f00; /* escurecido p/ texto sobre amarelo (WCAG AA) */
   --azul: #293ecf;
@@ -2617,26 +2618,61 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   text-underline-offset: 3px;
 }
 
-/* ---------- Compartilhar uma proposta no WhatsApp ---------- */
-.proposta__zap {
+
+/* ---------- Compartilhar as propostas (WhatsApp + PDF) ----------
+   Um bloco unico no fim da lista, no lugar dos links que ficavam em cada
+   cartao. Texto a esquerda, acoes a direita; empilha no celular. */
+.compartilha {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2.75rem);
+  align-items: center;
+  background: var(--branco);
+  border: var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra-dura);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+.compartilha__texto h2 {
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  margin: 0.35rem 0 0.7rem;
+}
+.compartilha__texto p {
+  margin: 0;
+  color: var(--tinta-70);
+  font-size: clamp(1rem, 2vw, 1.06rem);
+}
+.compartilha__acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.8rem;
+}
+.compartilha__acoes .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  align-self: flex-start;
-  margin-top: auto;      /* cola no pe do cartao, alinhado entre os vizinhos */
-  padding-top: 1rem;
-  font-family: var(--fonte-texto);
-  font-size: 0.82rem;
-  font-weight: 700;
-  line-height: 1.2;
-  text-decoration: none;
-  color: var(--verde-escuro);
+  justify-content: center;
+  gap: 0.6rem;
 }
-.proposta__zap svg { width: 1.05rem; height: 1.05rem; flex: none; }
-.proposta__zap span { border-bottom: 2px solid currentColor; }
-.proposta__zap:hover span,
-.proposta__zap:focus-visible span { border-bottom-color: transparent; }
-.proposta--destaque .proposta__zap { color: var(--verde); }
+.compartilha__acoes .btn svg { width: 1.25rem; height: 1.25rem; flex: none; }
+.compartilha__nota {
+  margin: 0.1rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--tinta-70);
+}
+
+/* Mesma regra dos outros botoes de fundo colorido: texto branco pequeno pede
+   >= 7:1 (WCAG 1.4.6 AAA). O --verde-escuro da paleta para em 5.25:1, entao o
+   botao usa um tom proprio, mais fechado, que chega a 7.44:1. */
+.btn--zap {
+  background: var(--verde-zap);
+  color: var(--branco);
+}
+
+@media (min-width: 820px) {
+  .compartilha { grid-template-columns: 1.35fr 1fr; }
+  .compartilha__acoes { align-items: stretch; }
+}
 
 /* Uma proposta pode ser promovida a manchete: ocupa a linha inteira do grid e
    inverte para o fundo escuro, virando o único bloco em tinta no meio dos
@@ -3128,6 +3164,10 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   .lnu__formato:hover { transform: none; }
 }
 
+
+/* Blocos que so existem no papel/PDF (ver @media print no fim do arquivo). */
+.so-impressao { display: none; }
+
 /* =============================================================
    IMPRESSÃO
    =============================================================
@@ -3144,8 +3184,13 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
 
   /* Fora tudo que não é a folha: cabeçalho, rodapé do site, balão de
      acessibilidade, VLibras, e o resto das seções da página. */
-  body > *:not(main),
-  main > *:not(#leve-na-urna),
+  /* Escondido na tela; e o cabecalho/rodape das versoes em papel. */
+  .so-impressao { display: block !important; }
+
+  /* A folha da urna so existe no index. As regras abaixo ficam presas a ela
+     para nao apagarem o conteudo das outras paginas (ver .folha-* adiante). */
+  body:has(#leve-na-urna) > *:not(main),
+  body:has(#leve-na-urna) main > *:not(#leve-na-urna),
   #leve-na-urna .section-head,
   #leve-na-urna .lnu__lado { display: none !important; }
 
@@ -3216,6 +3261,148 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
   /* O reveal move os blocos para baixo até entrarem na tela; no papel
      não há rolagem, então tudo precisa estar no lugar. */
   .reveal { transform: none !important; opacity: 1 !important; }
+
+
+/* -------------------------------------------------------------
+   PROPOSTAS EM PAPEL / PDF
+   -------------------------------------------------------------
+   O arquivo propostas-delegado-yasser.pdf e gerado a partir daqui:
+
+     chrome --headless=new --no-pdf-header-footer \
+            --print-to-pdf=propostas-delegado-yasser.pdf \
+            http://127.0.0.1:PORTA/propostas.html
+
+   Se a lista de propostas mudar, o PDF precisa ser gerado de novo.
+   Tudo em preto sobre branco: o documento e feito para ser fotocopiado
+   e para sobreviver a navegador com "imprimir cores de fundo" desligado.
+   ------------------------------------------------------------- */
+  body:has(#compartilhar) > *:not(main),
+  #compartilhar,
+  .secao--brand,
+  .props-indice,
+  .banner-mapa,
+  .eixo-bloco__cta { display: none !important; }
+
+  .folha-cabeca {
+    border-bottom: 3px solid #000;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.4rem;
+  }
+  .folha-cabeca__marca {
+    margin: 0;
+    font-family: var(--fonte-display);
+    font-size: 15pt;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #000;
+  }
+  .folha-cabeca__cargo {
+    margin: 0.15rem 0 0;
+    font-family: var(--fonte-mono);
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #000;
+  }
+
+  /* A abertura da pagina (h1 + intro) vira a capa do documento. */
+  .secao,
+  .secao .container,
+  .propostas-corpo { padding: 0 !important; margin: 0 !important; background: #fff !important; }
+  .secao--tinta { color: #000 !important; margin-bottom: 1.1rem !important; }
+  .secao--tinta .eyebrow { color: #000 !important; }
+  .secao--tinta h1 { font-size: 26pt; margin: 0.2rem 0 0.4rem; }
+  /* Na tela a tarja vermelha destaca a palavra; no papel ela viraria um bloco
+     preto (ou sumiria, com "cores de fundo" desligado). Vira sublinhado. */
+  .secao--tinta .marca {
+    background: none !important;
+    color: #000 !important;
+    padding: 0 !important;
+    border-bottom: 3px solid #000;
+  }
+  .props-intro { font-size: 10.5pt; color: #000 !important; max-width: none; }
+  /* .props-intro strong e --papel (quase branco) para o fundo escuro da tela:
+     no papel branco desapareceria. */
+  .props-intro strong,
+  .secao--tinta strong { color: #000 !important; }
+
+  /* Os eixos correm um atras do outro em vez de comecar cada um numa pagina:
+     "Trabalho e direitos" tem uma proposta so e deixaria a folha quase vazia.
+     O que separa os eixos e o titulo com fio, e o que nao pode quebrar e a
+     proposta (break-inside abaixo) e o titulo orfao no pe da pagina. */
+  .eixo-bloco {
+    background: #fff !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 0 1.6rem !important;
+    break-inside: auto;
+  }
+  .eixo-bloco__cabeca {
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.7rem;
+    break-after: avoid;
+  }
+  .eixo-bloco__cabeca h2 { font-size: 17pt; color: #000 !important; }
+  .eixo__ico { color: #000 !important; background: #fff !important; border-color: #000 !important; }
+  .eixo-bloco__intro { font-size: 9.5pt; color: #000 !important; margin-bottom: 0.8rem; }
+
+  /* Uma coluna: cartao em grade vira lista corrida, que e como um documento le. */
+  .propostas-lista {
+    display: block !important;
+    counter-reset: proposta;
+  }
+  .proposta,
+  .proposta--destaque {
+    background: #fff !important;
+    color: #000 !important;
+    border: 0 !important;
+    border-left: 3px solid #000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 0 0 0.7rem !important;
+    margin: 0 0 0.85rem !important;
+    break-inside: avoid;
+  }
+  .proposta h3,
+  .proposta--destaque h3 {
+    font-family: var(--fonte-texto);
+    font-weight: 800;
+    text-transform: none;
+    font-size: 11pt;
+    line-height: 1.25;
+    margin: 0 0 0.2rem;
+    color: #000 !important;
+  }
+  .proposta h3::before {
+    counter-increment: proposta;
+    content: counter(proposta) ". ";
+  }
+  .proposta p,
+  .proposta--destaque p {
+    font-size: 9.5pt;
+    line-height: 1.5;
+    color: #000 !important;
+    margin: 0 0 0.3rem;
+  }
+  .proposta a { color: #000 !important; text-decoration: underline; }
+  .proposta__selo {
+    background: #fff !important;
+    color: #000 !important;
+    border: 1.5px solid #000;
+  }
+
+  .folha-pe {
+    break-before: avoid;
+    border-top: 2px solid #000;
+    margin-top: 1.2rem;
+    padding-top: 0.5rem;
+    font-size: 8.5pt;
+    line-height: 1.45;
+    color: #000;
+  }
+  .folha-pe p { margin: 0 0 0.15rem; }
 
   a[href]::after { content: none !important; }
 }
