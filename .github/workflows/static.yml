@@ -38,7 +38,7 @@ jobs:
       # legível em /liberar-campanha.js — justamente o que não pode circular
       # antes da liberação. Removido só da cópia do runner; o repo não muda.
       - name: Remover ferramentas que não vão para o ar
-        run: rm -f liberar-campanha.js
+        run: rm -f liberar-campanha.js gerar-pdf-propostas.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

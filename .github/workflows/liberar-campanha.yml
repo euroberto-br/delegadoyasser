@@ -73,7 +73,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Remover ferramentas que não vão para o ar
-        run: rm -f liberar-campanha.js
+        run: rm -f liberar-campanha.js gerar-pdf-propostas.js
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

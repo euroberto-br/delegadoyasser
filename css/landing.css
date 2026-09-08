@@ -2324,6 +2324,7 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
 .eixo--transporte { --acento: var(--tinta);          --acento-tint: #eae3de; }
 .eixo--saude      { --acento: var(--brand-escuro);   --acento-tint: #fde6e5; }
 .eixo--direitos   { --acento: var(--azul-escuro);    --acento-tint: #e4e7fa; }
+.eixo--transparencia { --acento: var(--tinta); --acento-tint: #eae3de; }
 
 /* ---------- Selo do eixo (ícone quadrado, comum às duas telas) ---------- */
 .eixo__ico {

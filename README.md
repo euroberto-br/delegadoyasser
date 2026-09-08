@@ -12,8 +12,10 @@ Domínio oficial: **https://delegadoyasser.com.br** (apex, sem `www`).
 delegadoyasser/
 ├── index.html                     Página inicial — o site completo
 ├── propostas.html                 Lista completa das propostas, por eixo
-├── propostas-delegado-yasser.pdf  As propostas em PDF — GERADO a partir do
-│                                  @media print de propostas.html (ver seção)
+├── propostas-delegado-yasser.pdf  As propostas em PDF, com capa e a cola da urna
+│                                  — GERADO; não edite à mão (ver seção)
+├── gerar-pdf-propostas.js         Ferramenta: lê propostas.html + index.html e
+│                                  monta o PDF acima (ver "Compartilhamento")
 ├── goias-seguro-para-todos.html   Mapa participativo de insegurança
 ├── mapa-do-medo.html              Só redireciona para o arquivo acima (ver "Renomeações")
 ├── solicitar-reuniao.html         Convite para o Yasser visitar a comunidade
@@ -61,13 +63,18 @@ delegadoyasser/
   Yasser, o resumo das propostas, **"Leve na urna"**, as missões do movimento,
   o mapa, notícias, carrossel de fotos, "Foto com o Yasser" e o formulário de
   cadastro.
-- **`propostas.html`** — a lista completa, dividida em **oito eixos**: segurança
+- **`propostas.html`** — a lista completa, dividida em **nove eixos**: segurança
   pública, trabalho e direitos, educação, esporte e juventude, moradia,
-  transporte, saúde e direitos humanos e cultura. Cada eixo tem uma âncora
-  própria (`#seguranca`, `#trabalho`, `#educacao`, `#esporte`, `#moradia`,
-  `#transporte`, `#saude`, `#direitos`).
+  transporte, saúde, direitos humanos e cultura, e transparência e prestação de
+  contas. Cada eixo tem uma âncora própria (`#seguranca`, `#trabalho`,
+  `#educacao`, `#esporte`, `#moradia`, `#transporte`, `#saude`, `#direitos`,
+  `#transparencia`).
 
-  **Como escrever uma proposta nova.** Duas regras, e as 52 existentes seguem
+  O último eixo é diferente dos outros oito: não é área de política pública, é
+  compromisso sobre o próprio mandato (o painel com o destino de 100% das
+  emendas). Por isso fecha a página, em vez de entrar no meio.
+
+  **Como escrever uma proposta nova.** Duas regras, e as 56 existentes seguem
   as duas:
 
   1. **Começa com verbo de ação do deputado.** Os que estão em uso: articular,
@@ -113,25 +120,45 @@ no meio da leitura.
 | **Enviar no WhatsApp** | O `href` já sai pronto do HTML, com uma mensagem neutra que funciona sem JS. O `landing.js` reescreve o texto acrescentando o **13007** quando a propaganda está liberada (`data-campanha="on"`), e escuta o evento `campanha:liberada` para reescrever também em quem estiver com a página aberta na virada. O número é propaganda eleitoral e não pode vazar antes da hora, nem dentro de um texto de compartilhamento. |
 | **Baixar as propostas em PDF** | Arquivo estático `propostas-delegado-yasser.pdf`, na raiz. |
 
-**O PDF não se atualiza sozinho.** Ele é gerado a partir do `@media print` da
-própria `propostas.html` (bloco "PROPOSTAS EM PAPEL / PDF" no fim de
-`css/landing.css`), então **se a lista de propostas mudar, o PDF precisa ser
-gerado de novo**:
+**O PDF não se atualiza sozinho.** **Se a lista de propostas mudar, gere de
+novo:**
 
 ```bash
-python -m http.server 8731 --bind 127.0.0.1        # servir a pasta
-chrome --headless=new --no-pdf-header-footer \
-       --print-to-pdf=propostas-delegado-yasser.pdf \
-       http://127.0.0.1:8731/propostas.html
+python -m http.server 8731 --bind 127.0.0.1   # noutro terminal
+node gerar-pdf-propostas.js
 ```
 
-O documento sai em **preto sobre branco**, pela mesma razão da folha da urna: é
-feito para ser fotocopiado e para sobreviver a navegador com "imprimir cores de
-fundo" desligado. Por isso a tarja vermelha do título vira sublinhado, os cartões
-viram lista de uma coluna com fio à esquerda, e o `<strong>` da abertura — que na
-tela é quase branco sobre fundo escuro — volta para o preto. O cabeçalho e o
-rodapé do arquivo (`.folha-cabeca` / `.folha-pe`) só existem no papel: na tela
+### Há DUAS versões em papel, e elas são diferentes de propósito
+
+Isto confunde quem mexe pela primeira vez, então vale o parágrafo:
+
+| | O que sai | Como é feita |
+| --- | --- | --- |
+| **Ctrl+P na página** | Preto sobre branco, sem foto | `@media print` de `css/landing.css` (bloco "PROPOSTAS EM PAPEL / PDF") |
+| **`propostas-delegado-yasser.pdf`** | Capa com foto, eixos coloridos, cola da urna no fim | `gerar-pdf-propostas.js` |
+
+A versão do Ctrl+P **não pode** ser colorida: navegador não imprime fundo por
+padrão, e uma folha que depende de cor de fundo sai quebrada na casa de quem
+imprime. Ela é feita para ser fotocopiada — por isso a tarja vermelha do título
+vira sublinhado, os cartões viram lista de uma coluna com fio à esquerda, e o
+`<strong>` da abertura (quase branco na tela) volta para o preto. O cabeçalho e o
+rodapé dessa folha (`.folha-cabeca` / `.folha-pe`) só existem no papel: na tela
 levam `.so-impressao`, que é `display: none`.
+
+O PDF é outra peça, para mandar no WhatsApp e imprimir em gráfica. Ele força a
+cor com `print-color-adjust: exact`, o que só funciona porque quem imprime é o
+Chrome headless, e não o navegador do eleitor.
+
+**O gerador não duplica as propostas.** `gerar-pdf-propostas.js` *lê*
+`propostas.html` (eixos, ícones, títulos, parágrafos, destaques) e `index.html`
+(as seis linhas da peça `.lnu__peca`, para montar a cola da urna), e ainda puxa a
+paleta do `:root` e o `--acento` de cada eixo do `landing.css`. Editar a página é
+o bastante; o PDF acompanha na próxima geração. Um eixo novo entra sozinho, sem
+tocar no gerador.
+
+O intermediário `propostas-pdf.tmp.html` é gravado na raiz (precisa estar lá para
+achar `images/` e `fonts/` por caminho relativo) e apagado no fim — use `--manter`
+para depurar o layout. O script também aceita `--porta=` e `--chrome=`.
 
 Uma armadilha relacionada: o `@media print` da folha da urna começava em
 `main > *:not(#leve-na-urna)`, o que apagava o conteúdo de **qualquer outra
@@ -310,9 +337,10 @@ que o layout pule enquanto elas carregam.
 
 - **Cores:** no `:root` de `css/landing.css` (`--brand: #f9120c`). Cada token
   tem uma variante `-escuro` usada em texto, para manter contraste ≥ 4,5:1.
-  Os oito eixos de proposta usam `--acento`/`--acento-tint` (`.eixo--seguranca`
+  Os nove eixos de proposta usam `--acento`/`--acento-tint` (`.eixo--seguranca`
   e afins), no mesmo arquivo. Há mais eixos que cores: segurança e saúde
-  dividem o vermelho, educação e direitos o azul, trabalho e esporte o amarelo.
+  dividem o vermelho, educação e direitos o azul, trabalho e esporte o amarelo,
+  transporte e transparência a tinta.
 - **Tipografia:** Oswald (display), Archivo (texto), IBM Plex Mono (rótulos) e
   Caveat Brush (assinatura à mão) — todas em `fonts/`, servidas pelo próprio
   domínio via `@font-face`, sem chamada ao Google Fonts. Caveat Brush é a

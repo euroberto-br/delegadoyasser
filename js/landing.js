@@ -892,7 +892,7 @@
       return [
         assinatura,
         "",
-        "Propostas para Goiás em oito frentes:",
+        "Propostas para Goiás em nove frentes:",
         "",
         "• Segurança pública",
         "• Trabalho e direitos",
@@ -902,6 +902,7 @@
         "• Transporte",
         "• Saúde",
         "• Direitos humanos e cultura",
+        "• Transparência e prestação de contas",
         "",
         "Leia a lista completa:",
         "https://delegadoyasser.com.br/propostas.html"
