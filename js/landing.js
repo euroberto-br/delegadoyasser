@@ -892,11 +892,12 @@
       return [
         assinatura,
         "",
-        "Propostas para Goiás em sete frentes:",
+        "Propostas para Goiás em oito frentes:",
         "",
         "• Segurança pública",
         "• Trabalho e direitos",
         "• Educação",
+        "• Esporte e juventude",
         "• Moradia",
         "• Transporte",
         "• Saúde",

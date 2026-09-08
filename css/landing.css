@@ -2319,6 +2319,7 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
 .eixo--seguranca  { --acento: var(--brand-escuro);   --acento-tint: #fde6e5; }
 .eixo--trabalho   { --acento: var(--amarelo-escuro); --acento-tint: #fbf1c8; }
 .eixo--educacao   { --acento: var(--azul-escuro);    --acento-tint: #e4e7fa; }
+.eixo--esporte    { --acento: var(--amarelo-escuro); --acento-tint: #fbf1c8; }
 .eixo--moradia    { --acento: var(--verde-escuro);   --acento-tint: #e1f5e0; }
 .eixo--transporte { --acento: var(--tinta);          --acento-tint: #eae3de; }
 .eixo--saude      { --acento: var(--brand-escuro);   --acento-tint: #fde6e5; }

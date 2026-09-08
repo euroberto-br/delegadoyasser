@@ -61,10 +61,27 @@ delegadoyasser/
   Yasser, o resumo das propostas, **"Leve na urna"**, as missões do movimento,
   o mapa, notícias, carrossel de fotos, "Foto com o Yasser" e o formulário de
   cadastro.
-- **`propostas.html`** — a lista completa, dividida em **sete eixos**: segurança
-  pública, trabalho e direitos, educação, moradia, transporte, saúde e direitos
-  humanos e cultura. Cada eixo tem uma âncora própria (`#seguranca`, `#trabalho`,
-  `#educacao`, `#moradia`, `#transporte`, `#saude`, `#direitos`).
+- **`propostas.html`** — a lista completa, dividida em **oito eixos**: segurança
+  pública, trabalho e direitos, educação, esporte e juventude, moradia,
+  transporte, saúde e direitos humanos e cultura. Cada eixo tem uma âncora
+  própria (`#seguranca`, `#trabalho`, `#educacao`, `#esporte`, `#moradia`,
+  `#transporte`, `#saude`, `#direitos`).
+
+  **Como escrever uma proposta nova.** Duas regras, e as 52 existentes seguem
+  as duas:
+
+  1. **Começa com verbo de ação do deputado.** Os que estão em uso: articular,
+     apresentar, destinar, defender, cobrar, propor, fiscalizar, acompanhar,
+     levar, levantar, protocolar, transformar. O verbo carrega o instrumento —
+     *articular* é matéria federal ou acordo entre entes, *destinar* é emenda
+     parlamentar, *apresentar/propor* é projeto de lei ou indicação ao Governo,
+     *cobrar/fiscalizar/acompanhar* é a função fiscalizadora.
+  2. **Nunca explica de quem é a competência.** Deputado estadual de fato não
+     cria delegacia nem reestrutura carreira por lei de autoria própria — mas o
+     texto resolve isso escolhendo o verbo certo, não escrevendo "isso é
+     iniciativa do Governador". A proposta diz o que o Yasser faz, e ponto.
+     Frases como "não se cria em Goiás", "só o Governador pode propor" ou "a
+     tarifa é fixada pelo Executivo" já foram removidas — não as traga de volta.
 - **`goias-seguro-para-todos.html`** — mapa participativo (Leaflet +
   OpenStreetMap): a população marca pontos de risco, que passam por moderação
   antes de aparecer.
@@ -293,8 +310,9 @@ que o layout pule enquanto elas carregam.
 
 - **Cores:** no `:root` de `css/landing.css` (`--brand: #f9120c`). Cada token
   tem uma variante `-escuro` usada em texto, para manter contraste ≥ 4,5:1.
-  Os sete eixos de proposta usam `--acento`/`--acento-tint` (`.eixo--seguranca`
-  e afins), no mesmo arquivo.
+  Os oito eixos de proposta usam `--acento`/`--acento-tint` (`.eixo--seguranca`
+  e afins), no mesmo arquivo. Há mais eixos que cores: segurança e saúde
+  dividem o vermelho, educação e direitos o azul, trabalho e esporte o amarelo.
 - **Tipografia:** Oswald (display), Archivo (texto), IBM Plex Mono (rótulos) e
   Caveat Brush (assinatura à mão) — todas em `fonts/`, servidas pelo próprio
   domínio via `@font-face`, sem chamada ao Google Fonts. Caveat Brush é a
