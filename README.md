@@ -74,7 +74,7 @@ delegadoyasser/
   compromisso sobre o próprio mandato (o painel com o destino de 100% das
   emendas). Por isso fecha a página, em vez de entrar no meio.
 
-  **Como escrever uma proposta nova.** Duas regras, e as 56 existentes seguem
+  **Como escrever uma proposta nova.** Duas regras, e as 55 existentes seguem
   as duas:
 
   1. **Começa com verbo de ação do deputado.** Os que estão em uso: articular,
