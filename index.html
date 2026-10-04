@@ -651,9 +651,12 @@
                 </p>
                 <div class="lnu__num">
                   <label class="sr-only" for="lnuFederal">Número do seu candidato a deputado federal, quatro dígitos (opcional)</label>
-                  <input class="lnu__campo" id="lnuFederal" type="text" inputmode="numeric"
-                         pattern="[0-9]*" maxlength="4" autocomplete="off"
-                         placeholder="0000" aria-describedby="lnu-federal-dica">
+                  <span class="lnu__casas lnu__casas--campo">
+                    <b aria-hidden="true"></b><b aria-hidden="true"></b><b aria-hidden="true"></b><b aria-hidden="true"></b>
+                    <input class="lnu__campo" id="lnuFederal" type="text" inputmode="numeric"
+                           pattern="[0-9]*" maxlength="4" autocomplete="off"
+                           aria-describedby="lnu-federal-dica">
+                  </span>
                 </div>
                 <p class="lnu__quem" id="lnu-federal-dica"><strong>Voto livre</strong>
                    <span>Anote o número do seu candidato de confiança.</span></p>

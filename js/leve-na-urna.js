@@ -132,15 +132,28 @@
     } catch (e) { /* navegação anônima, cota cheia: só não guarda */ }
   }
 
+  // as 4 casas visíveis; o campo de verdade fica invisível por cima delas
+  var casasFederal = campoFederal
+    ? campoFederal.parentNode.querySelectorAll("b")
+    : [];
+
+  function mostrarFederal() {
+    for (var i = 0; i < casasFederal.length; i++) {
+      casasFederal[i].textContent = estado.federal.charAt(i);
+    }
+  }
+
   if (campoFederal) {
     estado.federal = lerFederalSalvo();
     campoFederal.value = estado.federal;
+    mostrarFederal();
 
     campoFederal.addEventListener("input", function () {
       var limpo = campoFederal.value.replace(/\D/g, "").slice(0, 4);
       if (limpo !== campoFederal.value) campoFederal.value = limpo;
       estado.federal = limpo;
       guardarFederal(limpo);
+      mostrarFederal();
     });
   }
 
@@ -329,11 +342,11 @@
         ctx.textAlign = "center";
         ctx.fillText(digitos[c], xc + casaL / 2, meioY + casaA * 0.03);
       } else {
-        // deputado federal: casa em branco, tracejada, com o que a pessoa anotou
-        tecla(xc, yCasa, casaL, casaA, 10, COR.papel, COR.tinta, 3, true);
+        // deputado federal: mesma casa das outras linhas, com o que a pessoa anotou
+        tecla(xc, yCasa, casaL, casaA, 10, COR.brandSuave, COR.tinta, 3);
         if (estado.federal.charAt(c)) {
           ctx.fillStyle = COR.tinta;
-          usarFonte("700", casaA * 0.6, "Oswald");
+          usarFonte("700", casaA * 0.66, "Oswald");
           ctx.textAlign = "center";
           ctx.fillText(estado.federal.charAt(c), xc + casaL / 2, meioY + casaA * 0.03);
         }

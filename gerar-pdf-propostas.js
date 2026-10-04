@@ -206,7 +206,7 @@ ${linhas
         <p class="cola__cargo"><span class="cola__ordem">${l.ordem}</span>${l.cargo}</p>
         <p class="cola__num">${
           l.livre
-            ? '<span class="cola__campo"></span>'
+            ? "<b></b>".repeat(4)
             : l.casas.map((d) => `<b>${d}</b>`).join("")
         }</p>
         <p class="cola__quem"><strong>${l.nome}</strong>${
@@ -421,13 +421,12 @@ body{
   font-family:"IBM Plex Mono",monospace; font-size:7pt; font-weight:600;
 }
 .cola__num{ display:flex; gap:1.4mm; margin:0 }
-.cola__num b,.cola__campo{
+.cola__num b{
   display:flex; align-items:center; justify-content:center;
   width:7.4mm; height:9.4mm;
   border:.5mm solid var(--tinta); background:var(--branco);
   font-family:"Oswald",sans-serif; font-weight:600; font-size:15pt;
 }
-.cola__campo{ width:30mm; background:repeating-linear-gradient(90deg,transparent 0 6.6mm,rgba(24,17,20,.3) 6.6mm 6.8mm) }
 .cola__quem{ margin:0; font-size:9pt; line-height:1.3 }
 .cola__quem strong{ display:block; font-size:10.4pt }
 .cola__quem span{ color:var(--tinta-70); font-size:8.2pt }

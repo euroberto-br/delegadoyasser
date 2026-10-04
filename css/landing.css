@@ -2898,25 +2898,32 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
 }
 
 /* A casa do deputado federal é a única em branco na peça oficial: aqui
-   ela virou campo, para quem já escolheu anotar o próprio número — na
-   tela, na imagem baixada e no papel. Borda tracejada porque é o único
-   lugar da folha que espera alguma coisa de quem lê. */
-.lnu__campo {
-  width: calc(var(--casa) * 4 + 0.9rem);
-  height: calc(var(--casa) * 1.2);
-  padding: 0 0 0 0.28em;
-  font-family: var(--fonte-display);
-  font-weight: 700;
-  font-size: calc(var(--casa) * 0.72);
-  line-height: 1;
-  text-align: center;
-  letter-spacing: 0.28em;
-  color: var(--tinta);
-  background: var(--branco);
-  border: 2px dashed var(--tinta);
+   ela tem as mesmas 4 casas das outras linhas, e um campo invisível por
+   cima recebe o número de quem já escolheu — o JS copia cada dígito
+   para a sua casa. */
+.lnu__casas--campo {
+  position: relative;
   border-radius: 8px;
 }
-.lnu__campo::placeholder { color: rgba(24, 17, 20, 0.28); }
+.lnu__casas--campo:focus-within {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}
+.lnu__campo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  color: transparent;
+  caret-color: transparent;
+  background: transparent;
+  border: 0;
+  opacity: 0;
+  cursor: text;
+}
 
 .lnu__quem {
   grid-area: quem;
@@ -3153,7 +3160,6 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
 /* Alto contraste: o modo já achata fundo e sombra de tudo. O que precisa
    voltar é a separação entre uma tecla e outra e o estado escolhido. */
 :root[data-contraste="alto"] .lnu__casas b,
-:root[data-contraste="alto"] .lnu__campo,
 :root[data-contraste="alto"] .lnu__ordem { border: 2px solid #fff !important; }
 :root[data-contraste="alto"] .lnu__formato[aria-pressed="true"] {
   outline: 3px solid #ffef3f;
@@ -3229,8 +3235,7 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
     background: #fff !important;
     border: 2px solid #000 !important;
   }
-  .lnu__casas b,
-  .lnu__campo {
+  .lnu__casas b {
     color: #000 !important;
     background: #fff !important;
     border: 2px solid #000 !important;
