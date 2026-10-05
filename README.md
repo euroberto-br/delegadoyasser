@@ -1,45 +1,39 @@
 # Site — Delegado Yasser Yassine · Goiás Seguro para Todos
 
-Site estático do candidato a deputado estadual **Delegado Yasser Yassine
-(PT-GO), nº 13007**. HTML, CSS e JavaScript separados, sem etapa de build —
-basta abrir os arquivos ou publicar a pasta.
+Site estático do **Delegado Yasser Yassine** e do movimento **Goiás Seguro para
+Todos**. HTML, CSS e JavaScript separados, sem etapa de build — basta abrir os
+arquivos ou publicar a pasta.
 
 Domínio oficial: **https://delegadoyasser.com.br** (apex, sem `www`).
+
+> **Fim da campanha (out/2026):** todo o conteúdo da campanha eleitoral de 2026
+> saiu do site — número de urna, propostas de mandato (`propostas.html` e o PDF),
+> "Leve na urna", "Foto com o Yasser", termos de voluntário e de cabo eleitoral,
+> álbum de jingles, texto legal da coligação e a liberação agendada
+> (`liberar-campanha.js`). Está tudo no histórico do git, se fizer falta.
 
 ## Estrutura
 
 ```
 delegadoyasser/
 ├── index.html                     Página inicial — o site completo
-├── propostas.html                 Lista completa das propostas, por eixo
-├── propostas-delegado-yasser.pdf  As propostas em PDF, com capa e a cola da urna
-│                                  — GERADO; não edite à mão (ver seção)
-├── gerar-pdf-propostas.js         Ferramenta: lê propostas.html + index.html e
-│                                  monta o PDF acima (ver "Compartilhamento")
 ├── goias-seguro-para-todos.html   Mapa participativo de insegurança
 ├── mapa-do-medo.html              Só redireciona para o arquivo acima (ver "Renomeações")
 ├── solicitar-reuniao.html         Convite para o Yasser visitar a comunidade
-├── voluntario.html                Termo de adesão de voluntário(a)
-├── cabo-eleitoral.html            Termo de compromisso de cabo eleitoral
 ├── acessibilidade.html            Declaração de acessibilidade
 ├── css/
 │   ├── landing.css                Estilos de TODAS as páginas (tokens, base, componentes)
 │   ├── goias-seguro-para-todos.css  Só o mapa participativo
-│   ├── agenda.css                 Só solicitar-reuniao.html
-│   └── termos.css                 Só voluntario.html e cabo-eleitoral.html
+│   └── agenda.css                 Só solicitar-reuniao.html
 ├── js/
 │   ├── landing.js                 Carregado por todas: menu, carrossel, notícias,
 │   │                              agenda, balão de acessibilidade e cadastro
 │   ├── goias-seguro-para-todos.js Mapa: relato, moderação e pontos aprovados
 │   ├── goias-geo.js               Contorno de Goiás (malha do IBGE) usado pelo mapa
-│   ├── agenda.js                  Formulário de solicitar-reuniao.html
-│   ├── termos.js                  Formulários dos dois termos (gera o PDF)
-│   ├── foto-com-yasser.js         Seção "Foto com o Yasser" (montagem no navegador)
-│   └── leve-na-urna.js            Seção "Leve na urna": gera a imagem e imprime
+│   └── agenda.js                  Formulário de solicitar-reuniao.html
 ├── fonts/                         Fontes .woff2 servidas pelo próprio domínio
 ├── images/                        Fotos, carrossel (114 fotos em jpg+webp), favicons e selos
 ├── .github/workflows/             Publicação no GitHub Pages (ver "Publicação")
-├── liberar-campanha.js            Ferramenta de manutenção (ver "Liberação da campanha")
 ├── robots.txt                     Regras para buscadores + link do sitemap
 ├── sitemap.xml                    Mapa do site para os buscadores
 ├── site.webmanifest               Manifesto PWA (nome, cores, ícones)
@@ -52,177 +46,32 @@ delegadoyasser/
 > `grep -rl "styles.css\|main.js" *.html` antes de apagar. É de `js/main.js` que
 > vem o seletor de cor de tema que o site **não** usa mais.
 
-> **Removido em ago/2026:** `js/vendor/tfjs/` (TensorFlow.js) e `models/`
-> (Selfie Segmentation e BlazeFace, do MediaPipe) serviam ao recorte automático
-> da seção "Foto com o Yasser". A arte nova põe a foto numa moldura branca, sem
-> recorte, e as pastas foram apagadas. Estão no histórico do git, se fizerem falta.
-
 ## Páginas
 
 - **`index.html`** — a página inicial servida na raiz do domínio. Reúne quem é o
-  Yasser, o resumo das propostas, **"Leve na urna"**, as missões do movimento,
-  o mapa, notícias, carrossel de fotos, "Foto com o Yasser" e o formulário de
-  cadastro.
-- **`propostas.html`** — a lista completa, dividida em **nove eixos**: segurança
-  pública, trabalho e direitos, educação, esporte e juventude, moradia,
-  transporte, saúde, direitos humanos e cultura, e transparência e prestação de
-  contas. Cada eixo tem uma âncora própria (`#seguranca`, `#trabalho`,
-  `#educacao`, `#esporte`, `#moradia`, `#transporte`, `#saude`, `#direitos`,
-  `#transparencia`).
-
-  O último eixo é diferente dos outros oito: não é área de política pública, é
-  compromisso sobre o próprio mandato (o painel com o destino de 100% das
-  emendas). Por isso fecha a página, em vez de entrar no meio.
-
-  **Como escrever uma proposta nova.** Duas regras, e as 55 existentes seguem
-  as duas:
-
-  1. **Começa com verbo de ação do deputado.** Os que estão em uso: articular,
-     apresentar, destinar, defender, cobrar, propor, fiscalizar, acompanhar,
-     levar, levantar, protocolar, transformar. O verbo carrega o instrumento —
-     *articular* é matéria federal ou acordo entre entes, *destinar* é emenda
-     parlamentar, *apresentar/propor* é projeto de lei ou indicação ao Governo,
-     *cobrar/fiscalizar/acompanhar* é a função fiscalizadora.
-  2. **Nunca explica de quem é a competência.** Deputado estadual de fato não
-     cria delegacia nem reestrutura carreira por lei de autoria própria — mas o
-     texto resolve isso escolhendo o verbo certo, não escrevendo "isso é
-     iniciativa do Governador". A proposta diz o que o Yasser faz, e ponto.
-     Frases como "não se cria em Goiás", "só o Governador pode propor" ou "a
-     tarifa é fixada pelo Executivo" já foram removidas — não as traga de volta.
+  Yasser, pilares e bandeiras, frases, redes, as missões do movimento, o radar,
+  notícias, carrossel de fotos e o formulário de cadastro.
 - **`goias-seguro-para-todos.html`** — mapa participativo (Leaflet +
   OpenStreetMap): a população marca pontos de risco, que passam por moderação
   antes de aparecer.
 - **`solicitar-reuniao.html`** — formulário para convidar o Yasser.
-- **`voluntario.html`** e **`cabo-eleitoral.html`** — termos preenchidos e
-  assinados no navegador (assinatura desenhada na tela); o Apps Script gera o PDF
-  no Google Drive da campanha.
 - **`acessibilidade.html`** — declaração de acessibilidade, aberta pelo balão de
   acessibilidade e pelo rodapé.
 
-### O resumo de propostas na home espelha `propostas.html`
-
-A seção **"Compromissos de mandato"** (`#propostas` no `index.html`) é o resumo
-da página completa e precisa continuar batendo com ela. As regras de sincronia
-estão num comentário HTML no próprio bloco: mesma ordem de eixos, **título exato**
-de cada proposta, e segurança pública abrindo como destaque nas duas páginas
-(o selo "Destaque" em `propostas.html` fica na proposta do SUIP). Se a lista
-completa mudar, ajuste o resumo junto.
-
-### Compartilhamento das propostas — e o PDF, que é gerado
-
-No fim de `propostas.html` há **um único** ponto de compartilhamento
-(`#compartilhar`), com duas saídas. Antes existia um link "envie para alguém" em
-cada proposta; eles saíram porque, com a lista crescendo, viraram ruído repetido
-no meio da leitura.
-
-| Saída | Como funciona |
-| --- | --- |
-| **Enviar no WhatsApp** | O `href` já sai pronto do HTML, com uma mensagem neutra que funciona sem JS. O `landing.js` reescreve o texto acrescentando o **13007** quando a propaganda está liberada (`data-campanha="on"`), e escuta o evento `campanha:liberada` para reescrever também em quem estiver com a página aberta na virada. O número é propaganda eleitoral e não pode vazar antes da hora, nem dentro de um texto de compartilhamento. |
-| **Baixar as propostas em PDF** | Arquivo estático `propostas-delegado-yasser.pdf`, na raiz. |
-
-**O PDF não se atualiza sozinho.** **Se a lista de propostas mudar, gere de
-novo:**
-
-```bash
-python -m http.server 8731 --bind 127.0.0.1   # noutro terminal
-node gerar-pdf-propostas.js
-```
-
-### Há DUAS versões em papel, e elas são diferentes de propósito
-
-Isto confunde quem mexe pela primeira vez, então vale o parágrafo:
-
-| | O que sai | Como é feita |
-| --- | --- | --- |
-| **Ctrl+P na página** | Preto sobre branco, sem foto | `@media print` de `css/landing.css` (bloco "PROPOSTAS EM PAPEL / PDF") |
-| **`propostas-delegado-yasser.pdf`** | Capa com foto, eixos coloridos, cola da urna no fim | `gerar-pdf-propostas.js` |
-
-A versão do Ctrl+P **não pode** ser colorida: navegador não imprime fundo por
-padrão, e uma folha que depende de cor de fundo sai quebrada na casa de quem
-imprime. Ela é feita para ser fotocopiada — por isso a tarja vermelha do título
-vira sublinhado, os cartões viram lista de uma coluna com fio à esquerda, e o
-`<strong>` da abertura (quase branco na tela) volta para o preto. O cabeçalho e o
-rodapé dessa folha (`.folha-cabeca` / `.folha-pe`) só existem no papel: na tela
-levam `.so-impressao`, que é `display: none`.
-
-O PDF é outra peça, para mandar no WhatsApp e imprimir em gráfica. Ele força a
-cor com `print-color-adjust: exact`, o que só funciona porque quem imprime é o
-Chrome headless, e não o navegador do eleitor.
-
-**O gerador não duplica as propostas.** `gerar-pdf-propostas.js` *lê*
-`propostas.html` (eixos, ícones, títulos, parágrafos, destaques) e `index.html`
-(as seis linhas da peça `.lnu__peca`, para montar a cola da urna), e ainda puxa a
-paleta do `:root` e o `--acento` de cada eixo do `landing.css`. Editar a página é
-o bastante; o PDF acompanha na próxima geração. Um eixo novo entra sozinho, sem
-tocar no gerador.
-
-O intermediário `propostas-pdf.tmp.html` é gravado na raiz (precisa estar lá para
-achar `images/` e `fonts/` por caminho relativo) e apagado no fim — use `--manter`
-para depurar o layout. O script também aceita `--porta=` e `--chrome=`.
-
-Uma armadilha relacionada: o `@media print` da folha da urna começava em
-`main > *:not(#leve-na-urna)`, o que apagava o conteúdo de **qualquer outra
-página** do site na impressão. As regras agora ficam presas a
-`body:has(#leve-na-urna)`.
-
-### "Leve na urna" (`#leve-na-urna`)
-
-A lista de números para o dia da votação — a "cola" da campanha — fica na home,
-logo abaixo do resumo de propostas, e tem item próprio no menu e no rodapé de
-todas as páginas. Serve para três coisas: **imprimir**, **baixar como imagem** e
-**mandar no WhatsApp**.
-
-A mesma informação existe em duas mídias, e não há etapa de build que gere uma a
-partir da outra — **se um número mudar, mude nos dois lugares**:
-
-| Onde | O quê |
-| --- | --- |
-| `index.html`, `.lnu__peca` | a folha que aparece na tela e sai na impressora |
-| `js/leve-na-urna.js`, `CARGOS` | a mesma folha redesenhada em `<canvas>` para virar imagem |
-
-Pontos que não são óbvios olhando o código:
-
-- **A ordem das linhas é a da urna** (deputado federal, deputado estadual,
-  senador 1, senador 2, governador, presidente), não a da importância. A peça
-  serve para acompanhar a votação tecla a tecla.
-- **A linha do deputado federal é um campo**, e não um número fixo: na peça
-  oficial ela vem em branco. Quem já escolheu anota o próprio número, que fica
-  no `localStorage` (`leve-na-urna-federal`) e reaparece na imagem e no papel.
-  Quem não escolheu imprime a casa vazia e escreve à caneta.
-- **A impressão é preto no branco**, com moldura no lugar do vermelho e do
-  amarelo (bloco `@media print` no fim de `css/landing.css`). É de propósito: a
-  folha foi feita para ser fotocopiada e para sobreviver a navegador com
-  "imprimir cores de fundo" desligado, que é o padrão. A mesma regra força o
-  layout de três colunas — o A4 tem ~703 px úteis, abaixo do corte de 720 px, e
-  sem isso a peça passaria para uma segunda página.
-- **`images/qr-leve-na-urna.png`** aponta para `delegadoyasser.com.br/#leve-na-urna`:
-  quem recebe o papel impresso volta para a página e imprime a sua cópia. Foi
-  gerado com [segno](https://pypi.org/project/segno/)
-  (`segno.make(url, error='m').save(..., scale=16, border=2)`).
-- **O texto legal da coligação** aparece em quatro lugares: o rodapé de todas as
-  páginas (`.rodape__legal`), a folha (`.lnu__legal`), `LEGAL` em
-  `js/leve-na-urna.js` e `LEGAL_COLIGACAO` em `js/foto-com-yasser.js`. Se a
-  coordenação mudar a composição, os quatro mudam juntos.
-
-### O menu do topo cabe em uma linha — e só por isso tem sete itens
+### O menu do topo cabe em uma linha
 
 O container do site tem 1.120 px e o logo come 262. Sobram **842 px** para o
-menu, que hoje pede **814**. É uma folga de 28 px: **cada item novo no topo
-tira o menu da linha única**, e aí alguma coisa some ou o cabeçalho vira duas
-linhas.
-
-Por isso "Notícias", "Foto com o Yasser" e "Convide o Yasser" saíram do topo em
-04/09/2026 — os três continuam alcançáveis pelo rodapé. Antes disso o botão
-"Quero fazer parte" ficava **cortado** em 1280 e 1440 px, e ninguém via: o
-`overflow-x: hidden` do `body` esconde o estouro em vez de deixar rolar.
+menu. Com a saída dos itens da campanha sobrou folga, mas a regra continua:
+**cada item novo no topo pode tirar o menu da linha única**, e o `overflow-x:
+hidden` do `body` esconde o estouro em vez de deixar rolar.
 
 Duas defesas no CSS, para o problema não voltar calado:
 
 - o menu na horizontal só vale a partir de **1160 px** (`@media (min-width: 1160px)`,
-  no fim de `css/landing.css`); abaixo disso vale o menu-gaveta. Se mexer nesse
+  em `css/landing.css`); abaixo disso vale o menu-gaveta. Se mexer nesse
   valor, mexa junto no `window.innerWidth >= 1160` de `js/landing.js`;
 - `.nav__links` tem `flex-wrap: wrap`, então o pior caso é o cabeçalho ganhar
-  uma segunda linha — nunca mais um item para fora da tela.
+  uma segunda linha — nunca um item para fora da tela.
 
 Para conferir depois de mexer no menu, sirva o site com
 `python -m http.server` e meça a altura do `#cabecalho`: **69 px é uma linha**,
@@ -233,12 +82,11 @@ Para conferir depois de mexer no menu, sirva o site com
 Duas seções do `index.html` estão **ocultas** com o atributo `hidden` (marcadas
 por comentário), prontas para reativação:
 
-- **Agenda** (`<section id="agenda">`) — também com os links de menu e rodapé
-  comentados.
+- **Agenda** (`<section id="agenda">`) — também com o link do rodapé comentado.
 - **Kit do voluntário / Materiais** (`<section id="materiais">`).
 
-Para reexibir, remova o `hidden` da `<section>` (e descomente os links de
-navegação, no caso da agenda).
+Para reexibir, remova o `hidden` da `<section>` (e descomente o link do rodapé,
+no caso da agenda).
 
 ## Renomeações e redirecionamentos
 
@@ -257,41 +105,17 @@ Mesma regra vale para qualquer renomeação futura: renomeie, atualize os `href`
 o `canonical`, o `og:url`, o JSON-LD e o `sitemap.xml`, e deixe um stub no lugar
 do endereço antigo.
 
-## Liberação da campanha (o número 13007)
-
-O HTML nasce com `data-campanha="pre"` no `<html>`. Um script inline no `<head>`
-troca para `"on"` em **16/08/2026, 08:00 (Brasília)**, e o CSS esconde
-`.so-campanha` antes disso e `.pre-campanha` depois. Isso resolve o que aparece
-na tela — mas WhatsApp, Facebook e Google **não executam JavaScript**: leem o
-HTML cru.
-
-Por isso existe **`liberar-campanha.js`**, que escreve/apaga o número em título,
-meta tags, JSON-LD, `sitemap.xml` e `site.webmanifest`:
-
-```
-node liberar-campanha.js --ocultar    # estado pré-16/08
-node liberar-campanha.js --liberar    # rodar na liberação
-```
-
-Ele trabalha com pares de texto exatos: **se algum desses textos for reescrito no
-site, o script avisa em vez de trocar pela metade** — nesse caso, ajuste o par
-correspondente no arquivo. O workflow `.github/workflows/liberar-campanha.yml`
-roda isso sozinho na data e publica. O arquivo é removido da cópia publicada
-(ver "Publicação").
-
 ## SEO
 
-As quatro páginas que vão para a busca — `index.html`, `propostas.html`,
+As três páginas que vão para a busca — `index.html`,
 `goias-seguro-para-todos.html` e `solicitar-reuniao.html` — trazem `canonical`,
 `robots`, Open Graph (Facebook/WhatsApp/LinkedIn), Twitter/X Cards e **JSON-LD**
-Schema.org (`WebSite` + `Person` + `PoliticalParty` no `index`; `WebPage`/
-`ContactPage` + `BreadcrumbList` nas internas). São exatamente as quatro do
-`sitemap.xml`.
+Schema.org (`WebSite` + `Person` no `index`; `WebPage`/`ContactPage` +
+`BreadcrumbList` nas internas). São exatamente as três do `sitemap.xml`.
 
-`voluntario.html`, `cabo-eleitoral.html` e `acessibilidade.html` são
-**`noindex, nofollow`** de propósito: são documentos de uso interno, chegam por
-link direto e por isso não têm canonical, JSON-LD nem entrada no sitemap. Ao
-criar uma página nova, decida em qual dos dois grupos ela entra — e, se for
+`acessibilidade.html` é **`noindex, nofollow`** de propósito: chega por link
+direto e por isso não tem canonical, JSON-LD nem entrada no sitemap. Ao criar
+uma página nova, decida em qual dos dois grupos ela entra — e, se for
 indexável, acrescente-a ao `sitemap.xml`.
 
 Somam-se `robots.txt` (aponta o sitemap) e `sitemap.xml`.
@@ -312,7 +136,6 @@ respectivo arquivo:
 | Agenda | `js/landing.js` | `AGENDA_CSV_URL` |
 | Cadastro de apoiador | `js/landing.js` | `CADASTRO_ENDPOINT` |
 | Convite para reunião | `js/agenda.js` | `AGENDA_ENDPOINT` |
-| Termos (voluntário / cabo) | `js/termos.js` | `TERMOS_ENDPOINT` |
 | Relatos do mapa | `js/goias-seguro-para-todos.js` | `MAPA_ENDPOINT` |
 | Pontos aprovados do mapa | `js/goias-seguro-para-todos.js` | `MAPA_CSV_URL` |
 | Fotos dos relatos (Cloudinary) | `js/goias-seguro-para-todos.js` | `CLOUDINARY_*` |
@@ -337,19 +160,12 @@ que o layout pule enquanto elas carregam.
 
 - **Cores:** no `:root` de `css/landing.css` (`--brand: #f9120c`). Cada token
   tem uma variante `-escuro` usada em texto, para manter contraste ≥ 4,5:1.
-  Os nove eixos de proposta usam `--acento`/`--acento-tint` (`.eixo--seguranca`
-  e afins), no mesmo arquivo. Há mais eixos que cores: segurança e saúde
-  dividem o vermelho, educação e direitos o azul, trabalho e esporte o amarelo,
-  transporte e transparência a tinta.
 - **Tipografia:** Oswald (display), Archivo (texto), IBM Plex Mono (rótulos) e
   Caveat Brush (assinatura à mão) — todas em `fonts/`, servidas pelo próprio
   domínio via `@font-face`, sem chamada ao Google Fonts. Caveat Brush é a
   substituta livre da "Brosign Brush" do manual, que é comercial.
 - **Textos:** direto no HTML da página.
-- **WhatsApp:** procure `https://wa.me/`. Atenção: nos links de compartilhamento
-  a URL do site vai **codificada** dentro do parâmetro `?text=`
-  (`https%3A%2F%2Fdelegadoyasser.com.br%2F...`); ela também precisa ser atualizada
-  quando um arquivo é renomeado.
+- **WhatsApp:** procure `https://wa.me/` e `chat.whatsapp.com`.
 
 ## Acessibilidade
 
@@ -373,16 +189,14 @@ O site não tem build nem framework, mas carrega de terceiros:
   **OpenStreetMap** — só no mapa participativo.
 - **VLibras** (gov.br) — nas páginas de conteúdo.
 - **Google Analytics** (`G-BKFLZQW72Y`) e **Microsoft Clarity** (`xltc65hll6`)
-  — nas sete páginas de conteúdo. Ao criar uma página nova, copie os dois blocos
-  do fim do `<head>` do `index.html`; o stub de redirecionamento fica de fora de
-  propósito (ele desvia em milissegundos, e o script não chegaria a rodar).
-- **Player do Spotify** (álbum de jingles) — só no `index.html`.
+  — nas quatro páginas de conteúdo. Ao criar uma página nova, copie os dois
+  blocos do fim do `<head>` do `index.html`; o stub de redirecionamento fica de
+  fora de propósito (ele desvia em milissegundos, e o script não chegaria a rodar).
 
-> Nos dois termos, o `<form id="formTermo">` leva `data-clarity-mask="True"`: o
-> Clarity grava replay da sessão e ali a pessoa digita CPF, RG e endereço e
-> desenha a assinatura. O atributo mascara a subárvore inteira, sem depender do
-> modo de máscara configurado no painel. **Qualquer formulário novo com dado
-> pessoal precisa do mesmo atributo.**
+> O Clarity grava replay da sessão. **Qualquer formulário novo com dado pessoal
+> sensível (CPF, RG, endereço, assinatura) precisa de `data-clarity-mask="True"`**
+> no `<form>`, que mascara a subárvore inteira sem depender do modo de máscara
+> configurado no painel.
 
 ## Publicação
 
@@ -390,10 +204,7 @@ Site estático — funciona em GitHub Pages, Netlify, Vercel ou hospedagem comum
 Mantenha o `CNAME` na raiz para o domínio próprio no GitHub Pages.
 
 O deploy é automático: **`.github/workflows/static.yml`** publica a cada push na
-`main`. Antes de subir, ele **remove `liberar-campanha.js`** da cópia do runner —
-esse arquivo guarda os textos com o número 13007 e ficaria legível em
-`/liberar-campanha.js`, que é justamente o que não pode circular antes da
-liberação. O repositório não muda.
+`main`.
 
 > O workflow publica a pasta **inteira** (`path: '.'`), então qualquer arquivo
 > solto na raiz vai para o ar. Antes de commitar, confira se não sobrou nada que

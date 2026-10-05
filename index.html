@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-campanha="pre">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,39 +13,8 @@
     }
   </script>
 
-  <!-- Liberação da propaganda de campanha (bloco inicial e o número 13007):
-       só a partir de 16/08/2026 às 08:00, horário de Brasília.
-
-       O HTML nasce com data-campanha="pre" e tudo que não pode aparecer antes
-       da hora leva a classe .so-campanha. Esconder é o estado PADRÃO: se este
-       script não rodar, o conteúdo continua oculto em vez de vazar.
-
-       A regra de ocultar é injetada aqui, e não só no css/landing.css, porque
-       quem já visitou o site pode ter o CSS antigo em cache — e aí veria o que
-       deveria estar bloqueado. Inline no <head> para não piscar na tela. -->
-  <script>
-    
-    (function () {
-      var LIBERACAO = Date.parse("2026-08-16T11:00:00Z"); // 08:00 em Brasília (UTC-3)
-      var raiz = document.documentElement;
-
-      var trava = document.createElement("style");
-      trava.textContent =
-        '[data-campanha="pre"] .so-campanha{display:none !important}' +
-        '[data-campanha="on"] .pre-campanha{display:none !important}';
-      (document.head || raiz).appendChild(trava);
-
-      if (Date.now() >= LIBERACAO) {
-        raiz.setAttribute("data-campanha", "on");
-      }
-    })();
-  </script>
-  <!-- Título, meta tags e JSON-LD estão sem o número: crawler não executa JS,
-       então a única forma de o 13007 não circular em preview de link e busca é
-       ele não estar no arquivo. Rode `node liberar-campanha.js --liberar` em
-       16/08/2026 às 08:00 para repor tudo de uma vez. -->
-  <title>Delegado Yasser 13007 — Goiás Seguro para Todos | Candidato a Deputado Estadual PT-GO</title>
-  <meta name="description" content="Delegado Yasser Yassine, candidato a deputado estadual pelo PT-GO, número 13007. Goiás seguro para todos: segurança pública com cuidado, prevenção e comunidade.">
+  <title>Delegado Yasser — Goiás Seguro para Todos | Movimento por segurança pública em Goiás</title>
+  <meta name="description" content="Delegado Yasser Yassine e o movimento Goiás Seguro para Todos: segurança pública com cuidado, prevenção e comunidade.">
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -62,7 +31,7 @@
   <meta name="author" content="Delegado Yasser Yassine">
   <meta name="publisher" content="Delegado Yasser Yassine">
   <meta name="copyright" content="Delegado Yasser Yassine">
-  <meta name="keywords" content="Delegado Yasser, Yasser Yassine, 13007, deputado estadual Goiás, PT-GO, segurança pública, Goiás Seguro, Goiás seguro para todos, candidato a deputado estadual, política Goiás, delegado de polícia, Tropa de Elite do Amor">
+  <meta name="keywords" content="Delegado Yasser, Yasser Yassine, segurança pública, Goiás Seguro, Goiás seguro para todos, movimento Goiás Seguro, delegado de polícia, Tropa de Elite do Amor">
   <meta name="rating" content="general">
   <meta name="distribution" content="global">
   <meta name="revisit-after" content="7 days">
@@ -74,8 +43,8 @@
 
   <!-- Open Graph (Facebook · WhatsApp · LinkedIn) -->
   <meta property="og:site_name" content="Delegado Yasser Yassine">
-  <meta property="og:title" content="Delegado Yasser 13007 — Goiás Seguro para Todos">
-  <meta property="og:description" content="Delegado Yasser Yassine, candidato a deputado estadual pelo PT-GO, número 13007. Segurança pública com cuidado, prevenção e comunidade. Entre para a Tropa de Elite do Amor.">
+  <meta property="og:title" content="Delegado Yasser — Goiás Seguro para Todos">
+  <meta property="og:description" content="Delegado Yasser Yassine e o movimento Goiás Seguro para Todos: segurança pública com cuidado, prevenção e comunidade. Entre para a Tropa de Elite do Amor.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://delegadoyasser.com.br/">
   <meta property="og:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg">
@@ -83,15 +52,15 @@
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="900">
   <meta property="og:image:height" content="1350">
-  <meta property="og:image:alt" content="Delegado Yasser Yassine, candidato a deputado estadual, número 13007">
+  <meta property="og:image:alt" content="Delegado Yasser Yassine, do movimento Goiás Seguro para Todos">
   <meta property="og:locale" content="pt_BR">
 
   <!-- Twitter / X Cards -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Delegado Yasser 13007 — Goiás Seguro para Todos">
-  <meta name="twitter:description" content="Candidato a deputado estadual pelo PT-GO, número 13007. Segurança pública com cuidado, prevenção e comunidade.">
+  <meta name="twitter:title" content="Delegado Yasser — Goiás Seguro para Todos">
+  <meta name="twitter:description" content="Delegado Yasser Yassine e o movimento Goiás Seguro para Todos: segurança pública com cuidado, prevenção e comunidade.">
   <meta name="twitter:image" content="https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg">
-  <meta name="twitter:image:alt" content="Delegado Yasser Yassine, candidato a deputado estadual, número 13007">
+  <meta name="twitter:image:alt" content="Delegado Yasser Yassine, do movimento Goiás Seguro para Todos">
 
   <!-- PWA / ícones de aplicativo -->
   <link rel="manifest" href="site.webmanifest">
@@ -110,7 +79,7 @@
         "@id": "https://delegadoyasser.com.br/#website",
         "url": "https://delegadoyasser.com.br/",
         "name": "Delegado Yasser Yassine",
-        "description": "Site oficial do Delegado Yasser Yassine, candidato a deputado estadual pelo PT-GO.",
+        "description": "Site oficial do Delegado Yasser Yassine e do movimento Goiás Seguro para Todos.",
         "inLanguage": "pt-BR",
         "publisher": { "@id": "https://delegadoyasser.com.br/#person" }
       },
@@ -121,14 +90,10 @@
         "alternateName": "Delegado Yasser",
         "url": "https://delegadoyasser.com.br/",
         "image": "https://delegadoyasser.com.br/images/yasser/yasser-retrato-camisa-jeans.jpg",
-        "jobTitle": "Candidato a Deputado Estadual",
-        "description": "Delegado de polícia e candidato a deputado estadual pelo PT-GO, número 13007, com bandeira de segurança pública com cuidado, prevenção e comunidade — Goiás seguro para todos.",
+        "jobTitle": "Delegado de Polícia Civil",
+        "description": "Delegado da Polícia Civil de Goiás, à frente do movimento Goiás Seguro para Todos: segurança pública com cuidado, prevenção e comunidade.",
         "email": "contato@delegadoyasser.com.br",
         "nationality": "Brasileiro",
-        "affiliation": {
-          "@type": "PoliticalParty",
-          "name": "Partido dos Trabalhadores (PT-GO)"
-        },
         "address": {
           "@type": "PostalAddress",
           "addressRegion": "GO",
@@ -139,8 +104,7 @@
           "https://www.threads.com/@delegadoyasser",
           "https://www.tiktok.com/@delegadoyasser",
           "https://www.facebook.com/people/Yasser-Yassine/61559402572466/",
-          "https://x.com/delegadoyasser",
-          "https://apoiar.me/delegadoyasser"
+          "https://x.com/delegadoyasser"
         ]
       }
     ]
@@ -162,7 +126,7 @@
     }catch(e){}
   </script>
 
-  <link rel="stylesheet" href="css/landing.css?v=20260905b">
+  <link rel="stylesheet" href="css/landing.css?v=20261004">
 
   <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
        por JS, então o navegador só descobriria os domínios tarde. Carrega em
@@ -219,16 +183,13 @@
     <div class="container nav">
       <a href="#topo" class="logo">
         <span class="logo__mark" aria-hidden="true">★</span>
-        <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
+        <span class="logo__nome">Delegado Yasser <small>Goiás Seguro para Todos</small></span>
       </a>
       <nav aria-label="Navegação principal">
         <ul class="nav__links" id="navLinks">
           <li><a href="#quem">Quem é</a></li>
-          <li><a href="propostas.html">Propostas</a></li>
-          <li class="so-campanha"><a href="#leve-na-urna">Leve na urna</a></li>
           <li><a href="#missoes">Missões</a></li>
           <li><a href="goias-seguro-para-todos.html">Goiás Seguro para Todos</a></li>
-          <li class="so-campanha"><span class="numero-pill"><small>Nº</small> 13007</span></li>
           <li><a href="#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
         </ul>
       </nav>
@@ -237,89 +198,13 @@
   </header>
 
   <main id="conteudo">
-    <!-- O id="topo" vive no wrapper, e não no banner: o link da logomarca
-         (#topo) precisa continuar funcionando enquanto o banner está oculto. -->
-    <div id="topo">
-
-    <!-- ===== AVISO DE LIBERAÇÃO (só enquanto data-campanha="pre") =====
-         Ocupa o lugar do banner até 16/08/2026 08:00 e some sozinho na hora. -->
-    <section class="aviso-liberacao pre-campanha" aria-label="Aviso de liberação de conteúdo">
-      <div class="container aviso-liberacao__inner">
-        <p class="aviso-liberacao__eyebrow">Tropa de Elite do Amor</p>
-        <p class="aviso-liberacao__titulo">O grande dia está chegando</p>
-        <p class="aviso-liberacao__texto">
-          Estamos quase lá! Guarde a data:
-          <strong>16 de agosto de 2026, às 8h</strong> (horário de Brasília).
-          Venha construir com a gente um Goiás seguro para todos.
-        </p>
-        <!-- O relógio é decorativo: a data já está escrita por extenso acima.
-             aria-hidden evita que o leitor de tela anuncie os segundos mudando. -->
-        <ul class="aviso-liberacao__relogio" id="contagemLiberacao" aria-hidden="true">
-          <li><b data-contagem="d">--</b><span>dias</span></li>
-          <li><b data-contagem="h">--</b><span>horas</span></li>
-          <li><b data-contagem="m">--</b><span>min</span></li>
-          <li><b data-contagem="s">--</b><span>seg</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===== HERO (recriação fiel da arte oficial — ver Material/HERO.PNG) =====
-         Fundo vermelho sólido, selo da logomarca à esquerda inclinado, ponta de
-         estrela azul/verde/amarela à direita e o candidato recortado por cima. -->
-    <section class="hero-poster so-campanha">
-
-      <!-- Arte da direita: ponta de estrela + foto recortada (decorativa) -->
-      <div class="hero-poster__arte" aria-hidden="true">
-        <span class="ponta ponta--azul"></span>
-        <span class="ponta ponta--verde"></span>
-        <span class="ponta ponta--amarela"></span>
-        <picture class="hero-poster__figura">
-          <source type="image/webp"
-                  srcset="images/yasser/yasser-recorte-hero-480.webp 480w, images/yasser/yasser-recorte-hero-720.webp 720w, images/yasser/yasser-recorte-hero-900.webp 900w"
-                  sizes="(max-width: 899px) 80vw, 46vw">
-          <img src="images/yasser/yasser-recorte-hero.png"
-               alt="" width="900" height="1252" decoding="async" fetchpriority="high">
-        </picture>
-      </div>
-
-      <!-- Estrela do PT -->
-      <span class="hero-poster__pt" aria-hidden="true">
-        <svg viewBox="0 0 100 100" focusable="false">
-          <polygon points="50,2 61,36 97,36 68,57 79,92 50,70 21,92 32,57 3,36 39,36" fill="#fff"/>
-          <!-- 26/y58 mantém o "PT" dentro do miolo da estrela: no tamanho
-               anterior (32) as letras invadiam a ponta de cima e os braços,
-               o que fazia a marca parecer torta. -->
-          <text x="50" y="58" text-anchor="middle"
-                font-family="Oswald, Archivo, sans-serif"
-                font-weight="700" font-size="26" fill="#f9120c">PT</text>
-        </svg>
-      </span>
-
-      <div class="hero-poster__inner">
-        <div class="selo-oficial" role="img"
-             aria-label="Delegado Yasser, 13007, candidato a Deputado Estadual — Goiás seguro para todos">
-          <span class="selo-oficial__fita" aria-hidden="true">
-            Deputado Estadual
-            <span class="selo-oficial__tag">★</span>
-          </span>
-          <span class="selo-oficial__caixa selo-oficial__caixa--verde" aria-hidden="true">
-            <span class="selo-oficial__delegado">Delegado</span>
-            <span class="selo-oficial__nome">Yasser</span>
-          </span>
-          <span class="selo-oficial__caixa selo-oficial__caixa--amarela" aria-hidden="true">
-            <span class="selo-oficial__numero">13007</span>
-          </span>
-          <span class="selo-oficial__slogan" aria-hidden="true">Goiás seguro para todos</span>
-        </div>
-      </div>
-    </section>
-    </div><!-- /#topo -->
+    <div id="topo"></div>
 
     <!-- ===== APRESENTAÇÃO ===== -->
     <section class="hero" id="apresentacao">
       <div class="container hero__grid">
         <div class="hero__texto">
-          <span class="hero__selo"><span class="pt">PT-GO<span class="so-campanha"> · Nº 13007</span></span> Candidato a Deputado Estadual</span>
+          <span class="hero__selo"><span class="pt">Movimento</span> Goiás Seguro para Todos</span>
           <h1>Goiás <span class="marca">seguro</span> para todos.</h1>
           <p class="hero__sub">
             Sou delegado de carreira da Polícia Civil de Goiás, filho de uma professora da rede
@@ -334,7 +219,6 @@
             <a href="#quem" class="btn">Conhecer o Yasser</a>
             <a href="#redes" class="btn">Seguir as redes</a>
             <a href="#cadastro" class="btn btn--primario">Quero fazer parte</a>
-            <a href="https://apoiar.me/delegadoyasser" class="btn btn--tinta" target="_blank" rel="noopener">♥ Apoiar o movimento</a>
           </div>
         </div>
         <div class="hero__foto">
@@ -357,11 +241,9 @@
     <div class="faixa" aria-hidden="true">
       <div class="faixa__trilho">
         <span>Goiás seguro para todos ★</span>
-        <span class="so-campanha">Delegado Yasser 13007 ★</span>
         <span>Cuidado ★ Prevenção ★ Comunidade ★</span>
         <span>Tropa de Elite do Amor ★</span>
         <span>Goiás seguro para todos ★</span>
-        <span class="so-campanha">Delegado Yasser 13007 ★</span>
         <span>Cuidado ★ Prevenção ★ Comunidade ★</span>
         <span>Tropa de Elite do Amor ★</span>
       </div>
@@ -390,7 +272,7 @@
             <span class="eyebrow">Quem é o Delegado Yasser</span>
             <h2>Do Entorno para todo o Brasil</h2>
             <p>Yasser Martins Yassine é delegado da Polícia Civil de Goiás. Filho de uma professora cearense da rede pública e de um pai palestino que chegou ao Brasil aos 18 anos como vendedor ambulante. O delegado Yasser carrega na sua história a origem humilde e a certeza de que as políticas sociais transformam vidas.</p>
-            <p>Anteriormente, foi advogado, professor e servidor da Justiça. Hoje, com mais de <strong>1 milhão de pessoas</strong> acompanhando seu trabalho nas redes sociais, leva à política a mesma bandeira do dia a dia na delegacia: segurança com cuidado, prevenção e comunidade.</p>
+            <p>Anteriormente, foi advogado, professor e servidor da Justiça. Hoje, com mais de <strong>1 milhão de pessoas</strong> acompanhando seu trabalho nas redes sociais, leva ao movimento Goiás Seguro para Todos a mesma bandeira do dia a dia na delegacia: segurança com cuidado, prevenção e comunidade.</p>
             <ol class="timeline">
               <li class="timeline__item">
                 <span class="timeline__ano">Raízes</span>
@@ -407,10 +289,6 @@
               <li class="timeline__item">
                 <span class="timeline__ano">Formação</span>
                 <p>Pós-graduado pelo FESMPDFT, MBA em Gestão de Segurança Pública (UnB) e mestrando em Segurança Pública (UFG).</p>
-              </li>
-              <li class="timeline__item">
-                <span class="timeline__ano">2026</span>
-                <p>Candidato a deputado estadual pelo PT-GO, com foco em todo o estado de Goiás.</p>
               </li>
             </ol>
           </div>
@@ -474,327 +352,6 @@
       </div>
     </section>
 
-    <!-- ===== PROPOSTAS (resumo — a lista completa vive em propostas.html) ===== -->
-    <section class="secao secao--suave" id="propostas">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Compromissos de mandato</span>
-          <h2>As <span class="marca">propostas</span></h2>
-          <p>Bandeira sem proposta é discurso. São nove frentes — de <strong>segurança
-             pública</strong> e <strong>direitos do trabalhador</strong> a educação, esporte,
-             moradia, transporte, saúde, direitos humanos e a transparência do próprio mandato
-             — que o Yasser se compromete a defender, articular e fiscalizar na Assembleia
-             Legislativa de Goiás.</p>
-        </div>
-
-        <!-- Este bloco é o RESUMO de propostas.html e precisa continuar batendo com ela.
-             Regras de sincronia, se a lista completa mudar:
-             1. os eixos aparecem na mesma ordem da página completa. Segurança pública
-                abre como DESTAQUE (é a frente do delegado e a com mais propostas) e, por
-                isso, não se repete entre os cartões — o mesmo destaque marca a proposta
-                de abertura do eixo em propostas.html;
-             2. cada item do cartão usa o TÍTULO EXATO da proposta em propostas.html,
-                escolhendo as primeiras/mais representativas na ordem em que aparecem lá;
-             3. o link do rodapé leva à âncora do eixo na página completa. O nome do eixo
-                vai num .sr-only: na tela os seis links dizem só "Ver as propostas", mas
-                o leitor de tela lê "Ver as propostas de educação" e não repete seis
-                rótulos idênticos. -->
-
-        <article class="proposta-destaque reveal">
-          <p class="proposta-destaque__selo">Destaque · Segurança pública</p>
-          <h3>SUIP — Sistema Único de Inquérito Policial</h3>
-          <p><strong>Articular com a bancada goiana no Congresso</strong> a criação do
-             SUIP, integrando investigações e informações entre as polícias e preservando a
-             autonomia dos estados. Investigação que conversa entre si chega em quem manda,
-             não só em quem obedece.</p>
-          <p>O Yasser é delegado de carreira da Polícia Civil de Goiás — segurança pública
-             é a frente com mais compromissos do mandato.</p>
-          <a href="propostas.html#seguranca" class="proposta-destaque__link">Ver as propostas<span class="sr-only"> de segurança pública</span>
-             <span aria-hidden="true">&rarr;</span></a>
-        </article>
-
-        <ul class="eixos">
-          <li class="eixo eixo--trabalho reveal">
-            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
-            <h3 class="eixo__titulo">Trabalho e direitos</h3>
-            <ul class="eixo__itens">
-              <li>Fim da escala 6x1</li>
-            </ul>
-            <a class="eixo__mais" href="propostas.html#trabalho">Ver as propostas<span class="sr-only"> de trabalho e direitos</span>
-               <span aria-hidden="true">&rarr;</span></a>
-          </li>
-          <li class="eixo eixo--educacao reveal">
-            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
-            <h3 class="eixo__titulo">Educação</h3>
-            <ul class="eixo__itens">
-              <li>Conservatório Estadual de Música do Entorno</li>
-              <li>Bandas e orquestras juvenis nas escolas</li>
-              <li>Concurso e estabilidade para educadores</li>
-            </ul>
-            <a class="eixo__mais" href="propostas.html#educacao">Ver as propostas<span class="sr-only"> de educação</span>
-               <span aria-hidden="true">&rarr;</span></a>
-          </li>
-          <li class="eixo eixo--esporte reveal">
-            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
-            <h3 class="eixo__titulo">Esporte e juventude</h3>
-            <ul class="eixo__itens">
-              <li>Esporte Protegido</li>
-              <li>Arenas Goiás Seguro</li>
-              <li>Segurança em Jogo</li>
-            </ul>
-            <a class="eixo__mais" href="propostas.html#esporte">Ver as propostas<span class="sr-only"> de esporte e juventude</span>
-               <span aria-hidden="true">&rarr;</span></a>
-          </li>
-          <li class="eixo eixo--moradia reveal">
-            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
-            <h3 class="eixo__titulo">Moradia</h3>
-            <ul class="eixo__itens">
-              <li>Regularização do Acampamento Lambari</li>
-              <li>Regularização fundiária social</li>
-              <li>Material de construção mais barato</li>
-            </ul>
-            <a class="eixo__mais" href="propostas.html#moradia">Ver as propostas<span class="sr-only"> de moradia</span>
-               <span aria-hidden="true">&rarr;</span></a>
-          </li>
-          <li class="eixo eixo--transporte reveal">
-            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1"/><path d="M2 11h20"/><path d="M8 4v7"/><path d="M16 4v7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M9 18h6"/></svg></span>
-            <h3 class="eixo__titulo">Transporte</h3>
-            <ul class="eixo__itens">
-              <li>Passagem mais barata no Entorno</li>
-              <li>Bilhete único e integração tarifária com o DF</li>
-              <li>Mais ônibus e mais viagens no pico</li>
-            </ul>
-            <a class="eixo__mais" href="propostas.html#transporte">Ver as propostas<span class="sr-only"> de transporte</span>
-               <span aria-hidden="true">&rarr;</span></a>
-          </li>
-          <li class="eixo eixo--saude reveal">
-            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></span>
-            <h3 class="eixo__titulo">Saúde</h3>
-            <ul class="eixo__itens">
-              <li>Emendas para a estrutura dos hospitais</li>
-              <li>Concursos para suprir o déficit</li>
-              <li>Atendimento perto de casa</li>
-            </ul>
-            <a class="eixo__mais" href="propostas.html#saude">Ver as propostas<span class="sr-only"> de saúde</span>
-               <span aria-hidden="true">&rarr;</span></a>
-          </li>
-          <li class="eixo eixo--direitos reveal">
-            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.7 2.7 0 0 0 16 4a2.7 2.7 0 0 0-5 1.8c0 1.1.8 2 1.5 2.7L16 12Z"/></svg></span>
-            <h3 class="eixo__titulo">Direitos humanos e cultura</h3>
-            <ul class="eixo__itens">
-              <li>Proteção à população LGBTQIA+</li>
-              <li>Atendimento especializado a vítimas LGBTQIA+</li>
-              <li>Frente Parlamentar pelo povo palestino</li>
-            </ul>
-            <a class="eixo__mais" href="propostas.html#direitos">Ver as propostas<span class="sr-only"> de direitos humanos e cultura</span>
-               <span aria-hidden="true">&rarr;</span></a>
-          </li>
-          <li class="eixo eixo--transparencia reveal">
-            <span class="eixo__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg></span>
-            <h3 class="eixo__titulo">Transparência e prestação de contas</h3>
-            <ul class="eixo__itens">
-              <li>Portal da transparência do mandato</li>
-            </ul>
-            <a class="eixo__mais" href="propostas.html#transparencia">Ver as propostas<span class="sr-only"> de transparência e prestação de contas</span>
-               <span aria-hidden="true">&rarr;</span></a>
-          </li>
-        </ul>
-
-        <div class="acoes reveal">
-          <a href="propostas.html" class="btn btn--primario">Ver todas as propostas</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== LEVE NA URNA =====
-         A lista de números da campanha: os cargos na ordem em que a urna
-         pergunta, para imprimir, salvar como imagem ou mandar no WhatsApp.
-
-         Regras de manutenção:
-         1. a ORDEM das linhas é a ordem real da urna (federal, estadual,
-            senador 1, senador 2, governador, presidente) — não reordenar por
-            importância, porque a peça serve para acompanhar a votação;
-         2. números e nomes aqui e em js/leve-na-urna.js (CARGOS) precisam
-            bater: este HTML é o que sai na impressão, o JS é o que vira imagem;
-         3. o texto legal da coligação é o mesmo do rodapé do site — se mudar
-            lá, muda aqui e no JS. -->
-    <section class="secao secao--suave so-campanha" id="leve-na-urna">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Domingo, 4 de outubro</span>
-          <h2>Leve na <span class="marca">urna</span></h2>
-          <p>Os números na mesma ordem em que a urna vai pedir. <strong>Imprima, salve
-             no celular ou mande para quem você quer convencer</strong> — no dia da
-             votação é só digitar e confirmar.</p>
-        </div>
-
-        <div class="lnu" id="leveNaUrna">
-
-          <!-- ---- A PEÇA (é isto, e só isto, que sai na impressão) ---- -->
-          <article class="lnu__peca" id="lnuPeca" aria-labelledby="lnu-peca-titulo">
-            <p class="lnu__bandeira" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span><span></span>
-            </p>
-
-            <header class="lnu__cabeca">
-              <p class="lnu__data">Eleições 2026 · Goiás · 4 de outubro</p>
-              <h3 class="lnu__titulo" id="lnu-peca-titulo">Meu voto</h3>
-              <p class="lnu__sub">Na ordem em que a urna pergunta</p>
-            </header>
-
-            <ol class="lnu__lista">
-
-              <li class="lnu__linha lnu__linha--livre">
-                <p class="lnu__cargo">
-                  <span class="lnu__ordem" aria-hidden="true">1</span>
-                  <span>Deputado Federal</span>
-                </p>
-                <div class="lnu__num">
-                  <label class="sr-only" for="lnuFederal">Número do seu candidato a deputado federal, quatro dígitos (opcional)</label>
-                  <span class="lnu__casas lnu__casas--campo">
-                    <b aria-hidden="true"></b><b aria-hidden="true"></b><b aria-hidden="true"></b><b aria-hidden="true"></b>
-                    <input class="lnu__campo" id="lnuFederal" type="text" inputmode="numeric"
-                           pattern="[0-9]*" maxlength="4" autocomplete="off"
-                           aria-describedby="lnu-federal-dica">
-                  </span>
-                </div>
-                <p class="lnu__quem" id="lnu-federal-dica"><strong>Voto livre</strong>
-                   <span>Anote o número do seu candidato de confiança.</span></p>
-              </li>
-
-              <li class="lnu__linha lnu__linha--destaque">
-                <p class="lnu__cargo">
-                  <span class="lnu__ordem" aria-hidden="true">2</span>
-                  <span>Deputado Estadual</span>
-                </p>
-                <p class="lnu__num">
-                  <span class="sr-only">Número 1 3 0 0 7</span>
-                  <span class="lnu__casas" aria-hidden="true"><b>1</b><b>3</b><b>0</b><b>0</b><b>7</b></span>
-                </p>
-                <p class="lnu__quem"><strong>Delegado Yasser</strong>
-                   <span>PT · Goiás Seguro para Todos</span></p>
-              </li>
-
-              <li class="lnu__linha lnu__linha--azul">
-                <p class="lnu__cargo">
-                  <span class="lnu__ordem" aria-hidden="true">3</span>
-                  <span>Senador <small>1º voto</small></span>
-                </p>
-                <p class="lnu__num">
-                  <span class="sr-only">Número 5 0 0</span>
-                  <span class="lnu__casas" aria-hidden="true"><b>5</b><b>0</b><b>0</b></span>
-                </p>
-                <p class="lnu__quem"><strong>Cíntia Dias</strong>
-                   <span>Suplentes: Fernando Isaac e Paulo Rochitld</span></p>
-              </li>
-
-              <li class="lnu__linha lnu__linha--verde">
-                <p class="lnu__cargo">
-                  <span class="lnu__ordem" aria-hidden="true">4</span>
-                  <span>Senador <small>2º voto</small></span>
-                </p>
-                <p class="lnu__num">
-                  <span class="sr-only">Número 4 0 0</span>
-                  <span class="lnu__casas" aria-hidden="true"><b>4</b><b>0</b><b>0</b></span>
-                </p>
-                <p class="lnu__quem"><strong>Isaura Lemos</strong></p>
-              </li>
-
-              <li class="lnu__linha lnu__linha--amarelo">
-                <p class="lnu__cargo">
-                  <span class="lnu__ordem" aria-hidden="true">5</span>
-                  <span>Governador</span>
-                </p>
-                <p class="lnu__num">
-                  <span class="sr-only">Número 1 3</span>
-                  <span class="lnu__casas" aria-hidden="true"><b>1</b><b>3</b></span>
-                </p>
-                <p class="lnu__quem"><strong>Luís Cesar Bueno</strong>
-                   <span>Vice: Carlos Mundim</span></p>
-              </li>
-
-              <li class="lnu__linha lnu__linha--vermelho">
-                <p class="lnu__cargo">
-                  <span class="lnu__ordem" aria-hidden="true">6</span>
-                  <span>Presidente</span>
-                </p>
-                <p class="lnu__num">
-                  <span class="sr-only">Número 1 3</span>
-                  <span class="lnu__casas" aria-hidden="true"><b>1</b><b>3</b></span>
-                </p>
-                <p class="lnu__quem"><strong>Lula</strong>
-                   <span>Vice: Geraldo Alckmin</span></p>
-              </li>
-
-            </ol>
-
-            <p class="lnu__grito">
-              <span class="lnu__grito__num" aria-hidden="true">13007</span>
-              <span class="sr-only">Número 1 3 0 0 7.</span>
-              <span class="lnu__grito__nome">Delegado Yasser<small>Deputado Estadual</small></span>
-            </p>
-
-            <footer class="lnu__rodape">
-              <img class="lnu__qr" src="images/qr-leve-na-urna.png" width="592" height="592"
-                   alt="QR Code que leva a delegadoyasser.com.br, onde esta lista pode ser impressa de novo"
-                   loading="lazy" decoding="async">
-              <div>
-                <p class="lnu__site">delegadoyasser.com.br</p>
-                <p class="lnu__legal">
-                  ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL<br>
-                  COLIGAÇÃO GOIÁS PODE MAIS<br>
-                  FEDERAÇÃO BRASIL DA ESPERANÇA (PT / PCdoB / PV) · FEDERAÇÃO PSOL-REDE (PSOL / REDE) · PSB · PDT<br>
-                  CNPJ 68.454.985/0001-69
-                </p>
-              </div>
-            </footer>
-          </article>
-
-          <!-- ---- O que fazer com ela. Nada daqui sai na impressão. ---- -->
-          <div class="lnu__lado">
-            <div class="lnu__bloco">
-              <h3>Leve com você</h3>
-              <p class="lnu__dica">Baixe a imagem para a galeria do celular ou mande a
-                 folha direto para a impressora. A imagem é montada aqui mesmo, no seu
-                 aparelho — nada é enviado para lugar nenhum.</p>
-
-              <div class="lnu__formatos" id="lnuFormatos" role="group" aria-label="Formato da imagem">
-                <button type="button" class="lnu__formato" data-formato="quadrado" aria-pressed="true">
-                  Quadrado <small>feed e conversa</small>
-                </button>
-                <button type="button" class="lnu__formato" data-formato="story" aria-pressed="false">
-                  Story <small>stories e status</small>
-                </button>
-              </div>
-
-              <div class="lnu__acoes">
-                <button type="button" class="btn btn--primario" id="lnuBaixar">Baixar imagem</button>
-                <button type="button" class="btn" id="lnuImprimir">Imprimir a folha</button>
-                <button type="button" class="btn" id="lnuCompartilhar">Compartilhar</button>
-                <button type="button" class="btn" id="lnuZap">Enviar no WhatsApp</button>
-              </div>
-
-              <p class="lnu__estado" id="lnuEstado" role="status" aria-live="polite"></p>
-            </div>
-
-            <div class="lnu__bloco lnu__bloco--nota">
-              <h3>Na hora de votar</h3>
-              <ol class="lnu__passos">
-                <li>A urna pede os cargos <strong>nessa ordem</strong>, do deputado federal ao presidente.</li>
-                <li>Digite o número, <strong>confira a foto e o nome na tela</strong> e aperte <b>CONFIRMA</b>.</li>
-                <li>Errou? Aperte <b>CORRIGE</b> e digite de novo — dá tempo, antes de confirmar.</li>
-                <li>Leve um documento oficial com foto. O título não é obrigatório.</li>
-              </ol>
-              <p class="lnu__dica">Não sabe onde vota? Consulte o
-                 <a href="https://www.tse.jus.br/servicos-eleitorais/titulo-e-local-de-votacao/consulta-por-nome"
-                    target="_blank" rel="noopener">site do TSE<span class="sr-only"> (abre em nova aba)</span></a>.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
     <!-- ===== FRASES ===== -->
     <section class="secao" id="frases">
       <div class="container">
@@ -853,119 +410,6 @@
       </div>
     </section>
 
-    <!-- ===== FOTO COM O YASSER =====
-         A montagem acontece toda no navegador de quem acessa (js/foto-com-yasser.js):
-         a foto escolhida não sobe para lugar nenhum. -->
-    <section class="secao secao--suave so-campanha" id="foto-com-yasser">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Tire uma foto com o Delegado</span>
-          <h2>Sua foto ao lado do <span class="marca">13007</span></h2>
-          <p>Escolha uma foto sua, escolha o Yasser e leve os dois no mesmo cartaz.
-             A montagem é feita aqui mesmo, no seu aparelho: <strong>sua foto não é
-             enviada para lugar nenhum</strong> e não fica guardada em nenhum servidor.</p>
-        </div>
-
-        <div class="fcy" id="fotoComYasser">
-          <div class="fcy__controles">
-            <div class="fcy__passo">
-              <h3 id="fcy-passo-1"><span class="fcy__num" aria-hidden="true">1</span> Escolha sua foto</h3>
-              <p class="fcy__dica">Vale foto da galeria ou da câmera, de qualquer
-                 tamanho. Ela entra na moldura branca do cartaz e o enquadramento
-                 fica com você.</p>
-              <label class="fcy__arquivo">
-                <input type="file" id="fcyArquivo" accept="image/*"
-                       aria-describedby="fcy-passo-1">
-                <span class="btn btn--primario">Escolher foto</span>
-              </label>
-            </div>
-
-            <div class="fcy__passo">
-              <h3 id="fcy-passo-2"><span class="fcy__num" aria-hidden="true">2</span> Escolha o Yasser</h3>
-              <ul class="fcy__poses" id="fcyPoses" aria-labelledby="fcy-passo-2"></ul>
-            </div>
-
-            <div class="fcy__passo">
-              <h3 id="fcy-passo-3"><span class="fcy__num" aria-hidden="true">3</span> Escolha o formato</h3>
-              <div class="fcy__formatos" id="fcyFormatos" role="group" aria-labelledby="fcy-passo-3">
-                <button type="button" class="fcy__formato" data-formato="quadrado" aria-pressed="true">
-                  Quadrado <small>feed</small>
-                </button>
-                <button type="button" class="fcy__formato" data-formato="story" aria-pressed="false">
-                  Story <small>stories e status</small>
-                </button>
-                <button type="button" class="fcy__formato" data-formato="retrato" aria-pressed="false">
-                  Retrato <small>feed alto</small>
-                </button>
-              </div>
-            </div>
-
-            <div class="fcy__passo">
-              <h3 id="fcy-passo-4"><span class="fcy__num" aria-hidden="true">4</span> Assine, se quiser</h3>
-              <div class="fcy__campos">
-                <div class="field">
-                  <label for="fcyNome">Seu nome <small>(opcional)</small></label>
-                  <input id="fcyNome" type="text" maxlength="22" placeholder="Maria"
-                         autocomplete="given-name">
-                </div>
-                <div class="field">
-                  <label for="fcyCidade">Sua cidade <small>(opcional)</small></label>
-                  <input id="fcyCidade" type="text" maxlength="22" placeholder="Anápolis"
-                         autocomplete="address-level2">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="fcy__palco">
-            <div class="fcy__moldura">
-              <canvas id="fcyTela" width="1080" height="1080" role="img" tabindex="0"
-                      aria-describedby="fcy-ajuda-enquadrar"
-                      aria-label="Área da montagem. Escolha uma foto para começar."></canvas>
-              <div class="fcy__vazio" id="fcyVazio">
-                <p><strong>Sua montagem aparece aqui.</strong></p>
-                <p>Escolha uma foto no passo 1 para começar.</p>
-              </div>
-              <div class="fcy__girando" aria-hidden="true"></div>
-            </div>
-
-            <!-- Enquadramento: fica junto da montagem, e não na lista de passos,
-                 porque só faz sentido com a foto já na tela. -->
-            <div class="fcy__ajuste" id="fcyAjuste" hidden>
-              <div class="fcy__zoom">
-                <label for="fcyZoom">Aproximar</label>
-                <input type="range" id="fcyZoom" min="1" max="3" step="0.05" value="1">
-              </div>
-              <button type="button" class="btn fcy__centralizar" id="fcyCentralizar">Centralizar</button>
-              <p class="fcy__dica" id="fcy-ajuda-enquadrar">Arraste a foto dentro da
-                 moldura para enquadrar. Pelo teclado: dê foco na montagem e use as
-                 setas para mover (com Shift, passos maiores), <kbd>+</kbd> e
-                 <kbd>−</kbd> para aproximar e <kbd>Home</kbd> para voltar ao começo.</p>
-            </div>
-
-            <p class="fcy__estado" id="fcyEstado" role="status" aria-live="polite"></p>
-
-            <div class="fcy__acoes" id="fcyAcoes" hidden>
-              <button type="button" class="btn btn--primario" id="fcyBaixar">Baixar imagem</button>
-              <button type="button" class="btn" id="fcyCompartilhar">Compartilhar</button>
-              <button type="button" class="btn" id="fcyZap">Enviar no WhatsApp</button>
-              <button type="button" class="btn fcy__trocar" id="fcyTrocar">Trocar minha foto</button>
-            </div>
-
-            <p class="fcy__nota">
-              A montagem é feita pelo seu próprio navegador, com a foto que está
-              no seu aparelho. Nenhuma imagem é enviada, salva ou compartilhada
-              sem você mandar.
-              Depois de baixar, siga o Delegado no
-              <a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">Instagram</a>,
-              no <a href="https://www.tiktok.com/@delegadoyasser" target="_blank" rel="noopener">TikTok</a>
-              e no <a href="https://www.threads.com/@delegadoyasser" target="_blank" rel="noopener">Threads</a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ===== CAUSA ===== -->
     <section class="secao" id="causa">
       <div class="container split">
@@ -1000,19 +444,6 @@
             </picture>
             <figcaption>Vem com a gente: o convite é para todo mundo</figcaption>
           </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== APOIE (vaquinha oficial) ===== -->
-    <section class="secao secao--brand" id="apoie">
-      <div class="container">
-        <div class="apoio reveal">
-          <span class="eyebrow">Vaquinha oficial · QueroApoiar</span>
-          <h2>Ajude a manter essa rede de pé</h2>
-          <p>O movimento se faz com gente — e também com recursos. Apoie com qualquer valor pelo financiamento coletivo oficial, com doação segura e lista pública de doadores.</p>
-          <a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener" class="btn btn--claro btn--grande">♥ Apoiar o movimento</a>
-          <span class="apoio__url">apoiar.me/delegadoyasser</span>
         </div>
       </div>
     </section>
@@ -1185,81 +616,6 @@
       </div>
     </section>
 
-    <!-- ===== TRILHA SONORA ===== -->
-    <section class="secao secao--suave" id="trilha">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Trilha sonora</span>
-          <h2>Yasser Fun Festival</h2>
-          <p>Os jingles da campanha viraram álbum. Dá o play, escuta do começo ao fim e leva a mensagem junto com a música.</p>
-        </div>
-
-        <div class="trilha reveal">
-          <!-- Player oficial do Spotify. Carrega só quando chega perto da tela
-               (loading="lazy") e não recebe a permissão "autoplay": som que
-               começa sozinho quebra o critério 1.4.2 da WCAG, e o eMAG cobra
-               o mesmo controle sobre áudio automático. -->
-          <iframe class="trilha__player"
-                  src="https://open.spotify.com/embed/album/5fvuiXEJKhVEn5moslSkZj?utm_source=site"
-                  title="Player do álbum Yasser Fun Festival no Spotify"
-                  width="100%" height="152" loading="lazy"
-                  allow="clipboard-write; encrypted-media; picture-in-picture"></iframe>
-
-          <div class="trilha__lojas">
-            <h3 class="trilha__titulo" id="trilha-plataformas">Ouça também em</h3>
-            <!-- A lista também é a alternativa em texto ao player: o iframe
-                 some para quem bloqueia conteúdo de terceiros, e o álbum
-                 precisa continuar alcançável.
-
-                 Para acrescentar uma plataforma, basta repetir um <li>. Sem
-                 logomarcas de terceiros: o site inteiro identifica canais por
-                 nome em tipografia própria (ver .rede na seção Redes), e cada
-                 marca tem regra própria de uso do logo. -->
-            <ul class="plataformas" aria-labelledby="trilha-plataformas">
-              <li>
-                <a class="plataforma" href="https://open.spotify.com/album/5fvuiXEJKhVEn5moslSkZj?si=NbvqtnOZRcyPLGyF6khoPA&amp;utm_source=site"
-                   target="_blank" rel="noopener">Spotify<span class="sr-only"> (abre em nova aba)</span></a>
-              </li>
-              <li>
-                <a class="plataforma" href="https://music.youtube.com/playlist?list=OLAK5uy_mZizupLu1ZcRNN1AATkAXSZRHwSQPvC14&amp;si=W_gs62lQumjxfHX0"
-                   target="_blank" rel="noopener">YouTube Music<span class="sr-only"> (abre em nova aba)</span></a>
-              </li>
-              <li>
-                <a class="plataforma" href="https://music.apple.com/br/album/yasser-fun-festival/6802015981"
-                   target="_blank" rel="noopener">Apple Music<span class="sr-only"> (abre em nova aba)</span></a>
-              </li>
-              <li>
-                <!-- Endereço canônico do álbum. O link curto compartilhado
-                     (link.deezer.com/s/…) resolve para cá, mas links de
-                     compartilhamento do Deezer expiram; o /album/ID não. -->
-                <a class="plataforma" href="https://www.deezer.com/br/album/1055512132"
-                   target="_blank" rel="noopener">Deezer<span class="sr-only"> (abre em nova aba)</span></a>
-              </li>
-              <li>
-                <!-- Página do álbum na Amazon (ASIN B0HFGBCD7Q). O mesmo endereço
-                     serve para a Amazon Music e para a loja. -->
-                <a class="plataforma" href="https://www.amazon.com/gp/product/B0HFGBCD7Q"
-                   target="_blank" rel="noopener">Amazon Music<span class="sr-only"> (abre em nova aba)</span></a>
-              </li>
-              <li>
-                <a class="plataforma" href="https://www.claromusica.com/dl.sh/ct/br/album/95055528"
-                   target="_blank" rel="noopener">Claro Música<span class="sr-only"> (abre em nova aba)</span></a>
-              </li>
-            </ul>
-
-            <!-- Instagram e TikTok não têm página de álbum como as lojas: as
-                 faixas entram na biblioteca de áudios, encontrável só de dentro
-                 do app. Por isso a menção é em texto, e não mais um botão. -->
-            <p class="trilha__nota">
-              As músicas também estão no <strong>Instagram</strong> e no <strong>TikTok</strong>:
-              procure por <em>Yasser Fun Festival</em> na biblioteca de áudios ao criar
-              seu reels ou vídeo e use na sua publicação.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ===== CADASTRO ===== -->
     <section class="secao" id="cadastro">
       <div class="container cadastro-grid">
@@ -1336,7 +692,7 @@
         <div class="cta-final">
           <span class="eyebrow">Goiás Seguro</span>
           <h2>Segurança pública de verdade não é espetáculo. É fazer cada um viver <span class="marca">seguro</span>. Na rua e em casa.</h2>
-          <p>Não perca a chance de fazer parte desse movimento. Sua participação transforma apoio em ação concreta. Vem com a gente construir esse Goiás — Delegado Yasser<span class="so-campanha">, 13007</span>.</p>
+          <p>Não perca a chance de fazer parte desse movimento. Sua participação transforma apoio em ação concreta. Vem com a gente construir esse Goiás — Delegado Yasser.</p>
           <div class="acoes">
             <a href="#cadastro" class="btn btn--primario">Quero fazer parte</a>
             <a href="https://chat.whatsapp.com/Hlgz2Q7nItW7bS8GaO4afE?mode=gi_t" target="_blank" rel="noopener" class="btn">Ajude a ampliar essa rede</a>
@@ -1354,10 +710,9 @@
         <div>
           <div class="logo">
             <span class="logo__mark" aria-hidden="true">★</span>
-            <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
-            <span class="numero-pill so-campanha"><small>Nº</small> 13007</span>
+            <span class="logo__nome">Delegado Yasser <small>Goiás Seguro para Todos</small></span>
           </div>
-          <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e candidato a deputado estadual pelo PT-GO. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
+          <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e idealizador do movimento Goiás Seguro para Todos. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
           <div class="rodape__social">
             <!-- Ícones em traço, no mesmo desenho do resto do site. A ordem é a
                  do alcance de cada rede (ver a seção "As Redes" na home), com o
@@ -1375,16 +730,12 @@
           <ul>
             <li><a href="#quem">Quem é o Yasser</a></li>
             <li><a href="#bandeiras">Bandeiras</a></li>
-            <li><a href="propostas.html">Propostas</a></li>
-            <li class="so-campanha"><a href="#leve-na-urna">Leve na urna</a></li>
-            <li class="so-campanha"><a href="#foto-com-yasser">Foto com o Yasser</a></li>
             <li><a href="#redes">Redes</a></li>
             <li><a href="#missoes">Missões</a></li>
             <li><a href="#radar">Radar</a></li>
             <!-- <li><a href="#agenda">Agenda de ações</a></li> -->
             <li><a href="#noticias">Notícias</a></li>
             <li><a href="#momentos">Momentos</a></li>
-            <li><a href="#trilha">Trilha sonora</a></li>
           </ul>
         </nav>
         <nav aria-label="Participe">
@@ -1392,7 +743,6 @@
           <ul>
             <li><a href="#cadastro">Quero fazer parte</a></li>
             <li><a href="solicitar-reuniao.html">Convide o Yasser para uma reunião</a></li>
-            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar o movimento (vaquinha)</a></li>
             <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
             <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
             <li><a href="acessibilidade.html">Acessibilidade</a></li>
@@ -1411,14 +761,8 @@
         </a>
         <a href="acessibilidade.html" class="rodape__selo-link">Declaração de acessibilidade</a>
       </div>
-      <p class="rodape__legal so-campanha">
-        ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL<br>
-        COLIGAÇÃO GOIÁS PODE MAIS<br>
-        FEDERAÇÃO BRASIL DA ESPERANÇA (PT / PCdoB / PV) / FEDERAÇÃO PSOL-REDE (PSOL / REDE) / PSB / PDT<br>
-        CNPJ 68.454.985/0001-69
-      </p>
       <div class="rodape__bottom">
-        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás Seguro<span class="so-campanha"> · Nº 13007</span>.</p>
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine — Goiás Seguro para Todos.</p>
         <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
            (textos, imagens e marca) sem autorização prévia.</p>
       </div>
@@ -1447,8 +791,6 @@
     });
   </script>
 
-  <script src="js/landing.js?v=20260905" defer></script>
-  <script src="js/foto-com-yasser.js?v=20260903" defer></script>
-  <script src="js/leve-na-urna.js?v=20260903" defer></script>
+  <script src="js/landing.js?v=20261004" defer></script>
 </body>
 </html>

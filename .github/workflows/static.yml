@@ -33,12 +33,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      # liberar-campanha.js é ferramenta de manutenção e guarda os textos com o
-      # número 13007. Como o passo abaixo publica a pasta inteira, ele ficaria
-      # legível em /liberar-campanha.js — justamente o que não pode circular
-      # antes da liberação. Removido só da cópia do runner; o repo não muda.
-      - name: Remover ferramentas que não vão para o ar
-        run: rm -f liberar-campanha.js gerar-pdf-propostas.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

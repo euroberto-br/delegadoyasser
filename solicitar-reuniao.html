@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-campanha="pre">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,32 +13,6 @@
     }
   </script>
 
-  <!-- Liberação da propaganda de campanha (bloco inicial e o número 13007):
-       só a partir de 16/08/2026 às 08:00, horário de Brasília.
-
-       O HTML nasce com data-campanha="pre" e tudo que não pode aparecer antes
-       da hora leva a classe .so-campanha. Esconder é o estado PADRÃO: se este
-       script não rodar, o conteúdo continua oculto em vez de vazar.
-
-       A regra de ocultar é injetada aqui, e não só no css/landing.css, porque
-       quem já visitou o site pode ter o CSS antigo em cache — e aí veria o que
-       deveria estar bloqueado. Inline no <head> para não piscar na tela. -->
-  <script>
-    (function () {
-      var LIBERACAO = Date.parse("2026-08-16T11:00:00Z"); // 08:00 em Brasília (UTC-3)
-      var raiz = document.documentElement;
-
-      var trava = document.createElement("style");
-      trava.textContent =
-        '[data-campanha="pre"] .so-campanha{display:none !important}' +
-        '[data-campanha="on"] .pre-campanha{display:none !important}';
-      (document.head || raiz).appendChild(trava);
-
-      if (Date.now() >= LIBERACAO) {
-        raiz.setAttribute("data-campanha", "on");
-      }
-    })();
-  </script>
   <title>Convide o Yasser para uma reunião | Agenda do movimento Goiás Seguro</title>
   <meta name="description" content="Convide o Delegado Yasser para uma reunião na sua comunidade: escolha o dia e o período, conte o motivo e a equipe responde a viabilidade.">
 
@@ -117,7 +91,7 @@
     }catch(e){}
   </script>
 
-  <link rel="stylesheet" href="css/landing.css?v=20260905b">
+  <link rel="stylesheet" href="css/landing.css?v=20261004">
   <link rel="stylesheet" href="css/agenda.css">
 
   <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
@@ -175,16 +149,13 @@
     <div class="container nav">
       <a href="index.html#topo" class="logo">
         <span class="logo__mark" aria-hidden="true">★</span>
-        <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
+        <span class="logo__nome">Delegado Yasser <small>Goiás Seguro para Todos</small></span>
       </a>
       <nav aria-label="Navegação principal">
         <ul class="nav__links" id="navLinks">
           <li><a href="index.html#quem">Quem é</a></li>
-          <li><a href="propostas.html">Propostas</a></li>
-          <li class="so-campanha"><a href="index.html#leve-na-urna">Leve na urna</a></li>
           <li><a href="index.html#missoes">Missões</a></li>
           <li><a href="goias-seguro-para-todos.html">Goiás Seguro para Todos</a></li>
-          <li class="so-campanha"><span class="numero-pill"><small>Nº</small> 13007</span></li>
           <li><a href="index.html#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
         </ul>
       </nav>
@@ -361,10 +332,9 @@
         <div>
           <div class="logo">
             <span class="logo__mark" aria-hidden="true">★</span>
-            <span class="logo__nome">Delegado Yasser <small>Candidato · Dep. Estadual · PT-GO</small></span>
-            <span class="numero-pill so-campanha"><small>Nº</small> 13007</span>
+            <span class="logo__nome">Delegado Yasser <small>Goiás Seguro para Todos</small></span>
           </div>
-          <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e candidato a deputado estadual pelo PT-GO. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
+          <p class="rodape__sobre">Delegado da Polícia Civil de Goiás e idealizador do movimento Goiás Seguro para Todos. Uma rede de pessoas construindo segurança pública com cuidado, prevenção e comunidade.</p>
           <div class="rodape__social">
             <!-- Ícones em traço, no mesmo desenho do resto do site. A ordem é a
                  do alcance de cada rede (ver a seção "As Redes" na home), com o
@@ -382,9 +352,6 @@
           <ul>
             <li><a href="index.html#quem">Quem é o Yasser</a></li>
             <li><a href="index.html#bandeiras">Bandeiras</a></li>
-            <li><a href="propostas.html">Propostas</a></li>
-            <li class="so-campanha"><a href="index.html#leve-na-urna">Leve na urna</a></li>
-            <li class="so-campanha"><a href="index.html#foto-com-yasser">Foto com o Yasser</a></li>
             <li><a href="goias-seguro-para-todos.html">Goiás Seguro para Todos</a></li>
             <li><a href="index.html#noticias">Notícias</a></li>
           </ul>
@@ -394,7 +361,6 @@
           <ul>
             <li><a href="index.html#cadastro">Quero fazer parte</a></li>
             <li><a href="solicitar-reuniao.html">Convide o Yasser para uma reunião</a></li>
-            <li><a href="https://apoiar.me/delegadoyasser" target="_blank" rel="noopener">Apoiar o movimento (vaquinha)</a></li>
             <li><a href="https://instagram.com/delegadoyasser" target="_blank" rel="noopener">@delegadoyasser</a></li>
             <li><a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a></li>
             <li><a href="acessibilidade.html">Acessibilidade</a></li>
@@ -402,14 +368,8 @@
         </nav>
       </div>
       <p class="rodape__assinatura" aria-hidden="true">Goiás seguro</p>
-      <p class="rodape__legal so-campanha">
-        ELEIÇÃO 2026 · YASSER MARTINS YASSINE · DEPUTADO ESTADUAL<br>
-        COLIGAÇÃO GOIÁS PODE MAIS<br>
-        FEDERAÇÃO BRASIL DA ESPERANÇA (PT / PCdoB / PV) / FEDERAÇÃO PSOL-REDE (PSOL / REDE) / PSB / PDT<br>
-        CNPJ 68.454.985/0001-69
-      </p>
       <div class="rodape__bottom">
-        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine · PT-GO — Goiás Seguro<span class="so-campanha"> · Nº 13007</span>.</p>
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine — Goiás Seguro para Todos.</p>
         <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
            (textos, imagens e marca) sem autorização prévia.</p>
       </div>
@@ -439,7 +399,7 @@
   </script>
 
   <!-- Moldura compartilhada (menu, seletor de cor, balão de acessibilidade) -->
-  <script src="js/landing.js?v=20260905" defer></script>
+  <script src="js/landing.js?v=20261004" defer></script>
   <!-- Lógica do formulário de solicitação de reunião -->
   <script src="js/agenda.js" defer></script>
 </body>
