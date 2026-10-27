@@ -22,3 +22,19 @@ Thumbs.db
 # Dumps de travamento do Git Bash/Cygwin. O deploy publica a pasta inteira
 # (path: "." no static.yml), então lixo solto na raiz vai para o ar.
 *.stackdump
+
+# Pastas de trabalho de ferramentas de IA
+.claude/
+.remember/
+.superpowers/
+.cursor/
+.codex/
+.gemini/
+.aider*
+.continue/
+.windsurf/
+.cline/
+.roo/
+.kilocode/
+.serena/
+.specstory/
