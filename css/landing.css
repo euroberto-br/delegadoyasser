@@ -1527,3 +1527,51 @@ html.a11y-parado .reveal { opacity: 1 !important; transform: none !important; }
      não há rolagem, então tudo precisa estar no lugar. */
   .reveal { transform: none !important; opacity: 1 !important; }
 }
+
+/* ---------- Aviso de cookies (LGPD) — montado por js/consentimento.js ---------- */
+/* Canto inferior esquerdo; a margem direita deixa livre o balão de
+   acessibilidade, que fica no canto oposto e não pode ser coberto. */
+.cookies {
+  position: fixed;
+  left: 0.9rem;
+  right: 4.9rem;
+  bottom: 0.9rem;
+  z-index: 80;
+  max-width: 30rem;
+  max-height: calc(100vh - 1.8rem);
+  overflow-y: auto;
+  background: var(--branco);
+  color: var(--tinta);
+  border: var(--borda);
+  box-shadow: var(--sombra-dura);
+  padding: 1rem 1.1rem 1.1rem;
+}
+.cookies__titulo {
+  margin: 0 0 0.5rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--tinta-70);
+}
+.cookies p { margin: 0 0 0.8rem; font-size: 0.92rem; line-height: 1.5; }
+.cookies a { color: var(--tinta); }
+/* Recusar e Aceitar com o mesmo peso visual: nenhum dos dois é "o certo". */
+.cookies__acoes { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+.cookies__acoes .btn { flex: 1 1 7rem; padding: 0.7rem 1rem; }
+
+/* Botão do rodapé que reabre o aviso, com cara de link */
+.rodape__cookies {
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--papel);
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media print {
+  .cookies { display: none; }
+}

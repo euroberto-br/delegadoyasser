@@ -126,31 +126,11 @@
     }catch(e){}
   </script>
 
-  <link rel="stylesheet" href="css/landing.css?v=20261004">
+  <link rel="stylesheet" href="css/landing.css?v=20261027">
 
-  <!-- Abre as conexões com o Clarity em paralelo: o script dele é injetado
-       por JS, então o navegador só descobriria os domínios tarde. Carrega em
-       dois saltos — www serve o /tag e este puxa o script de scripts. ~200 ms. -->
-  <link rel="preconnect" href="https://www.clarity.ms">
-  <link rel="preconnect" href="https://scripts.clarity.ms">
-
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xltc65hll6");
-  </script>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BKFLZQW72Y"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-BKFLZQW72Y');
-  </script>
+  <!-- Google Analytics e Microsoft Clarity só carregam depois do "Aceitar"
+       no aviso de cookies (LGPD). IDs e lógica em js/consentimento.js. -->
+  <script src="js/consentimento.js?v=20261027" defer></script>
 </head>
 <body>
 
@@ -677,7 +657,7 @@
             </div>
           </div>
           <label class="check">
-            <input type="checkbox" name="consentimento" required> Autorizo o contato por WhatsApp e aceito receber materiais do movimento.
+            <input type="checkbox" name="consentimento" required> Autorizo o contato por WhatsApp e aceito receber materiais do movimento. Veja a <a href="politica-de-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.
           </label>
           <button type="submit" class="btn btn--primario">Enviar cadastro</button>
           <p class="form-status" id="formStatus" role="status" aria-live="polite" hidden></p>
@@ -762,6 +742,7 @@
         <a href="acessibilidade.html" class="rodape__selo-link">Declaração de acessibilidade</a>
       </div>
       <div class="rodape__bottom">
+        <p><a href="politica-de-privacidade.html">Política de Privacidade</a> · <button type="button" class="rodape__cookies" data-preferencias-cookies>Preferências de cookies</button></p>
         <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine — Goiás Seguro para Todos.</p>
         <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
            (textos, imagens e marca) sem autorização prévia.</p>

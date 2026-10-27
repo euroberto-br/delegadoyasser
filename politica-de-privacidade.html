@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f9120c">
+
+  <!-- Impede que o site seja embutido em iframes de outros domínios (anti-clickjacking) -->
+  <script>
+    if (window.top !== window.self) {
+      try { window.top.location.replace(window.location.href); }
+      catch (e) { document.documentElement.style.display = "none"; }
+    }
+  </script>
+
+  <title>Política de Privacidade | Delegado Yasser</title>
+  <meta name="description" content="Como o site do Delegado Yasser trata dados pessoais e cookies, conforme a LGPD: o que é coletado, para quê, com quem é compartilhado e como exercer seus direitos.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+  <link rel="canonical" href="https://delegadoyasser.com.br/politica-de-privacidade.html">
+  <meta name="robots" content="index, follow">
+
+  <!-- Fontes hospedadas no próprio domínio · @font-face declarado em css/landing.css -->
+  <link rel="preload" href="fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/oswald-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  <script>
+    try{
+      var cc=localStorage.getItem('contraste');
+      if(cc==='alto'||(!cc&&window.matchMedia&&window.matchMedia('(prefers-contrast: more)').matches))document.documentElement.setAttribute('data-contraste','alto');
+      var p=parseInt(localStorage.getItem('fonte-escala'),10);if(p&&p!==100&&p>=90&&p<=130)document.documentElement.style.fontSize=p+'%';
+      if(localStorage.getItem('destacar-links')==='1')document.documentElement.classList.add('a11y-links');
+      if(localStorage.getItem('pausar-animacoes')==='1')document.documentElement.classList.add('a11y-parado');
+    }catch(e){}
+  </script>
+
+  <link rel="stylesheet" href="css/landing.css?v=20261027">
+
+  <!-- Google Analytics e Microsoft Clarity só carregam depois do "Aceitar"
+       no aviso de cookies (LGPD). IDs e lógica em js/consentimento.js. -->
+  <script src="js/consentimento.js?v=20261027" defer></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#conteudo" accesskey="1">Pular para o conteúdo</a>
+
+  <!-- ===== BALÃO DE ACESSIBILIDADE (flutuante: fonte e contraste) ===== -->
+  <div class="acess-flutuante">
+    <button type="button" class="acess-flutuante__botao" id="acessToggle"
+            aria-expanded="false" aria-controls="acessPainel" aria-label="Opções de acessibilidade">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm8.5 0c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2z"/></svg>
+    </button>
+    <div class="acess-flutuante__painel" id="acessPainel" role="group" aria-label="Ferramentas de acessibilidade" hidden>
+      <p class="acess-flutuante__titulo">Acessibilidade</p>
+      <div class="acess-flutuante__linha">
+        <button type="button" id="fonteMenor" aria-label="Diminuir tamanho do texto">A−</button>
+        <span class="acess-flutuante__escala" id="fonteEscala" aria-live="polite">100%</span>
+        <button type="button" id="fonteMaior" aria-label="Aumentar tamanho do texto">A+</button>
+      </div>
+      <button type="button" id="contrasteAlto" class="acess-flutuante__toggle" aria-pressed="false">Alto contraste</button>
+      <button type="button" id="destacarLinks" class="acess-flutuante__toggle" aria-pressed="false">Destacar links</button>
+      <button type="button" id="pausarAnimacoes" class="acess-flutuante__toggle" aria-pressed="false">Pausar animações</button>
+      <button type="button" id="restaurarPadrao" class="acess-flutuante__toggle">Restaurar padrão</button>
+    </div>
+  </div>
+
+  <header class="cabecalho" id="cabecalho">
+    <div class="container nav">
+      <a href="index.html#topo" class="logo">
+        <span class="logo__mark" aria-hidden="true">★</span>
+        <span class="logo__nome">Delegado Yasser <small>Goiás Seguro para Todos</small></span>
+      </a>
+      <nav aria-label="Navegação principal">
+        <ul class="nav__links" id="navLinks">
+          <li><a href="index.html#quem">Quem é</a></li>
+          <li><a href="index.html#missoes">Missões</a></li>
+          <li><a href="goias-seguro-para-todos.html">Goiás Seguro para Todos</a></li>
+          <li><a href="index.html#cadastro" class="btn btn--primario nav__cta">Quero fazer parte</a></li>
+        </ul>
+      </nav>
+      <button class="nav__toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="secao">
+      <div class="container" style="max-width: 760px;">
+        <span class="eyebrow">Seus dados, suas regras</span>
+        <h1 style="font-size: clamp(2rem, 6vw, 3.2rem);">Política de Privacidade</h1>
+
+        <p>Esta página explica, sem juridiquês, quais dados pessoais este site coleta, para que
+        servem, com quem são compartilhados e como você pode consultar, corrigir ou apagar o que
+        é seu. Ela segue a <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD)</strong>.</p>
+
+        <h2 style="font-size: clamp(1.4rem, 4vw, 1.9rem);">Quem cuida dos seus dados</h2>
+        <p>O controlador dos dados é <strong>Yasser Yassine</strong> (Delegado Yasser), responsável
+        por este site e pelo movimento Goiás Seguro para Todos.</p>
+        <p>Pedidos, dúvidas e reclamações sobre dados pessoais (canal do titular e do encarregado):
+        <a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a>.</p>
+
+        <h2 style="font-size: clamp(1.4rem, 4vw, 1.9rem);">O que coletamos e para quê</h2>
+        <p>Só coletamos o que você mesmo informa nos formulários e, se você aceitar, estatísticas
+        de uso. A base legal é o seu <strong>consentimento</strong> (art. 7º, I, e art. 11, I, da LGPD),
+        que você pode retirar quando quiser.</p>
+
+        <h3>Cadastro “Quero fazer parte”</h3>
+        <ul>
+          <li><strong>Dados:</strong> nome, WhatsApp, e-mail, cidade, bairro e a forma como deseja ajudar.</li>
+          <li><strong>Para quê:</strong> falar com você pelo WhatsApp e enviar materiais e novidades do movimento.</li>
+          <li><strong>Por quanto tempo:</strong> até você pedir para sair.</li>
+          <li>Participar de um movimento político pode revelar opinião política, que a LGPD trata como
+          dado sensível. Por isso o cadastro só é enviado com a caixa de autorização marcada, e esses
+          dados nunca são vendidos, cedidos ou publicados.</li>
+        </ul>
+
+        <h3>Pedido de reunião</h3>
+        <ul>
+          <li><strong>Dados:</strong> nome, CPF, telefone, e-mail, organização, local, data e período
+          desejados, número de participantes e o motivo da reunião.</li>
+          <li><strong>Para quê:</strong> organizar a agenda, confirmar quem está pedindo e responder a solicitação.</li>
+          <li><strong>Por quanto tempo:</strong> até 12 meses depois do atendimento, ou antes, se você pedir.</li>
+        </ul>
+
+        <h3>Relato no mapa Goiás Seguro para Todos</h3>
+        <ul>
+          <li><strong>O que aparece no mapa:</strong> categoria, título, descrição, local e, se você
+          enviar, a foto. <strong>Seu nome e seus contatos nunca aparecem.</strong> Evite fotos em que
+          apareçam rostos ou placas de veículos.</li>
+          <li><strong>Se você escolher “Com meus dados”:</strong> nome, e-mail e telefone, usados só pela
+          equipe para confirmar o relato e dar retorno. No modo anônimo, nenhum dado pessoal é enviado.</li>
+          <li><strong>Por quanto tempo:</strong> os contatos são apagados em até 12 meses. O relato
+          publicado fica no mapa enquanto ele existir, ou até você pedir a retirada.</li>
+        </ul>
+
+        <h3>Preferências guardadas no seu aparelho</h3>
+        <p>Tamanho da fonte, alto contraste, destaque de links, pausa de animações e a sua escolha
+        sobre cookies ficam guardados só no seu navegador (<em>localStorage</em>). Nada disso é
+        enviado para nós.</p>
+
+        <h2 id="cookies" style="font-size: clamp(1.4rem, 4vw, 1.9rem);">Cookies</h2>
+        <p>O site funciona por completo sem cookies. Os únicos cookies são os de
+        <strong>estatística</strong>, e eles só são ativados se você clicar em “Aceitar” no aviso de cookies:</p>
+        <ul>
+          <li><strong>Google Analytics</strong> (<code>_ga</code> e <code>_ga_*</code>, até 2 anos):
+          conta visitas, páginas vistas e de onde as pessoas chegam, sem identificar quem você é.
+          Os recursos de publicidade do Google ficam desligados.</li>
+          <li><strong>Microsoft Clarity</strong> (<code>_clck</code>, 1 ano; <code>_clsk</code>, 1 dia):
+          mostra como as páginas são usadas (cliques, rolagem, mapas de calor) para corrigirmos
+          problemas.</li>
+        </ul>
+        <p>Você pode mudar de ideia a qualquer momento. Se retirar o aceite, os cookies de estatística
+        são apagados deste site.</p>
+        <p><button type="button" class="btn" data-preferencias-cookies>Preferências de cookies</button></p>
+
+        <h2 style="font-size: clamp(1.4rem, 4vw, 1.9rem);">Com quem os dados são compartilhados</h2>
+        <p>Não vendemos nem cedemos dados pessoais. Para o site funcionar, usamos estes serviços,
+        que tratam dados só para nos atender:</p>
+        <ul>
+          <li><strong>Google</strong> (Planilhas e Apps Script): recebe e guarda as respostas dos formulários.
+          Também fornece o Google Analytics, se você aceitar.</li>
+          <li><strong>Microsoft</strong>: Clarity, se você aceitar.</li>
+          <li><strong>Cloudinary</strong>: guarda as fotos enviadas com os relatos.</li>
+          <li><strong>OpenStreetMap</strong> e <strong>Nominatim</strong>: desenham o mapa e localizam o
+          endereço que você digita na busca.</li>
+          <li><strong>unpkg</strong>: entrega a biblioteca que desenha o mapa (Leaflet).</li>
+          <li><strong>VLibras</strong> (governo federal): tradução do site para Libras.</li>
+        </ul>
+        <p>Como qualquer site, esses serviços recebem o endereço IP de quem acessa. Alguns deles
+        guardam dados fora do Brasil, principalmente nos Estados Unidos.</p>
+
+        <h2 style="font-size: clamp(1.4rem, 4vw, 1.9rem);">Seus direitos</h2>
+        <p>A LGPD (art. 18) garante que você pode, a qualquer momento:</p>
+        <ul class="lista-check">
+          <li>Confirmar se temos dados seus e receber uma cópia deles</li>
+          <li>Corrigir dados incompletos, errados ou desatualizados</li>
+          <li>Pedir que seus dados sejam apagados</li>
+          <li>Retirar o consentimento, sem nenhum prejuízo</li>
+          <li>Saber com quem seus dados foram compartilhados</li>
+          <li>Pedir a portabilidade dos dados para outro serviço</li>
+        </ul>
+        <p>Basta escrever para <a href="mailto:contato@delegadoyasser.com.br">contato@delegadoyasser.com.br</a>
+        dizendo o que você quer. Respondemos em até 15 dias. Se não ficar satisfeito, você também pode
+        reclamar na <a href="https://www.gov.br/anpd/pt-br" target="_blank" rel="noopener">Autoridade
+        Nacional de Proteção de Dados (ANPD)</a>.</p>
+
+        <h2 style="font-size: clamp(1.4rem, 4vw, 1.9rem);">Segurança</h2>
+        <p>Os formulários são enviados por conexão criptografada (HTTPS), e só a equipe responsável tem
+        acesso às respostas dos formulários. Se acontecer um incidente que possa trazer risco a
+        você, vamos avisar as pessoas afetadas e a ANPD.</p>
+
+        <h2 style="font-size: clamp(1.4rem, 4vw, 1.9rem);">Mudanças nesta política</h2>
+        <p>Quando esta política mudar, a data abaixo será atualizada. Se a mudança envolver novos
+        cookies, o aviso de cookies aparece de novo para você decidir.</p>
+
+        <p class="redes-nota" style="color: var(--tinta-70);">Última atualização: 27 de outubro de 2026.</p>
+
+        <div class="acoes">
+          <a href="index.html" class="btn">Voltar à página inicial</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape__selos">
+        <a href="https://www.w3.org/WAI/WCAG2AA-Conformance" target="_blank" rel="noopener"
+           title="Explicação da conformidade com o nível AA das WCAG 2 do W3C">
+          <picture>
+            <source type="image/webp" srcset="images/selo-wcag2aa.webp">
+            <img src="images/selo-wcag2aa.png" width="88" height="32"
+               alt="Selo de conformidade nível AA, Diretrizes de Acessibilidade para Conteúdo Web (WCAG 2) do W3C WAI" loading="lazy" decoding="async">
+          </picture>
+        </a>
+      </div>
+      <div class="rodape__bottom">
+        <p><a href="politica-de-privacidade.html">Política de Privacidade</a> · <button type="button" class="rodape__cookies" data-preferencias-cookies>Preferências de cookies</button></p>
+        <p>&copy; <span id="ano">2026</span> Delegado Yasser Yassine — Goiás Seguro para Todos.</p>
+        <p>Todos os direitos reservados. É proibida a reprodução ou o uso do conteúdo deste site
+           (textos, imagens e marca) sem autorização prévia.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== VLIBRAS (tradução para Língua Brasileira de Sinais — widget oficial gov.br) ===== -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <!-- VLibras (tradutor de Libras do gov.br). Carregado só depois do load:
+       como <script> síncrono ele travava a renderização por ~850 ms. O widget
+       é um botão flutuante acionado pelo usuário, então aparecer um instante
+       mais tarde não muda o uso. -->
+  <script>
+    window.addEventListener("load", function () {
+      var s = document.createElement("script");
+      s.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
+      s.onload = function () {
+        try { new window.VLibras.Widget("https://vlibras.gov.br/app"); } catch (e) {}
+      };
+      document.body.appendChild(s);
+    });
+  </script>
+
+  <script>
+    document.getElementById('ano').textContent = new Date().getFullYear();
+  </script>
+  <script src="js/landing.js?v=20261004" defer></script>
+</body>
+</html>
